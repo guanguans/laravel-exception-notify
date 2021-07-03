@@ -4,6 +4,10 @@
 
 > Multiple channels of laravel exception notification(DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
 
+![usage](docs/usage.png)
+
+![息知](docs/xiZhi.png)
+
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![codecov](https://codecov.io/gh/guanguans/laravel-exception-notify/branch/main/graph/badge.svg?token=URGFAWS6S4)](https://codecov.io/gh/guanguans/laravel-exception-notify)
@@ -60,14 +64,11 @@ $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Exce
 public function report(Exception $exception)
 {
     // 添加的代码
-    if ($this->shouldReport($exception)) {
-        app('exception.notifier')->report($exception);
-        /*
-        OR ...
-        \ExceptionNotifier::report($exception);
-        \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
-        */
-    }
+    $this->shouldReport($exception) and \ExceptionNotifier::report($exception);
+    // // 或者
+    // $this->shouldReport($exception) and app('exception.notifier')->report($exception);
+    // // 或者
+    // $this->shouldReport($exception) and \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
 
     parent::report($exception);
 }
@@ -81,7 +82,7 @@ public function report(Exception $exception)
 
 ![企业微信群机器人](docs/weWork.png)
 
-![企业微信群机器人](docs/xiZhi.png)
+![息知](docs/xiZhi.png)
 
 ## 测试
 

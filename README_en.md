@@ -60,14 +60,11 @@ $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Exce
 public function report(Exception $exception)
 {
     // Added code
-    if ($this->shouldReport($exception)) {
-        app('exception.notifier')->report($exception);
-        /*
-        OR ...
-        \ExceptionNotifier::report($exception);
-        \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
-        */
-    }
+    $this->shouldReport($exception) and \ExceptionNotifier::report($exception);
+    // // OR
+    // $this->shouldReport($exception) and app('exception.notifier')->report($exception);
+    // // OR
+    // $this->shouldReport($exception) and \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
 
     parent::report($exception);
 }
