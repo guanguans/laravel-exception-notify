@@ -12,6 +12,11 @@ namespace Guanguans\LaravelExceptionNotify\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static report(\Exception $exception)
+ *
+ * @see \Guanguans\LaravelExceptionNotify\Notifier
+ */
 class Notifier extends Facade
 {
     /**
