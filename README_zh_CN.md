@@ -2,7 +2,7 @@
 
 [简体中文](README_zh_CN.md) | [ENGLISH](README.md)
 
-> 一个 PHP 软件包模板存储库。- A PHP package template repository.
+> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -22,12 +22,6 @@ $ composer require guanguans/laravel-exception-notify --prefer-dist -vvv
 ```
 
 ## 使用
-
-1. 替换 `guanguans/laravel-exception-notify` -> `vendorName/package-name`
-2. 替换 `Guanguans\\LaravelExceptionNotify` -> `VendorName\\PackageName`
-3. 替换 `Guanguans\LaravelExceptionNotify` -> `VendorName\PackageName`
-4. 替换 `ityaozm@gmail.com` -> `your email`
-5. 执行 `$ composer dumpautoload`
 
 ## 测试
 

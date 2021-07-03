@@ -8,12 +8,14 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify;
+namespace Guanguans\LaravelExceptionNotify\Facades;
 
-class PackageSkeleton
+use Illuminate\Support\Facades\Facade;
+
+class Notifier extends Facade
 {
-    public static function test()
+    public static function getFacadeAccessor()
     {
-        return true;
+        return 'exception.notifier';
     }
 }

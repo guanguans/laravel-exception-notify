@@ -1,11 +1,31 @@
 {
     "name": "guanguans/laravel-exception-notify",
-    "description": "A PHP package template repository. - 一个PHP软件包模板存储库。",
+    "description": "Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。",
     "keywords": [
-        "package",
-        "template",
-        "PHP",
-        "skeleton"
+        "laravel",
+        "notification",
+        "notify",
+        "notifier",
+        "SDK",
+        "sdk",
+        "bark",
+        "chanify",
+        "dingTalk",
+        "feiShu",
+        "serverChan",
+        "weWork",
+        "xiZhi",
+        "钉钉群机器人",
+        "机器人",
+        "钉钉群",
+        "钉钉",
+        "飞书群机器人",
+        "飞书",
+        "Server酱",
+        "企业微信群机器人",
+        "企业微信",
+        "微信",
+        "息知"
     ],
     "homepage": "https://github.com/guanguans/laravel-exception-notify",
     "support": {
@@ -25,7 +45,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "laravel/framework": "^5.5 || ^6.0 || ^7.0 || ^8.0",
+        "guanguans/notify": "^1.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.7",
@@ -57,6 +79,14 @@
         }
     ],
     "extra": {
+        "laravel": {
+            "providers": [
+                "Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
+            ],
+            "aliases": {
+                "ExceptionNotifier": "Guanguans\\LaravelExceptionNotify\\Facades\\Notifier"
+            }
+        },
         "hooks": {
             "pre-commit": [
                 "composer lint",
