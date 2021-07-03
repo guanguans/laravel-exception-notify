@@ -27,11 +27,11 @@ use Throwable;
 
 class Notifier extends BaseObject
 {
-    protected const MARKDOWN_TEMPLATE = <<<'markdown'
+    protected const MARKDOWN_TEMPLATE = <<<'md'
 ``` text
 %s
 ```
-markdown;
+md;
 
     /**
      * @var string
@@ -47,12 +47,14 @@ markdown;
      * @var bool[]
      */
     public $collector = [
+        'app_name' => true,
+        'app_env' => true,
         'trigger_time' => true,
-        'exception_trace' => true,
         'request_method' => true,
         'request_url' => true,
         'request_ip' => true,
         'request_data' => true,
+        'exception_trace' => true,
     ];
 
     /**
@@ -65,8 +67,9 @@ markdown;
      */
     protected $client;
 
-    protected $clientOptions = [];
-
+    /**
+     * {@inheritdoc}
+     */
     public function init()
     {
         parent::init();
@@ -83,39 +86,54 @@ markdown;
         try {
             dispatch(new ExceptionMessageSendJob(
                 tap($this->client, function (Client $client) use ($exception) {
-                    $client->setMessage($this->transformToMessage($exception));
+                    $information = $this->collectInformation($exception);
+
+                    $message = $this->createMessage($this->formatInformation($information));
+
+                    $client->setMessage($message);
                 })
             ));
         } catch (Throwable $e) {
-            $this->debug and Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
-    /**
-     * @return \Guanguans\Notify\Messages\Message
-     */
-    protected function transformToMessage(Exception $exception)
+    protected function formatInformation(array $information): string
     {
-        $contentCollector = array_filter([
-            sprintf('Application Name: %s', config('app.name')),
-            sprintf('Application Environment: %s', config('app.env')),
-            $this->collector['trigger_time'] ? sprintf('Trigger Time: %s', Carbon::now()->toDateTimeString()) : '',
-            $this->collector['request_method'] ? sprintf('Request method: %s', Request::method()) : '',
-            $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
-            $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
-            $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
+        return trim(array_reduce($information, function ($carry, $item) {
+            return $carry.$item.PHP_EOL;
+        }, ''));
+    }
+
+    protected function collectInformation(Exception $exception): array
+    {
+        return array_merge($this->collectExtraInformation(), $this->collectExceptionInformation($exception));
+    }
+
+    protected function collectExceptionInformation(Exception $exception): array
+    {
+        return array_filter([
             sprintf('Exception Class: %s', get_class($exception)),
             sprintf('Exception Message: %s', $exception->getMessage()),
             sprintf('Exception Code: %s', $exception->getCode()),
             sprintf('Exception File: %s', $exception->getFile()),
             sprintf('Exception Line: %s', $exception->getLine()),
             $this->collector['exception_trace'] ? sprintf('Exception Trace: %s', $exception->getTraceAsString()) : '',
+        ]);
+    }
+
+    protected function collectExtraInformation(): array
+    {
+        return array_filter([
+            $this->collector['app_name'] ? sprintf('Application Name: %s', config('app.name')) : '',
+            $this->collector['app_env'] ? sprintf('Application Environment: %s', config('app.env')) : '',
+            $this->collector['trigger_time'] ? sprintf('Trigger Time: %s', Carbon::now()->toDateTimeString()) : '',
+            $this->collector['request_method'] ? sprintf('Request method: %s', Request::method()) : '',
+            $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
+            $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
+            $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
             isset($this->channels[$this->default]['keyword']) ? sprintf('Keyword: %s', $this->channels[$this->default]['keyword']) : '',
         ]);
-
-        $content = implode(PHP_EOL, $contentCollector);
-
-        return $this->createMessage($content);
     }
 
     protected function createMessage(string $content): Message
@@ -137,7 +155,7 @@ markdown;
         }
 
         if ($this->client instanceof XiZhiClient) {
-            $message = new \Guanguans\Notify\Messages\XiZhiMessage($this->getMessageTitle(), $this->normalizeToMarkdown($content));
+            $message = new \Guanguans\Notify\Messages\XiZhiMessage($this->getMessageTitle(), $this->transformToMarkdown($content));
         }
 
         return $message;
@@ -148,7 +166,7 @@ markdown;
         return sprintf('%s application exception notification', config('app.name'));
     }
 
-    protected function normalizeToMarkdown(string $content): string
+    protected function transformToMarkdown(string $content): string
     {
         return sprintf(self::MARKDOWN_TEMPLATE, $content);
     }

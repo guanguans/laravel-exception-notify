@@ -14,10 +14,12 @@ return [
     'debug' => false,
 
     'collector' => [
+        'app_name' => true,
+        'app_env' => true,
         'trigger_time' => true,
+        'request_method' => true,
         'request_url' => true,
         'request_ip' => true,
-        'request_method' => true,
         'request_data' => true,
         'exception_trace' => true,
     ],

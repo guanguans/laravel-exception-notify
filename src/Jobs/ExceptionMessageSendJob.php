@@ -43,8 +43,8 @@ class ExceptionMessageSendJob implements ShouldQueue
      */
     public function handle()
     {
-        $ret = $this->client->send();
+        $response = $this->client->send();
 
-        config('exception-notify.debug') and Log::debug('Exception notify debugging.', $ret);
+        config('exception-notify.debug') and Log::debug('Exception notify debugging.', $response);
     }
 }
