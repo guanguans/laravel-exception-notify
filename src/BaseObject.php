@@ -14,6 +14,8 @@ use Guanguans\LaravelExceptionNotify\Exception\InvalidCallException;
 use Guanguans\LaravelExceptionNotify\Exception\UnknownPropertyException;
 
 /**
+ * This file is modified from `https://github.com/yiisoft/yii2/blob/master/framework/base/BaseObject.php`.
+ *
  * BaseObject is the base class that implements the *property* feature.
  *
  * A property is defined by a getter method (e.g. `getLabel`), and/or a setter method (e.g. `setLabel`). For example,
@@ -76,8 +78,6 @@ use Guanguans\LaravelExceptionNotify\Exception\UnknownPropertyException;
  * of the constructor, and the parent implementation should be called at the end of the constructor.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- *
- * @since 2.0.13
  */
 class BaseObject
 {

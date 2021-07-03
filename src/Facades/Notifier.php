@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Facade;
 
 class Notifier extends Facade
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function getFacadeAccessor()
     {
         return 'exception.notifier';

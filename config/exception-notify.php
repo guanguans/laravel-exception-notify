@@ -11,8 +11,16 @@
 return [
     'default' => env('EXCEPTION_NOTIFY_CHANNEL', 'dingTalk'),
 
-    // 'dontReport' => [
-    // ],
+    'debug' => false,
+
+    'collector' => [
+        'trigger_time' => true,
+        'request_url' => true,
+        'request_ip' => true,
+        'request_method' => true,
+        'request_data' => true,
+        'exception_trace' => true,
+    ],
 
     'channels' => [
         // 钉钉群机器人
@@ -29,6 +37,11 @@ return [
             'secret' => 'iigDOvnsIn6aFS1pYHHEHh',
         ],
 
+        // Server 酱
+        'serverChan' => [
+            'token' => 'SCT35149Thtf1g2Bc14QJuQ6HFpW5YGXm',
+        ],
+
         // 企业微信群机器人
         'weWork' => [
             'token' => '73a3d5a3-ceff-4da8-bcf3-ff5891778fb7',
@@ -36,6 +49,7 @@ return [
 
         // 息知
         'xiZhi' => [
+            'type' => 'single', // [single, channel]
             'token' => 'XZd60aea56567ae39a1b1920cbc42bb5bd',
         ],
     ],

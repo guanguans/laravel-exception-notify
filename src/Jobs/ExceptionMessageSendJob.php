@@ -11,12 +11,12 @@
 namespace Guanguans\LaravelExceptionNotify\Jobs;
 
 use Guanguans\Notify\Clients\Client;
-use Guanguans\Notify\Messages\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ExceptionMessageSendJob implements ShouldQueue
 {
@@ -31,17 +31,11 @@ class ExceptionMessageSendJob implements ShouldQueue
     protected $client;
 
     /**
-     * @var \Guanguans\Notify\Messages\Message
-     */
-    protected $message;
-
-    /**
      * ExceptionMessageSendJob constructor.
      */
-    public function __construct(Client $client, Message $message)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->message = $message;
     }
 
     /**
@@ -49,6 +43,8 @@ class ExceptionMessageSendJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->client->send($this->message);
+        $ret = $this->client->send();
+
+        config('exception-notify.debug') and Log::debug('Exception notify debugging.', $ret);
     }
 }

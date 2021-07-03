@@ -23,6 +23,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function register()
     {
         $this->setupConfig();
@@ -33,7 +36,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     }
 
     /**
-     * Setup the config.
+     * Set up the config.
      */
     protected function setupConfig()
     {
