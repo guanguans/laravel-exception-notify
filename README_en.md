@@ -11,55 +11,55 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/laravel-exception-notify/downloads)](//packagist.org/packages/guanguans/laravel-exception-notify)
 [![License](https://poser.pugx.org/guanguans/laravel-exception-notify/license)](//packagist.org/packages/guanguans/laravel-exception-notify)
 
-## 功能
+## Feature
 
-* 监控发送 laravel 应用异常
-* 支持多种通道(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)
-* 自定义发送的异常信息数据
+* Monitor and send laravel application exception
+* Support multiple channels(DingTalk、FeiShu、ServerChan、WeWork、XiZhi)
+* Customize the abnormal information data sent
 
-## 相关项目
+## Related Links
 
 * [https://github.com/guanguans/notify](https://github.com/guanguans/notify)
 * [https://github.com/guanguans/yii-log-target](https://github.com/guanguans/yii-log-target)
 
-## 环境要求
+## Requirement
 
 * laravel >= 5.5
 
-## 安装
+## Installation
 
 ``` bash
 $ composer require guanguans/laravel-exception-notify -vvv
 ```
 
-## 配置
+## Configuration
 
-### 发布服务
+### Publish service
 
 ``` bash
 $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
-### 申请通道 token 等信息
+### Apply for channel `token` and other information
 
-* [钉钉群机器人](https://developers.dingtalk.com/document/app/custom-robot-access)
-* [飞书群机器人](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
-* [Server 酱](https://sct.ftqq.com)
-* [企业微信群机器人](https://work.weixin.qq.com/help?doc_id=13376)
-* [息知](https://xz.qqoq.net/#/index)
+* [Dingtalk](https://developers.dingtalk.com/document/app/custom-robot-access)
+* [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
+* [ServerChan](https://sct.ftqq.com)
+* [WeWork](https://work.weixin.qq.com/help?doc_id=13376)
+* [XiZhi](https://xz.qqoq.net/#/index)
 
-### 配置文件中配置 token 等信息
+### Configure `token` and other information in the configuration file
 
 `config/exception-notify.php`
 
-## 使用
+## Usage
 
-### 修改 `app/Exceptions/Handler.php` 文件中的 `report` 方法
+### Modify the `report` method in the `app/Exceptions/Handler.php` file
 
 ``` php
 public function report(Exception $exception)
 {
-    // 添加的代码
+    // Added code
     if ($this->shouldReport($exception)) {
         app('exception.notifier')->report($exception);
         /*
@@ -73,39 +73,39 @@ public function report(Exception $exception)
 }
 ```
 
-### 通知结果
+### Notification result
 
-![钉钉群机器人](docs/dingTalk.png)
+![dingTalk](docs/dingTalk.png)
 
-![飞书群机器人](docs/feiShu.png)
+![feiShu](docs/feiShu.png)
 
-![企业微信群机器人](docs/weWork.png)
+![weWork](docs/weWork.png)
 
-![企业微信群机器人](docs/xiZhi.png)
+![xiZhi](docs/xiZhi.png)
 
-## 测试
+## Testing
 
 ``` bash
 $ composer test
 ```
 
-## 变更日志
+## Changelog
 
-请参阅 [CHANGELOG](CHANGELOG.md) 获取最近有关更改的更多信息。
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## 贡献指南
+## Contributing
 
-请参阅 [CONTRIBUTING](.github/CONTRIBUTING.md) 有关详细信息。
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-## 安全漏洞
+## Security Vulnerabilities
 
-请查看[我们的安全政策](../../security/policy)了解如何报告安全漏洞。
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
-## 贡献者
+## Credits
 
 * [guanguans](https://github.com/guanguans)
-* [所有贡献者](../../contributors)
+* [All Contributors](../../contributors)
 
-## 协议
+## License
 
-MIT 许可证（MIT）。有关更多信息，请参见[协议文件](LICENSE)。
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
