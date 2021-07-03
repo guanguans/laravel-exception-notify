@@ -151,6 +151,8 @@ md;
         }
 
         if ($this->client instanceof WeWorkClient) {
+            $content = substr($content, 0, 5100).'...';
+
             $message = new \Guanguans\Notify\Messages\WeWork\TextMessage(['content' => $content]);
         }
 

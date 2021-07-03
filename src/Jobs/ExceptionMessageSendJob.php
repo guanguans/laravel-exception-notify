@@ -45,6 +45,6 @@ class ExceptionMessageSendJob implements ShouldQueue
     {
         $response = $this->client->send();
 
-        config('exception-notify.debug') and Log::debug('Exception notify debugging.', $response);
+        config('exception-notify.debug') and Log::debug('Exception notify debugging: ', $response);
     }
 }
