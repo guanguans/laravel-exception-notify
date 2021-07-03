@@ -1,12 +1,10 @@
 # laravel-exception-notify
 
+![usage](docs/usage.png)
+
 [简体中文](README.md) | [ENGLISH](README_en.md)
 
 > Multiple channels of laravel exception notification(DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
-
-![usage](docs/usage.png)
-
-![息知](docs/xiZhi.png)
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
