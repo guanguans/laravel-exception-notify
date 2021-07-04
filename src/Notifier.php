@@ -105,10 +105,9 @@ md;
             }
 
             dispatch(new SendExceptionNotification(
+                // tap($this->client)->setMessage($this->createMessageByException($exception))
                 tap($this->client, function (Client $client) use ($exception) {
-                    $information = $this->transformInformation($exception);
-
-                    $client->setMessage($this->createMessage($information));
+                    $client->setMessage($this->createMessageByException($exception));
                 })
             ))
             ->afterResponse();
@@ -117,11 +116,14 @@ md;
         }
     }
 
-    protected function transformInformation(Throwable $exception): string
+    protected function createMessageByException(Throwable $exception): Message
     {
-        $information = $this->collectInformation($exception);
+        return $this->createMessage($this->transformToInformation($exception));
+    }
 
-        return $this->formatInformation($information);
+    protected function transformToInformation(Throwable $exception): string
+    {
+        return $this->formatInformation($this->collectInformation($exception));
     }
 
     protected function formatInformation(array $information): string
