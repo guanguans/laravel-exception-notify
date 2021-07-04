@@ -13,7 +13,9 @@ namespace Guanguans\LaravelExceptionNotify\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static report(\Exception $exception)
+ * @method static report(\Throwable $exception)
+ * @method static shouldReport(\Throwable $exception)
+ * @method static shouldntReport(\Throwable $exception)
  *
  * @see \Guanguans\LaravelExceptionNotify\Notifier
  */

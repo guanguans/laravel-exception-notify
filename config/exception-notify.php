@@ -12,12 +12,38 @@ return [
     /*
      * Default channel.
      */
-    'default' => env('EXCEPTION_NOTIFY_CHANNEL', 'dingTalk'),
+    'defaultChannel' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'dingTalk'),
+
+    /*
+     * Exception notification report switch.
+     */
+    'on' => (bool) env('EXCEPTION_NOTIFY_ON', true),
+
+    /*
+     * A list of the application environments that are reported.
+     *
+     * ```
+     * [production, local]
+     * ```
+     */
+    'env' => ['*'],
+
+    /*
+     * A list of the exception types that are not reported.
+     *
+     * ```
+     * [
+     *      HttpException::class,
+     *      HttpResponseException::class,
+     * ]
+     * ```
+     */
+    'dontReport' => [],
 
     /*
      * Debug mode.
      */
-    'debug' => false,
+    'debug' => (bool) env('EXCEPTION_NOTIFY_DEBUG', false),
 
     /*
      * Information collector.

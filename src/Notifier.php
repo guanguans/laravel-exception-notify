@@ -19,6 +19,7 @@ use Guanguans\Notify\Clients\WeWorkClient;
 use Guanguans\Notify\Clients\XiZhiClient;
 use Guanguans\Notify\Factory;
 use Guanguans\Notify\Messages\Message;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -35,7 +36,22 @@ md;
     /**
      * @var string
      */
-    public $default;
+    public $defaultChannel;
+
+    /**
+     * @var bool
+     */
+    public $on = true;
+
+    /**
+     * @var string[]
+     */
+    public $env = ['*'];
+
+    /**
+     * @var string[]
+     */
+    public $dontReport = [];
 
     /**
      * @var bool
@@ -78,12 +94,16 @@ md;
     {
         $this->clientOptions = $this->getDefaultChannelOptions();
 
-        ! $this->client instanceof Client and $this->client = Factory::{$this->default}($this->clientOptions);
+        ! $this->client instanceof Client and $this->client = Factory::{$this->defaultChannel}($this->clientOptions);
     }
 
     public function report(Throwable $exception)
     {
         try {
+            if ($this->shouldntReport($exception)) {
+                return;
+            }
+
             dispatch(new SendExceptionNotification(
                 tap($this->client, function (Client $client) use ($exception) {
                     $information = $this->transformInformation($exception);
@@ -138,7 +158,7 @@ md;
             $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
             $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
             $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
-            isset($this->channels[$this->default]['keyword']) ? sprintf('Keyword: %s', $this->channels[$this->default]['keyword']) : '',
+            isset($this->channels[$this->defaultChannel]['keyword']) ? sprintf('Keyword: %s', $this->channels[$this->defaultChannel]['keyword']) : '',
         ]);
     }
 
@@ -171,7 +191,7 @@ md;
 
     protected function getDefaultChannelOptions(): array
     {
-        $options = $this->channels[$this->default];
+        $options = $this->channels[$this->defaultChannel];
 
         unset($options['keyword']);
 
@@ -186,5 +206,25 @@ md;
     protected function transformToMarkdown(string $content): string
     {
         return sprintf(self::MARKDOWN_TEMPLATE, $content);
+    }
+
+    public function shouldReport(Throwable $e): bool
+    {
+        return ! $this->shouldntReport($e);
+    }
+
+    public function shouldntReport(Throwable $e): bool
+    {
+        if (! $this->on) {
+            return true;
+        }
+
+        if (! in_array('*', $this->env) && ! in_array(config('app.env'), $this->env)) {
+            return true;
+        }
+
+        return ! is_null(Arr::first($this->dontReport, function ($type) use ($e) {
+            return $e instanceof $type;
+        }));
     }
 }
