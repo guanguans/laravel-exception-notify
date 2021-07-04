@@ -14,3 +14,7 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 ## 1.0.2 - 2021-07-04
 
 * Add `on`、`env`、`dontReport` config options.
+
+## 1.0.3 - 2021-07-04
+
+* Optimize Notifier.
