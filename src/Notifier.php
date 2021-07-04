@@ -10,8 +10,7 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Exception;
-use Guanguans\LaravelExceptionNotify\Jobs\ExceptionMessageSendJob;
+use Guanguans\LaravelExceptionNotify\Jobs\SendExceptionNotification;
 use Guanguans\Notify\Clients\Client;
 use Guanguans\Notify\Clients\DingTalkClient;
 use Guanguans\Notify\Clients\FeiShuClient;
@@ -41,7 +40,7 @@ md;
     /**
      * @var bool
      */
-    public $debug;
+    public $debug = false;
 
     /**
      * @var bool[]
@@ -68,34 +67,41 @@ md;
     protected $client;
 
     /**
+     * @var array
+     */
+    protected $clientOptions = [];
+
+    /**
      * {@inheritdoc}
      */
     public function init()
     {
-        parent::init();
+        $this->clientOptions = $this->getDefaultChannelOptions();
 
-        $options = $this->channels[$this->default];
-
-        unset($options['keyword']);
-
-        ! $this->client instanceof Client and $this->client = Factory::{$this->default}($options);
+        ! $this->client instanceof Client and $this->client = Factory::{$this->default}($this->clientOptions);
     }
 
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         try {
-            dispatch(new ExceptionMessageSendJob(
+            dispatch(new SendExceptionNotification(
                 tap($this->client, function (Client $client) use ($exception) {
-                    $information = $this->collectInformation($exception);
+                    $information = $this->transformInformation($exception);
 
-                    $message = $this->createMessage($this->formatInformation($information));
-
-                    $client->setMessage($message);
+                    $client->setMessage($this->createMessage($information));
                 })
-            ));
+            ))
+            ->afterResponse();
         } catch (Throwable $e) {
             Log::error($e->getMessage());
         }
+    }
+
+    protected function transformInformation(Throwable $exception): string
+    {
+        $information = $this->collectInformation($exception);
+
+        return $this->formatInformation($information);
     }
 
     protected function formatInformation(array $information): string
@@ -105,12 +111,12 @@ md;
         }, ''));
     }
 
-    protected function collectInformation(Exception $exception): array
+    protected function collectInformation(Throwable $exception): array
     {
         return array_merge($this->collectExtraInformation(), $this->collectExceptionInformation($exception));
     }
 
-    protected function collectExceptionInformation(Exception $exception): array
+    protected function collectExceptionInformation(Throwable $exception): array
     {
         return array_filter([
             sprintf('Exception Class: %s', get_class($exception)),
@@ -161,6 +167,15 @@ md;
         }
 
         return $message;
+    }
+
+    protected function getDefaultChannelOptions(): array
+    {
+        $options = $this->channels[$this->default];
+
+        unset($options['keyword']);
+
+        return $options;
     }
 
     protected function getMessageTitle(): string
