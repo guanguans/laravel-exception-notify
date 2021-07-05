@@ -94,7 +94,10 @@ md;
     {
         $this->clientOptions = $this->getDefaultChannelOptions();
 
-        ! $this->client instanceof Client and $this->client = Factory::{$this->defaultChannel}($this->clientOptions);
+        // $this->client instanceof Client or $this->client = Factory::{$this->defaultChannel}($this->clientOptions);
+        $this->client = memoization(function () {
+            return Factory::{$this->defaultChannel}($this->clientOptions);
+        });
     }
 
     public function report(Throwable $exception)
