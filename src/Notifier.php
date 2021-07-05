@@ -156,7 +156,7 @@ md;
             $this->collector['app_name'] ? sprintf('Application Name: %s', config('app.name')) : '',
             $this->collector['app_env'] ? sprintf('Application Environment: %s', config('app.env')) : '',
             $this->collector['trigger_time'] ? sprintf('Trigger Time: %s', Carbon::now()->toDateTimeString()) : '',
-            $this->collector['request_method'] ? sprintf('Request method: %s', Request::method()) : '',
+            $this->collector['request_method'] ? sprintf('Request Method: %s', Request::method()) : '',
             $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
             $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
             $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
