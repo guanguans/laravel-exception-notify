@@ -18,3 +18,9 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 ## 1.0.3 - 2021-07-04
 
 * Optimize Notifier.
+
+
+## 1.0.4 - 2021-07-06
+
+* Optimize create client instance.
+* Fix request method information name.
