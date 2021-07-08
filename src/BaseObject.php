@@ -11,6 +11,7 @@
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Exception\InvalidCallException;
+use Guanguans\LaravelExceptionNotify\Exception\UnknownMethodException;
 use Guanguans\LaravelExceptionNotify\Exception\UnknownPropertyException;
 
 /**
