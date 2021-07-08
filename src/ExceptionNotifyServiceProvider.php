@@ -21,6 +21,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->setupConfig();
     }
 
     /**
@@ -28,8 +29,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->setupConfig();
-
         $this->app->singleton('exception.notifier', function ($app) {
             return new Notifier(config('exception-notify'));
         });
