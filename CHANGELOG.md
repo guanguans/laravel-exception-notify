@@ -19,8 +19,12 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 
 * Optimize Notifier.
 
-
 ## 1.0.4 - 2021-07-06
 
 * Optimize create client instance.
 * Fix request method information name.
+
+## 1.0.5 - 2021-07-08
+
+* Rename property `on` -> `enabled`.
+* Add InvalidCallException.
