@@ -28,3 +28,8 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 
 * Rename property `on` -> `enabled`.
 * Add InvalidCallException.
+
+## 1.0.6 - 2021-07-08
+
+* Optimize `ExceptionNotifyServiceProvider`.
+* Fix config `exception_stack_trace` option.
