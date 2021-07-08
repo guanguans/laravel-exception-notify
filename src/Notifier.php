@@ -146,7 +146,7 @@ md;
             sprintf('Exception Code: %s', $exception->getCode()),
             sprintf('Exception File: %s', $exception->getFile()),
             sprintf('Exception Line: %s', $exception->getLine()),
-            $this->collector['exception_trace'] ? sprintf('Exception Trace: %s', $exception->getTraceAsString()) : '',
+            $this->collector['exception_stack_trace'] ? sprintf('Exception Stack Trace: %s', $exception->getTraceAsString()) : '',
         ]);
     }
 
