@@ -10,14 +10,9 @@
 
 return [
     /*
-     * Default channel.
+     * Enable exception notification report switch.
      */
-    'defaultChannel' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'dingTalk'),
-
-    /*
-     * Exception notification report switch.
-     */
-    'on' => (bool) env('EXCEPTION_NOTIFY_ON', true),
+    'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
     /*
      * A list of the application environments that are reported.
@@ -58,6 +53,11 @@ return [
         'request_data' => true,
         'exception_stack_trace' => true,
     ],
+
+    /*
+     * Default channel.
+     */
+    'defaultChannel' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'dingTalk'),
 
     /*
      * Supported channels

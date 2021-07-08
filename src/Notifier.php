@@ -34,14 +34,9 @@ class Notifier extends BaseObject
 md;
 
     /**
-     * @var string
-     */
-    public $defaultChannel;
-
-    /**
      * @var bool
      */
-    public $on = true;
+    public $enabled = true;
 
     /**
      * @var string[]
@@ -71,6 +66,11 @@ md;
         'request_data' => true,
         'exception_trace' => true,
     ];
+
+    /**
+     * @var string
+     */
+    public $defaultChannel;
 
     /**
      * @var array[]
@@ -217,7 +217,7 @@ md;
 
     public function shouldntReport(Throwable $e): bool
     {
-        if (! $this->on) {
+        if (! $this->enabled) {
             return true;
         }
 
