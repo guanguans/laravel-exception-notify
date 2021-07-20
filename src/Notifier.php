@@ -64,7 +64,7 @@ md;
         'request_url' => true,
         'request_ip' => true,
         'request_data' => true,
-        'exception_trace' => true,
+        'exception_stack_trace' => true,
     ];
 
     /**
