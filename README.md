@@ -30,7 +30,7 @@
 
 ## 安装
 
-``` bash
+```bash
 $ composer require guanguans/laravel-exception-notify -vvv
 ```
 
@@ -38,7 +38,7 @@ $ composer require guanguans/laravel-exception-notify -vvv
 
 ### 发布服务
 
-``` bash
+```bash
 $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
@@ -54,11 +54,20 @@ $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Exce
 
 `config/exception-notify.php`
 
+`.env` 文件中配置
+
+```dotenv
+EXCEPTION_NOTIFY_DEFAULT_CHANNEL=dingTalk
+EXCEPTION_NOTIFY_CHANNEL_KEYWORD=keyword
+EXCEPTION_NOTIFY_CHANNEL_TOKEN=fec1ddaa8a833156efb77b7865d62ae13775418030d94d05da08bfca73eeb
+EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d460149d730eee51730
+```
+
 ## 使用
 
-### 修改 `app/Exceptions/Handler.php` 文件中的 `report` 方法
+### `app/Exceptions/Handler.php` 的 `report` 方法中添加
 
-``` php
+```php
 public function report(Exception $exception)
 {
     // 添加的代码
@@ -84,7 +93,7 @@ public function report(Exception $exception)
 
 ## 测试
 
-``` bash
+```bash
 $ composer test
 ```
 

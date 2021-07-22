@@ -28,7 +28,7 @@
 
 ## Installation
 
-``` bash
+```bash
 $ composer require guanguans/laravel-exception-notify -vvv
 ```
 
@@ -36,7 +36,7 @@ $ composer require guanguans/laravel-exception-notify -vvv
 
 ### Publish service
 
-``` bash
+```bash
 $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
@@ -52,11 +52,20 @@ $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Exce
 
 `config/exception-notify.php`
 
+Configure in the `.env` file
+
+```dotenv
+EXCEPTION_NOTIFY_DEFAULT_CHANNEL=dingTalk
+EXCEPTION_NOTIFY_CHANNEL_KEYWORD=keyword
+EXCEPTION_NOTIFY_CHANNEL_TOKEN=fec1ddaa8a833156efb77b7865d62ae13775418030d94d05da08bfca73eeb
+EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d460149d730eee51730
+```
+
 ## Usage
 
 ### Modify the `report` method in the `app/Exceptions/Handler.php` file
 
-``` php
+```php
 public function report(Exception $exception)
 {
     // Added code
@@ -82,7 +91,7 @@ public function report(Exception $exception)
 
 ## Testing
 
-``` bash
+```bash
 $ composer test
 ```
 
