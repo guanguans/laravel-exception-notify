@@ -33,3 +33,9 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 
 * Optimize `ExceptionNotifyServiceProvider`.
 * Fix config `exception_stack_trace` option.
+
+## 1.0.7 - 2021-07-22
+
+* Fix Dispatch not exists method `afterResponse` error.
+* Rename `exception_trace` -> `exception_stack_trace`.
+* Update php-cs-fixer config file.
