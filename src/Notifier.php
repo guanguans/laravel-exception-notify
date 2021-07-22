@@ -104,13 +104,14 @@ md;
                 return;
             }
 
-            dispatch(new SendExceptionNotification(
+            $dispatch = dispatch(new SendExceptionNotification(
                 // tap($this->client)->setMessage($this->createMessageByException($exception))
                 tap($this->client, function (Client $client) use ($exception) {
                     $client->setMessage($this->createMessageByException($exception));
                 })
-            ))
-            ->afterResponse();
+            ));
+
+            method_exists($dispatch, 'afterResponse') && $dispatch->afterResponse();
         } catch (Throwable $e) {
             Log::error($e->getMessage());
         }
