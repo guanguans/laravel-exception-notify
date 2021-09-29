@@ -2,7 +2,7 @@
 
 ![usage](docs/usage.png)
 
-[简体中文](README.md) | [ENGLISH](README_en.md)
+[简体中文](README.md) | [ENGLISH](README-EN.md)
 
 > Multiple channels of laravel exception notification(DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
 
@@ -36,10 +36,20 @@ $ composer require guanguans/laravel-exception-notify -vvv
 
 ## 配置
 
-### 发布服务
+### 注册服务
+
+#### laravel
 
 ```bash
 $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
+```
+
+#### lumen
+
+将以下代码段添加到 `bootstrap/app.php` 文件中的 `Register Service Providers` 部分下：
+
+```php
+$app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### 申请通道 token 等信息
