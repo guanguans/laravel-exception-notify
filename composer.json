@@ -63,7 +63,7 @@
         "overtrue/phplint": "^2.4 || ^3.0",
         "phpbench/phpbench": "^1.0",
         "phpunit/phpunit": "^7.0 || ^8.0",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.0"
     },
     "autoload": {
         "psr-4": {
