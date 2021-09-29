@@ -60,7 +60,7 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "mockery/mockery": "^1.2",
         "nyholm/nsa": "^1.2",
-        "overtrue/phplint": "^2.3",
+        "overtrue/phplint": "^2.3 || ^3.0",
         "phpbench/phpbench": "^1.0",
         "phpunit/phpunit": "^7.0 || ^8.0",
         "vimeo/psalm": "^3.11"
