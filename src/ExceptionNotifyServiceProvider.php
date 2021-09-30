@@ -10,7 +10,9 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Lumen\Application as LumenApplication;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Adapt lumen
+        $this->app instanceof LumenApplication and $this->boot();
+
         $this->app->singleton('exception.notifier', function ($app) {
             return new Notifier(config('exception-notify'));
         });
@@ -39,10 +44,12 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     protected function setupConfig()
     {
-        $source = __DIR__.'/../config/exception-notify.php';
+        $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
 
-        if ($this->app->runningInConsole()) {
-            $this->publishes([$source => config_path('exception-notify.php')], 'exception-notify');
+        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+            $this->publishes([$source => config_path('exception-notify')], 'laravel-exception-notify');
+        } elseif ($this->app instanceof LumenApplication) {
+            $this->app->configure('exception-notify');
         }
 
         $this->mergeConfigFrom($source, 'exception-notify');
