@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.1 - 2021-09-30
+
+* Fix that the configuration is not loaded in the lumen environment.
+
 ## 1.1.0 - 2021-09-29
 
 * Adapt lumen.
