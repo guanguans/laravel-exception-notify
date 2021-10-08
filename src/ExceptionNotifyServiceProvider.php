@@ -32,7 +32,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     public function register()
     {
         // Adapt lumen
-        $this->app instanceof LumenApplication and $this->boot();
+        $this->setupConfig();
 
         $this->app->singleton('exception.notifier', function ($app) {
             return new Notifier(config('exception-notify'));
