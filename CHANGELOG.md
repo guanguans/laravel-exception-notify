@@ -2,6 +2,11 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.3 - 2021-10-09
+
+* Fix the queue is still executed synchronously in the case of asynchronous configuration of the queue(#8).
+* Fix markdown template.
+
 ## 1.1.2 - 2021-10-08
 
 * Optimize service registration.
