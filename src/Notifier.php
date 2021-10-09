@@ -111,7 +111,7 @@ md;
                 })
             ));
 
-            method_exists($dispatch, 'afterResponse') && $dispatch->afterResponse();
+            config('queue.default') === 'sync' and method_exists($dispatch, 'afterResponse') and $dispatch->afterResponse();
         } catch (Throwable $e) {
             Log::error($e->getMessage());
         }
