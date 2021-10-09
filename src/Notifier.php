@@ -111,7 +111,7 @@ md;
                 })
             ));
 
-            method_exists($dispatch, 'afterResponse') && $dispatch->afterResponse();
+            // method_exists($dispatch, 'afterResponse') && $dispatch->afterResponse();
         } catch (Throwable $e) {
             Log::error($e->getMessage());
         }
