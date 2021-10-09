@@ -28,7 +28,7 @@ use Throwable;
 class Notifier extends BaseObject
 {
     protected const MARKDOWN_TEMPLATE = <<<'md'
-``` text
+```plain text
 %s
 ```
 md;
