@@ -34,9 +34,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         // Adapt lumen
         $this->setupConfig();
 
-        $this->app->singleton('exception.notifier', function ($app) {
+        $this->app->singleton(Notifier::class, function ($app) {
             return new Notifier(config('exception-notify'));
         });
+
+        $this->app->alias(Notifier::class, 'exception.notifier');
     }
 
     /**
