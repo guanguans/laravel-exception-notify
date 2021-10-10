@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.4 - 2021-10-10
+
+* `Notifier::class` alias `exception.notifier`.
+
 ## 1.1.3 - 2021-10-09
 
 * Fix the queue is still executed synchronously in the case of asynchronous configuration of the queue(#8).
