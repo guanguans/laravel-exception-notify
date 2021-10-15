@@ -49,7 +49,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
-            $this->publishes([$source => config_path('exception-notify')], 'laravel-exception-notify');
+            $this->publishes([$source => config_path('exception-notify.php')], 'laravel-exception-notify');
         } elseif ($this->app instanceof LumenApplication) {
             $this->app->configure('exception-notify');
         }
