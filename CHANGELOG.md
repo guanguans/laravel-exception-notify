@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.5 - 2021-10-16
+
+* Fix the error of the push configuration file path.
+
 ## 1.1.4 - 2021-10-10
 
 * `Notifier::class` alias `exception.notifier`.
