@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.6 - 2021-11-03
+
+* Add collect request header info.
+
 ## 1.1.5 - 2021-10-16
 
 * Fix the error of the push configuration file path.
