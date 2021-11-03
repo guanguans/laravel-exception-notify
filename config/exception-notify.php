@@ -50,6 +50,7 @@ return [
         'request_method' => true,
         'request_url' => true,
         'request_ip' => true,
+        'request_header' => true,
         'request_data' => true,
         'exception_stack_trace' => true,
     ],

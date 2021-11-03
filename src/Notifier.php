@@ -63,6 +63,7 @@ md;
         'request_method' => true,
         'request_url' => true,
         'request_ip' => true,
+        'request_header' => true,
         'request_data' => true,
         'exception_stack_trace' => true,
     ];
@@ -160,6 +161,7 @@ md;
             $this->collector['request_method'] ? sprintf('Request Method: %s', Request::method()) : '',
             $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
             $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
+            $this->collector['request_header'] ? sprintf('Request Header: %s', var_export(Request::header(), true)) : '',
             $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
             isset($this->channels[$this->defaultChannel]['keyword']) ? sprintf('Keyword: %s', $this->channels[$this->defaultChannel]['keyword']) : '',
         ]);
