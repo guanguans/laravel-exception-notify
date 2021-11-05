@@ -56,7 +56,7 @@ md;
     /**
      * @var bool[]
      */
-    public $collector = [
+    protected $_collector = [
         'app_name' => true,
         'app_env' => true,
         'trigger_time' => true,
@@ -106,7 +106,7 @@ md;
             }
 
             $dispatch = dispatch(new SendExceptionNotification(
-                // tap($this->client)->setMessage($this->createMessageByException($exception))
+                // tap($this->client)->setMessage($this->createMessageByException($exception));
                 tap($this->client, function (Client $client) use ($exception) {
                     $client->setMessage($this->createMessageByException($exception));
                 })
@@ -120,51 +120,60 @@ md;
 
     protected function createMessageByException(Throwable $exception): Message
     {
-        return $this->createMessage($this->transformToInformation($exception));
-    }
+        $information = array_merge($this->collectExtraInformation(), $this->collectExceptionInformation($exception));
 
-    protected function transformToInformation(Throwable $exception): string
-    {
-        return $this->formatInformation($this->collectInformation($exception));
+        $formatInformation = $this->formatInformation($information);
+
+        return $this->createMessage($formatInformation);
     }
 
     protected function formatInformation(array $information): string
     {
-        return trim(array_reduce($information, function ($carry, $item) {
-            return $carry.$item.PHP_EOL;
-        }, ''));
-    }
+        $information = array_filter($information);
 
-    protected function collectInformation(Throwable $exception): array
-    {
-        return array_merge($this->collectExtraInformation(), $this->collectExceptionInformation($exception));
+        $information = array_reduces($information, function ($carry, $val, $name) {
+            $names = explode('_', $name);
+            $name = array_reduce($names, function ($carry, $name) {
+                return $carry.' '.ucfirst($name);
+            }, '');
+
+            return $carry.sprintf("%s: %s\n", trim($name), $val);
+        }, '');
+
+        return trim($information);
     }
 
     protected function collectExceptionInformation(Throwable $exception): array
     {
-        return array_filter([
-            sprintf('Exception Class: %s', get_class($exception)),
-            sprintf('Exception Message: %s', $exception->getMessage()),
-            sprintf('Exception Code: %s', $exception->getCode()),
-            sprintf('Exception File: %s', $exception->getFile()),
-            sprintf('Exception Line: %s', $exception->getLine()),
-            $this->collector['exception_stack_trace'] ? sprintf('Exception Stack Trace: %s', $exception->getTraceAsString()) : '',
-        ]);
+        return [
+            'exception_class' => get_class($exception),
+            'exception_message' => $exception->getMessage(),
+            'exception_code' => $exception->getCode(),
+            'exception_file' => $exception->getFile(),
+            'exception_line' => $exception->getLine(),
+            'exception_stack_trace' => $exception->getTraceAsString(),
+        ];
     }
 
     protected function collectExtraInformation(): array
     {
-        return array_filter([
-            $this->collector['app_name'] ? sprintf('Application Name: %s', config('app.name')) : '',
-            $this->collector['app_env'] ? sprintf('Application Environment: %s', config('app.env')) : '',
-            $this->collector['trigger_time'] ? sprintf('Trigger Time: %s', Carbon::now()->toDateTimeString()) : '',
-            $this->collector['request_method'] ? sprintf('Request Method: %s', Request::method()) : '',
-            $this->collector['request_url'] ? sprintf('Request Url: %s', Request::fullUrl()) : '',
-            $this->collector['request_ip'] ? sprintf('Request IP: %s', Request::ip()) : '',
-            $this->collector['request_header'] ? sprintf('Request Header: %s', var_export(Request::header(), true)) : '',
-            $this->collector['request_data'] ? sprintf('Request Data: %s', var_export(Request::all(), true)) : '',
-            isset($this->channels[$this->defaultChannel]['keyword']) ? sprintf('Keyword: %s', $this->channels[$this->defaultChannel]['keyword']) : '',
-        ]);
+        $headers = collect(Request::header())
+            ->map(function (array $header) {
+                return $header[0];
+            })
+            ->toArray();
+
+        return [
+            'app_name' => $this->collector['app_name'] ? config('app.name') : '',
+            'app_env' => $this->collector['app_env'] ? config('app.env') : '',
+            'trigger_time' => $this->collector['trigger_time'] ? Carbon::now()->toDateTimeString() : '',
+            'request_method' => $this->collector['request_method'] ? Request::method() : '',
+            'request_url' => $this->collector['request_url'] ? Request::fullUrl() : '',
+            'request_ip' => $this->collector['request_ip'] ? Request::ip() : '',
+            'request_header' => $this->collector['request_header'] ? var_export($headers, true) : '',
+            'request_data' => $this->collector['request_data'] ? var_export(Request::all(), true) : '',
+            'keyword' => $this->channels[$this->defaultChannel]['keyword'] ?? '',
+        ];
     }
 
     protected function createMessage(string $content): Message
@@ -231,5 +240,21 @@ md;
         return ! is_null(Arr::first($this->dontReport, function ($type) use ($e) {
             return $e instanceof $type;
         }));
+    }
+
+    /**
+     * @param bool[] $collector
+     */
+    public function setCollector(array $collector): void
+    {
+        $this->_collector = array_merge($this->collector, $collector);
+    }
+
+    /**
+     * @return bool[]
+     */
+    public function getCollector(): array
+    {
+        return $this->_collector;
     }
 }

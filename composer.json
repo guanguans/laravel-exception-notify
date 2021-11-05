@@ -69,7 +69,10 @@
     "autoload": {
         "psr-4": {
             "Guanguans\\LaravelExceptionNotify\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
