@@ -44,14 +44,32 @@ return [
      * Information collector.
      */
     'collector' => [
-        'app_name' => true,
-        'app_env' => true,
         'trigger_time' => true,
-        'request_method' => true,
+        'usage_memory' => true,
+
+        'app_name' => true,
+        'app_environment' => true,
+        'app_version' => true,
+        'app_locale' => true,
+
+        'php_version' => true,
+        'php_interface' => true,
+
+        'request_ip_address' => true,
         'request_url' => true,
-        'request_ip' => true,
-        'request_header' => true,
-        'request_data' => true,
+        'request_method' => true,
+        'request_controller_action' => true,
+        'request_duration' => true,
+        'request_middleware' => false,
+        'request_all' => false,
+        'request_input' => true,
+        'request_header' => false,
+        'request_query' => false,
+        'request_post' => false,
+        'request_server' => false,
+        'request_cookie' => false,
+        'request_session' => false,
+
         'exception_stack_trace' => true,
     ],
 
