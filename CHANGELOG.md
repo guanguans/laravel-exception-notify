@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.8 - 2021-11-06
+
+* Add some collectors.
+
 ## 1.1.7 - 2021-11-05
 
 * Optimize collectors.
