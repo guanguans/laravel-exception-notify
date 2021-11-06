@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.10 - 2021-11-07
+
+* Add global function `notifier_report`.
+
 ## 1.1.9 - 2021-11-07
 
 * Add Custom information collector.
