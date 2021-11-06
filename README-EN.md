@@ -97,7 +97,7 @@ public function report(Exception $exception)
 
 ![weWork](docs/weWork.png)
 
-![xiZhi](docs/xiZhi.png)
+![xiZhi](docs/xiZhi.jpg)
 
 ## Testing
 

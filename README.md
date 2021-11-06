@@ -99,7 +99,7 @@ public function report(Exception $exception)
 
 ![企业微信群机器人](docs/weWork.png)
 
-![息知](docs/xiZhi.png)
+![息知](docs/xiZhi.jpg)
 
 ## 测试
 
