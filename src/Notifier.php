@@ -24,6 +24,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use Throwable;
 
 class Notifier extends BaseObject
@@ -88,6 +89,11 @@ md;
     ];
 
     /**
+     * @var array
+     */
+    public $customCollector = [];
+
+    /**
      * @var string
      */
     public $defaultChannel;
@@ -126,9 +132,14 @@ md;
 
             $dispatch = dispatch(
                 new SendExceptionNotification(
-                    // tap($this->client)->setMessage($this->createMessageByException($exception));
                     tap($this->client, function (Client $client) use ($exception) {
-                        $client->setMessage($this->createMessageByException($exception));
+                        $formatInformation = $this->formatInformation(
+                            $this->collectInformation($exception)
+                        );
+                        // dd($formatInformation);
+                        $client->setMessage(
+                            $this->createClientMessage($client, $formatInformation)
+                        );
                     })
                 )
             );
@@ -139,23 +150,16 @@ md;
         }
     }
 
-    protected function createMessageByException(Throwable $exception): Message
-    {
-        $formatInformation = $this->formatInformation($this->collectInformation($exception));
-
-        return $this->createMessage($formatInformation);
-    }
-
     protected function formatInformation(array $information): string
     {
-        $information = array_filter($information);
-
-        // ksort($information);
+        $information = array_filter($information, function ($info) {
+            return filled($info);
+        });
 
         $information = array_reduces($information, function ($carry, $val, $name) {
             is_scalar($val) or $val = var_export($val, true);
 
-            return $carry.sprintf("%s: %s\n", $name, $val);
+            return $carry.sprintf("%s: %s\n", str_replace('_', ' ', Str::title($name)), $val);
         }, '');
 
         return trim($information);
@@ -163,34 +167,17 @@ md;
 
     protected function collectInformation(Throwable $exception): array
     {
-        $trace = collect($exception->getTrace())
-            ->filter(function ($trace) {
-                return isset($trace['file']) and isset($trace['line']);
-            })
-            ->map(function ($trace) {
-                return $trace['file']."({$trace['line']})";
-            })
-            ->toArray();
+        $collector = [
+            'Trigger Time' => $this->_collector['trigger_time'] ? Carbon::now()->toDateTimeString() : null,
+            'Usage Memory' => $this->_collector['usage_memory'] ? round(memory_get_peak_usage(true) / 1024 / 1024, 1).'M' : null,
 
-        $startTime = defined('LARAVEL_START') ? LARAVEL_START : Request::server('REQUEST_TIME_FLOAT');
+            'App Name' => $this->_collector['app_name'] ? config('app.name') : null,
+            'App Version' => $this->_collector['app_version'] ? App::version() : null,
+            'App Environment' => $this->_collector['app_environment'] ? App::environment() : null,
+            'App Locale' => $this->_collector['app_locale'] ? App::getLocale() : null,
 
-        $headers = collect(Request::header())
-            ->map(function (array $header) {
-                return $header[0];
-            })
-            ->toArray();
-
-        return [
-            'Trigger Time' => $this->collector['trigger_time'] ? Carbon::now()->toDateTimeString() : '',
-            'Usage Memory' => $this->collector['usage_memory'] ? round(memory_get_peak_usage(true) / 1024 / 1024, 1).'M' : '',
-
-            'App Name' => $this->collector['app_name'] ? config('app.name') : '',
-            'App Version' => $this->collector['app_version'] ? App::version() : '',
-            'App Environment' => $this->collector['app_environment'] ? App::environment() : '',
-            'App Locale' => $this->collector['app_locale'] ? App::getLocale() : '',
-
-            'PHP Version' => $this->collector['php_version'] ? implode('.', [PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION]) : '',
-            'PHP Interface' => $this->collector['php_interface'] ? PHP_SAPI : '',
+            'PHP Version' => $this->_collector['php_version'] ? implode('.', [PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION]) : null,
+            'PHP Interface' => $this->_collector['php_interface'] ? PHP_SAPI : null,
 
             'Exception Class' => get_class($exception),
             'Exception Message' => $exception->getMessage(),
@@ -198,48 +185,91 @@ md;
             'Exception File' => $exception->getFile(),
             'Exception Line' => $exception->getLine(),
             'Exception Line Preview' => ExceptionContext::getContextAsString($exception),
-            'Exception Stack Trace' => $this->collector['exception_stack_trace'] ? $trace : '',
+            'Exception Stack Trace' => with($exception->getTrace(), function ($trace) {
+                if (! $this->_collector['exception_stack_trace']) {
+                    return null;
+                }
 
-            'Request Ip Address' => $this->collector['request_ip_address'] ? Request::ip() : '',
-            'Request Url' => $this->collector['request_url'] ? Request::fullUrl() : '',
-            'Request Method' => $this->collector['request_method'] ? Request::method() : '',
-            'Request Controller Action' => $this->collector['request_controller_action'] ? optional(Request::route())->getActionName() : '',
-            'Request Duration' => $this->collector['request_duration'] ? ($startTime ? floor((microtime(true) - $startTime) * 1000).'ms' : null) : '',
-            'Request Middleware' => $this->collector['request_middleware'] ? array_values(optional(Request::route())->gatherMiddleware() ?? []) : '',
-            'Request All' => $this->collector['request_all'] ? Request::all() : '',
-            'Request Input' => $this->collector['request_input'] ? Request::input() : '',
-            'Request Header' => $this->collector['request_header'] ? $headers : '',
-            'Request Query' => $this->collector['request_query'] ? Request::query() : '',
-            'Request Post' => $this->collector['request_post'] ? Request::post() : '',
-            'Request Server' => $this->collector['request_server'] ? Request::server() : '',
-            'Request Cookie' => $this->collector['request_cookie'] ? Request::cookie() : '',
-            'Request Session' => $this->collector['request_session'] ? optional(Request::getSession())->all() : '',
+                return collect($trace)
+                    ->filter(function ($trace) {
+                        return isset($trace['file']) and isset($trace['line']);
+                    })
+                    ->map(function ($trace) {
+                        return $trace['file']."({$trace['line']})";
+                    })
+                    ->values()
+                    ->toArray();
+            }),
 
-            'Keyword' => $this->channels[$this->defaultChannel]['keyword'] ?? '',
+            'Request Ip Address' => $this->_collector['request_ip_address'] ? Request::ip() : null,
+            'Request Url' => $this->_collector['request_url'] ? Request::fullUrl() : null,
+            'Request Method' => $this->_collector['request_method'] ? Request::method() : null,
+            'Request Controller Action' => $this->_collector['request_controller_action'] ? optional(Request::route())->getActionName() : null,
+            'Request Duration' => value(function () {
+                $startTime = defined('LARAVEL_START') ? LARAVEL_START : Request::server('REQUEST_TIME_FLOAT');
+                if (! $this->_collector['request_duration'] || ! $startTime) {
+                    return null;
+                }
+
+                return floor((microtime(true) - $startTime) * 1000).'ms';
+            }),
+            'Request Middleware' => $this->_collector['request_middleware'] ? array_values(optional(Request::route())->gatherMiddleware() ?? []) : null,
+            'Request All' => $this->_collector['request_all'] ? Request::all() : null,
+            'Request Input' => $this->_collector['request_input'] ? Request::input() : null,
+            'Request Header' => value(function () {
+                if (! $this->_collector['request_header']) {
+                    return null;
+                }
+
+                return collect(Request::header())
+                    ->map(function ($header) {
+                        return $header[0];
+                    })
+                    ->toArray();
+            }),
+            'Request Query' => $this->_collector['request_query'] ? Request::query() : null,
+            'Request Post' => $this->_collector['request_post'] ? Request::post() : null,
+            'Request Server' => $this->_collector['request_server'] ? Request::server() : null,
+            'Request Cookie' => $this->_collector['request_cookie'] ? Request::cookie() : null,
+            'Request Session' => $this->_collector['request_session'] ? optional(Request::getSession())->all() : null,
+
+            'Keyword' => $this->channels[$this->defaultChannel]['keyword'] ?? null,
         ];
+
+        $customCollector = collect($this->customCollector)
+            ->map(function ($collector) {
+                if (! is_callable($collector)) {
+                    return $collector;
+                }
+
+                return App::call($collector);
+            })
+            ->toArray();
+
+        return array_merge($collector, $customCollector);
     }
 
-    protected function createMessage(string $content): Message
+    protected function createClientMessage(Client $client, string $content): Message
     {
-        if ($this->client instanceof DingTalkClient) {
+        if ($client instanceof DingTalkClient) {
             $message = new \Guanguans\Notify\Messages\DingTalk\TextMessage(['content' => $content]);
         }
 
-        if ($this->client instanceof FeiShuClient) {
+        if ($client instanceof FeiShuClient) {
             $message = new \Guanguans\Notify\Messages\FeiShu\TextMessage($content);
         }
 
-        if ($this->client instanceof ServerChanClient) {
+        if ($client instanceof ServerChanClient) {
             $message = new \Guanguans\Notify\Messages\ServerChanMessage($this->getMessageTitle(), $content);
         }
 
-        if ($this->client instanceof WeWorkClient) {
+        if ($client instanceof WeWorkClient) {
             $content = substr($content, 0, 5100).'...';
 
             $message = new \Guanguans\Notify\Messages\WeWork\TextMessage(['content' => $content]);
         }
 
-        if ($this->client instanceof XiZhiClient) {
+        if ($client instanceof XiZhiClient) {
             $message = new \Guanguans\Notify\Messages\XiZhiMessage(
                 $this->getMessageTitle(),
                 transform($content, function ($content) {
@@ -292,7 +322,7 @@ md;
      */
     public function setCollector(array $collector): void
     {
-        $this->_collector = array_merge($this->collector, $collector);
+        $this->_collector = array_merge($this->_collector, $collector);
     }
 
     /**

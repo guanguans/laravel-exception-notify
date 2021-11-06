@@ -74,6 +74,16 @@ return [
     ],
 
     /*
+     * Custom information collector.
+     */
+    'customCollector' => [
+        // 'custom_name' => function () {
+        //     // Process some information you want
+        //     return 'custom value';
+        // },
+    ],
+
+    /*
      * Default channel.
      */
     'defaultChannel' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'dingTalk'),
