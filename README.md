@@ -93,13 +93,13 @@ public function report(Exception $exception)
 
 ### 通知结果
 
+![息知](docs/xiZhi.png)
+
 ![钉钉群机器人](docs/dingTalk.png)
 
 ![飞书群机器人](docs/feiShu.png)
 
 ![企业微信群机器人](docs/weWork.png)
-
-![息知](docs/xiZhi.jpg)
 
 ## 测试
 

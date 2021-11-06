@@ -91,13 +91,13 @@ public function report(Exception $exception)
 
 ### Notification result
 
+![xiZhi](docs/xiZhi.png)
+
 ![dingTalk](docs/dingTalk.png)
 
 ![feiShu](docs/feiShu.png)
 
 ![weWork](docs/weWork.png)
-
-![xiZhi](docs/xiZhi.jpg)
 
 ## Testing
 
