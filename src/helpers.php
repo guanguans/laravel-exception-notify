@@ -42,7 +42,7 @@ if (! function_exists('notifier_report')) {
     }
 }
 
-if (! function_exists('notifier_report')) {
+if (! function_exists('is_callable_with_at_sign')) {
     /**
      * Determine if the given string is in Class@method syntax.
      *
