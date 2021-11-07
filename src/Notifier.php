@@ -238,7 +238,7 @@ md;
 
         $customCollector = collect($this->customCollector)
             ->map(function ($collector) {
-                if (! is_callable($collector)) {
+                if (! is_callable($collector) && ! is_callable_with_at_sign($collector)) {
                     return $collector;
                 }
 

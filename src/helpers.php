@@ -41,3 +41,17 @@ if (! function_exists('notifier_report')) {
         Notifier::report($exception);
     }
 }
+
+if (! function_exists('notifier_report')) {
+    /**
+     * Determine if the given string is in Class@method syntax.
+     *
+     * @param mixed $callback
+     *
+     * @return bool
+     */
+    function is_callable_with_at_sign($callback)
+    {
+        return is_string($callback) && false !== strpos($callback, '@');
+    }
+}
