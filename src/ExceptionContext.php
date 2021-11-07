@@ -25,15 +25,25 @@ class ExceptionContext
      */
     public static function getContextAsString(Throwable $exception)
     {
-        $context = ExceptionContext::get($exception);
+        $context = static::get($exception);
 
-        $lastLineLen = strlen(array_key_last($context));
+        $exceptionLine = $exception->getLine();
 
-        $contextString = PHP_EOL.array_reduces($context, function ($carry, $code, $line) use ($lastLineLen) {
-            $line = str_pad($line, $lastLineLen, ' ', STR_PAD_LEFT);
+        $markedExceptionLine = sprintf('> %s', $exceptionLine);
 
-            return "$carry    $line    $code".PHP_EOL;
-        }, '');
+        $maxLineLen = max(strlen(array_key_last($context)), strlen($markedExceptionLine));
+
+        $contextString = PHP_EOL.array_reduces(
+                $context,
+                function ($carry, $code, $line) use ($maxLineLen, $exceptionLine, $markedExceptionLine) {
+                    $line === $exceptionLine and $line = $markedExceptionLine;
+
+                    $line = str_pad($line, $maxLineLen, ' ', STR_PAD_LEFT);
+
+                    return "$carry    $line    $code".PHP_EOL;
+                },
+                ''
+            );
 
         return "($contextString)";
     }
