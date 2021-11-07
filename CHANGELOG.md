@@ -2,6 +2,11 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.11 - 2021-11-07
+
+* Add handle with at sign call string.
+* Add mark exception line number.
+
 ## 1.1.10 - 2021-11-07
 
 * Add global function `notifier_report`.
