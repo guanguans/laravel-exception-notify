@@ -29,9 +29,9 @@ class ExceptionContext
 
         $exceptionLine = $exception->getLine();
 
-        $markedExceptionLine = sprintf('> %s', $exceptionLine);
+        $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
 
-        $maxLineLen = max(strlen(array_key_last($context)), strlen($markedExceptionLine));
+        $maxLineLen = max(mb_strlen(array_key_last($context)), mb_strlen($markedExceptionLine));
 
         $contextString = PHP_EOL.array_reduces(
                 $context,
@@ -40,7 +40,7 @@ class ExceptionContext
 
                     $line = str_pad($line, $maxLineLen, ' ', STR_PAD_LEFT);
 
-                    return "$carry    $line    $code".PHP_EOL;
+                    return "$carry  $line    $code".PHP_EOL;
                 },
                 ''
             );
