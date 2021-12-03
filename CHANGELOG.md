@@ -2,6 +2,11 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.1.12 - 2021-12-03
+
+* Optimize exception context string.
+* Update config example for the custom collector.
+
 ## 1.1.11 - 2021-11-07
 
 * Add handle with at sign call string.
