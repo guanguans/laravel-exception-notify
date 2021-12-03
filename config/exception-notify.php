@@ -77,10 +77,7 @@ return [
      * Custom information collector.
      */
     'customCollector' => [
-        // 'custom_name' => function () {
-        //     // Process some information you want
-        //     return 'custom value';
-        // },
+        // 'custom_name' => '\App\Helpers\YourClass@yourMethod', // callable
     ],
 
     /*
