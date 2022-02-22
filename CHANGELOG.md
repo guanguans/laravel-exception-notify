@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## 1.2.0 - 2022-02-14
+
+* Support laravel9.
+
 ## 1.1.12 - 2021-12-03
 
 * Optimize exception context string.
