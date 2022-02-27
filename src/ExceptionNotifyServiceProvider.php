@@ -10,7 +10,9 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 
@@ -24,6 +26,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setupConfig();
+        Collection::mixin($this->app->make(CollectionMacro::class));
     }
 
     /**

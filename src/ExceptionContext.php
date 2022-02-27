@@ -10,6 +10,7 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -25,27 +26,20 @@ class ExceptionContext
      */
     public static function getContextAsString(Throwable $exception)
     {
-        $context = static::get($exception);
+        $contextStr = collect(static::get($exception))
+            ->tap(function (Collection $context) use ($exception, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
+                $exceptionLine = $exception->getLine();
+                $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
+                $maxLineLen = max(mb_strlen(array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
+            })
+            ->reduces(function ($carry, $code, $line) use ($maxLineLen, $markedExceptionLine, $exceptionLine) {
+                $line === $exceptionLine and $line = $markedExceptionLine;
+                $line = sprintf("%{$maxLineLen}s", $line);
 
-        $exceptionLine = $exception->getLine();
+                return "$carry  $line    $code".PHP_EOL;
+            }, '');
 
-        $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
-
-        $maxLineLen = max(mb_strlen(array_key_last($context)), mb_strlen($markedExceptionLine));
-
-        $contextString = PHP_EOL.array_reduces(
-                $context,
-                function ($carry, $code, $line) use ($maxLineLen, $exceptionLine, $markedExceptionLine) {
-                    $line === $exceptionLine and $line = $markedExceptionLine;
-
-                    $line = str_pad($line, $maxLineLen, ' ', STR_PAD_LEFT);
-
-                    return "$carry  $line    $code".PHP_EOL;
-                },
-                ''
-            );
-
-        return "($contextString)";
+        return sprintf('(%s)', PHP_EOL.$contextStr);
     }
 
     /**
@@ -83,6 +77,7 @@ class ExceptionContext
             ->slice($exception->getLine() - 10, 20)
             ->mapWithKeys(function ($value, $key) {
                 return [$key + 1 => $value];
-            })->all();
+            })
+            ->all();
     }
 }
