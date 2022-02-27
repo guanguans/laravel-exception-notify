@@ -8,7 +8,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify;
+namespace Guanguans\LaravelExceptionNotify\Support;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -20,15 +20,15 @@ use Throwable;
 class ExceptionContext
 {
     /**
-     * Get the exception code context for the given exception.
+     * Get the formatted exception code context for the given exception.
      *
      * @return string
      */
-    public static function getContextAsString(Throwable $exception)
+    public static function getFormattedContext(Throwable $e, $wrapSkeleton = "[\n%s  ]")
     {
-        $contextStr = collect(static::get($exception))
-            ->tap(function (Collection $context) use ($exception, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
-                $exceptionLine = $exception->getLine();
+        $contextStr = collect(static::get($e))
+            ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
+                $exceptionLine = $e->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
                 $maxLineLen = max(mb_strlen(array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
             })
@@ -36,10 +36,10 @@ class ExceptionContext
                 $line === $exceptionLine and $line = $markedExceptionLine;
                 $line = sprintf("%{$maxLineLen}s", $line);
 
-                return "$carry  $line    $code".PHP_EOL;
+                return "$carry    $line    $code".PHP_EOL;
             }, '');
 
-        return sprintf('(%s)', PHP_EOL.$contextStr);
+        return sprintf($wrapSkeleton, $contextStr);
     }
 
     /**
@@ -47,9 +47,9 @@ class ExceptionContext
      *
      * @return array
      */
-    public static function get(Throwable $exception)
+    public static function get(Throwable $e)
     {
-        return static::getEvalContext($exception) ?? static::getFileContext($exception);
+        return static::getEvalContext($e) ?? static::getFileContext($e);
     }
 
     /**
@@ -57,12 +57,10 @@ class ExceptionContext
      *
      * @return array|null
      */
-    protected static function getEvalContext(Throwable $exception)
+    protected static function getEvalContext(Throwable $e)
     {
-        if (Str::contains($exception->getFile(), "eval()'d code")) {
-            return [
-                $exception->getLine() => "eval()'d code",
-            ];
+        if (Str::contains($e->getFile(), "eval()'d code")) {
+            return [$e->getLine() => "eval()'d code"];
         }
     }
 
@@ -71,10 +69,10 @@ class ExceptionContext
      *
      * @return array
      */
-    protected static function getFileContext(Throwable $exception)
+    protected static function getFileContext(Throwable $e)
     {
-        return collect(explode("\n", file_get_contents($exception->getFile())))
-            ->slice($exception->getLine() - 10, 20)
+        return collect(explode("\n", file_get_contents($e->getFile())))
+            ->slice($e->getLine() - 10, 20)
             ->mapWithKeys(function ($value, $key) {
                 return [$key + 1 => $value];
             })

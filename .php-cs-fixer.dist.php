@@ -10,12 +10,15 @@ EOF;
 
 $finder = PhpCsFixer\Finder::create()
     ->in([
-        __DIR__,
+        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
     ->exclude([
-        __DIR__.'/vendor',
+        '.github',
+        'doc',
+        'docs',
+        'vendor',
     ])
     ->name('*.php')
     ->notName('*.blade.php')

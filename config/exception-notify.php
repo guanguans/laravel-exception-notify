@@ -8,115 +8,199 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Guanguans\LaravelExceptionNotify\Pipelines\AppendContentPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\ToMarkdownPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\TrimPipeline;
+
 return [
     /*
-     * Enable exception notification report switch.
-     */
+    |--------------------------------------------------------------------------
+    | Enable exception notification report switch.
+    |--------------------------------------------------------------------------
+    |
+    | If set to false, the exception notification report will not be enabled.
+    |
+    */
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
     /*
-     * A list of the application environments that are reported.
-     *
-     * ```
-     * [production, local]
-     * ```
-     */
+    |--------------------------------------------------------------------------
+    | A list of the application environments that are reported.
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify a list of the application environments that should
+    | be reported.
+    |
+    | ```
+    | [production, local]
+    | ```
+    */
     'env' => ['*'],
 
     /*
-     * A list of the exception types that are not reported.
-     *
-     * ```
-     * [
-     *      HttpException::class,
-     *      HttpResponseException::class,
-     * ]
-     * ```
-     */
-    'dontReport' => [],
+    |--------------------------------------------------------------------------
+    | A list of the exception types that are not reported.
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify a list of the exception types that should not be
+    | reported.
+    |
+    | ```
+    | [
+    |     HttpResponseException::class,
+    |     HttpException::class,
+    | ]
+    | ```
+    */
+    'dont_report' => [],
 
     /*
-     * Debug mode.
-     */
-    'debug' => (bool) env('EXCEPTION_NOTIFY_DEBUG', false),
+    |--------------------------------------------------------------------------
+    | Report title.
+    |--------------------------------------------------------------------------
+    |
+    | The title of the exception notification report.
+    |
+    */
+    'title' => env('EXCEPTION_NOTIFY_REPORT_TITLE', sprintf('%s application exception report.', config('app.name'))),
 
     /*
-     * Information collector.
-     */
+    |--------------------------------------------------------------------------
+    | Collector configuration.
+    |--------------------------------------------------------------------------
+    |
+    | Responsible for collecting and transforming the exception data.
+    |
+    */
     'collector' => [
-        'trigger_time' => true,
-        'usage_memory' => true,
-
-        'app_name' => true,
-        'app_environment' => true,
-        'app_version' => true,
-        'app_locale' => true,
-
-        'php_version' => true,
-        'php_interface' => true,
-
-        'request_ip_address' => true,
-        'request_url' => true,
-        'request_method' => true,
-        'request_controller_action' => true,
-        'request_duration' => true,
-        'request_middleware' => false,
-        'request_all' => false,
-        'request_input' => true,
-        'request_header' => false,
-        'request_query' => false,
-        'request_post' => false,
-        'request_server' => false,
-        'request_cookie' => false,
-        'request_session' => false,
-
-        'exception_stack_trace' => true,
+        // List of collectors
+        'class' => [
+            \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\AnnexCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestCollector::class,
+        ],
+        // The transformer is used to transformer collectors to reports.
+        'transformer' => \Guanguans\LaravelExceptionNotify\CollectorTransformer::class,
     ],
 
     /*
-     * Custom information collector.
-     */
-    'customCollector' => [
-        // 'custom_name' => '\App\Helpers\YourClass@yourMethod', // callable
+    |--------------------------------------------------------------------------
+    | Reporting event.
+    |--------------------------------------------------------------------------
+    |
+    | The event that will be triggered when the report is ready.
+    |
+    */
+    'reporting' => [
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\LogReportListener::class,
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DumpReportListener::class,
     ],
 
     /*
-     * Default channel.
-     */
-    'defaultChannel' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'dingTalk'),
+    |--------------------------------------------------------------------------
+    | Reported event.
+    |--------------------------------------------------------------------------
+    |
+    | The event that will be triggered when the report is reported.
+    |
+    */
+    'reported' => [
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\LogReportResultListener::class,
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DumpReportResultListener::class,
+    ],
 
     /*
-     * Supported channels
-     */
+    |--------------------------------------------------------------------------
+    | Global pipeline.
+    |--------------------------------------------------------------------------
+    | The global pipeline are used to pipeline report data.
+    |
+    */
+    'pipeline' => [
+        TrimPipeline::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | default channel.
+    |--------------------------------------------------------------------------
+    |
+    | The default channel of the exception notification report.
+    |
+    */
+    'default' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'mail'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supported channels.
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify a list of the supported channels.
+    |
+    */
     'channels' => [
         // 钉钉群机器人
         'dingTalk' => [
-            'keyword' => env('EXCEPTION_NOTIFY_CHANNEL_KEYWORD', 'Your keyword.'),
-            'token' => env('EXCEPTION_NOTIFY_CHANNEL_TOKEN', 'Your token.'),
-            'secret' => env('EXCEPTION_NOTIFY_CHANNEL_SECRET', 'Your secret.'),
+            'driver' => 'dingTalk',
+            'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
+            'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
+            'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 2000),
+                sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+            ],
         ],
 
         // 飞书群机器人
         'feiShu' => [
-            'keyword' => env('EXCEPTION_NOTIFY_CHANNEL_KEYWORD', 'Your keyword.'),
-            'token' => env('EXCEPTION_NOTIFY_CHANNEL_TOKEN', 'Your token.'),
-            'secret' => env('EXCEPTION_NOTIFY_CHANNEL_SECRET', 'Your secret.'),
+            'driver' => 'feiShu',
+            'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
+            'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
+            'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
+            'pipeline' => [
+                sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
+            ],
+        ],
+
+        // 邮件
+        'mail' => [
+            'driver' => 'mail',
+            'dsn' => env('EXCEPTION_NOTIFY_MAIL_DSN'),
+            'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
+            'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
+            'pipeline' => [
+                ToHtmlPipeline::class,
+            ],
         ],
 
         // Server 酱
         'serverChan' => [
-            'token' => env('EXCEPTION_NOTIFY_CHANNEL_TOKEN', 'Your token.'),
+            'driver' => 'serverChan',
+            'token' => env('EXCEPTION_NOTIFY_SERVERCHAN_TOKEN'),
+            'pipeline' => [],
         ],
 
         // 企业微信群机器人
         'weWork' => [
-            'token' => env('EXCEPTION_NOTIFY_CHANNEL_TOKEN', 'Your token.'),
+            'driver' => 'weWork',
+            'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 5120),
+            ],
         ],
 
         // 息知
         'xiZhi' => [
-            'type' => 'single', // [single, channel]
-            'token' => env('EXCEPTION_NOTIFY_CHANNEL_TOKEN', 'Your token.'),
+            'driver' => 'xiZhi',
+            'type' => env('EXCEPTION_NOTIFY_XIZHI_TYPE', 'single'), // [single, channel]
+            'token' => env('EXCEPTION_NOTIFY_XIZHI_TOKEN'),
+            'pipeline' => [
+                ToMarkdownPipeline::class,
+            ],
         ],
     ],
 ];

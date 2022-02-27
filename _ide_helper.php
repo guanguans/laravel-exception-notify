@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the guanguans/laravel-soar.
+ * This file is part of the guanguans/laravel-exception-notify.
  *
  * (c) guanguans <ityaozm@gmail.com>
  *
@@ -9,7 +9,12 @@
  */
 
 namespace {
-    class ExceptionNotifier extends \Guanguans\LaravelExceptionNotify\Facades\Notifier
+
+    class ExceptionNotifier extends \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify
+    {
+    }
+
+    class ExceptionNotify extends \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify
     {
     }
 }

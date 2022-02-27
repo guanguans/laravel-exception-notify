@@ -10,10 +10,17 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
+use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
+use Guanguans\LaravelExceptionNotify\Support\Macros\CollectionMacro;
+use Guanguans\LaravelExceptionNotify\Support\Macros\RequestMacro;
+use Guanguans\LaravelExceptionNotify\Support\Macros\StrMacro;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Laravel\Lumen\Application as LumenApplication;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
@@ -26,7 +33,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setupConfig();
+        Request::mixin($this->app->make(RequestMacro::class));
         Collection::mixin($this->app->make(CollectionMacro::class));
+        Str::mixin($this->app->make(StrMacro::class));
+        $this->registerReportingEvent();
+        $this->registerReportedEvent();
     }
 
     /**
@@ -36,12 +47,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         // Adapt lumen
         $this->setupConfig();
-
-        $this->app->singleton(Notifier::class, function ($app) {
-            return new Notifier(config('exception-notify'));
-        });
-
-        $this->app->alias(Notifier::class, 'exception.notifier');
+        $this->registerExceptionNotifyManager();
+        $this->registerCollectorManager();
     }
 
     /**
@@ -60,13 +67,57 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($source, 'exception-notify');
     }
 
+    protected function registerCollectorManager()
+    {
+        $this->app->singleton(CollectorManager::class, function (Container $app) {
+            $collectors = collect($app['config']['exception-notify.collector.class'])
+                ->map(function ($parameters, $class) {
+                    if (! is_array($parameters)) {
+                        [$parameters, $class] = [$class, $parameters];
+                    }
+
+                    return $this->app->make($class, (array) $parameters);
+                })
+                ->values();
+
+            return new CollectorManager($collectors);
+        });
+
+        $this->app->alias(CollectorManager::class, 'exception.collector');
+    }
+
+    protected function registerExceptionNotifyManager()
+    {
+        $this->app->singleton(ExceptionNotifyManager::class, function ($app) {
+            return new ExceptionNotifyManager($app);
+        });
+
+        $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
+        $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
+    }
+
+    protected function registerReportingEvent()
+    {
+        foreach ($this->app['config']['exception-notify.reporting'] as $listener) {
+            $this->app['events']->listen(ReportingEvent::class, $listener);
+        }
+    }
+
+    protected function registerReportedEvent()
+    {
+        foreach ($this->app['config']['exception-notify.reported'] as $listener) {
+            $this->app['events']->listen(ReportedEvent::class, $listener);
+        }
+    }
+
     /**
-     * Get the services provided by the provider.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function provides()
     {
-        return ['exception.notifier'];
+        return [
+            ExceptionNotifyManager::class,
+            'exception.notifier',
+        ];
     }
 }

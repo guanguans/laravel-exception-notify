@@ -10,7 +10,10 @@
 
 namespace Guanguans\LaravelExceptionNotify\Jobs;
 
-use Guanguans\Notify\Clients\Client;
+use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
+use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,12 +21,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class SendExceptionNotification implements ShouldQueue
+class ReportExceptionJob implements ShouldQueue
 {
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+    use CreateStatic;
 
     /**
      * 在超时之前任务可以运行的秒数.
@@ -47,34 +51,41 @@ class SendExceptionNotification implements ShouldQueue
     public $maxExceptions = 3;
 
     /**
-     * @var \Guanguans\Notify\Clients\Client
+     * @var \Guanguans\LaravelExceptionNotify\Contracts\Channel
      */
-    protected $client;
+    protected $channel;
 
-    /**
-     * SendExceptionNotification constructor.
-     */
-    public function __construct(Client $client)
+    public function __construct(Channel $channel)
     {
-        $this->client = $client;
+        $this->channel = $channel;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle()
+    public function handle(string $report)
     {
-        $response = $this->client->send();
+        $this->fireReportingEvent($report);
+        $result = $this->channel->report($report);
+        $this->fireReportedEvent($result);
+    }
 
-        config('exception-notify.debug') and Log::debug('Exception notify debugging: ', $response);
+    protected function fireReportingEvent(string $report)
+    {
+        event(new ReportingEvent($this->channel, $report));
+    }
+
+    protected function fireReportedEvent($result)
+    {
+        event(new ReportedEvent($this->channel, $result));
     }
 
     /**
      * 任务未能处理.
      */
-    public function failed(Throwable $exception)
+    public function failed(Throwable $e)
     {
-        Log::error($exception->getMessage());
+        Log::error($e->getMessage(), ['exception' => $e]);
     }
 
     /**
