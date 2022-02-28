@@ -21,6 +21,7 @@ use Guanguans\Notify\Factory;
 use Guanguans\Notify\Messages\Message;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
@@ -193,6 +194,9 @@ md;
                 return collect($trace)
                     ->filter(function ($trace) {
                         return isset($trace['file']) and isset($trace['line']);
+                    })
+                    ->when(is_callable($this->_collector['exception_stack_trace']), function (Collection $traces) {
+                        return $traces->filter($this->_collector['exception_stack_trace']);
                     })
                     ->map(function ($trace) {
                         return $trace['file']."({$trace['line']})";
