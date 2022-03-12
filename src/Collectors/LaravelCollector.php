@@ -31,6 +31,7 @@ class LaravelCollector extends Collector
             'Version' => $this->app->version(),
             'Environment' => $this->app->environment(),
             'Locale' => $this->app->getLocale(),
+            'In Console' => $this->app->runningInConsole(),
         ];
     }
 }
