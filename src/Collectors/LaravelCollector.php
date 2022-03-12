@@ -30,7 +30,13 @@ class LaravelCollector extends Collector
             'Name' => $this->app['config']['app.name'],
             'Version' => $this->app->version(),
             'Environment' => $this->app->environment(),
-            'Locale' => $this->app->getLocale(),
+            'Locale' => value(function () {
+                if (! method_exists($this->app, 'getLocale')) {
+                    return null;
+                }
+
+                return $this->app->getLocale();
+            }),
             'In Console' => $this->app->runningInConsole(),
         ];
     }
