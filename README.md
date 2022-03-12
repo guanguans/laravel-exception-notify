@@ -52,6 +52,7 @@ $ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Exce
 
 ```php
 $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
+$app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### 申请通道 token 等信息

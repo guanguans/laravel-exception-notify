@@ -50,6 +50,7 @@ Add the following snippet to the `bootstrap/app.php` file under the `Register Se
 
 ```php
 $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
+$app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### Apply for channel `token` and other information
