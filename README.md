@@ -4,7 +4,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
+> Multiple channels of laravel exception notification(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -16,8 +16,10 @@
 ## 功能
 
 * 监控发送 laravel 应用异常
-* 支持多种通道(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)
-* 自定义发送的异常信息数据
+* 支持多种通道(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)
+* 支持扩展自定义通道
+* 支持自定义数据收集器
+* 支持自定义数据转换器
 
 ## 相关项目
 
@@ -54,6 +56,7 @@ $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider:
 
 ### 申请通道 token 等信息
 
+* [Chanify](https://github.com/chanify?type=source)
 * [钉钉群机器人](https://developers.dingtalk.com/document/app/custom-robot-access)
 * [飞书群机器人](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
 * [Server 酱](https://sct.ftqq.com)
@@ -68,9 +71,9 @@ $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider:
 
 ```dotenv
 EXCEPTION_NOTIFY_DEFAULT_CHANNEL=dingTalk
-EXCEPTION_NOTIFY_CHANNEL_KEYWORD=keyword
-EXCEPTION_NOTIFY_CHANNEL_TOKEN=fec1ddaa8a833156efb77b7865d62ae13775418030d94d05da08bfca73eeb
-EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d460149d730eee51730
+EXCEPTION_NOTIFY_DINGTALK_KEYWORD=keyword
+EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94d
+EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82
 ```
 
 ## 使用
@@ -78,28 +81,21 @@ EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d46
 ### `app/Exceptions/Handler.php` 的 `report` 方法中添加
 
 ```php
-public function report(Exception $exception)
+public function report(Exception $e)
 {
-    // 添加的代码
-    $this->shouldReport($exception) and \ExceptionNotifier::report($exception);
-    // // 或者
-    // $this->shouldReport($exception) and app('exception.notifier')->report($exception);
-    // // 或者
-    // $this->shouldReport($exception) and \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
+    // 默认通道
+    \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
+    
+    // 指定通道
+    \ExceptionNotifier::onChannel('dingTalk', 'mail')->reportIf($this->shouldReport($e), $e);
 
-    parent::report($exception);
+    parent::report($e);
 }
 ```
 
 ### 通知结果
 
-![息知](docs/xiZhi.png)
-
-![钉钉群机器人](docs/dingTalk.png)
-
-![飞书群机器人](docs/feiShu.png)
-
-![企业微信群机器人](docs/weWork.png)
+![息知](docs/xiZhi.jpg)
 
 ## 测试
 

@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(DingTalk、FeiShu、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(钉钉群机器人、飞书群机器人、Server 酱、企业微信群机器人、息知)。
+> Multiple channels of laravel exception notification(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -14,8 +14,10 @@
 ## Feature
 
 * Monitor and send laravel application exception
-* Support multiple channels(DingTalk、FeiShu、ServerChan、WeWork、XiZhi)
-* Customize the abnormal information data sent
+* Support multiple channels(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi)
+* Support for extended custom channels
+* Support for custom data collectors
+* Support for custom data transformers
 
 ## Related Links
 
@@ -52,6 +54,7 @@ $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider:
 
 ### Apply for channel `token` and other information
 
+* [Chanify](https://github.com/chanify?type=source)
 * [Dingtalk](https://developers.dingtalk.com/document/app/custom-robot-access)
 * [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
 * [ServerChan](https://sct.ftqq.com)
@@ -66,9 +69,9 @@ Configure in the `.env` file
 
 ```dotenv
 EXCEPTION_NOTIFY_DEFAULT_CHANNEL=dingTalk
-EXCEPTION_NOTIFY_CHANNEL_KEYWORD=keyword
-EXCEPTION_NOTIFY_CHANNEL_TOKEN=fec1ddaa8a833156efb77b7865d62ae13775418030d94d05da08bfca73eeb
-EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d460149d730eee51730
+EXCEPTION_NOTIFY_DINGTALK_KEYWORD=keyword
+EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94d
+EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82
 ```
 
 ## Usage
@@ -76,28 +79,21 @@ EXCEPTION_NOTIFY_CHANNEL_SECRET=c32bb7345c0f73da2b9786f0f7dd5083bd768a29b82e6d46
 ### Modify the `report` method in the `app/Exceptions/Handler.php` file
 
 ```php
-public function report(Exception $exception)
+public function report(Exception $e)
 {
-    // Added code
-    $this->shouldReport($exception) and \ExceptionNotifier::report($exception);
-    // // OR
-    // $this->shouldReport($exception) and app('exception.notifier')->report($exception);
-    // // OR
-    // $this->shouldReport($exception) and \Guanguans\LaravelExceptionNotify\Facades\Notifier::report($exception);
+    // 默认通道
+    \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
+    
+    // 指定通道
+    \ExceptionNotifier::onChannel('dingTalk', 'mail')->reportIf($this->shouldReport($e), $e);
 
-    parent::report($exception);
+    parent::report($e);
 }
 ```
 
 ### Notification result
 
 ![xiZhi](docs/xiZhi.png)
-
-![dingTalk](docs/dingTalk.png)
-
-![feiShu](docs/feiShu.png)
-
-![weWork](docs/weWork.png)
 
 ## Testing
 
