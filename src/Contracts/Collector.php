@@ -16,5 +16,5 @@ interface Collector extends Stringable
 {
     public function getName(): string;
 
-    public function collect(): array;
+    public function collect();
 }

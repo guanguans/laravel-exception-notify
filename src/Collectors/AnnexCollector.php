@@ -12,7 +12,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class AnnexCollector extends Collector
 {
-    public function collect(): array
+    public function collect()
     {
         return [
             'Time' => date('Y-m-d H:i:s'),

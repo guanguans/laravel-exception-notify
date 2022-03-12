@@ -10,26 +10,45 @@
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use ArrayAccess;
 use Guanguans\LaravelExceptionNotify\Contracts\Collector as CollectorContract;
-use Guanguans\LaravelExceptionNotify\Support\Traits\OptionsProperty;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-abstract class Collector implements CollectorContract, ArrayAccess
+abstract class Collector implements CollectorContract
 {
-    use OptionsProperty;
+    /**
+     * @var callable|null
+     */
+    protected $pipe;
+
+    public function __construct(callable $pipe = null)
+    {
+        $this->pipe = $pipe;
+    }
 
     public function getName(): string
     {
         return Str::ucfirst(Str::beforeLast(class_basename($this), 'Collector'));
     }
 
+    protected function applyPipeCollect()
+    {
+        $pipedCollect = collect($this->collect())
+                ->when($this->pipe, function (Collection $collects) {
+                    return $collects->pipe($this->pipe);
+                });
+
+        return collect($pipedCollect)
+            ->filter(function ($item) {
+                return ! blank($item);
+            })
+            ->all();
+    }
+
     public function __toString()
     {
         return varexport(
-            array_filter($this->collect(), function ($value) {
-                return ! blank($value);
-            }),
+            $this->applyPipeCollect(),
             true
         );
     }

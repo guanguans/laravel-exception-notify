@@ -19,12 +19,13 @@ class LaravelCollector extends Collector
      */
     protected $app;
 
-    public function __construct(Container $app)
+    public function __construct(Container $app, callable $pipe = null)
     {
+        parent::__construct($pipe);
         $this->app = $app;
     }
 
-    public function collect(): array
+    public function collect()
     {
         return [
             'Name' => $this->app['config']['app.name'],

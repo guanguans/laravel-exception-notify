@@ -80,8 +80,17 @@ return [
             \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\AnnexCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
+            // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
+            // \Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
+            // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
+            // \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
+            // \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
         ],
         // The transformer is used to transformer collectors to reports.
         'transformer' => \Guanguans\LaravelExceptionNotify\CollectorTransformer::class,
@@ -98,7 +107,7 @@ return [
     'reporting' => [
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\LogReportListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DumpReportListener::class,
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
+        \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
     ],
 
     /*

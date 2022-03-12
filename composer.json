@@ -52,6 +52,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=7.2",
+        "ext-json": "*",
         "guanguans/notify": "^1.13",
         "illuminate/bus": "^5.5 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
         "illuminate/contracts": "^5.5 || ^6.0 || ^7.0 || ^8.0 || ^9.0",

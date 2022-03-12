@@ -12,7 +12,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class PhpInfoCollector extends Collector
 {
-    public function collect(): array
+    public function collect()
     {
         return [
             'Version' => implode('.', [PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION]),
