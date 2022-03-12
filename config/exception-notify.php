@@ -160,7 +160,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 2000),
+                sprintf('%s:%s', LengthLimitPipeline::class, 20000),
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
             ],
         ],
@@ -172,6 +172,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 30720),
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],
