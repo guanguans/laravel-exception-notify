@@ -98,6 +98,7 @@ return [
     'reporting' => [
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\LogReportListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DumpReportListener::class,
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
     ],
 
     /*
@@ -111,6 +112,7 @@ return [
     'reported' => [
         // \Guanguans\LaravelExceptionNotify\Listeners\Reported\LogReportResultListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DumpReportResultListener::class,
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DdReportResultListener::class,
     ],
 
     /*
