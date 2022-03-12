@@ -84,7 +84,6 @@ public function report(Exception $e)
 {
     // 默认通道
     \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
-    
     // 指定通道
     \ExceptionNotifier::onChannel('dingTalk', 'mail')->reportIf($this->shouldReport($e), $e);
 
@@ -94,7 +93,7 @@ public function report(Exception $e)
 
 ### Notification result
 
-![xiZhi](docs/xiZhi.png)
+![xiZhi](docs/xiZhi.jpg)
 
 ## Testing
 
