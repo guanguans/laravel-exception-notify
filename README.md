@@ -97,6 +97,20 @@ public function report(Exception $e)
 
 ![息知](docs/xiZhi.jpg)
 
+## 扩展自定义通道
+
+`app/Providers/AppServiceProvider.php` 的 `boot` 方法中添加
+
+```php
+public function boot()
+{
+    // 扩展自定义通道
+    \ExceptionNotifier::extend('YourChannel', function (\Illuminate\Contracts\Container\Container $container){
+        // 返回 \Guanguans\LaravelExceptionNotify\Contracts\Channel 的实例          
+    });
+}
+```
+
 ## 测试
 
 ```bash

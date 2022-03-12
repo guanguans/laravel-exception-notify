@@ -95,6 +95,20 @@ public function report(Exception $e)
 
 ![xiZhi](docs/xiZhi.jpg)
 
+## Extend custom channel
+
+Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
+
+```php
+public function boot()
+{
+    // Extend custom channel
+    \ExceptionNotifier::extend('YourChannel', function (\Illuminate\Contracts\Container\Container $container){
+        // return instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.          
+    });
+}
+```
+
 ## Testing
 
 ```bash

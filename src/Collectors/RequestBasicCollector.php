@@ -33,7 +33,7 @@ class RequestBasicCollector extends Collector
             'Method' => $this->request->method(),
             'Action' => optional($this->request->route())->getActionName(),
             'Duration' => value(function () {
-                $startTime = defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT');
+                $startTime = defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
                 return floor((microtime(true) - $startTime) * 1000).'ms';
             }),
