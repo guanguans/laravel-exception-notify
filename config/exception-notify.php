@@ -107,7 +107,7 @@ return [
     'reporting' => [
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\LogReportListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DumpReportListener::class,
-        \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
+        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
     ],
 
     /*

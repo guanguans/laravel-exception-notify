@@ -35,4 +35,11 @@ class StrMacro
             return lcfirst($string);
         };
     }
+
+    public static function ucwords(): callable
+    {
+        return function ($string) {
+            return ucwords($string);
+        };
+    }
 }

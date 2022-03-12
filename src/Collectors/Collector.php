@@ -28,7 +28,7 @@ abstract class Collector implements CollectorContract
 
     public function getName(): string
     {
-        return Str::ucfirst(Str::beforeLast(class_basename($this), 'Collector'));
+        return Str::ucwords(Str::snake(Str::beforeLast(class_basename($this), 'Collector'), ' '));
     }
 
     protected function applyPipeCollect()
