@@ -18,7 +18,7 @@ class CollectorTransformer
     public function handle(Collection $collectors): string
     {
         return $collectors->reduce(function ($carry, Collector $collector) {
-            return $carry.PHP_EOL.sprintf('%s: %s'.PHP_EOL, $collector->getName(), (string) $collector);
+            return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector);
         }, '');
     }
 }
