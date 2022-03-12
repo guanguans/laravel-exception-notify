@@ -143,6 +143,16 @@ return [
     |
     */
     'channels' => [
+        // Chanify
+        'chanify' => [
+            'driver' => 'chanify',
+            'url' => env('EXCEPTION_NOTIFY_CHANIFY_URL'),
+            'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 1024),
+            ],
+        ],
+
         // 钉钉群机器人
         'dingTalk' => [
             'driver' => 'dingTalk',

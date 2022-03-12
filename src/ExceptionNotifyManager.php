@@ -10,6 +10,7 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
 use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
@@ -144,8 +145,7 @@ class ExceptionNotifyManager extends Manager
             $config['pipeline'],
             $config['to'],
             $config['from'],
-            $config['reporting'],
-            $config['reported']
+            $config['url'],
         );
 
         return $config;
@@ -201,6 +201,18 @@ class ExceptionNotifyManager extends Manager
         $this->drivers = [];
 
         return $this;
+    }
+
+    protected function createChanifyDriver()
+    {
+        $options = $this->getClientOptions('chanify');
+        if (empty($options['url'])) {
+            unset($options['url']);
+        }
+
+        return new ChanifyChannel(
+            Factory::chanify($options)
+        );
     }
 
     protected function createDingTalkDriver()
