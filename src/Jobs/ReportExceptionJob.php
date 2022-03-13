@@ -61,19 +61,13 @@ class ReportExceptionJob implements ShouldQueue
         $this->channel = $channel;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(string $report)
     {
-        (new Pipeline(app()))
-            ->send($report)
-            ->through($this->getChannelPipeline())
-            ->then(function ($report) {
-                $this->fireReportingEvent($report);
-                $result = $this->channel->report($report);
-                $this->fireReportedEvent($result);
-            });
+        $pipedReport = $this->pipelineReport($report);
+
+        $this->fireReportingEvent($pipedReport);
+        $result = $this->channel->report($pipedReport);
+        $this->fireReportedEvent($result);
     }
 
     protected function getChannelPipeline(): array
@@ -82,6 +76,16 @@ class ReportExceptionJob implements ShouldQueue
             config('exception-notify.pipeline', []),
             config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), [])
         );
+    }
+
+    protected function pipelineReport(string $report): string
+    {
+        return (new Pipeline(app()))
+            ->send($report)
+            ->through($this->getChannelPipeline())
+            ->then(function ($report) {
+                return $report;
+            });
     }
 
     protected function fireReportingEvent(string $report)
