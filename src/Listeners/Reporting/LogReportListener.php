@@ -11,16 +11,16 @@
 namespace Guanguans\LaravelExceptionNotify\Listeners\Reporting;
 
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Illuminate\Log\Logger;
+use Psr\Log\LoggerInterface;
 
 class LogReportListener
 {
     /**
-     * @var \Illuminate\Log\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
