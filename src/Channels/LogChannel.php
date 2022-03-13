@@ -14,8 +14,18 @@ use Illuminate\Support\Facades\Log;
 
 class LogChannel extends Channel
 {
+    /**
+     * @var string
+     */
+    protected $level;
+
+    public function __construct(string $level = 'info')
+    {
+        $this->level = $level;
+    }
+
     public function report(string $report)
     {
-        Log::error($report);
+        Log::{$this->level}($report);
     }
 }
