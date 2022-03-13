@@ -2,6 +2,18 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.0.0 - 2022-03-12
+
+![usage](https://user-images.githubusercontent.com/22309277/158031144-f86dd132-2116-488d-8691-cf0ddc0718e5.png)
+
+## What's Changed
+
+- Bump actions/checkout from 2 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/15
+- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/16
+- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/17
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.2...v2.0.0
+
 ## v1.2.3 - 2022-02-28
 
 **Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.2...v1.2.3
