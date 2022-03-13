@@ -11,6 +11,7 @@
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
+use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
 use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
@@ -222,6 +223,11 @@ class ExceptionNotifyManager extends Manager
         return new DingTalkChannel(
             Factory::dingTalk($this->getClientOptions('dingTalk'))
         );
+    }
+
+    protected function createDdDriver()
+    {
+        return new DdChannel();
     }
 
     protected function createDumpDriver()
