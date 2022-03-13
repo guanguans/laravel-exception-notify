@@ -20,7 +20,6 @@ class StrMacro
             }
 
             $pos = mb_strrpos($subject, $search);
-
             if (false === $pos) {
                 return $subject;
             }
