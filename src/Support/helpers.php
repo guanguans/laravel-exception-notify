@@ -38,6 +38,7 @@ if (! function_exists('varexport')) {
         $export = var_export($expression, true);
 
         $patterns = [
+            "/array \(\n\)/" => '[]',
             "/array \(\n\s+\)/" => '[]',
             "/array \(/" => '[',
             "/^([ ]*)\)(,?)$/m" => '$1]$2',
