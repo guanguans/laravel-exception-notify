@@ -10,10 +10,12 @@
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-class NullChannel extends Channel
+use Illuminate\Support\Facades\Log;
+
+class LogChannel extends Channel
 {
     public function report(string $report)
     {
-        // noop
+        Log::error($report);
     }
 }

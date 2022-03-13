@@ -13,6 +13,7 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
+use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
 use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
 use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ServerChanChannel;
@@ -227,6 +228,11 @@ class ExceptionNotifyManager extends Manager
         return new FeiShuChannel(
             Factory::feiShu($this->getClientOptions('feiShu'))
         );
+    }
+
+    protected function createLogDriver()
+    {
+        return new LogChannel();
     }
 
     protected function createMailDriver()

@@ -16,6 +16,7 @@ use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
@@ -65,9 +66,29 @@ class ReportExceptionJob implements ShouldQueue
      */
     public function handle(string $report)
     {
+        $report = $this->handleReport($report);
+
         $this->fireReportingEvent($report);
         $result = $this->channel->report($report);
         $this->fireReportedEvent($result);
+    }
+
+    protected function getChannelPipeline(): array
+    {
+        return array_merge(
+            config('exception-notify.pipeline', []),
+            config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), [])
+        );
+    }
+
+    protected function handleReport(string $report): string
+    {
+        return (new Pipeline(app()))
+            ->send($report)
+            ->through($this->getChannelPipeline())
+            ->then(function ($passable) {
+                return $passable;
+            });
     }
 
     protected function fireReportingEvent(string $report)
