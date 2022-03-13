@@ -40,9 +40,9 @@ class CollectorManager extends Fluent implements Stringable
         $this->attributes[$offset] = $value;
     }
 
-    public function toReport(): string
+    public function __toString()
     {
-        return collect($this)
+        return (string) collect($this)
             ->transform(function (Collector $collector) {
                 $collector instanceof ExceptionProperty and $collector->setException(app('exception.notify.exception'));
 
@@ -51,10 +51,5 @@ class CollectorManager extends Fluent implements Stringable
             ->pipe(function (Collection $collectors): string {
                 return call(config('exception-notify.collector.transformer'), ['collectors' => $collectors]);
             });
-    }
-
-    public function __toString()
-    {
-        return $this->toReport();
     }
 }
