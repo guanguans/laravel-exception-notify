@@ -32,12 +32,9 @@ class ExceptionTraceCollector extends Collector implements ExceptionPropertyCont
 
     public function collect()
     {
-        return collect($this->exception->getTrace())
-            ->filter(function ($trace) {
-                return isset($trace['file']) and isset($trace['line']);
-            })
-            ->map(function ($trace) {
-                return $trace['file']."({$trace['line']})";
+        return collect(explode("\n", $this->exception->getTraceAsString()))
+            ->transform(function ($trace, $index) {
+                return ltrim($trace, "#$index ");
             })
             ->all();
     }
