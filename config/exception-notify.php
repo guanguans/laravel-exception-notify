@@ -13,7 +13,6 @@ use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToMarkdownPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\TrimPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\VarExportPipeline;
 
 return [
     /*
@@ -133,7 +132,6 @@ return [
     |
     */
     'pipeline' => [
-        VarExportPipeline::class,
         TrimPipeline::class,
     ],
 

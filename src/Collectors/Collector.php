@@ -47,6 +47,6 @@ abstract class Collector implements CollectorContract
 
     public function __toString()
     {
-        return (string) var_export($this->applyPipeCollect(), true);
+        return (string) varexport($this->applyPipeCollect(), true);
     }
 }
