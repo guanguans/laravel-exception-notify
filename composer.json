@@ -1,6 +1,6 @@
 {
     "name": "guanguans/laravel-exception-notify",
-    "description": "Multiple channels of laravel exception notification(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。",
+    "description": "Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。",
     "keywords": [
         "laravel",
         "notification",

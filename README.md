@@ -4,7 +4,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
+> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -16,7 +16,7 @@
 ## 功能
 
 * 监控发送 laravel 应用异常
-* 支持多种通道(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)
+* 支持多种通道(Bark、Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)
 * 支持扩展自定义通道
 * 支持自定义数据收集器
 * 支持自定义数据转换器
@@ -57,6 +57,7 @@ $app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::cla
 
 ### 申请通道 token 等信息
 
+* [Bark](https://github.com/Finb/Bark)
 * [Chanify](https://github.com/chanify?type=source)
 * [钉钉群机器人](https://developers.dingtalk.com/document/app/custom-robot-access)
 * [飞书群机器人](https://www.feishu.cn/hc/zh-CN/articles/360024984973)

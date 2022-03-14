@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
+> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi). - 多种通道的 laravel 异常通知(Bark、Chanify、钉钉群机器人、飞书群机器人、邮件、Server 酱、企业微信群机器人、息知)。
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -14,7 +14,7 @@
 ## Feature
 
 * Monitor and send laravel application exception
-* Support multiple channels(Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi)
+* Support multiple channels(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、WeWork、XiZhi)
 * Support for extended custom channels
 * Support for custom data collectors
 * Support for custom data transformers
@@ -55,6 +55,7 @@ $app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::cla
 
 ### Apply for channel `token` and other information
 
+* [Bark](https://github.com/Finb/Bark)
 * [Chanify](https://github.com/chanify?type=source)
 * [Dingtalk](https://developers.dingtalk.com/document/app/custom-robot-access)
 * [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
