@@ -35,8 +35,6 @@ if (! function_exists('varexport')) {
      */
     function varexport($expression, bool $return = false)
     {
-        $export = var_export($expression, true);
-
         $patterns = [
             "/array \(\n\)/" => '[]',
             "/array \(\n\s+\)/" => '[]',
@@ -46,8 +44,8 @@ if (! function_exists('varexport')) {
             "/([ ]*)(\'[^\']+\') => ([\[\'])/" => '$1$2 => $3',
         ];
 
+        $export = var_export($expression, true);
         $export = preg_replace(array_keys($patterns), array_values($patterns), $export);
-
         if ($return) {
             return $export;
         }
