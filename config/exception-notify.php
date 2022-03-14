@@ -154,10 +154,21 @@ return [
     |
     */
     'channels' => [
+        // Bark
+        'bark' => [
+            'driver' => 'bark',
+            'base_uri' => env('EXCEPTION_NOTIFY_BARK_BASE_URI'),
+            'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
+            'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 1024),
+            ],
+        ],
+
         // Chanify
         'chanify' => [
             'driver' => 'chanify',
-            'url' => env('EXCEPTION_NOTIFY_CHANIFY_URL'),
+            'base_uri' => env('EXCEPTION_NOTIFY_CHANIFY_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 1024),

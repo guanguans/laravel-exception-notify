@@ -10,6 +10,7 @@
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
@@ -134,7 +135,11 @@ class ExceptionNotifyManager extends Manager
      */
     protected function getClientOptions($name)
     {
-        return $this->transformConfigToOptions($this->getChannelConfig($name));
+        $options = $this->transformConfigToOptions($this->getChannelConfig($name));
+
+        return array_filter($options, function ($option) {
+            return ! blank($option);
+        });
     }
 
     /**
@@ -149,6 +154,16 @@ class ExceptionNotifyManager extends Manager
             $config['to'],
             $config['from'],
             $config['url'],
+            $config['group'],
+            $config['copy'],
+            $config['url'],
+            $config['icon'],
+            $config['group'],
+            $config['level'],
+            $config['badge'],
+            $config['isArchive'],
+            $config['autoCopy'],
+            $config['automaticallyCopy'],
         );
 
         return $config;
@@ -206,15 +221,17 @@ class ExceptionNotifyManager extends Manager
         return $this;
     }
 
+    protected function createBarkDriver()
+    {
+        return new BarkChannel(
+            Factory::bark($this->getClientOptions('bark'))
+        );
+    }
+
     protected function createChanifyDriver()
     {
-        $options = $this->getClientOptions('chanify');
-        if (empty($options['url'])) {
-            unset($options['url']);
-        }
-
         return new ChanifyChannel(
-            Factory::chanify($options)
+            Factory::chanify($this->getClientOptions('chanify'))
         );
     }
 
