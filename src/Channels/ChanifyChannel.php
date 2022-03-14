@@ -10,30 +10,12 @@
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\Notify\Clients\ChanifyClient;
+use Guanguans\Notify\Contracts\MessageInterface;
 use Guanguans\Notify\Messages\Chanify\TextMessage;
 
-class ChanifyChannel extends Channel
+class ChanifyChannel extends NotifyChannel
 {
-    /**
-     * @var \Guanguans\Notify\Clients\ChanifyClient
-     */
-    protected $client;
-
-    public function __construct(ChanifyClient $client)
-    {
-        $this->client = $client;
-    }
-
-    public function report(string $report)
-    {
-        return $this
-            ->client
-            ->setMessage($this->createMessage($report))
-            ->send();
-    }
-
-    protected function createMessage(string $report)
+    protected function createMessage(string $report): MessageInterface
     {
         return new TextMessage([
             'title' => config('exception-notify.title'),

@@ -10,30 +10,12 @@
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\Notify\Clients\DingTalkClient;
+use Guanguans\Notify\Contracts\MessageInterface;
 use Guanguans\Notify\Messages\DingTalk\TextMessage;
 
-class DingTalkChannel extends Channel
+class DingTalkChannel extends NotifyChannel
 {
-    /**
-     * @var \Guanguans\Notify\Clients\DingTalkClient
-     */
-    protected $client;
-
-    public function __construct(DingTalkClient $client)
-    {
-        $this->client = $client;
-    }
-
-    public function report(string $report)
-    {
-        return $this
-            ->client
-            ->setMessage($this->createMessage($report))
-            ->send();
-    }
-
-    protected function createMessage(string $report)
+    protected function createMessage(string $report): MessageInterface
     {
         return new TextMessage(['content' => $report]);
     }

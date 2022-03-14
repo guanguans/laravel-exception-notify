@@ -10,30 +10,12 @@
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\Notify\Clients\MailerClient;
+use Guanguans\Notify\Contracts\MessageInterface;
 use Guanguans\Notify\Messages\EmailMessage;
 
-class MailChannel extends Channel
+class MailChannel extends NotifyChannel
 {
-    /**
-     * @var \Guanguans\Notify\Clients\MailerClient
-     */
-    protected $client;
-
-    public function __construct(MailerClient $client)
-    {
-        $this->client = $client;
-    }
-
-    public function report(string $report)
-    {
-        return $this
-            ->client
-            ->setMessage($this->createMessage($report))
-            ->send();
-    }
-
-    protected function createMessage(string $report)
+    protected function createMessage(string $report): MessageInterface
     {
         return EmailMessage::create()
             ->from(config('exception-notify.channels.mail.from'))
