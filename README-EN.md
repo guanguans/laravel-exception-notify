@@ -29,7 +29,7 @@
 ## Installation
 
 ```bash
-$ composer require guanguans/laravel-exception-notify -vvv
+$ composer require guanguans/laravel-exception-notify:^1.0 -v
 ```
 
 ## Configuration
