@@ -31,7 +31,7 @@ class CollectorManager extends Fluent implements Stringable
         parent::__construct($collectors);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (! $value instanceof Collector) {
             throw new InvalidArgumentException(sprintf('Collector must be instance of %s', Collector::class));
