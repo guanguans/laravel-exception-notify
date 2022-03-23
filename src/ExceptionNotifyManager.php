@@ -20,6 +20,7 @@ use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
 use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
 use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
 use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
+use Guanguans\LaravelExceptionNotify\Channels\PushDeerChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ServerChanChannel;
 use Guanguans\LaravelExceptionNotify\Channels\SlackChannel;
 use Guanguans\LaravelExceptionNotify\Channels\TelegramChannel;
@@ -284,6 +285,13 @@ class ExceptionNotifyManager extends Manager
     protected function createNullDriver()
     {
         return new NullChannel();
+    }
+
+    protected function createPushDeerDriver()
+    {
+        return new PushDeerChannel(
+            Factory::pushDeer(['token' => config('exception-notify.channels.pushDeer.token')])
+        );
     }
 
     protected function createServerChanDriver()

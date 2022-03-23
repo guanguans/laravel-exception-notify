@@ -219,6 +219,15 @@ return [
             ],
         ],
 
+        // Push Deer
+        'pushDeer' => [
+            'driver' => 'pushDeer',
+            'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
+            'pipeline' => [
+                ToMarkdownPipeline::class,
+            ],
+        ],
+
         // Server 酱
         'serverChan' => [
             'driver' => 'serverChan',
