@@ -2,6 +2,14 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.1.3 - 2022-03-23
+
+## What's Changed
+
+- Bump actions/cache from 2 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/18
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.2...v2.1.3
+
 ## v2.1.2 - 2022-03-15
 
 **Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.1...v2.1.2
