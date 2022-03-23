@@ -227,6 +227,16 @@ return [
             ],
         ],
 
+        // Telegram
+        'telegram' => [
+            'driver' => 'telegram',
+            'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
+            'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 4096),
+            ],
+        ],
+
         // 企业微信群机器人
         'weWork' => [
             'driver' => 'weWork',

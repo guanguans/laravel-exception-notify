@@ -21,6 +21,7 @@ use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
 use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ServerChanChannel;
 use Guanguans\LaravelExceptionNotify\Channels\SlackChannel;
+use Guanguans\LaravelExceptionNotify\Channels\TelegramChannel;
 use Guanguans\LaravelExceptionNotify\Channels\WeWorkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
@@ -288,6 +289,13 @@ class ExceptionNotifyManager extends Manager
     {
         return new SlackChannel(
             Factory::slack(['webhook_url' => config('exception-notify.channels.slack.webhook_url')])
+        );
+    }
+
+    protected function createTelegramDriver()
+    {
+        return new TelegramChannel(
+            Factory::telegram(['token' => config('exception-notify.channels.telegram.token')])
         );
     }
 
