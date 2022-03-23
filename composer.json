@@ -69,7 +69,6 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.2",
         "nyholm/nsa": "^1.2",
-        "overtrue/phplint": "^2.4 || ^3.0",
         "phpunit/phpunit": "^7.0 || ^8.0",
         "vimeo/psalm": "^4.0"
     },
@@ -107,15 +106,11 @@
         },
         "hooks": {
             "pre-commit": [
-                "composer lint",
                 "composer style-lint",
-                "composer md-lint",
                 "composer test"
             ],
             "pre-push": [
-                "composer lint",
                 "composer style-lint",
-                "composer md-lint",
                 "composer test"
             ]
         }
@@ -130,26 +125,12 @@
             "cghooks update"
         ],
         "cghooks": "./vendor/bin/cghooks",
-        "lint": "./vendor/bin/phplint --no-cache --configuration=.phplint.yml --ansi",
         "md-lint": "lint-md --config .lintmdrc *.md .github/*.md .github/ISSUE_TEMPLATE/*.md",
         "md-fix": "lint-md --config .lintmdrc --fix *.md .github/*.md .github/ISSUE_TEMPLATE/*.md",
         "style-lint": "./vendor/bin/php-cs-fixer fix --using-cache=no --diff --config=.php-cs-fixer.dist.php --dry-run --ansi",
         "style-fix": "./vendor/bin/php-cs-fixer fix --using-cache=no --config=.php-cs-fixer.dist.php --ansi",
         "psalm": "./vendor/bin/psalm",
         "test": "./vendor/bin/phpunit --coverage-text --colors=always --verbose",
-        "test-coverage": "./vendor/bin/phpunit --coverage-html=coverage/ --coverage-clover=clover.xml --color=always --verbose",
-        "benchmark": "./vendor/bin/phpbench run --retry-threshold=3 --iterations=15 --revs=1000 --warmup=2"
-    },
-    "scripts-descriptions": {
-        "cghooks": "Run git cghooks.",
-        "lint": "Run phplint checks.",
-        "md-lint": "Run markdown checks.",
-        "md-fix": "Run markdown fixing.",
-        "style-lint": "Run style checks (only dry run - no fixing!).",
-        "style-fix": "Run style checks and fix violations.",
-        "psalm": "Run psalm checks.",
-        "test": "Run all tests.",
-        "test-coverage": "Run all tests with coverage.",
-        "benchmark": "Run all benchmark."
+        "test-coverage": "./vendor/bin/phpunit --coverage-html=coverage/ --coverage-clover=clover.xml --color=always --verbose"
     }
 }
