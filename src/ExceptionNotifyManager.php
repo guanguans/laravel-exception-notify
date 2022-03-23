@@ -290,7 +290,7 @@ class ExceptionNotifyManager extends Manager
     protected function createPushDeerDriver()
     {
         return new PushDeerChannel(
-            Factory::pushDeer(['token' => config('exception-notify.channels.pushDeer.token')])
+            Factory::pushDeer($this->getClientOptions('pushDeer'))
         );
     }
 

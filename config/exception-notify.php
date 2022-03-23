@@ -222,6 +222,7 @@ return [
         // Push Deer
         'pushDeer' => [
             'driver' => 'pushDeer',
+            'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
             'pipeline' => [
                 ToMarkdownPipeline::class,
