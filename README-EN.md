@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、Slack、Telegram、WeWork、XiZhi).
+> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、ServerChan、Slack、Telegram、WeWork、XiZhi).
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -14,7 +14,7 @@
 ## Feature
 
 * Monitor and send laravel application exception
-* Support multiple channels(Bark、Chanify、DingTalk、FeiShu、Mail、ServerChan、Slack、Telegram、WeWork、XiZhi)
+* Support multiple channels(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、ServerChan、Slack、Telegram、WeWork、XiZhi)
 * Support for extended custom channels
 * Support for custom data collectors
 * Support for custom data transformers
@@ -58,6 +58,7 @@ $app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::cla
 * [Bark](https://github.com/Finb/Bark)
 * [Chanify](https://github.com/chanify?type=source)
 * [Dingtalk](https://developers.dingtalk.com/document/app/custom-robot-access)
+* [Discord](https://discord.com/developers/docs/resources/webhook#edit-webhook-message)
 * [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
 * [ServerChan](https://sct.ftqq.com)
 * [Slack](https://api.slack.com/messaging/webhooks)
