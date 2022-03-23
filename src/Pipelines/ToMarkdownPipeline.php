@@ -18,7 +18,7 @@ class ToMarkdownPipeline
         string $report,
         Closure $next,
         string $mark = <<<'md'
-```plain text
+```
 %s
 ```
 md

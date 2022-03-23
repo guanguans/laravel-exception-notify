@@ -217,6 +217,16 @@ return [
             'pipeline' => [],
         ],
 
+        // Slack
+        'slack' => [
+            'driver' => 'slack',
+            'webhook_url' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK_URL'),
+            'channel' => env('EXCEPTION_NOTIFY_SLACK_CHANNEL'),
+            'pipeline' => [
+                ToMarkdownPipeline::class,
+            ],
+        ],
+
         // 企业微信群机器人
         'weWork' => [
             'driver' => 'weWork',
