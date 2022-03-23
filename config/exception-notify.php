@@ -187,6 +187,15 @@ return [
             ],
         ],
 
+        // Discord
+        'discord' => [
+            'driver' => 'discord',
+            'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
+            'pipeline' => [
+                sprintf('%s:%s', LengthLimitPipeline::class, 2000),
+            ],
+        ],
+
         // 飞书群机器人
         'feiShu' => [
             'driver' => 'feiShu',

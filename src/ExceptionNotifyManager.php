@@ -14,6 +14,7 @@ use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
+use Guanguans\LaravelExceptionNotify\Channels\DiscordChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
 use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
 use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
@@ -241,6 +242,13 @@ class ExceptionNotifyManager extends Manager
     {
         return new DingTalkChannel(
             Factory::dingTalk($this->getClientOptions('dingTalk'))
+        );
+    }
+
+    protected function createDiscordDriver()
+    {
+        return new DiscordChannel(
+            Factory::discord(['webhook_url' => config('exception-notify.channels.discord.webhook_url')])
         );
     }
 
