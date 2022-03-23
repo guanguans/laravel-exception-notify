@@ -10,13 +10,13 @@
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Concerns\ExceptionProperty;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionProperty as ExceptionPropertyContract;
+use Guanguans\LaravelExceptionNotify\Concerns\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware as ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
-class ExceptionBasicCollector extends Collector implements ExceptionPropertyContract
+class ExceptionBasicCollector extends Collector implements ExceptionAwareContract
 {
-    use ExceptionProperty;
+    use ExceptionAware;
 
     public function collect()
     {

@@ -11,7 +11,7 @@
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionProperty;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
@@ -44,7 +44,7 @@ class CollectorManager extends Fluent implements Stringable
     {
         return (string) collect($this)
             ->transform(function (Collector $collector) {
-                $collector instanceof ExceptionProperty and $collector->setException(app('exception.notify.exception'));
+                $collector instanceof ExceptionAware and $collector->setException(app('exception.notify.exception'));
 
                 return $collector;
             })

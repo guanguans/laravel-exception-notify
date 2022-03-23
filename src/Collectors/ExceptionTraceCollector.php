@@ -10,14 +10,14 @@
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Concerns\ExceptionProperty;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionProperty as ExceptionPropertyContract;
+use Guanguans\LaravelExceptionNotify\Concerns\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware as ExceptionAwareContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ExceptionTraceCollector extends Collector implements ExceptionPropertyContract
+class ExceptionTraceCollector extends Collector implements ExceptionAwareContract
 {
-    use ExceptionProperty;
+    use ExceptionAware;
 
     public function __construct(callable $pipe = null)
     {

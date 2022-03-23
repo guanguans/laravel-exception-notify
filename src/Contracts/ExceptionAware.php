@@ -12,9 +12,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 use Throwable;
 
-interface ExceptionProperty
+interface ExceptionAware
 {
-    public function getException(): Throwable;
-
     public function setException(Throwable $exception);
 }

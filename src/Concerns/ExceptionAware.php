@@ -12,17 +12,12 @@ namespace Guanguans\LaravelExceptionNotify\Concerns;
 
 use Throwable;
 
-trait ExceptionProperty
+trait ExceptionAware
 {
     /**
-     * @var \Throwable
+     * @var \Throwable|null
      */
     protected $exception;
-
-    public function getException(): Throwable
-    {
-        return $this->exception;
-    }
 
     public function setException(Throwable $exception)
     {
