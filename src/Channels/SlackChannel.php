@@ -17,12 +17,14 @@ class SlackChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        return SlackMessage::create(array_filter([
+        return SlackMessage::create(array_filter_filled([
             'text' => $report,
             'channel' => config('exception-notify.channels.slack.channel'),
             'username' => config('exception-notify.channels.slack.username'),
             'icon_emoji' => config('exception-notify.channels.slack.icon_emoji'),
             'icon_url' => config('exception-notify.channels.slack.icon_url'),
+            'unfurl_links' => config('exception-notify.channels.slack.unfurl_links'),
+            'attachments' => config('exception-notify.channels.slack.attachments'),
         ]));
     }
 }
