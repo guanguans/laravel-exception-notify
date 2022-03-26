@@ -329,7 +329,7 @@ class ExceptionNotifyManager extends Manager
     protected function createServerChanDriver()
     {
         return new ServerChanChannel(
-            Factory::serverChan($this->getClientOptions('serverChan'))
+            Factory::serverChan(['token' => config('exception-notify.channels.serverChan.token')])
         );
     }
 

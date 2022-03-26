@@ -15,8 +15,8 @@ use Guanguans\Notify\Messages\ServerChanMessage;
 
 class ServerChanChannel extends NotifyChannel
 {
-    protected function createMessage(string $content): MessageInterface
+    protected function createMessage(string $report): MessageInterface
     {
-        return new ServerChanMessage(config('exception-notify.title'), $content);
+        return new ServerChanMessage(config('exception-notify.title'), $report);
     }
 }
