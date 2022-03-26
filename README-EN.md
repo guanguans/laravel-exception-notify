@@ -2,7 +2,7 @@
 
 [简体中文](README.md) | [ENGLISH](README-EN.md)
 
-> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、PushDeer、ServerChan、Slack、Telegram、WeWork、XiZhi).
+> Multiple channels of laravel exception notification(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、PushDeer、QQ Channel Bot、ServerChan、Slack、Telegram、WeWork、XiZhi).
 
 [![Tests](https://github.com/guanguans/laravel-exception-notify/workflows/Tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![Check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/Check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -61,6 +61,7 @@ $app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::cla
 * [Discord](https://discord.com/developers/docs/resources/webhook#edit-webhook-message)
 * [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
 * [PushDeer](http://pushdeer.com)
+* [QQ Channel Bot](https://bot.q.qq.com/wiki/develop/api/openapi/message/post_messages.html)
 * [ServerChan](https://sct.ftqq.com)
 * [Slack](https://api.slack.com/messaging/webhooks)
 * [Telegram](https://core.telegram.org/bots/api#sendmessage)
