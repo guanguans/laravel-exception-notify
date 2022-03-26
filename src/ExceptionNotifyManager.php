@@ -249,7 +249,10 @@ class ExceptionNotifyManager extends Manager
     protected function createDingTalkDriver()
     {
         return new DingTalkChannel(
-            Factory::dingTalk($this->getClientOptions('dingTalk'))
+            Factory::dingTalk(array_filter_filled([
+                'token' => config('exception-notify.channels.dingTalk.token'),
+                'secret' => config('exception-notify.channels.dingTalk.secret'),
+            ]))
         );
     }
 

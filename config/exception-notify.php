@@ -179,9 +179,9 @@ return [
         // 钉钉群机器人
         'dingTalk' => [
             'driver' => 'dingTalk',
-            'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
+            'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 20000),
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
