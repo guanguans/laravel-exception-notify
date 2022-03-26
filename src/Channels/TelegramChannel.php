@@ -17,7 +17,7 @@ class TelegramChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        $options = array_filter([
+        return TextMessage::create(array_filter_filled([
             'chat_id' => config('exception-notify.channels.telegram.chat_id'),
             'text' => $report,
             'parse_mode' => config('exception-notify.channels.telegram.parse_mode'),
@@ -28,10 +28,6 @@ class TelegramChannel extends NotifyChannel
             'reply_to_message_id' => config('exception-notify.channels.telegram.reply_to_message_id'),
             'allow_sending_without_reply' => config('exception-notify.channels.telegram.allow_sending_without_reply'),
             'reply_markup' => config('exception-notify.channels.telegram.reply_markup'),
-        ], function ($option) {
-            return ! blank($option);
-        });
-
-        return TextMessage::create($options);
+        ]));
     }
 }
