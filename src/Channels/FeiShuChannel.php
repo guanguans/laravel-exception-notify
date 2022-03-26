@@ -17,6 +17,6 @@ class FeiShuChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        return TextMessage::create($report);
+        return new TextMessage($report);
     }
 }

@@ -200,9 +200,9 @@ return [
         // 飞书群机器人
         'feiShu' => [
             'driver' => 'feiShu',
-            'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
+            'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 30720),
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
@@ -223,8 +223,8 @@ return [
         // Push Deer
         'pushDeer' => [
             'driver' => 'pushDeer',
-            'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
+            'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
             'pipeline' => [
                 ToMarkdownPipeline::class,
             ],
