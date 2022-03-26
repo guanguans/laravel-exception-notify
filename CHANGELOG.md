@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.6.1 - 2022-03-26
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.6.0...v2.6.1
+
 ## v2.6.0 - 2022-03-26
 
 - Support QQ channel bot
