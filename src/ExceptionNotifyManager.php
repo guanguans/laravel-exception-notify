@@ -350,7 +350,7 @@ class ExceptionNotifyManager extends Manager
     protected function createWeWorkDriver()
     {
         return new WeWorkChannel(
-            Factory::weWork($this->getClientOptions('weWork'))
+            Factory::weWork(['token' => config('exception-notify.channels.weWork.token')])
         );
     }
 

@@ -17,6 +17,10 @@ class WeWorkChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        return new TextMessage(['content' => $report]);
+        return TextMessage::create(array_filter_filled([
+            'content' => $report,
+            'mentioned_list' => config('exception-notify.channels.weWork.mentioned_list'),
+            'mentioned_mobile_list' => config('exception-notify.channels.weWork.mentioned_mobile_list'),
+        ]));
     }
 }
