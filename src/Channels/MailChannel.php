@@ -17,10 +17,16 @@ class MailChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        return EmailMessage::create()
+        $message = EmailMessage::create()
             ->from(config('exception-notify.channels.mail.from'))
             ->to(config('exception-notify.channels.mail.to'))
             ->subject(config('exception-notify.title'))
             ->html($report);
+
+        $cc = config('exception-notify.channels.mail.cc') and $message->cc($cc);
+        $bcc = config('exception-notify.channels.mail.bcc') and $message->bcc($bcc);
+        $replyTo = config('exception-notify.channels.mail.reply_to') and $message->replyTo($replyTo);
+
+        return $message;
     }
 }

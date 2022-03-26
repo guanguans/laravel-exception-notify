@@ -291,7 +291,10 @@ class ExceptionNotifyManager extends Manager
     protected function createMailDriver()
     {
         return new MailChannel(
-            Factory::mailer($this->getClientOptions('mail'))
+            Factory::mailer(array_filter_filled([
+                'dsn' => config('exception-notify.channels.mail.dsn'),
+                'envelope' => config('exception-notify.channels.mail.envelope'),
+            ]))
         );
     }
 
