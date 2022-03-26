@@ -17,9 +17,14 @@ class ChanifyChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        return new TextMessage([
+        return TextMessage::create(array_filter_filled([
             'title' => config('exception-notify.title'),
             'text' => $report,
-        ]);
+            'copy' => config('exception-notify.channels.chanify.copy'),
+            'actions' => config('exception-notify.channels.chanify.actions'),
+            'autocopy' => config('exception-notify.channels.chanify.autocopy'),
+            'sound' => config('exception-notify.channels.chanify.sound'),
+            'priority' => config('exception-notify.channels.chanify.priority'),
+        ]));
     }
 }

@@ -239,7 +239,10 @@ class ExceptionNotifyManager extends Manager
     protected function createChanifyDriver()
     {
         return new ChanifyChannel(
-            Factory::chanify($this->getClientOptions('chanify'))
+            Factory::chanify(array_filter_filled([
+                'token' => config('exception-notify.channels.chanify.token'),
+                'base_uri' => config('exception-notify.channels.chanify.base_uri'),
+            ]))
         );
     }
 
