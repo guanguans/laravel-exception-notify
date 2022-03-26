@@ -17,16 +17,12 @@ class DiscordChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        $options = array_filter([
+        return DiscordMessage::create(array_filter_filled([
             'content' => $report,
             'username' => config('exception-notify.channels.discord.username'),
             'avatar_url' => config('exception-notify.channels.discord.avatar_url'),
             'tts' => config('exception-notify.channels.discord.tts'),
             'embeds' => config('exception-notify.channels.discord.embeds'),
-        ], function ($option) {
-            return ! blank($option);
-        });
-
-        return DiscordMessage::create($options);
+        ]));
     }
 }

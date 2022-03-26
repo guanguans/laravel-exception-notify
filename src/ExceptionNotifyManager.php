@@ -246,6 +246,11 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
+    protected function createDdDriver()
+    {
+        return new DdChannel();
+    }
+
     protected function createDingTalkDriver()
     {
         return new DingTalkChannel(
@@ -261,11 +266,6 @@ class ExceptionNotifyManager extends Manager
         return new DiscordChannel(
             Factory::discord(['webhook_url' => config('exception-notify.channels.discord.webhook_url')])
         );
-    }
-
-    protected function createDdDriver()
-    {
-        return new DdChannel();
     }
 
     protected function createDumpDriver()
