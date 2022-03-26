@@ -276,7 +276,10 @@ class ExceptionNotifyManager extends Manager
     protected function createFeiShuDriver()
     {
         return new FeiShuChannel(
-            Factory::feiShu($this->getClientOptions('feiShu'))
+            Factory::feiShu(array_filter_filled([
+                'token' => config('exception-notify.channels.feiShu.token'),
+                'secret' => config('exception-notify.channels.feiShu.secret'),
+            ]))
         );
     }
 
