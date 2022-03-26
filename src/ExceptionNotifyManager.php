@@ -21,6 +21,7 @@ use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
 use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
 use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
 use Guanguans\LaravelExceptionNotify\Channels\PushDeerChannel;
+use Guanguans\LaravelExceptionNotify\Channels\QqChannelBotChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ServerChanChannel;
 use Guanguans\LaravelExceptionNotify\Channels\SlackChannel;
 use Guanguans\LaravelExceptionNotify\Channels\TelegramChannel;
@@ -291,6 +292,19 @@ class ExceptionNotifyManager extends Manager
     {
         return new PushDeerChannel(
             Factory::pushDeer($this->getClientOptions('pushDeer'))
+        );
+    }
+
+    protected function createQqChannelBotDriver()
+    {
+        return new QqChannelBotChannel(
+            Factory::qqChannelBot(array_filter_filled([
+                'appid' => config('exception-notify.channels.qqChannelBot.appid'),
+                'token' => config('exception-notify.channels.qqChannelBot.token'),
+                'secret' => config('exception-notify.channels.qqChannelBot.secret'),
+                'environment' => config('exception-notify.channels.qqChannelBot.environment'),
+                'channel_id' => config('exception-notify.channels.qqChannelBot.channel_id'),
+            ]))
         );
     }
 

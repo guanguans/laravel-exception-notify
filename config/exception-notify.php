@@ -10,6 +10,7 @@
 
 use Guanguans\LaravelExceptionNotify\Pipelines\AppendContentPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\StrReplacePipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToMarkdownPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\TrimPipeline;
@@ -226,6 +227,19 @@ return [
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
             'pipeline' => [
                 ToMarkdownPipeline::class,
+            ],
+        ],
+
+        // QQ Channel Bot
+        'qqChannelBot' => [
+            'driver' => 'qqChannelBot',
+            'appid' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_APPID'),
+            'token' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_TOKEN'),
+            'channel_id' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_CHANNEL_ID'),
+            'environment' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_ENVIRONMENT', 'production'),
+            'pipeline' => [
+                // 错误码(304003) https://bot.q.qq.com/wiki/develop/api/openapi/error/error.html
+                sprintf('%s:%s,%s', StrReplacePipeline::class, '.php', '.PHP'),
             ],
         ],
 

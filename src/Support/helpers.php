@@ -10,6 +10,18 @@
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 
+if (! function_exists('array_filter_filled')) {
+    /**
+     * @return array
+     */
+    function array_filter_filled(array $array)
+    {
+        return array_filter($array, function ($item) {
+            return ! blank($item);
+        });
+    }
+}
+
 if (! function_exists('call')) {
     /**
      * Call the given Closure / class@method and inject its dependencies.
