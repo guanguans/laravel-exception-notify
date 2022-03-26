@@ -357,7 +357,10 @@ class ExceptionNotifyManager extends Manager
     protected function createXiZhiDriver()
     {
         return new XiZhiChannel(
-            Factory::xiZhi($this->getClientOptions('xiZhi'))
+            Factory::xiZhi([
+                'token' => config('exception-notify.channels.xiZhi.token'),
+                'type' => config('exception-notify.channels.xiZhi.type'),
+            ])
         );
     }
 
