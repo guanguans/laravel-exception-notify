@@ -229,7 +229,10 @@ class ExceptionNotifyManager extends Manager
     protected function createBarkDriver()
     {
         return new BarkChannel(
-            Factory::bark($this->getClientOptions('bark'))
+            Factory::bark(array_filter_filled([
+                'token' => config('exception-notify.channels.bark.token'),
+                'base_uri' => config('exception-notify.channels.bark.base_uri'),
+            ]))
         );
     }
 

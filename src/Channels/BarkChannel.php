@@ -17,7 +17,7 @@ class BarkChannel extends NotifyChannel
 {
     protected function createMessage(string $report): MessageInterface
     {
-        $options = array_filter([
+        return BarkMessage::create(array_filter_filled([
             'title' => config('exception-notify.title'),
             'body' => $report,
             'group' => config('exception-notify.channels.bark.group'),
@@ -30,10 +30,6 @@ class BarkChannel extends NotifyChannel
             'isArchive' => config('exception-notify.channels.bark.isArchive'),
             'autoCopy' => config('exception-notify.channels.bark.autoCopy'),
             'automaticallyCopy' => config('exception-notify.channels.bark.automaticallyCopy'),
-        ], function ($option) {
-            return ! blank($option);
-        });
-
-        return new BarkMessage($options);
+        ]));
     }
 }
