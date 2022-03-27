@@ -138,47 +138,6 @@ class ExceptionNotifyManager extends Manager
      *
      * @return array
      */
-    protected function getClientOptions($name)
-    {
-        $options = $this->transformConfigToOptions($this->getChannelConfig($name));
-
-        return array_filter($options, function ($option) {
-            return ! blank($option);
-        });
-    }
-
-    /**
-     * @return array
-     */
-    protected function transformConfigToOptions(array $config)
-    {
-        unset(
-            $config['keyword'],
-            $config['driver'],
-            $config['pipeline'],
-            $config['to'],
-            $config['from'],
-            $config['url'],
-            $config['group'],
-            $config['copy'],
-            $config['url'],
-            $config['icon'],
-            $config['group'],
-            $config['level'],
-            $config['badge'],
-            $config['isArchive'],
-            $config['autoCopy'],
-            $config['automaticallyCopy'],
-        );
-
-        return $config;
-    }
-
-    /**
-     * @param $name
-     *
-     * @return array
-     */
     protected function getChannelConfig($name)
     {
         if (! is_null($name) && 'null' !== $name) {
