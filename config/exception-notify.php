@@ -144,7 +144,7 @@ return [
     | The default channel of the exception notification report.
     |
     */
-    'default' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'mail'),
+    'default' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'log'),
 
     /*
     |--------------------------------------------------------------------------
@@ -207,6 +207,14 @@ return [
                 sprintf('%s:%s', LengthLimitPipeline::class, 30720),
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
+        ],
+
+        // Log
+        'log' => [
+            'driver' => 'log',
+            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default')),
+            'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
+            'pipeline' => [],
         ],
 
         // 邮件

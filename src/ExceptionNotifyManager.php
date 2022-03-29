@@ -244,7 +244,10 @@ class ExceptionNotifyManager extends Manager
 
     protected function createLogDriver()
     {
-        return new LogChannel(config('exception-notify.channels.log.level', 'error'));
+        return new LogChannel(
+            config('exception-notify.channels.log.channel'),
+            config('exception-notify.channels.log.level')
+        );
     }
 
     protected function createMailDriver()

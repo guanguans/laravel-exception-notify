@@ -19,13 +19,19 @@ class LogChannel extends Channel
      */
     protected $level;
 
-    public function __construct(string $level = 'info')
+    /**
+     * @var string
+     */
+    protected $channel;
+
+    public function __construct(string $channel, string $level)
     {
+        $this->channel = $channel;
         $this->level = $level;
     }
 
     public function report(string $report)
     {
-        Log::{$this->level}($report);
+        Log::channel($this->channel)->{$this->level}($report);
     }
 }
