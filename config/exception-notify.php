@@ -212,7 +212,7 @@ return [
         // Log
         'log' => [
             'driver' => 'log',
-            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default')),
+            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default', 'stack')),
             'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
             'pipeline' => [],
         ],
