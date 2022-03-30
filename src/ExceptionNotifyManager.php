@@ -74,7 +74,6 @@ class ExceptionNotifyManager extends Manager
             }
 
             $this->registerException($e);
-            $this->registerReportExceptionJobMethod();
             $this->dispatchReportExceptionJob();
         } catch (Throwable $e) {
             $this->container['log']->error($e->getMessage(), ['exception' => $e]);
@@ -100,9 +99,10 @@ class ExceptionNotifyManager extends Manager
 
     protected function dispatchReportExceptionJob()
     {
+        $report = (string) $this->container->make(CollectorManager::class);
         $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
         foreach ($drivers as $driver) {
-            $dispatch = dispatch(ReportExceptionJob::create($driver));
+            $dispatch = dispatch(ReportExceptionJob::create($driver, $report));
 
             'sync' === $this->container['config']['queue.default'] and
             method_exists($dispatch, 'afterResponse') and $dispatch->afterResponse();
