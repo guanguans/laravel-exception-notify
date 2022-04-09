@@ -70,7 +70,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function registerCollectorManager()
     {
         $this->app->singleton(CollectorManager::class, function (Container $app) {
-            $collectors = collect($app['config']['exception-notify.collector.class'])
+            $collectors = collect($app['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
                     if (! is_array($parameters)) {
                         [$parameters, $class] = [$class, $parameters];

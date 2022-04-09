@@ -49,7 +49,9 @@ class CollectorManager extends Fluent implements Stringable
                 return $collector;
             })
             ->pipe(function (Collection $collectors): string {
-                return call(config('exception-notify.collector.transformer'), ['collectors' => $collectors]);
+                return $collectors->reduce(function (string $carry, Collector $collector) {
+                    return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector);
+                }, '');
             });
     }
 }
