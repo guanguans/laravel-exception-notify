@@ -30,7 +30,6 @@ use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
@@ -83,18 +82,6 @@ class ExceptionNotifyManager extends Manager
     protected function registerException(Throwable $e)
     {
         $this->container->instance('exception.notify.exception', $e);
-    }
-
-    protected function registerReportExceptionJobMethod()
-    {
-        $this->container->bindMethod(
-            sprintf('%s@handle', ReportExceptionJob::class),
-            function (ShouldQueue $job, Container $container) {
-                $report = (string) $container->make(CollectorManager::class);
-
-                return $job->handle($report);
-            }
-        );
     }
 
     protected function dispatchReportExceptionJob()

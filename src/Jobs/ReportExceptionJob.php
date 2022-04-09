@@ -13,7 +13,6 @@ namespace Guanguans\LaravelExceptionNotify\Jobs;
 use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Pipelines\TrimPipeline;
 use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -79,10 +78,7 @@ class ReportExceptionJob implements ShouldQueue
 
     protected function getChannelPipeline(): array
     {
-        return array_merge(
-            [TrimPipeline::class],
-            config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), [])
-        );
+        return config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), []);
     }
 
     protected function pipelineReport(string $report): string

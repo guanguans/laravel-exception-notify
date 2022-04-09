@@ -16,6 +16,7 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Stringable;
+use Throwable;
 
 class CollectorManager extends Fluent implements Stringable
 {
@@ -40,18 +41,25 @@ class CollectorManager extends Fluent implements Stringable
         $this->attributes[$offset] = $value;
     }
 
-    public function __toString()
+    public function toReport(Throwable $e): string
     {
         return (string) collect($this)
-            ->transform(function (Collector $collector) {
-                $collector instanceof ExceptionAware and $collector->setException(app('exception.notify.exception'));
+            ->transform(function (Collector $collector) use ($e) {
+                $collector instanceof ExceptionAware and $collector->setException($e);
 
                 return $collector;
             })
             ->pipe(function (Collection $collectors): string {
-                return $collectors->reduce(function (string $carry, Collector $collector) {
+                $report = $collectors->reduce(function (string $carry, Collector $collector) {
                     return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector);
                 }, '');
+
+                return trim($report);
             });
+    }
+
+    public function __toString()
+    {
+        return $this->toReport(app('exception.notify.exception'));
     }
 }
