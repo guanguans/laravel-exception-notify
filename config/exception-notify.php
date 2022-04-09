@@ -13,7 +13,6 @@ use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\StrReplacePipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToMarkdownPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\TrimPipeline;
 
 return [
     /*
@@ -123,17 +122,6 @@ return [
         // \Guanguans\LaravelExceptionNotify\Listeners\Reported\LogReportResultListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DumpReportResultListener::class,
         // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DdReportResultListener::class,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Global pipeline.
-    |--------------------------------------------------------------------------
-    | The global pipeline are used to pipeline report data.
-    |
-    */
-    'pipeline' => [
-        TrimPipeline::class,
     ],
 
     /*
