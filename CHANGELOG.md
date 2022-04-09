@@ -2,6 +2,14 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.8.0 - 2022-04-09
+
+## What's Changed
+
+- Bump codecov/codecov-action from 2.1.0 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/21
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.7.1...v2.8.0
+
 ## v2.7.1 - 2022-03-30
 
 ## What's Changed
