@@ -33,12 +33,10 @@ abstract class Collector implements CollectorContract
 
     protected function applyPipeCollect()
     {
-        $pipedCollect = collect($this->collect())
-                ->when($this->pipe, function (Collection $collects) {
-                    return $collects->pipe($this->pipe);
-                });
-
-        return collect($pipedCollect)
+        return collect($this->collect())
+            ->when($this->pipe, function (Collection $collects) {
+                return collect($collects->pipe($this->pipe));
+            })
             ->filter(function ($item) {
                 return ! blank($item);
             })
@@ -47,6 +45,9 @@ abstract class Collector implements CollectorContract
 
     public function __toString()
     {
-        return (string) var_output($this->applyPipeCollect(), true);
+        return (string) json_encode(
+            $this->applyPipeCollect(),
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+        );
     }
 }
