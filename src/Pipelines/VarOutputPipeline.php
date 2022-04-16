@@ -12,7 +12,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
 use Closure;
 
-class VarExportPipeline
+class VarOutputPipeline
 {
     public function handle(string $report, Closure $next): string
     {
