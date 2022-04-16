@@ -39,13 +39,13 @@ if (! function_exists('call')) {
     }
 }
 
-if (! function_exists('varexport')) {
+if (! function_exists('var_output')) {
     /**
      * @param $expression
      *
      * @return void|null|string|
      */
-    function varexport($expression, bool $return = false)
+    function var_output($expression, bool $return = false)
     {
         $patterns = [
             "/array \(\n\)/" => '[]',

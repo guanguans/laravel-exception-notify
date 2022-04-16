@@ -16,6 +16,6 @@ class VarExportPipeline
 {
     public function handle(string $report, Closure $next): string
     {
-        return $next(varexport($report, true));
+        return $next(var_output($report, true));
     }
 }
