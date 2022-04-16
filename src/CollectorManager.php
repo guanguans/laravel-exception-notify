@@ -28,8 +28,6 @@ class CollectorManager extends Fluent implements Stringable
         foreach ($collectors as $index => $collector) {
             $this->offsetSet($index, $collector);
         }
-
-        parent::__construct($collectors);
     }
 
     public function offsetSet($offset, $value): void
