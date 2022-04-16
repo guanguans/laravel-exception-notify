@@ -28,11 +28,11 @@ class RequestBasicCollector extends Collector
     public function collect()
     {
         return [
-            'Url' => $this->request->url(),
-            'Ip' => $this->request->ip(),
-            'Method' => $this->request->method(),
-            'Action' => optional($this->request->route())->getActionName(),
-            'Duration' => value(function () {
+            'url' => $this->request->url(),
+            'ip' => $this->request->ip(),
+            'method' => $this->request->method(),
+            'action' => optional($this->request->route())->getActionName(),
+            'duration' => value(function () {
                 $startTime = defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
                 return floor((microtime(true) - $startTime) * 1000).'ms';

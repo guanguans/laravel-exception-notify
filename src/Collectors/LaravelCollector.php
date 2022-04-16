@@ -28,17 +28,17 @@ class LaravelCollector extends Collector
     public function collect()
     {
         return [
-            'Name' => $this->app['config']['app.name'],
-            'Version' => $this->app->version(),
-            'Environment' => $this->app->environment(),
-            'Locale' => value(function () {
+            'name' => $this->app['config']['app.name'],
+            'version' => $this->app->version(),
+            'environment' => $this->app->environment(),
+            'locale' => value(function () {
                 if (! method_exists($this->app, 'getLocale')) {
                     return null;
                 }
 
                 return $this->app->getLocale();
             }),
-            'In Console' => $this->app->runningInConsole(),
+            'in console' => $this->app->runningInConsole(),
         ];
     }
 }
