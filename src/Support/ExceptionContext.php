@@ -22,24 +22,23 @@ class ExceptionContext
     /**
      * Get the formatted exception code context for the given exception.
      *
-     * @return string
+     * @return array
      */
-    public static function getFormattedContext(Throwable $e, $wrapSkeleton = "[\n%s  ]")
+    public static function getFormattedContext(Throwable $e)
     {
-        $contextStr = collect(static::get($e))
+        return collect(static::get($e))
             ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
                 $exceptionLine = $e->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
                 $maxLineLen = max(mb_strlen(array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
             })
-            ->reduces(function ($carry, $code, $line) use ($maxLineLen, $markedExceptionLine, $exceptionLine) {
+            ->mapWithKeys(function ($code, $line) use (&$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
                 $line === $exceptionLine and $line = $markedExceptionLine;
                 $line = sprintf("%{$maxLineLen}s", $line);
 
-                return "$carry    $line    $code".PHP_EOL;
-            }, '');
-
-        return sprintf($wrapSkeleton, $contextStr);
+                return [$line => $code];
+            })
+            ->all();
     }
 
     /**
