@@ -93,34 +93,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Reporting event.
-    |--------------------------------------------------------------------------
-    |
-    | The event that will be triggered when the report is ready.
-    |
-    */
-    'reporting' => [
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\LogReportListener::class,
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DumpReportListener::class,
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reporting\DdReportListener::class,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Reported event.
-    |--------------------------------------------------------------------------
-    |
-    | The event that will be triggered when the report is reported.
-    |
-    */
-    'reported' => [
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\LogReportResultListener::class,
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DumpReportResultListener::class,
-        // \Guanguans\LaravelExceptionNotify\Listeners\Reported\DdReportResultListener::class,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | default channel.
     |--------------------------------------------------------------------------
     |

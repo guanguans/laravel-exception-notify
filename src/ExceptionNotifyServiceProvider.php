@@ -36,8 +36,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         Request::mixin($this->app->make(RequestMacro::class));
         Collection::mixin($this->app->make(CollectionMacro::class));
         Str::mixin($this->app->make(StrMacro::class));
-        $this->registerReportingEvent();
-        $this->registerReportedEvent();
+        // $this->registerReportingEvent();
+        // $this->registerReportedEvent();
     }
 
     /**
