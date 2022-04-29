@@ -13,17 +13,16 @@ namespace Guanguans\LaravelExceptionNotify\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static onChannel(...$channels)
- * @method static report(\Throwable $e)
- * @method static reportIf($condition, \Throwable $e)
- * @method static extend($driver, \Closure $callback)
- * @method static shouldReport(\Throwable $e)
- * @method static shouldntReport(\Throwable $e)
- * @method static macro($name, $macro)
- * @method static mixin($mixin, $replace = true)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager onChannel(...$channels)
+ * @method static void report(\Throwable $e)
+ * @method static void reportIf($condition, \Throwable $e)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend($driver, \Closure $callback)
+ * @method static bool shouldReport(\Throwable $e)
+ * @method static bool shouldntReport(\Throwable $e)
+ * @method static void macro($name, $macro)
+ * @method static void mixin($mixin, $replace = true)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
- * @see \Guanguans\LaravelExceptionNotify\Channels\Channel
  */
 class ExceptionNotify extends Facade
 {
