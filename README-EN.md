@@ -18,6 +18,7 @@
 * Support for extended custom channels
 * Support for custom data collectors
 * Support for custom data transformers
+* Support notification rate limit(default once per minute)
 
 ## Related Links
 

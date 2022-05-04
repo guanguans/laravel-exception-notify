@@ -22,7 +22,7 @@ All notable changes to `guanguans/laravel-exception-notify` will be documented i
 
 ## What's Changed
 
-- Issue 19 job错误 by @guanguans in https://github.com/guanguans/laravel-exception-notify/pull/20
+- Issue 19 job 错误 by @guanguans in https://github.com/guanguans/laravel-exception-notify/pull/20
 
 ## New Contributors
 
