@@ -58,6 +58,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Exception notification rate limiter.
+    |--------------------------------------------------------------------------
+    |
+    | The exception notification rate limiter is used to prevent sending
+    | exception notification to the same channel too frequently.
+    |
+    */
+    'rate_limiter' => [
+        // Limit the number of exceptions.
+        'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', 1),
+
+        // Time interval.
+        'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '1 minutes'),
+
+        // Cache adapter.
+        'cache_adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Report title.
     |--------------------------------------------------------------------------
     |

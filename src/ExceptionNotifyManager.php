@@ -34,6 +34,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Throwable;
 
 class ExceptionNotifyManager extends Manager
@@ -112,7 +113,13 @@ class ExceptionNotifyManager extends Manager
             }
         }
 
-        return false;
+        /* @var RateLimiterFactory $rateLimiterFactory */
+        $rateLimiterFactory = $this->container->make(RateLimiterFactory::class);
+
+        return ! $rateLimiterFactory
+            ->create(md5($e->getFile().$e->getLine().$e->getCode().$e->getMessage()))
+            ->consume()
+            ->isAccepted();
     }
 
     public function shouldReport(Throwable $e): bool

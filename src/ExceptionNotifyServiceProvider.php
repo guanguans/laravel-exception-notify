@@ -22,6 +22,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Lumen\Application as LumenApplication;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\Storage\CacheStorage;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
@@ -49,6 +51,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->setupConfig();
         $this->registerExceptionNotifyManager();
         $this->registerCollectorManager();
+        $this->registerRateLimiterFactory();
     }
 
     /**
@@ -94,6 +97,22 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
+    }
+
+    protected function registerRateLimiterFactory()
+    {
+        $this->app->singleton(RateLimiterFactory::class, function (Container $app) {
+            return new RateLimiterFactory([
+                'id' => 'exception_notify',
+                'policy' => 'token_bucket',
+                'limit' => $app['config']['exception-notify.rate_limiter.limit'],
+                'rate' => [
+                    'interval' => $app['config']['exception-notify.rate_limiter.interval'],
+                ],
+            ], new CacheStorage($app->make($app['config']['exception-notify.rate_limiter.cache_adapter'])));
+        });
+
+        $this->app->alias(RateLimiterFactory::class, 'exception.rate-limiter-factory');
     }
 
     protected function registerReportingEvent()
