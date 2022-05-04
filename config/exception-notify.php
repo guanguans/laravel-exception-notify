@@ -105,7 +105,7 @@ return [
     */
     'collector' => [
         \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\AnnexCollector::class,
+        \Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector::class,
         \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
         \Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
         \Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,

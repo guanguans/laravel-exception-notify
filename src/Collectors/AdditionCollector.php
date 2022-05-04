@@ -10,7 +10,7 @@
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-class AnnexCollector extends Collector
+class AdditionCollector extends Collector
 {
     public function collect()
     {
