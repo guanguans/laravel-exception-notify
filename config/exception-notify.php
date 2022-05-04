@@ -66,14 +66,23 @@ return [
     |
     */
     'rate_limiter' => [
-        // Limit the number of exceptions.
-        'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', 1),
+        // Config.
+        'config' => [
+            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', 1),
+            'rate' => [
+                // https://www.php.net/manual/en/datetime.formats.php
+                'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '1 minutes'),
+            ],
+        ],
 
-        // Time interval.
-        'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '1 minutes'),
-
-        // Cache adapter.
-        'cache_adapter' => \Symfony\Component\Cache\Adapter\FilesystemAdapter::class,
+        // Storage.
+        'storage' => [
+            // \Psr\Cache\CacheItemPoolInterface::class
+            'class' => \Symfony\Component\Cache\Adapter\PhpFilesAdapter::class,
+            'parameters' => [
+                'directory' => storage_path('framework/cache/exception-notify'),
+            ],
+        ],
     ],
 
     /*

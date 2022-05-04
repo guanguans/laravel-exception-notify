@@ -113,11 +113,10 @@ class ExceptionNotifyManager extends Manager
             }
         }
 
-        /* @var RateLimiterFactory $rateLimiterFactory */
-        $rateLimiterFactory = $this->container->make(RateLimiterFactory::class);
-
-        return ! $rateLimiterFactory
-            ->create(md5($e->getFile().$e->getLine().$e->getCode().$e->getMessage()))
+        return ! $this
+            ->container
+            ->make(RateLimiterFactory::class)
+            ->create(md5($e->getMessage().$e->getCode().$e->getFile().$e->getLine()))
             ->consume()
             ->isAccepted();
     }

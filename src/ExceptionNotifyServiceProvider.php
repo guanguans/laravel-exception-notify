@@ -51,7 +51,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->setupConfig();
         $this->registerExceptionNotifyManager();
         $this->registerCollectorManager();
-        $this->registerRateLimiterFactory();
+        $this->registerRateLimiter();
     }
 
     /**
@@ -99,20 +99,34 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
     }
 
-    protected function registerRateLimiterFactory()
+    protected function registerRateLimiter()
     {
-        $this->app->singleton(RateLimiterFactory::class, function (Container $app) {
-            return new RateLimiterFactory([
-                'id' => 'exception_notify',
-                'policy' => 'token_bucket',
-                'limit' => $app['config']['exception-notify.rate_limiter.limit'],
-                'rate' => [
-                    'interval' => $app['config']['exception-notify.rate_limiter.interval'],
-                ],
-            ], new CacheStorage($app->make($app['config']['exception-notify.rate_limiter.cache_adapter'])));
+        $this->app->singleton(CacheStorage::class, function (Container $app) {
+            return new CacheStorage(
+                $app->make(
+                    $app['config']['exception-notify.rate_limiter.storage.class'],
+                    $app['config']['exception-notify.rate_limiter.storage.parameters']
+                )
+            );
         });
+        $this->app->alias(CacheStorage::class, 'exception.rate-limiter.storage');
 
-        $this->app->alias(RateLimiterFactory::class, 'exception.rate-limiter-factory');
+        $this->app->singleton(RateLimiterFactory::class, function (Container $app) {
+            return new RateLimiterFactory(
+                array_merge([
+                    'id' => 'exception-notify',
+                    'policy' => 'token_bucket',
+                    'limit' => 6,
+                    'interval' => '1 minutes',
+                    'rate' => [
+                        'amount' => 1,
+                        'interval' => '1 minutes',
+                    ],
+                ], $app['config']['exception-notify.rate_limiter.config']),
+                $this->app->make(CacheStorage::class)
+            );
+        });
+        $this->app->alias(RateLimiterFactory::class, 'exception.rate-limiter.factory');
     }
 
     protected function registerReportingEvent()
