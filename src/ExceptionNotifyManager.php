@@ -63,7 +63,7 @@ class ExceptionNotifyManager extends Manager
 
     public function reportIf($condition, Throwable $e)
     {
-        $condition and $this->report($e);
+        value($condition) and $this->report($e);
     }
 
     public function report(Throwable $e)
