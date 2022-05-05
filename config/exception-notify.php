@@ -68,7 +68,7 @@ return [
     'rate_limiter' => [
         // Config.
         'config' => [
-            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', 1),
+            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 20 : 1),
             'rate' => [
                 // https://www.php.net/manual/en/datetime.formats.php
                 'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '1 minutes'),
