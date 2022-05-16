@@ -10,22 +10,46 @@
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+use Exception;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Illuminate\Support\Facades\Route;
+
+abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
-    /**
-     * Tear down the test case.
-     */
-    public function tearDown(): void
+    protected function setUp(): void
     {
-        $this->finish();
-        parent::tearDown();
+        parent::setUp();
+        $this->setUpApplicationRoutes();
     }
 
-    /**
-     * Run extra tear down code.
-     */
-    protected function finish()
+    protected function getPackageProviders($app)
     {
-        // call more tear down methods
+        return [
+            \Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class,
+        ];
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('soar', require __DIR__.'/../config/exception-notify.php');
+        $app['config']->set('soar.enabled', true);
+
+        $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('database.connections.sqlite', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+
+        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
+    }
+
+    protected function setUpApplicationRoutes(): void
+    {
+        Route::get('/report-exception', function () {
+            ExceptionNotify::onChannel('dump', 'log')->report(new Exception('What happened?'));
+
+            return 'This is a test page.';
+        });
     }
 }
