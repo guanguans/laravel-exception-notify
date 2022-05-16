@@ -11,6 +11,7 @@
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
 use Exception;
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class,
+            ExceptionNotifyServiceProvider::class,
         ];
     }
 
@@ -33,7 +34,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         $app['config']->set('exception-notify', require __DIR__.'/../config/exception-notify.php');
         $app['config']->set('exception-notify.enabled', true);
+        $app['config']->set('exception-notify.channels.bark.token', 'GQpdjXqYuCrQDWpW');
         $app['config']->set('exception-notify.channels.log.channel', 'single');
+        $app['config']->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
+        $app['config']->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
+        $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
+        $app['config']->set('exception-notify.rate_limiter.config.limit', 1000);
 
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [
@@ -52,5 +58,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
             return 'This is a test page.';
         });
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        if ($container = \Mockery::getContainer()) {
+            $this->addToAssertionCount($container->Mockery_getExpectationCount());
+        }
+        \Mockery::close();
     }
 }
