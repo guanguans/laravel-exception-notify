@@ -20,6 +20,7 @@
         <whitelist>
             <directory suffix=".php">src/</directory>
             <exclude>
+                <directory>src/Support/</directory>
                 <file>src/Skeleton.php</file>
             </exclude>
         </whitelist>
