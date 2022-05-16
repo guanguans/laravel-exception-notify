@@ -74,7 +74,8 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.2",
         "nyholm/nsa": "^1.2",
-        "phpunit/phpunit": "^7.0 || ^8.0",
+        "orchestra/testbench": "^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
+        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
         "vimeo/psalm": "^4.0"
     },
     "autoload": {
