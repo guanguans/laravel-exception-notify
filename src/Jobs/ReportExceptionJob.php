@@ -61,18 +61,22 @@ class ReportExceptionJob implements ShouldQueue
      */
     protected $report;
 
+    /**
+     * @var string
+     */
+    protected $pipedReport;
+
     public function __construct(Channel $channel, string $report)
     {
         $this->channel = $channel;
         $this->report = $report;
+        $this->pipedReport = $this->pipelineReport($report);
     }
 
     public function handle()
     {
-        $pipedReport = $this->pipelineReport($this->report);
-
-        $this->fireReportingEvent($pipedReport);
-        $result = $this->channel->report($pipedReport);
+        $this->fireReportingEvent($this->pipedReport);
+        $result = $this->channel->report($this->pipedReport);
         $this->fireReportedEvent($result);
     }
 
