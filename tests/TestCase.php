@@ -14,7 +14,7 @@ use Exception;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
 
-abstract class TestCase extends \Orchestra\Testbench\TestCase
+class TestCase extends \Orchestra\Testbench\TestCase
 {
     protected function setUp(): void
     {
@@ -31,8 +31,9 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('soar', require __DIR__.'/../config/exception-notify.php');
-        $app['config']->set('soar.enabled', true);
+        $app['config']->set('exception-notify', require __DIR__.'/../config/exception-notify.php');
+        $app['config']->set('exception-notify.enabled', true);
+        $app['config']->set('exception-notify.channels.log.channel', 'single');
 
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [

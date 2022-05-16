@@ -20,6 +20,10 @@
         <whitelist>
             <directory suffix=".php">src/</directory>
             <exclude>
+                <directory>src/Contracts/</directory>
+                <directory>src/Exceptions/</directory>
+                <directory>src/Listeners/</directory>
+                <directory>src/Pipelines/</directory>
                 <directory>src/Support/</directory>
                 <file>src/Skeleton.php</file>
             </exclude>
