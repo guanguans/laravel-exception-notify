@@ -139,6 +139,12 @@ Please review [our security policy](../../security/policy) on how to report secu
 * [guanguans](https://github.com/guanguans)
 * [All Contributors](../../contributors)
 
+## Thanks
+
+<a href="https://www.jetbrains.com" target="_blank">
+    <img src="./docs/jetbrains.png" alt="jetbrains" width="200"/>
+</a>
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.

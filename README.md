@@ -141,6 +141,12 @@ $ composer test
 * [guanguans](https://github.com/guanguans)
 * [所有贡献者](../../contributors)
 
+## 鸣谢
+
+<a href="https://www.jetbrains.com" target="_blank">
+    <img src="./docs/jetbrains.png" alt="jetbrains" width="200"/>
+</a>
+
 ## 协议
 
 MIT 许可证（MIT）。有关更多信息，请参见[协议文件](LICENSE)。
