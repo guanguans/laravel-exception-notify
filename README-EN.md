@@ -141,9 +141,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Thanks
 
-<a href="https://www.jetbrains.com" target="_blank">
-    <img src="./docs/jetbrains.png" alt="jetbrains" width="200"/>
-</a>
+[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/guanguans)
 
 ## License
 
