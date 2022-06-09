@@ -202,6 +202,7 @@ return [
         ],
 
         // 邮件
+        // 安装依赖 composer require symfony/mailer -vvv
         'mail' => [
             'driver' => 'mail',
             'dsn' => env('EXCEPTION_NOTIFY_MAIL_DSN'),
@@ -223,6 +224,7 @@ return [
         ],
 
         // QQ Channel Bot
+        // 安装依赖 composer require textalk/websocket -vvv
         'qqChannelBot' => [
             'driver' => 'qqChannelBot',
             'appid' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_APPID'),
