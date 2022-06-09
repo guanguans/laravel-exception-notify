@@ -20,7 +20,7 @@ class DingTalkChannel extends NotifyChannel
         return TextMessage::create(array_filter_filled([
             'content' => $report,
             'atMobiles' => config('exception-notify.channels.dingTalk.atMobiles'),
-            'atUserIds' => config('exception-notify.channels.dingTalk.atUserIds'),
+            'atDingtalkIds' => config('exception-notify.channels.dingTalk.atDingtalkIds'),
             'isAtAll' => config('exception-notify.channels.dingTalk.isAtAll'),
         ]));
     }
