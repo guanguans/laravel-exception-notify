@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -12,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 class DdChannel extends Channel
 {
-    public function report(string $report)
+    public function report(string $report): void
     {
         dd($report);
     }

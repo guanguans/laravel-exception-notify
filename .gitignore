@@ -14,3 +14,4 @@ vendor/
 tests.php
 .DS_Store
 .history/
+composer.phar

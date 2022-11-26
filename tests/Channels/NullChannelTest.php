@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -16,7 +18,7 @@ use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
 class NullChannelTest extends TestCase
 {
-    public function testReport()
+    public function testReport(): void
     {
         $channel = $this->app->make(ExceptionNotifyManager::class)->driver('null');
         $this->assertInstanceOf(NullChannel::class, $channel);

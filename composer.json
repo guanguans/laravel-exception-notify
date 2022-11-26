@@ -1,6 +1,8 @@
 {
     "name": "guanguans/laravel-exception-notify",
     "description": "Laravel 中异常监控报警通知(Bark、Chanify、钉钉群机器人、Discord、飞书群机器人、邮件、PushDeer、QQ 频道机器人、Server 酱、Slack、Telegram、企业微信群机器人、息知)。",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "laravel",
         "notification",
@@ -38,11 +40,6 @@
         "微信",
         "息知"
     ],
-    "homepage": "https://github.com/guanguans/laravel-exception-notify",
-    "support": {
-        "issues": "https://github.com/guanguans/laravel-exception-notify/issues",
-        "source": "https://github.com/guanguans/laravel-exception-notify"
-    },
     "authors": [
         {
             "name": "guanguans",
@@ -51,10 +48,17 @@
             "role": "developer"
         }
     ],
-    "type": "library",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "homepage": "https://github.com/guanguans/laravel-exception-notify",
+    "support": {
+        "issues": "https://github.com/guanguans/laravel-exception-notify/issues",
+        "source": "https://github.com/guanguans/laravel-exception-notify"
+    },
+    "funding": [
+        {
+            "type": "wechat",
+            "url": "https://www.guanguans.cn/images/wechat.jpeg"
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "ext-json": "*",
@@ -70,14 +74,16 @@
         "symfony/rate-limiter": "^5.0 || ^6.0"
     },
     "require-dev": {
-        "brainmaestro/composer-git-hooks": "^2.7",
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "mockery/mockery": "^1.2",
-        "nyholm/nsa": "^1.2",
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "mockery/mockery": "^1.5",
+        "nyholm/nsa": "^1.3",
         "orchestra/testbench": "^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
-        "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-        "vimeo/psalm": "^4.0"
+        "phpunit/phpunit": "^8.0 || ^9.0",
+        "vimeo/psalm": "^4.22"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Guanguans\\LaravelExceptionNotify\\": "src"
@@ -94,49 +100,61 @@
     "config": {
         "sort-packages": true
     },
-    "funding": [
-        {
-            "type": "wechat",
-            "url": "https://www.guanguans.cn/images/wechat.jpeg"
-        }
-    ],
     "extra": {
-        "laravel": {
-            "providers": [
-                "Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
+        "branch-alias": {
+            "dev-main": "2.x-dev"
+        },
+        "hooks": {
+            "post-merge": [
+                "composer checks"
             ],
+            "pre-commit": [
+                "composer checks"
+            ]
+        },
+        "laravel": {
             "aliases": {
                 "ExceptionNotifier": "Guanguans\\LaravelExceptionNotify\\Facades\\ExceptionNotify",
                 "ExceptionNotify": "Guanguans\\LaravelExceptionNotify\\Facades\\ExceptionNotify"
-            }
-        },
-        "hooks": {
-            "pre-commit": [
-                "composer style-lint",
-                "composer test"
-            ],
-            "pre-push": [
-                "composer style-lint",
-                "composer test"
+            },
+            "providers": [
+                "Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
             ]
         }
     },
     "scripts": {
-        "post-update-cmd": [
-            "cghooks update"
-        ],
-        "post-merge": "composer install",
         "post-install-cmd": [
             "cghooks add --ignore-lock",
             "cghooks update"
         ],
+        "post-update-cmd": [
+            "cghooks update"
+        ],
         "cghooks": "./vendor/bin/cghooks",
-        "md-lint": "lint-md --config .lintmdrc *.md .github/*.md .github/ISSUE_TEMPLATE/*.md",
-        "md-fix": "lint-md --config .lintmdrc --fix *.md .github/*.md .github/ISSUE_TEMPLATE/*.md",
-        "style-lint": "./vendor/bin/php-cs-fixer fix --using-cache=no --diff --config=.php-cs-fixer.dist.php --dry-run --ansi",
-        "style-fix": "./vendor/bin/php-cs-fixer fix --using-cache=no --config=.php-cs-fixer.dist.php --ansi",
+        "checks": [
+            "@mark-start",
+            "@style-lint",
+            "@mark-separate",
+            "@test",
+            "@mark-finish"
+        ],
+        "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
+        "mark-separate": "printf '\\n!\\n!\\t\\033[0;33m%s\\033[0m\\n!\\n\\n' \"----------------\"",
+        "mark-start": "printf '\\n!\\n!\\t\\033[0;36m%s\\033[0m\\n!\\n\\n' \"Started\"",
+        "md-fix": "@md-lint --fix",
+        "md-lint": "lint-md --config .lintmdrc ./*.md ./.github/ ./docs/",
+        "phpstan": "./vendor/bin/phpstan analyse -vv",
+        "phpstan-baseline": "@phpstan --generate-baseline",
+        "post-merge": [
+            "composer install"
+        ],
         "psalm": "./vendor/bin/psalm",
-        "test": "./vendor/bin/phpunit --coverage-text --colors=always --verbose",
-        "test-coverage": "./vendor/bin/phpunit --coverage-html=coverage/ --coverage-clover=clover.xml --color=always --verbose"
+        "psalm-baseline": "@psalm --update-baseline",
+        "rector": "./vendor/bin/rector --clear-cache --ansi -v",
+        "rector-dry-run": "@rector --dry-run",
+        "style-fix": "./vendor/bin/php-cs-fixer fix --using-cache=no --config=.php-cs-fixer.php --ansi",
+        "style-lint": "@style-fix --diff --dry-run",
+        "test": "./vendor/bin/phpunit --cache-result-file=./build//phpunit/.phpunit.result.cache",
+        "test-coverage": "@test --coverage-html=./build/phpunit/ --coverage-clover=clover.xml --coverage"
     }
 }

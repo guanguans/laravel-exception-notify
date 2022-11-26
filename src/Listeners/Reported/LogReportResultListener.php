@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -25,7 +27,7 @@ class LogReportResultListener
         $this->logger = $logger;
     }
 
-    public function handle(ReportedEvent $event)
+    public function handle(ReportedEvent $event): void
     {
         $this->logger->info($event->channel->getName(), (array) $event->result);
     }

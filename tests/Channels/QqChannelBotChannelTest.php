@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -18,7 +20,7 @@ use Nyholm\NSA;
 
 class QqChannelBotChannelTest extends TestCase
 {
-    public function testCreateMessage()
+    public function testCreateMessage(): void
     {
         $channel = $this->app->make(ExceptionNotifyManager::class)->driver('qqChannelBot');
         $this->assertInstanceOf(QqChannelBotChannel::class, $channel);

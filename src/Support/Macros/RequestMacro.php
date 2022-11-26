@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -16,14 +18,12 @@ class RequestMacro
     {
         return function ($key = null, $default = null) {
             /* @var \Illuminate\Http\Request $this */
-            if (! is_null($key)) {
+            if (null !== $key) {
                 return $this->header($key, $default);
             }
 
             return collect($this->header())
-                ->map(function ($header) {
-                    return $header[0];
-                })
+                ->map(fn ($header) => $header[0])
                 ->all();
         };
     }

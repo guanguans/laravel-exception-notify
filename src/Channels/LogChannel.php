@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -30,7 +32,7 @@ class LogChannel extends Channel
         $this->level = $level;
     }
 
-    public function report(string $report)
+    public function report(string $report): void
     {
         Log::channel($this->channel)->{$this->level}($report);
     }

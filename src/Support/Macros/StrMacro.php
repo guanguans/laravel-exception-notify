@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -30,15 +32,11 @@ class StrMacro
 
     public static function lcfirst(): callable
     {
-        return function ($string) {
-            return lcfirst($string);
-        };
+        return fn ($string) => lcfirst($string);
     }
 
     public static function ucwords(): callable
     {
-        return function ($string) {
-            return ucwords($string);
-        };
+        return fn ($string) => ucwords($string);
     }
 }

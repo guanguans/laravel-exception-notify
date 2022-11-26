@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -25,9 +27,7 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
         $this->pipe = $pipe
             ?: function (Collection $traces) {
                 return $traces
-                    ->filter(function ($trace) {
-                        return ! Str::contains($trace, 'vendor');
-                    })
+                    ->filter(fn ($trace) => ! Str::contains($trace, 'vendor'))
                     ->values();
             };
     }

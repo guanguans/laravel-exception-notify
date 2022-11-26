@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -46,9 +48,7 @@ class CollectorManager extends Fluent implements \Stringable
                 return $collector;
             })
             ->pipe(function (Collection $collectors): string {
-                $report = $collectors->reduce(function (string $carry, Collector $collector) {
-                    return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector);
-                }, '');
+                $report = $collectors->reduce(fn (string $carry, Collector $collector) => $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector), '');
 
                 return trim($report);
             });

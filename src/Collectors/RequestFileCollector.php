@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -28,7 +30,7 @@ class RequestFileCollector extends Collector
     public function collect()
     {
         $files = $this->request->allFiles();
-        array_walk_recursive($files, function (&$file) {
+        array_walk_recursive($files, function (&$file): void {
             $file = [
                 'name' => $file->getClientOriginalName(),
                 'size' => $file->isFile() ? ($file->getSize() / 1000).'KB' : '0',

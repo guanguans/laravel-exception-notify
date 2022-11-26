@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -72,7 +74,7 @@ class ReportExceptionJob implements ShouldQueue
         $this->pipedReport = $this->pipelineReport($report);
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->fireReportingEvent($this->pipedReport);
         $result = $this->channel->report($this->pipedReport);
@@ -89,17 +91,15 @@ class ReportExceptionJob implements ShouldQueue
         return (new Pipeline(app()))
             ->send($report)
             ->through($this->getChannelPipeline())
-            ->then(function ($report) {
-                return $report;
-            });
+            ->then(fn ($report) => $report);
     }
 
-    protected function fireReportingEvent(string $report)
+    protected function fireReportingEvent(string $report): void
     {
         event(new ReportingEvent($this->channel, $report));
     }
 
-    protected function fireReportedEvent($result)
+    protected function fireReportedEvent($result): void
     {
         event(new ReportedEvent($this->channel, $result));
     }
@@ -107,7 +107,7 @@ class ReportExceptionJob implements ShouldQueue
     /**
      * 任务未能处理.
      */
-    public function failed(\Throwable $e)
+    public function failed(\Throwable $e): void
     {
         Log::error($e->getMessage(), ['exception' => $e]);
     }

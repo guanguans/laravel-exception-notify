@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -32,7 +34,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     protected $defer = false;
 
-    public function boot()
+    public function boot(): void
     {
         $this->setupConfig();
         Request::mixin($this->app->make(RequestMacro::class));
@@ -45,7 +47,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    public function register()
+    public function register(): void
     {
         // Adapt lumen
         $this->setupConfig();
@@ -57,7 +59,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     /**
      * Set up the config.
      */
-    protected function setupConfig()
+    protected function setupConfig(): void
     {
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
 
@@ -70,7 +72,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($source, 'exception-notify');
     }
 
-    protected function registerCollectorManager()
+    protected function registerCollectorManager(): void
     {
         $this->app->singleton(CollectorManager::class, function (Container $app) {
             $collectors = collect($app['config']['exception-notify.collector'])
@@ -89,17 +91,15 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->app->alias(CollectorManager::class, 'exception.collector');
     }
 
-    protected function registerExceptionNotifyManager()
+    protected function registerExceptionNotifyManager(): void
     {
-        $this->app->singleton(ExceptionNotifyManager::class, function ($app) {
-            return new ExceptionNotifyManager($app);
-        });
+        $this->app->singleton(ExceptionNotifyManager::class, fn ($app) => new ExceptionNotifyManager($app));
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
     }
 
-    protected function registerRateLimiter()
+    protected function registerRateLimiter(): void
     {
         $this->app->singleton(CacheStorage::class, function (Container $app) {
             return new CacheStorage(
@@ -129,14 +129,14 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->app->alias(RateLimiterFactory::class, 'exception.rate-limiter.factory');
     }
 
-    protected function registerReportingEvent()
+    protected function registerReportingEvent(): void
     {
         foreach ($this->app['config']['exception-notify.reporting'] as $listener) {
             $this->app['events']->listen(ReportingEvent::class, $listener);
         }
     }
 
-    protected function registerReportedEvent()
+    protected function registerReportedEvent(): void
     {
         foreach ($this->app['config']['exception-notify.reported'] as $listener) {
             $this->app['events']->listen(ReportedEvent::class, $listener);

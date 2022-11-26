@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -14,7 +16,7 @@ use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 
 class DumpReportListener
 {
-    public function handle(ReportingEvent $event)
+    public function handle(ReportingEvent $event): void
     {
         dump($event->channel->getName(), $event->report);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -15,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 
 class FeatureTest extends TestCase
 {
-    public function testReportException()
+    public function testReportException(): void
     {
         $response = $this->get('/report-exception');
         $response->assertSee('This is a test page.');
@@ -24,7 +26,7 @@ class FeatureTest extends TestCase
         $content = file_get_contents($logPath);
         $this->assertStringContainsString('What happened?', $content);
         collect($this->app->make(CollectorManager::class))
-            ->each(function (Collector $collector) use ($content) {
+            ->each(function (Collector $collector) use ($content): void {
                 $this->assertStringContainsString($collector->getName(), $content);
             });
     }

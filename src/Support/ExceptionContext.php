@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -26,7 +28,7 @@ class ExceptionContext
     public static function getFormattedContext(\Throwable $e)
     {
         return collect(static::get($e))
-            ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
+            ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen): void {
                 $exceptionLine = $e->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
                 $maxLineLen = max(mb_strlen(array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
@@ -71,9 +73,7 @@ class ExceptionContext
     {
         return collect(explode("\n", file_get_contents($e->getFile())))
             ->slice($e->getLine() - 10, 20)
-            ->mapWithKeys(function ($value, $key) {
-                return [$key + 1 => $value];
-            })
+            ->mapWithKeys(fn ($value, $key) => [$key + 1 => $value])
             ->all();
     }
 }

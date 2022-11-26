@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -17,7 +19,7 @@ trait ExceptionAware
      */
     protected $exception;
 
-    public function setException(\Throwable $exception)
+    public function setException(\Throwable $exception): void
     {
         $this->exception = $exception;
     }

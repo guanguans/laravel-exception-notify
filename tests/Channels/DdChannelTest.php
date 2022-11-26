@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -16,7 +18,7 @@ use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
 class DdChannelTest extends TestCase
 {
-    public function testReport()
+    public function testReport(): void
     {
         $this->markTestSkipped(__METHOD__.' is skipped.');
 

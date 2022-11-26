@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -34,12 +36,8 @@ abstract class Collector implements CollectorContract
     protected function applyPipeCollect()
     {
         return collect($this->collect())
-            ->when($this->pipe, function (Collection $collects) {
-                return collect($collects->pipe($this->pipe));
-            })
-            ->filter(function ($item) {
-                return ! blank($item);
-            })
+            ->when($this->pipe, fn (Collection $collects) => collect($collects->pipe($this->pipe)))
+            ->filter(fn ($item) => ! blank($item))
             ->all();
     }
 

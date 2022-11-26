@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -27,7 +29,7 @@ class CollectorManagerTest extends TestCase
         $this->collectorManager = $this->app->make(CollectorManager::class);
     }
 
-    public function testOffsetSet()
+    public function testOffsetSet(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->collectorManager->offsetSet('key', 'value');

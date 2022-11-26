@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -16,9 +18,7 @@ if (! function_exists('array_filter_filled')) {
      */
     function array_filter_filled(array $array)
     {
-        return array_filter($array, function ($item) {
-            return ! blank($item);
-        });
+        return array_filter($array, fn ($item) => ! blank($item));
     }
 }
 
@@ -76,20 +76,14 @@ if (! function_exists('array_reduces')) {
 }
 
 if (! function_exists('exception_notify_report_if')) {
-    /**
-     * @return void
-     */
-    function exception_notify_report_if($condition, $exception, ...$channels)
+    function exception_notify_report_if($condition, $exception, ...$channels): void
     {
         $condition and exception_notify_report($exception, ...$channels);
     }
 }
 
 if (! function_exists('exception_notify_report')) {
-    /**
-     * @return void
-     */
-    function exception_notify_report($exception, ...$channels)
+    function exception_notify_report($exception, ...$channels): void
     {
         $exception instanceof Throwable or $exception = new Exception($exception);
 
@@ -107,6 +101,6 @@ if (! function_exists('is_callable_with_at_sign')) {
      */
     function is_callable_with_at_sign($callback)
     {
-        return is_string($callback) && false !== strpos($callback, '@');
+        return is_string($callback) && str_contains($callback, '@');
     }
 }

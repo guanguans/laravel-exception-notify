@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -17,7 +19,7 @@ trait OptionsProperty
      */
     protected $options = [];
 
-    public function set($name, $value = null)
+    public function set($name, $value = null): void
     {
         $options = is_array($name) ? $name : [$name => $value];
 
@@ -26,7 +28,7 @@ trait OptionsProperty
 
     public function get($key = null, $default = null)
     {
-        if (is_null($key)) {
+        if (null === $key) {
             return $this->options;
         }
 
@@ -47,12 +49,12 @@ trait OptionsProperty
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->options[$offset]);
     }
@@ -69,7 +71,7 @@ trait OptionsProperty
         return $this->get($key);
     }
 
-    public function __set($key, $value)
+    public function __set($key, $value): void
     {
         $this->offsetSet($key, $value);
     }
@@ -79,7 +81,7 @@ trait OptionsProperty
         return $this->offsetExists($key);
     }
 
-    public function __unset($key)
+    public function __unset($key): void
     {
         $this->offsetUnset($key);
     }

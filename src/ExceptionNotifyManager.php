@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -60,12 +62,12 @@ class ExceptionNotifyManager extends Manager
         $this->config = $container->make('config');
     }
 
-    public function reportIf($condition, \Throwable $e)
+    public function reportIf($condition, \Throwable $e): void
     {
         value($condition) and $this->report($e);
     }
 
-    public function report(\Throwable $e)
+    public function report(\Throwable $e): void
     {
         try {
             if ($this->shouldntReport($e)) {
@@ -79,12 +81,12 @@ class ExceptionNotifyManager extends Manager
         }
     }
 
-    protected function registerException(\Throwable $e)
+    protected function registerException(\Throwable $e): void
     {
         $this->container->instance('exception.notify.exception', $e);
     }
 
-    protected function dispatchReportExceptionJob()
+    protected function dispatchReportExceptionJob(): void
     {
         $report = (string) $this->container->make(CollectorManager::class);
         $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
@@ -129,7 +131,7 @@ class ExceptionNotifyManager extends Manager
      */
     protected function getChannelConfig($name)
     {
-        if (! is_null($name) && 'null' !== $name) {
+        if (null !== $name && 'null' !== $name) {
             return $this->container['config']["exception-notify.channels.$name"];
         }
 

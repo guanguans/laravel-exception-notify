@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -15,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
 class RequestCookieCollectorTest extends TestCase
 {
-    public function testCollect()
+    public function testCollect(): void
     {
         $requestCookieCollector = new RequestCookieCollector($this->app['request']);
         $this->assertIsArray($requestCookieCollector->collect());

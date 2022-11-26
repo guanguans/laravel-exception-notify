@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the guanguans/laravel-exception-notify.
  *
@@ -18,7 +20,7 @@ use Nyholm\NSA;
 
 class BarkChannelTest extends TestCase
 {
-    public function testCreateMessage()
+    public function testCreateMessage(): void
     {
         $m = \Mockery::mock(BarkChannel::class);
         $m->shouldAllowMockingProtectedMethods()
@@ -34,7 +36,7 @@ class BarkChannelTest extends TestCase
         $this->assertInstanceOf(MessageInterface::class, NSA::invokeMethod($channel, 'createMessage', 'report'));
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $m = \Mockery::mock(BarkChannel::class);
         $m->shouldAllowMockingProtectedMethods()
