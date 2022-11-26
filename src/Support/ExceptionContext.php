@@ -31,7 +31,7 @@ class ExceptionContext
             ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen): void {
                 $exceptionLine = $e->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
-                $maxLineLen = max(mb_strlen(array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
+                $maxLineLen = max(mb_strlen((string) array_key_last($context->toArray())), mb_strlen($markedExceptionLine));
             })
             ->mapWithKeys(function ($code, $line) use (&$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
                 $line === $exceptionLine and $line = $markedExceptionLine;

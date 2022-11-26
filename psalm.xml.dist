@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <psalm
     errorLevel="4"
     findUnusedVariablesAndParams="true"
@@ -6,11 +6,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    cacheDirectory="./build/psalm/"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
+        <directory name="config"/>
         <directory name="src"/>
-        <ignoreFiles>
+        <ignoreFiles allowMissingFiles="true">
             <directory name="vendor"/>
+            <file name="src/UpdateHelper.php"/>
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="info"/>
+    </issueHandlers>
+    <plugins>
+        <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
+    </plugins>
 </psalm>
