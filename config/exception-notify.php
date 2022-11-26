@@ -58,6 +58,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Connection of queue.
+    |--------------------------------------------------------------------------
+    */
+    'queue_connection' => env('EXCEPTION_NOTIFY_QUEUE_CONNECTION', config('queue.default', 'sync')),
+
+    /*
+    |--------------------------------------------------------------------------
     | Exception notification rate limiter.
     |--------------------------------------------------------------------------
     |
@@ -66,12 +73,12 @@ return [
     |
     */
     'rate_limiter' => [
-        // Config.
+        // Config(相同异常生产环境默认每 5 分钟通知 1 次).
         'config' => [
-            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 20 : 1),
+            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
             'rate' => [
                 // https://www.php.net/manual/en/datetime.formats.php
-                'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '1 minutes'),
+                'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '5 minutes'),
             ],
         ],
 
@@ -93,7 +100,7 @@ return [
     | The title of the exception notification report.
     |
     */
-    'title' => env('EXCEPTION_NOTIFY_REPORT_TITLE', sprintf('%s application exception report.', config('app.name'))),
+    'title' => env('EXCEPTION_NOTIFY_REPORT_TITLE', sprintf('%s application exception report', config('app.name'))),
 
     /*
     |--------------------------------------------------------------------------
@@ -205,6 +212,7 @@ return [
         // 安装依赖 composer require symfony/mailer -vvv
         'mail' => [
             'driver' => 'mail',
+            // smtp://53***11@qq.com:***password***@smtp.qq.com:465?verify_peer=0
             'dsn' => env('EXCEPTION_NOTIFY_MAIL_DSN'),
             'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
             'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
