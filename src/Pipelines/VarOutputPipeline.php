@@ -10,11 +10,9 @@
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
-
 class VarOutputPipeline
 {
-    public function handle(string $report, Closure $next): string
+    public function handle(string $report, \Closure $next): string
     {
         return $next(var_output($report, true));
     }

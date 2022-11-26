@@ -35,7 +35,6 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
-use Throwable;
 
 class ExceptionNotifyManager extends Manager
 {
@@ -61,12 +60,12 @@ class ExceptionNotifyManager extends Manager
         $this->config = $container->make('config');
     }
 
-    public function reportIf($condition, Throwable $e)
+    public function reportIf($condition, \Throwable $e)
     {
         value($condition) and $this->report($e);
     }
 
-    public function report(Throwable $e)
+    public function report(\Throwable $e)
     {
         try {
             if ($this->shouldntReport($e)) {
@@ -75,12 +74,12 @@ class ExceptionNotifyManager extends Manager
 
             $this->registerException($e);
             $this->dispatchReportExceptionJob();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->container['log']->error($e->getMessage(), ['exception' => $e]);
         }
     }
 
-    protected function registerException(Throwable $e)
+    protected function registerException(\Throwable $e)
     {
         $this->container->instance('exception.notify.exception', $e);
     }
@@ -96,7 +95,7 @@ class ExceptionNotifyManager extends Manager
         }
     }
 
-    public function shouldntReport(Throwable $e): bool
+    public function shouldntReport(\Throwable $e): bool
     {
         if (! $this->container['config']['exception-notify.enabled']) {
             return true;
@@ -120,14 +119,12 @@ class ExceptionNotifyManager extends Manager
             ->isAccepted();
     }
 
-    public function shouldReport(Throwable $e): bool
+    public function shouldReport(\Throwable $e): bool
     {
         return ! $this->shouldntReport($e);
     }
 
     /**
-     * @param $name
-     *
      * @return array
      */
     protected function getChannelConfig($name)
@@ -145,8 +142,6 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @param ...$channels
-     *
      * @return $this
      */
     public function onChannel(...$channels)

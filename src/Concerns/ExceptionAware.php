@@ -10,8 +10,6 @@
 
 namespace Guanguans\LaravelExceptionNotify\Concerns;
 
-use Throwable;
-
 trait ExceptionAware
 {
     /**
@@ -19,7 +17,7 @@ trait ExceptionAware
      */
     protected $exception;
 
-    public function setException(Throwable $exception)
+    public function setException(\Throwable $exception)
     {
         $this->exception = $exception;
     }

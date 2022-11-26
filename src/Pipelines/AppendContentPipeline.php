@@ -10,11 +10,9 @@
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
-
 class AppendContentPipeline
 {
-    public function handle(string $report, Closure $next, string $content): string
+    public function handle(string $report, \Closure $next, string $content): string
     {
         return $next($report.$content);
     }

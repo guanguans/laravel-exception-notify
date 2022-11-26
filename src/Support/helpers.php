@@ -26,9 +26,6 @@ if (! function_exists('call')) {
     /**
      * Call the given Closure / class@method and inject its dependencies.
      *
-     * @param $callback
-     * @param $defaultMethod
-     *
      * @return mixed
      */
     function call($callback, array $parameters = [], $defaultMethod = 'handle')
@@ -41,8 +38,6 @@ if (! function_exists('call')) {
 
 if (! function_exists('var_output')) {
     /**
-     * @param $expression
-     *
      * @return void|null|string|
      */
     function var_output($expression, bool $return = false)
@@ -68,8 +63,6 @@ if (! function_exists('var_output')) {
 
 if (! function_exists('array_reduces')) {
     /**
-     * @param $carry
-     *
      * @return mixed|null
      */
     function array_reduces(array $array, callable $callback, $carry = null)
@@ -84,10 +77,6 @@ if (! function_exists('array_reduces')) {
 
 if (! function_exists('exception_notify_report_if')) {
     /**
-     * @param $condition
-     * @param $exception
-     * @param ...$channels
-     *
      * @return void
      */
     function exception_notify_report_if($condition, $exception, ...$channels)
@@ -98,9 +87,6 @@ if (! function_exists('exception_notify_report_if')) {
 
 if (! function_exists('exception_notify_report')) {
     /**
-     * @param $exception
-     * @param ...$channels
-     *
      * @return void
      */
     function exception_notify_report($exception, ...$channels)

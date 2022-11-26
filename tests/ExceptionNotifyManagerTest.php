@@ -10,7 +10,6 @@
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-use Exception;
 use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
@@ -50,20 +49,20 @@ class ExceptionNotifyManagerTest extends TestCase
 
     public function testReportif()
     {
-        $this->assertNull($this->exceptionNotifyManager->reportIf(true, new Exception('test')));
+        $this->assertNull($this->exceptionNotifyManager->reportIf(true, new \Exception('test')));
     }
 
     public function testReport()
     {
         $this->app['config']->set('exception-notify.enabled', false);
-        $this->assertNull($this->exceptionNotifyManager->report(new Exception('test')));
+        $this->assertNull($this->exceptionNotifyManager->report(new \Exception('test')));
         $this->app['config']->set('exception-notify.enabled', true);
     }
 
     public function testShouldntReport()
     {
         $this->app['config']->set('exception-notify.enabled', false);
-        $this->assertTrue($this->exceptionNotifyManager->shouldntReport($e = new Exception()));
+        $this->assertTrue($this->exceptionNotifyManager->shouldntReport($e = new \Exception()));
 
         $this->app['config']->set('exception-notify.enabled', true);
         $this->app['config']->set('exception-notify.env', 'production');
@@ -71,7 +70,7 @@ class ExceptionNotifyManagerTest extends TestCase
 
         $this->app['config']->set('exception-notify.enabled', true);
         $this->app['config']->set('exception-notify.env', '*');
-        $this->app['config']->set('exception-notify.dont_report', [Exception::class]);
+        $this->app['config']->set('exception-notify.dont_report', [\Exception::class]);
         $this->assertTrue($this->exceptionNotifyManager->shouldntReport($e));
 
         $this->app['config']->set('exception-notify.enabled', true);

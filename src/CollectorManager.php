@@ -15,10 +15,8 @@ use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
-use Stringable;
-use Throwable;
 
-class CollectorManager extends Fluent implements Stringable
+class CollectorManager extends Fluent implements \Stringable
 {
     /**
      * @var Collector[]
@@ -39,7 +37,7 @@ class CollectorManager extends Fluent implements Stringable
         $this->attributes[$offset] = $value;
     }
 
-    public function toReport(Throwable $e): string
+    public function toReport(\Throwable $e): string
     {
         return (string) collect($this)
             ->transform(function (Collector $collector) use ($e) {

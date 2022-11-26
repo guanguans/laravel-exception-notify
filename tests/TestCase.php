@@ -10,7 +10,6 @@
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-use Exception;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +53,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUpApplicationRoutes(): void
     {
         Route::get('/report-exception', function () {
-            ExceptionNotify::onChannel('dump', 'log')->report(new Exception('What happened?'));
+            ExceptionNotify::onChannel('dump', 'log')->report(new \Exception('What happened?'));
 
             return 'This is a test page.';
         });

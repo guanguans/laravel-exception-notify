@@ -20,7 +20,6 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class ReportExceptionJob implements ShouldQueue
 {
@@ -108,7 +107,7 @@ class ReportExceptionJob implements ShouldQueue
     /**
      * 任务未能处理.
      */
-    public function failed(Throwable $e)
+    public function failed(\Throwable $e)
     {
         Log::error($e->getMessage(), ['exception' => $e]);
     }

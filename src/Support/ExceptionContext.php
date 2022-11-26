@@ -12,7 +12,6 @@ namespace Guanguans\LaravelExceptionNotify\Support;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Throwable;
 
 /**
  * This is file is modified from the laravel/telescope.
@@ -24,7 +23,7 @@ class ExceptionContext
      *
      * @return array
      */
-    public static function getFormattedContext(Throwable $e)
+    public static function getFormattedContext(\Throwable $e)
     {
         return collect(static::get($e))
             ->tap(function (Collection $context) use ($e, &$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
@@ -46,7 +45,7 @@ class ExceptionContext
      *
      * @return array
      */
-    public static function get(Throwable $e)
+    public static function get(\Throwable $e)
     {
         return static::getEvalContext($e) ?? static::getFileContext($e);
     }
@@ -56,7 +55,7 @@ class ExceptionContext
      *
      * @return array|null
      */
-    protected static function getEvalContext(Throwable $e)
+    protected static function getEvalContext(\Throwable $e)
     {
         if (Str::contains($e->getFile(), "eval()'d code")) {
             return [$e->getLine() => "eval()'d code"];
@@ -68,7 +67,7 @@ class ExceptionContext
      *
      * @return array
      */
-    protected static function getFileContext(Throwable $e)
+    protected static function getFileContext(\Throwable $e)
     {
         return collect(explode("\n", file_get_contents($e->getFile())))
             ->slice($e->getLine() - 10, 20)
