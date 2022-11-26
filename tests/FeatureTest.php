@@ -30,4 +30,12 @@ class FeatureTest extends TestCase
                 $this->assertStringContainsString($collector->getName(), $content);
             });
     }
+
+    public function testReport()
+    {
+        exception_notify_report('What happened?', 'dump');
+        $report = (string) $this->app->make(CollectorManager::class);
+        $this->assertMatchesSnapshot($report);
+        // $this->expectOutputString($report);
+    }
 }

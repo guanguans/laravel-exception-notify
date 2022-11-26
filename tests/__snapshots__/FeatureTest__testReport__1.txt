@@ -1,0 +1,43 @@
+Exception Basic: {
+    "class": "Exception",
+    "message": "What happened?",
+    "code": 0,
+    "file": "/Users/yaozm/Documents/develop/laravel-exception-notify/src/Support/helpers.php",
+    "line": 88,
+    "preview": {
+        "  79": "    function exception_notify_report_if($condition, $exception, ...$channels): void",
+        "  80": "    {",
+        "  81": "        $condition and exception_notify_report($exception, ...$channels);",
+        "  82": "    }",
+        "  83": "}",
+        "  84": "",
+        "  85": "if (! function_exists('exception_notify_report')) {",
+        "  86": "    function exception_notify_report($exception, ...$channels): void",
+        "  87": "    {",
+        "➤ 88": "        $exception instanceof Throwable or $exception = new Exception($exception);",
+        "  89": "",
+        "  90": "        ExceptionNotify::onChannel(...$channels)->report($exception);",
+        "  91": "    }",
+        "  92": "}",
+        "  93": "",
+        "  94": "if (! function_exists('is_callable_with_at_sign')) {",
+        "  95": "    /**",
+        "  96": "     * Determine if the given string is in Class@method syntax.",
+        "  97": "     *",
+        "  98": "     * @param mixed $callback"
+    }
+}
+Exception Trace: [
+    "#0 /Users/yaozm/Documents/develop/laravel-exception-notify/tests/FeatureTest.php(36): exception_notify_report('What happened?', 'dump')",
+    "#12 {main}"
+]
+Request Header: {
+    "host": "localhost",
+    "user-agent": "Symfony",
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "accept-language": "en-us,en;q=0.5",
+    "accept-charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7"
+}
+Request Query: []
+Request Post: []
+Request File: []

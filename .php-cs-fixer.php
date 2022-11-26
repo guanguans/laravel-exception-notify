@@ -52,7 +52,7 @@ $finder = PhpCsFixer\Finder::create()
 return (new PhpCsFixer\Config())
     ->setRules([
         '@DoctrineAnnotation' => true,
-        '@PHP80Migration:risky' => true,
+        // '@PHP80Migration:risky' => true,
         '@PHPUnit84Migration:risky' => true,
         '@PSR12:risky' => true,
         '@Symfony' => true,
