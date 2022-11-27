@@ -12,6 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support\Macros;
 
+/**
+ * @mixin \Illuminate\Support\Str
+ */
 class StrMacro
 {
     public static function beforeLast(): callable
@@ -32,11 +35,15 @@ class StrMacro
 
     public static function lcfirst(): callable
     {
-        return fn ($string) => lcfirst($string);
+        return function ($string) {
+            return lcfirst($string);
+        };
     }
 
     public static function ucwords(): callable
     {
-        return fn ($string) => ucwords($string);
+        return function ($string) {
+            return ucwords($string);
+        };
     }
 }

@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac"/>
+<files psalm-version="4.22.0@fc2c6ab4d5fa5d644d8617089f012f3bb84b8703">
+  <file src="src/Collectors/RequestHeaderCollector.php">
+    <UndefinedMagicMethod occurrences="1">
+      <code>headers</code>
+    </UndefinedMagicMethod>
+  </file>
+  <file src="src/Support/ExceptionContext.php">
+    <UnusedVariable occurrences="1">
+      <code>$exceptionLine</code>
+    </UnusedVariable>
+  </file>
+  <file src="src/Support/Macros/CollectionMacro.php">
+    <InaccessibleProperty occurrences="1">
+      <code>$this-&gt;items</code>
+    </InaccessibleProperty>
+  </file>
+  <file src="src/Support/Traits/CreateStatic.php">
+    <TooManyArguments occurrences="1">
+      <code>new static(...$parameters)</code>
+    </TooManyArguments>
+  </file>
+</files>

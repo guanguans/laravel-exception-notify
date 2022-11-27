@@ -12,18 +12,22 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support\Macros;
 
+/**
+ * @mixin \Illuminate\Http\Request
+ */
 class RequestMacro
 {
     public function headers(): callable
     {
         return function ($key = null, $default = null) {
-            /* @var \Illuminate\Http\Request $this */
             if (null !== $key) {
                 return $this->header($key, $default);
             }
 
             return collect($this->header())
-                ->map(fn ($header) => $header[0])
+                ->map(function ($header) {
+                    return $header[0];
+                })
                 ->all();
         };
     }

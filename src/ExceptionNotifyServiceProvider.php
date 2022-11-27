@@ -17,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Support\Macros\CollectionMacro;
 use Guanguans\LaravelExceptionNotify\Support\Macros\RequestMacro;
 use Guanguans\LaravelExceptionNotify\Support\Macros\StrMacro;
-use Illuminate\Contracts\Container\Container;
+use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -58,6 +58,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * Set up the config.
+     *
+     * @psalm-suppress UndefinedClass
+     * @psalm-suppress UndefinedInterfaceMethod
      */
     protected function setupConfig(): void
     {
@@ -75,6 +78,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function registerCollectorManager(): void
     {
         $this->app->singleton(CollectorManager::class, function (Container $app) {
+            /** @var \Guanguans\LaravelExceptionNotify\Contracts\Collector[] $collectors */
             $collectors = collect($app['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
                     if (! is_array($parameters)) {
@@ -93,7 +97,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     protected function registerExceptionNotifyManager(): void
     {
-        $this->app->singleton(ExceptionNotifyManager::class, fn ($app) => new ExceptionNotifyManager($app));
+        $this->app->singleton(ExceptionNotifyManager::class, function ($app) {
+            return new ExceptionNotifyManager($app);
+        });
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
@@ -129,6 +135,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->app->alias(RateLimiterFactory::class, 'exception.rate-limiter.factory');
     }
 
+    /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     */
     protected function registerReportingEvent(): void
     {
         foreach ($this->app['config']['exception-notify.reporting'] as $listener) {
@@ -136,6 +145,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * @psalm-suppress UndefinedInterfaceMethod
+     */
     protected function registerReportedEvent(): void
     {
         foreach ($this->app['config']['exception-notify.reported'] as $listener) {

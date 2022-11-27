@@ -73,7 +73,9 @@ class ExceptionContext
     {
         return collect(explode("\n", file_get_contents($e->getFile())))
             ->slice($e->getLine() - 10, 20)
-            ->mapWithKeys(fn ($value, $key) => [$key + 1 => $value])
+            ->mapWithKeys(function ($value, $key) {
+                return [$key + 1 => $value];
+            })
             ->all();
     }
 }

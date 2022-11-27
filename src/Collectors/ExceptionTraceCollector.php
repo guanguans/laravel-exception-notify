@@ -27,7 +27,9 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
         $this->pipe = $pipe
             ?: function (Collection $traces) {
                 return $traces
-                    ->filter(fn ($trace) => ! Str::contains($trace, 'vendor'))
+                    ->filter(function ($trace) {
+                        return ! Str::contains($trace, 'vendor');
+                    })
                     ->values();
             };
     }

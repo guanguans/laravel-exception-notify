@@ -18,7 +18,9 @@ if (! function_exists('array_filter_filled')) {
      */
     function array_filter_filled(array $array)
     {
-        return array_filter($array, fn ($item) => ! blank($item));
+        return array_filter($array, function ($item) {
+            return ! blank($item);
+        });
     }
 }
 

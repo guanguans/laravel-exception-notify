@@ -21,7 +21,9 @@ use Illuminate\Support\Fluent;
 class CollectorManager extends Fluent implements \Stringable
 {
     /**
-     * @var Collector[]
+     * @param Collector[] $collectors
+     *
+     * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      */
     public function __construct($collectors = [])
     {
@@ -48,7 +50,9 @@ class CollectorManager extends Fluent implements \Stringable
                 return $collector;
             })
             ->pipe(function (Collection $collectors): string {
-                $report = $collectors->reduce(fn (string $carry, Collector $collector) => $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), $collector), '');
+                $report = $collectors->reduce(function (string $carry, Collector $collector): string {
+                    return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), (string) $collector);
+                }, '');
 
                 return trim($report);
             });

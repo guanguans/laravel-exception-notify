@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support\Macros;
 
+/**
+ * @mixin \Illuminate\Support\Collection
+ */
 class CollectionMacro
 {
     public function reduces(): callable
     {
         return function (callable $callback, $carry = null) {
-            /* @var \Illuminate\Support\Collection $this */
             return array_reduces($this->items, $callback, $carry);
         };
     }

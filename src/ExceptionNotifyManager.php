@@ -45,7 +45,7 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @var \Illuminate\Contracts\Container\Container
+     * @var \Illuminate\Foundation\Application
      */
     protected $container;
 
@@ -103,7 +103,7 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        if (! Str::is($this->container['config']['exception-notify.env'], $this->container->environment())) {
+        if (! Str::is($this->container['config']['exception-notify.env'], (string) $this->container->environment())) {
             return true;
         }
 

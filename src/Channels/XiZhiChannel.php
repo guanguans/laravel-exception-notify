@@ -17,8 +17,8 @@ use Guanguans\Notify\Messages\XiZhiMessage;
 
 class XiZhiChannel extends NotifyChannel
 {
-    protected function createMessage(string $content): MessageInterface
+    protected function createMessage(string $report): MessageInterface
     {
-        return new XiZhiMessage(config('exception-notify.title'), $content);
+        return new XiZhiMessage(config('exception-notify.title'), $report);
     }
 }
