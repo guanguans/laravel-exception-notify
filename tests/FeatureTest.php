@@ -33,6 +33,8 @@ class FeatureTest extends TestCase
 
     public function testReport()
     {
+        $this->markTestSkipped(__METHOD__);
+
         exception_notify_report('What happened?', 'dump');
         $report = (string) $this->app->make(CollectorManager::class);
         $this->assertMatchesSnapshot($report);

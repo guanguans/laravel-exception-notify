@@ -40,7 +40,9 @@ if (! function_exists('call')) {
 
 if (! function_exists('var_output')) {
     /**
-     * @return void|null|string|
+     * @param $expression
+     *
+     * @return string|null
      */
     function var_output($expression, bool $return = false)
     {

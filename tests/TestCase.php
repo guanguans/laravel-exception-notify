@@ -45,20 +45,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
         $app['config']->set('exception-notify.rate_limiter.config.limit', 1000);
         $app['config']->set('exception-notify.collector', [
-            // \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
             \Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
-            // \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
+            \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
         ]);
 
         $app['config']->set('database.default', 'sqlite');

@@ -13,6 +13,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
+use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
@@ -34,6 +35,7 @@ use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Laravel\Set\LaravelLevelSetList;
 use Rector\Laravel\Set\LaravelSetList;
+use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Set\PHPUnitLevelSetList;
@@ -41,6 +43,7 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->bootstrapFiles([
@@ -81,6 +84,10 @@ return static function (RectorConfig $rectorConfig): void {
         UnSpreadOperatorRector::class,
         StaticClosureRector::class,
         NewlineAfterStatementRector::class,
+        RemoveEmptyMethodCallRector::class,
+        CompleteDynamicPropertiesRector::class,
+        RenamePropertyToMatchTypeRector::class,
+        ReturnTypeDeclarationRector::class,
 
         // paths
         '**/fixtures*',

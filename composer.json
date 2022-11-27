@@ -145,6 +145,8 @@
             "@style-lint",
             "@mark-separate",
             "@test",
+            "@mark-separate",
+            "@psalm",
             "@mark-finish"
         ],
         "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
@@ -163,7 +165,7 @@
         "rector-dry-run": "@rector --dry-run",
         "style-fix": "./vendor/bin/php-cs-fixer fix --using-cache=no --config=.php-cs-fixer.php --ansi",
         "style-lint": "@style-fix --diff --dry-run",
-        "test": "./vendor/bin/phpunit --cache-result-file=./build//phpunit/.phpunit.result.cache",
-        "test-coverage": "@test --coverage-html=./build/phpunit/ --coverage-clover=clover.xml --coverage"
+        "test": "./vendor/bin/phpunit --cache-result-file=./build/phpunit/.phpunit.result.cache",
+        "test-coverage": "@test --coverage-html=./build/phpunit/ --coverage-clover=clover.xml"
     }
 }

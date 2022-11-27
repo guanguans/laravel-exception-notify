@@ -17,7 +17,7 @@ use Illuminate\Contracts\Container\Container;
 class LaravelCollector extends Collector
 {
     /**
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Foundation\Application|\Illuminate\Contracts\Container\Container
      */
     protected $app;
 

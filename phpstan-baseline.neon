@@ -1,6 +1,26 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\ConnectionInterface\\:\\:getDriverName\\(\\)\\.$#"
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
-			path: src/Exceptions/DatabaseNotSupported.php
+			path: src/Channels/Channel.php
+
+		-
+			message: "#^Call to method configure\\(\\) on an unknown class Laravel\\\\Lumen\\\\Application\\.$#"
+			count: 1
+			path: src/ExceptionNotifyServiceProvider.php
+
+		-
+			message: "#^Class Laravel\\\\Lumen\\\\Application not found\\.$#"
+			count: 1
+			path: src/ExceptionNotifyServiceProvider.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Jobs/ReportExceptionJob.php
+
+		-
+			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Support\\\\Macros\\\\CollectionMacro\\:\\:\\$items\\.$#"
+			count: 1
+			path: src/Support/Macros/CollectionMacro.php

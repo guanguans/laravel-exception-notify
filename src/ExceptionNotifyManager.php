@@ -45,7 +45,7 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Foundation\Application|\Illuminate\Contracts\Container\Container
      */
     protected $container;
 
