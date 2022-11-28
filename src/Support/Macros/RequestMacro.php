@@ -25,7 +25,7 @@ class RequestMacro
             }
 
             return collect($this->header())
-                ->map(function ($header) {
+                ->map(static function ($header) {
                     return $header[0];
                 })
                 ->all();

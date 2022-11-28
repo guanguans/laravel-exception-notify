@@ -12,9 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
+use Closure;
+
 class ToHtmlPipeline
 {
-    public function handle(string $report, \Closure $next, string $label = '<pre>%s</pre>'): string
+    public function handle(string $report, Closure $next, string $label = '<pre>%s</pre>'): string
     {
         return $next(sprintf($label, $report));
     }

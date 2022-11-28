@@ -23,7 +23,7 @@ abstract class Collector implements CollectorContract
      */
     protected $pipe;
 
-    public function __construct(callable $pipe = null)
+    public function __construct(?callable $pipe = null)
     {
         $this->pipe = $pipe;
     }
@@ -36,10 +36,10 @@ abstract class Collector implements CollectorContract
     protected function applyPipeCollect()
     {
         return collect($this->collect())
-            ->when($this->pipe, function (Collection $collects) {
-                return collect($collects->pipe($this->pipe));
+            ->when($this->pipe, function (Collection $collection) {
+                return collect($collection->pipe($this->pipe));
             })
-            ->filter(function ($item) {
+            ->filter(static function ($item) {
                 return ! blank($item);
             })
             ->all();

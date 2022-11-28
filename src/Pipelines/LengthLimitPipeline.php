@@ -12,9 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
+use Closure;
+
 class LengthLimitPipeline
 {
-    public function handle(string $report, \Closure $next, int $length = -1): string
+    public function handle(string $report, Closure $next, int $length = -1): string
     {
         $length > 0 and $report = substr($report, 0, $length * 95 / 100).'...';
 

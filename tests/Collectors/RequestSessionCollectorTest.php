@@ -19,7 +19,7 @@ class RequestSessionCollectorTest extends TestCase
 {
     public function testCollect(): void
     {
-        $requestCookieCollector = new RequestSessionCollector($this->app['request']);
-        $this->assertNull($requestCookieCollector->collect());
+        $requestSessionCollector = new RequestSessionCollector($this->app['request']);
+        $this->assertNull($requestSessionCollector->collect());
     }
 }

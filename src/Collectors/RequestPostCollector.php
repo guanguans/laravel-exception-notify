@@ -23,13 +23,17 @@ class RequestPostCollector extends Collector
      */
     protected $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    /**
+     * @noinspection MagicMethodsValidityInspection
+     * @noinspection PhpMissingParentConstructorInspection
+     */
+    public function __construct(Request $request, ?callable $pipe = null)
     {
-        parent::__construct($pipe);
         $this->request = $request;
         $this->pipe = $pipe
-            ?: function (Collection $post) {
-                return $post->transform(function ($val, $key) {
+            ?: static function (Collection $collection) {
+                return $collection->transform(static function ($val, $key) {
+                    /** @noinspection PhpParamsInspection */
                     Str::is([
                         'password',
                         '*password',

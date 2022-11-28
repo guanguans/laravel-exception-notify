@@ -21,19 +21,25 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
 {
     use ExceptionAware;
 
-    public function __construct(callable $pipe = null)
+    /**
+     * @noinspection MagicMethodsValidityInspection
+     * @noinspection PhpMissingParentConstructorInspection
+     */
+    public function __construct(?callable $pipe = null)
     {
-        parent::__construct();
         $this->pipe = $pipe
-            ?: function (Collection $traces) {
-                return $traces
-                    ->filter(function ($trace) {
+            ?: static function (Collection $collection) {
+                return $collection
+                    ->filter(static function ($trace) {
                         return ! Str::contains($trace, 'vendor');
                     })
                     ->values();
             };
     }
 
+    /**
+     * @return string[]
+     */
     public function collect()
     {
         return explode("\n", $this->exception->getTraceAsString());

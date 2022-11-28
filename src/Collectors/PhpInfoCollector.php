@@ -14,6 +14,9 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class PhpInfoCollector extends Collector
 {
+    /**
+     * @return array{version: string, interface: string}
+     */
     public function collect()
     {
         return [

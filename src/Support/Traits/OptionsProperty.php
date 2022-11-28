@@ -26,6 +26,10 @@ trait OptionsProperty
         $this->options = array_merge($this->options, $options);
     }
 
+    /**
+     * @return \any|array
+     * @noinspection MultipleReturnStatementsInspection
+     */
     public function get($key = null, $default = null)
     {
         if (null === $key) {

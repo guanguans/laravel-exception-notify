@@ -19,11 +19,10 @@ class StrMacro
 {
     public static function beforeLast(): callable
     {
-        return function ($subject, $search) {
+        return static function ($subject, $search) {
             if ('' === $search) {
                 return $subject;
             }
-
             $pos = mb_strrpos($subject, $search);
             if (false === $pos) {
                 return $subject;
@@ -35,14 +34,14 @@ class StrMacro
 
     public static function lcfirst(): callable
     {
-        return function ($string) {
+        return static function ($string): string {
             return lcfirst($string);
         };
     }
 
     public static function ucwords(): callable
     {
-        return function ($string) {
+        return static function ($string): string {
             return ucwords($string);
         };
     }

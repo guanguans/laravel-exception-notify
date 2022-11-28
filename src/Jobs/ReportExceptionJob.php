@@ -22,6 +22,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ReportExceptionJob implements ShouldQueue
 {
@@ -81,6 +82,9 @@ class ReportExceptionJob implements ShouldQueue
         $this->fireReportedEvent($result);
     }
 
+    /**
+     * @return mixed[]
+     */
     protected function getChannelPipeline(): array
     {
         return config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), []);
@@ -91,7 +95,7 @@ class ReportExceptionJob implements ShouldQueue
         return (new Pipeline(app()))
             ->send($report)
             ->through($this->getChannelPipeline())
-            ->then(function ($report) {
+            ->then(static function ($report) {
                 return $report;
             });
     }
@@ -109,15 +113,17 @@ class ReportExceptionJob implements ShouldQueue
     /**
      * 任务未能处理.
      */
-    public function failed(\Throwable $e): void
+    public function failed(Throwable $throwable): void
     {
-        Log::error($e->getMessage(), ['exception' => $e]);
+        Log::error($throwable->getMessage(), ['exception' => $throwable]);
     }
 
     /**
      * 计算在重试任务之前需等待的秒数.
+     *
+     * @return int[]
      */
-    public function backoff()
+    public function backoff(): array
     {
         return [1, 10, 30];
     }

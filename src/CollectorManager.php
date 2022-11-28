@@ -17,13 +17,17 @@ use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
+use Stringable;
+use Throwable;
 
-class CollectorManager extends Fluent implements \Stringable
+class CollectorManager extends Fluent implements Stringable
 {
     /**
      * @param Collector[] $collectors
      *
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
+     * @noinspection MagicMethodsValidityInspection
+     * @noinspection PhpMissingParentConstructorInspection
      */
     public function __construct($collectors = [])
     {
@@ -41,16 +45,16 @@ class CollectorManager extends Fluent implements \Stringable
         $this->attributes[$offset] = $value;
     }
 
-    public function toReport(\Throwable $e): string
+    public function toReport(Throwable $throwable): string
     {
         return (string) collect($this)
-            ->transform(function (Collector $collector) use ($e) {
-                $collector instanceof ExceptionAware and $collector->setException($e);
+            ->transform(static function (Collector $collector) use ($throwable) {
+                $collector instanceof ExceptionAware and $collector->setException($throwable);
 
                 return $collector;
             })
-            ->pipe(function (Collection $collectors): string {
-                $report = $collectors->reduce(function (string $carry, Collector $collector): string {
+            ->pipe(static function (Collection $collection): string {
+                $report = $collection->reduce(static function (string $carry, Collector $collector): string {
                     return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), (string) $collector);
                 }, '');
 

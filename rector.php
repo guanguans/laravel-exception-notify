@@ -37,12 +37,14 @@ use Rector\Laravel\Set\LaravelLevelSetList;
 use Rector\Laravel\Set\LaravelSetList;
 use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
+use Rector\Php72\Rector\FuncCall\GetClassOnNullRector;
 use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Set\PHPUnitLevelSetList;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\Closure\AddClosureReturnTypeRector;
 use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -66,13 +68,13 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         // rules
         // CallableThisArrayToAnonymousFunctionRector::class,
-        // InlineIfToExplicitIfRector::class,
-        // LogicalToBooleanRector::class,
+        InlineIfToExplicitIfRector::class,
+        LogicalToBooleanRector::class,
         // SimplifyBoolIdenticalTrueRector::class,
         // RemoveEmptyMethodCallRector::class,
-        // AddSeeTestAnnotationRector::class,
-        // NormalizeNamespaceByPSR4ComposerAutoloadRector::class,
-        // ChangeAndIfToEarlyReturnRector::class,
+        AddSeeTestAnnotationRector::class,
+        NormalizeNamespaceByPSR4ComposerAutoloadRector::class,
+        ChangeAndIfToEarlyReturnRector::class,
         // ReturnBinaryOrToEarlyReturnRector::class,
         EncapsedStringsToSprintfRector::class,
         // WrapEncapsedVariableInCurlyBracesRector::class,
@@ -82,12 +84,14 @@ return static function (RectorConfig $rectorConfig): void {
         // RemoveUnusedVariableAssignRector::class,
         // ConsistentPregDelimiterRector::class,
         UnSpreadOperatorRector::class,
-        StaticClosureRector::class,
+        // StaticClosureRector::class,
         NewlineAfterStatementRector::class,
         RemoveEmptyMethodCallRector::class,
         CompleteDynamicPropertiesRector::class,
         RenamePropertyToMatchTypeRector::class,
         ReturnTypeDeclarationRector::class,
+        AddClosureReturnTypeRector::class,
+        GetClassOnNullRector::class,
 
         // paths
         '**/fixtures*',
@@ -98,6 +102,7 @@ return static function (RectorConfig $rectorConfig): void {
         '**/Source/*',
         '**/Expected/*',
         '**/Expected*',
+        'tests/ExceptionNotifyManagerTest.php',
     ]);
 
     $rectorConfig->sets([

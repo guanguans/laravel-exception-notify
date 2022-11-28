@@ -16,8 +16,9 @@ use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 
 class DumpReportResultListener
 {
-    public function handle(ReportedEvent $event): void
+    public function handle(ReportedEvent $reportedEvent): void
     {
-        dump($event->channel->getName(), $event->result);
+        /** @noinspection ForgottenDebugOutputInspection */
+        dump($reportedEvent->channel->getName(), $reportedEvent->result);
     }
 }

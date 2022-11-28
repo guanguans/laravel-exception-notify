@@ -21,7 +21,7 @@ class RequestBasicCollector extends Collector
      */
     protected $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->request = $request;
@@ -29,6 +29,8 @@ class RequestBasicCollector extends Collector
 
     /**
      * @psalm-suppress InvalidScalarArgument
+     *
+     * @return array{url: string, ip: string|null, method: string, action: mixed, duration: string}
      */
     public function collect()
     {

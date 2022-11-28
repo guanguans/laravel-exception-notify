@@ -21,16 +21,19 @@ class RequestFileCollector extends Collector
      */
     protected $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->request = $request;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function collect()
     {
         $files = $this->request->allFiles();
-        array_walk_recursive($files, function (&$file): void {
+        array_walk_recursive($files, static function (&$file): void {
             $file = [
                 'name' => $file->getClientOriginalName(),
                 'size' => $file->isFile() ? ($file->getSize() / 1000).'KB' : '0',

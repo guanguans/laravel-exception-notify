@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Support\Traits;
 
 trait CreateStatic
 {
-    public static function create(...$parameters)
+    public static function create(...$parameters): self
     {
         return new static(...$parameters);
     }

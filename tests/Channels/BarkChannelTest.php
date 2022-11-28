@@ -16,20 +16,22 @@ use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 use Guanguans\Notify\Contracts\MessageInterface;
+use GuzzleHttp\Exception\ClientException;
+use Mockery;
 use Nyholm\NSA;
 
 class BarkChannelTest extends TestCase
 {
     public function testCreateMessage(): void
     {
-        $m = \Mockery::mock(BarkChannel::class);
-        $m->shouldAllowMockingProtectedMethods()
+        $legacyMock = Mockery::mock(BarkChannel::class);
+        $legacyMock->shouldAllowMockingProtectedMethods()
             ->shouldReceive('createMessage')
             ->once()
             ->with('report')
             ->andReturn(\Mockery::mock(MessageInterface::class));
-        $this->assertInstanceOf(BarkChannel::class, $m);
-        $this->assertInstanceOf(MessageInterface::class, $m->createMessage('report'));
+        $this->assertInstanceOf(BarkChannel::class, $legacyMock);
+        $this->assertInstanceOf(MessageInterface::class, $legacyMock->createMessage('report'));
 
         $channel = $this->app->make(ExceptionNotifyManager::class)->driver('bark');
         $this->assertInstanceOf(BarkChannel::class, $channel);
@@ -38,18 +40,18 @@ class BarkChannelTest extends TestCase
 
     public function testReport(): void
     {
-        $m = \Mockery::mock(BarkChannel::class);
-        $m->shouldAllowMockingProtectedMethods()
+        $legacyMock = Mockery::mock(BarkChannel::class);
+        $legacyMock->shouldAllowMockingProtectedMethods()
             ->shouldReceive('report')
             ->once()
             ->with('report')
             ->andReturnNull();
-        $this->assertInstanceOf(BarkChannel::class, $m);
-        $this->assertNull($m->report('report'));
+        $this->assertInstanceOf(BarkChannel::class, $legacyMock);
+        $this->assertNull($legacyMock->report('report'));
 
         $channel = $this->app->make(ExceptionNotifyManager::class)->driver('bark');
         $this->assertInstanceOf(BarkChannel::class, $channel);
-        $this->expectException(\GuzzleHttp\Exception\ClientException::class);
+        $this->expectException(ClientException::class);
         $channel->report('report');
     }
 }

@@ -31,7 +31,7 @@ class FeatureTest extends TestCase
             });
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $this->markTestSkipped(__METHOD__);
 

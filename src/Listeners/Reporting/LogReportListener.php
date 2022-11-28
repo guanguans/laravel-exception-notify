@@ -27,9 +27,9 @@ class LogReportListener
         $this->logger = $logger;
     }
 
-    public function handle(ReportingEvent $event): void
+    public function handle(ReportingEvent $reportingEvent): void
     {
-        $this->logger->info($event->channel->getName());
-        $this->logger->info($event->report);
+        $this->logger->info($reportingEvent->channel->getName());
+        $this->logger->info($reportingEvent->report);
     }
 }

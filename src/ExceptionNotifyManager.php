@@ -37,6 +37,7 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Throwable;
 
 class ExceptionNotifyManager extends Manager
 {
@@ -62,28 +63,28 @@ class ExceptionNotifyManager extends Manager
         $this->config = $container->make('config');
     }
 
-    public function reportIf($condition, \Throwable $e): void
+    public function reportIf($condition, Throwable $throwable): void
     {
-        value($condition) and $this->report($e);
+        value($condition) and $this->report($throwable);
     }
 
-    public function report(\Throwable $e): void
+    public function report(Throwable $throwable): void
     {
         try {
-            if ($this->shouldntReport($e)) {
+            if ($this->shouldntReport($throwable)) {
                 return;
             }
 
-            $this->registerException($e);
+            $this->registerException($throwable);
             $this->dispatchReportExceptionJob();
-        } catch (\Throwable $e) {
-            $this->container['log']->error($e->getMessage(), ['exception' => $e]);
+        } catch (Throwable $throwable) {
+            $this->container['log']->error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
 
-    protected function registerException(\Throwable $e): void
+    protected function registerException(Throwable $throwable): void
     {
-        $this->container->instance('exception.notify.exception', $e);
+        $this->container->instance('exception.notify.exception', $throwable);
     }
 
     protected function dispatchReportExceptionJob(): void
@@ -97,7 +98,8 @@ class ExceptionNotifyManager extends Manager
         }
     }
 
-    public function shouldntReport(\Throwable $e): bool
+    /** @noinspection MultipleReturnStatementsInspection */
+    public function shouldntReport(Throwable $throwable): bool
     {
         if (! $this->container['config']['exception-notify.enabled']) {
             return true;
@@ -108,7 +110,7 @@ class ExceptionNotifyManager extends Manager
         }
 
         foreach ($this->container['config']['exception-notify.dont_report'] as $type) {
-            if ($e instanceof $type) {
+            if ($throwable instanceof $type) {
                 return true;
             }
         }
@@ -116,23 +118,20 @@ class ExceptionNotifyManager extends Manager
         return ! $this
             ->container
             ->make(RateLimiterFactory::class)
-            ->create(md5($e->getMessage().$e->getCode().$e->getFile().$e->getLine()))
+            ->create(md5($throwable->getMessage().$throwable->getCode().$throwable->getFile().$throwable->getLine()))
             ->consume()
             ->isAccepted();
     }
 
-    public function shouldReport(\Throwable $e): bool
+    public function shouldReport(Throwable $throwable): bool
     {
-        return ! $this->shouldntReport($e);
+        return ! $this->shouldntReport($throwable);
     }
 
-    /**
-     * @return array
-     */
-    protected function getChannelConfig($name)
+    protected function getChannelConfig($name): array
     {
         if (null !== $name && 'null' !== $name) {
-            return $this->container['config']["exception-notify.channels.$name"];
+            return $this->container['config']["exception-notify.channels.{$name}"];
         }
 
         return ['driver' => 'null'];
@@ -174,7 +173,7 @@ class ExceptionNotifyManager extends Manager
         return $this;
     }
 
-    protected function createBarkDriver()
+    protected function createBarkDriver(): BarkChannel
     {
         return new BarkChannel(
             Factory::bark(array_filter_filled([
@@ -184,7 +183,7 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createChanifyDriver()
+    protected function createChanifyDriver(): ChanifyChannel
     {
         return new ChanifyChannel(
             Factory::chanify(array_filter_filled([
@@ -194,12 +193,12 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createDdDriver()
+    protected function createDdDriver(): DdChannel
     {
         return new DdChannel();
     }
 
-    protected function createDingTalkDriver()
+    protected function createDingTalkDriver(): DingTalkChannel
     {
         return new DingTalkChannel(
             Factory::dingTalk(array_filter_filled([
@@ -209,19 +208,19 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createDiscordDriver()
+    protected function createDiscordDriver(): DiscordChannel
     {
         return new DiscordChannel(
             Factory::discord(['webhook_url' => config('exception-notify.channels.discord.webhook_url')])
         );
     }
 
-    protected function createDumpDriver()
+    protected function createDumpDriver(): DumpChannel
     {
         return new DumpChannel();
     }
 
-    protected function createFeiShuDriver()
+    protected function createFeiShuDriver(): FeiShuChannel
     {
         return new FeiShuChannel(
             Factory::feiShu(array_filter_filled([
@@ -231,7 +230,7 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createLogDriver()
+    protected function createLogDriver(): LogChannel
     {
         return new LogChannel(
             config('exception-notify.channels.log.channel'),
@@ -239,7 +238,7 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createMailDriver()
+    protected function createMailDriver(): MailChannel
     {
         return new MailChannel(
             Factory::mailer(array_filter_filled([
@@ -249,12 +248,12 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createNullDriver()
+    protected function createNullDriver(): NullChannel
     {
         return new NullChannel();
     }
 
-    protected function createPushDeerDriver()
+    protected function createPushDeerDriver(): PushDeerChannel
     {
         return new PushDeerChannel(
             Factory::pushDeer(array_filter_filled([
@@ -264,7 +263,7 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createQqChannelBotDriver()
+    protected function createQqChannelBotDriver(): QqChannelBotChannel
     {
         return new QqChannelBotChannel(
             Factory::qqChannelBot(array_filter_filled([
@@ -277,35 +276,35 @@ class ExceptionNotifyManager extends Manager
         );
     }
 
-    protected function createServerChanDriver()
+    protected function createServerChanDriver(): ServerChanChannel
     {
         return new ServerChanChannel(
             Factory::serverChan(['token' => config('exception-notify.channels.serverChan.token')])
         );
     }
 
-    protected function createSlackDriver()
+    protected function createSlackDriver(): SlackChannel
     {
         return new SlackChannel(
             Factory::slack(['webhook_url' => config('exception-notify.channels.slack.webhook_url')])
         );
     }
 
-    protected function createTelegramDriver()
+    protected function createTelegramDriver(): TelegramChannel
     {
         return new TelegramChannel(
             Factory::telegram(['token' => config('exception-notify.channels.telegram.token')])
         );
     }
 
-    protected function createWeWorkDriver()
+    protected function createWeWorkDriver(): WeWorkChannel
     {
         return new WeWorkChannel(
             Factory::weWork(['token' => config('exception-notify.channels.weWork.token')])
         );
     }
 
-    protected function createXiZhiDriver()
+    protected function createXiZhiDriver(): XiZhiChannel
     {
         return new XiZhiChannel(
             Factory::xiZhi([

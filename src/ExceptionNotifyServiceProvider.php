@@ -64,6 +64,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     protected function setupConfig(): void
     {
+        /** @noinspection RealpathInStreamContextInspection */
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
@@ -77,9 +78,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     protected function registerCollectorManager(): void
     {
-        $this->app->singleton(CollectorManager::class, function (Container $app) {
-            /** @var \Guanguans\LaravelExceptionNotify\Contracts\Collector[] $collectors */
-            $collectors = collect($app['config']['exception-notify.collector'])
+        $this->app->singleton(CollectorManager::class, function (Container $container): CollectorManager {
+            /** @var \Guanguans\LaravelExceptionNotify\Contracts\Collector[] $collection */
+            $collection = collect($container['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
                     if (! is_array($parameters)) {
                         [$parameters, $class] = [$class, $parameters];
@@ -89,7 +90,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
                 })
                 ->values();
 
-            return new CollectorManager($collectors);
+            return new CollectorManager($collection);
         });
 
         $this->app->alias(CollectorManager::class, 'exception.collector');
@@ -97,7 +98,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     protected function registerExceptionNotifyManager(): void
     {
-        $this->app->singleton(ExceptionNotifyManager::class, function ($app) {
+        $this->app->singleton(ExceptionNotifyManager::class, static function ($app): ExceptionNotifyManager {
             return new ExceptionNotifyManager($app);
         });
 
@@ -107,28 +108,31 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     protected function registerRateLimiter(): void
     {
-        $this->app->singleton(CacheStorage::class, function (Container $app) {
+        $this->app->singleton(CacheStorage::class, static function (Container $container): CacheStorage {
             return new CacheStorage(
-                $app->make(
-                    $app['config']['exception-notify.rate_limiter.storage.class'],
-                    $app['config']['exception-notify.rate_limiter.storage.parameters']
+                $container->make(
+                    $container['config']['exception-notify.rate_limiter.storage.class'],
+                    $container['config']['exception-notify.rate_limiter.storage.parameters']
                 )
             );
         });
         $this->app->alias(CacheStorage::class, 'exception.rate-limiter.storage');
 
-        $this->app->singleton(RateLimiterFactory::class, function (Container $app) {
+        $this->app->singleton(RateLimiterFactory::class, function (Container $container): RateLimiterFactory {
             return new RateLimiterFactory(
-                array_merge([
-                    'id' => 'exception-notify',
-                    'policy' => 'token_bucket',
-                    'limit' => 6,
-                    'interval' => '1 minutes',
-                    'rate' => [
-                        'amount' => 1,
+                array_merge(
+                    [
+                        'id' => 'exception-notify',
+                        'policy' => 'token_bucket',
+                        'limit' => (int) config('app.debug') ? 50 : 1,
                         'interval' => '1 minutes',
+                        'rate' => [
+                            'amount' => 1,
+                            'interval' => '5 minutes',
+                        ],
                     ],
-                ], $app['config']['exception-notify.rate_limiter.config']),
+                    $container['config']['exception-notify.rate_limiter.config']
+                ),
                 $this->app->make(CacheStorage::class)
             );
         });
@@ -137,6 +141,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * @psalm-suppress UndefinedInterfaceMethod
+     * @noinspection OffsetOperationsInspection
      */
     protected function registerReportingEvent(): void
     {
@@ -147,6 +152,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * @psalm-suppress UndefinedInterfaceMethod
+     * @noinspection OffsetOperationsInspection
      */
     protected function registerReportedEvent(): void
     {

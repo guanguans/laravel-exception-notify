@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface Collector extends \Stringable
+use Stringable;
+
+interface Collector extends Stringable
 {
     public function getName(): string;
 

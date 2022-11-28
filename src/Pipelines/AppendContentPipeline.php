@@ -12,9 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
+use Closure;
+
 class AppendContentPipeline
 {
-    public function handle(string $report, \Closure $next, string $content): string
+    public function handle(string $report, Closure $next, string $content): string
     {
         return $next($report.$content);
     }

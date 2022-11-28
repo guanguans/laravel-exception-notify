@@ -22,7 +22,7 @@ class CollectorManagerTest extends TestCase
      */
     private $collectorManager;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

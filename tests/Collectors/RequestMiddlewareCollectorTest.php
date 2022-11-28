@@ -19,7 +19,7 @@ class RequestMiddlewareCollectorTest extends TestCase
 {
     public function testCollect(): void
     {
-        $requestCookieCollector = new RequestMiddlewareCollector($this->app['request']);
-        $this->assertNull($requestCookieCollector->collect());
+        $requestMiddlewareCollector = new RequestMiddlewareCollector($this->app['request']);
+        $this->assertNull($requestMiddlewareCollector->collect());
     }
 }

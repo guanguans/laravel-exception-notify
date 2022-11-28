@@ -21,7 +21,7 @@ class RequestCookieCollector extends Collector
      */
     protected $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->request = $request;

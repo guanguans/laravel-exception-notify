@@ -13,12 +13,9 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 
 if (! function_exists('array_filter_filled')) {
-    /**
-     * @return array
-     */
-    function array_filter_filled(array $array)
+    function array_filter_filled(array $array): array
     {
-        return array_filter($array, function ($item) {
+        return array_filter($array, static function ($item) {
             return ! blank($item);
         });
     }
@@ -28,9 +25,12 @@ if (! function_exists('call')) {
     /**
      * Call the given Closure / class@method and inject its dependencies.
      *
+     * @param callable|string      $callback
+     * @param array<string, mixed> $parameters
+     *
      * @return mixed
      */
-    function call($callback, array $parameters = [], $defaultMethod = 'handle')
+    function call($callback, array $parameters = [], ?string $defaultMethod = 'handle')
     {
         is_callable($callback) and $defaultMethod = null;
 
@@ -42,7 +42,8 @@ if (! function_exists('var_output')) {
     /**
      * @param $expression
      *
-     * @return string|null
+     * @return string|void|null
+     * @noinspection DebugFunctionUsageInspection
      */
     function var_output($expression, bool $return = false)
     {
@@ -82,7 +83,7 @@ if (! function_exists('array_reduces')) {
 if (! function_exists('exception_notify_report_if')) {
     function exception_notify_report_if($condition, $exception, ...$channels): void
     {
-        $condition and exception_notify_report($exception, ...$channels);
+        value($condition) and exception_notify_report($exception, ...$channels);
     }
 }
 
@@ -100,10 +101,8 @@ if (! function_exists('is_callable_with_at_sign')) {
      * Determine if the given string is in Class@method syntax.
      *
      * @param mixed $callback
-     *
-     * @return bool
      */
-    function is_callable_with_at_sign($callback)
+    function is_callable_with_at_sign($callback): bool
     {
         return is_string($callback) && str_contains($callback, '@');
     }

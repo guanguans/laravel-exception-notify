@@ -12,9 +12,25 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
+use Exception;
+use Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
+use Mockery;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -45,20 +61,20 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
         $app['config']->set('exception-notify.rate_limiter.config.limit', 1000);
         $app['config']->set('exception-notify.collector', [
-            \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
-            \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
+            LaravelCollector::class,
+            AdditionCollector::class,
+            PhpInfoCollector::class,
+            ExceptionBasicCollector::class,
+            ExceptionTraceCollector::class,
+            RequestBasicCollector::class,
+            RequestHeaderCollector::class,
+            RequestQueryCollector::class,
+            RequestPostCollector::class,
+            RequestFileCollector::class,
+            RequestMiddlewareCollector::class,
+            RequestServerCollector::class,
+            RequestCookieCollector::class,
+            RequestSessionCollector::class,
         ]);
 
         $app['config']->set('database.default', 'sqlite');
@@ -73,19 +89,19 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function setUpApplicationRoutes(): void
     {
-        Route::get('/report-exception', function () {
-            ExceptionNotify::onChannel('dump', 'log')->report(new \Exception('What happened?'));
+        Route::get('/report-exception', static function (): string {
+            ExceptionNotify::onChannel('dump', 'log')->report(new Exception('What happened?'));
 
             return 'This is a test page.';
         });
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
-        if ($container = \Mockery::getContainer()) {
+        if ($container = Mockery::getContainer()) {
             $this->addToAssertionCount($container->Mockery_getExpectationCount());
         }
-        \Mockery::close();
+        Mockery::close();
     }
 }

@@ -14,6 +14,9 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class AdditionCollector extends Collector
 {
+    /**
+     * @return array{time: string, memory: string}
+     */
     public function collect()
     {
         return [

@@ -19,7 +19,7 @@ class RequestServerCollectorTest extends TestCase
 {
     public function testCollect(): void
     {
-        $requestCookieCollector = new RequestServerCollector($this->app['request']);
-        $this->assertIsArray($requestCookieCollector->collect());
+        $requestServerCollector = new RequestServerCollector($this->app['request']);
+        $this->assertIsArray($requestServerCollector->collect());
     }
 }
