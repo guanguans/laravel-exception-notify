@@ -14,6 +14,10 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 class DumpChannel extends Channel
 {
+    /**
+     * @noinspection ForgottenDebugOutputInspection
+     * @noinspection DebugFunctionUsageInspection
+     */
     public function report(string $report): void
     {
         dump($report);

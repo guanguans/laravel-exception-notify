@@ -42,7 +42,7 @@ if (! function_exists('var_output')) {
     /**
      * @param $expression
      *
-     * @return string|void|null
+     * @return string|void
      * @noinspection DebugFunctionUsageInspection
      */
     function var_output($expression, bool $return = false)

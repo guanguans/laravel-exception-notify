@@ -18,7 +18,7 @@
 * Support for extended custom channels
 * Support for custom data collectors
 * Support for custom data transformers
-* Support notification rate limit(default once per minute)
+* Support notification rate limit(The production environment with the same exception will be notified every 5 minutes by default)
 
 ## Related Links
 

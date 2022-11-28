@@ -24,3 +24,8 @@ parameters:
 			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Support\\\\Macros\\\\CollectionMacro\\:\\:\\$items\\.$#"
 			count: 1
 			path: src/Support/Macros/CollectionMacro.php
+
+		-
+			message: "#^Function var_output\\(\\) never returns void so it can be removed from the return type\\.$#"
+			count: 1
+			path: src/Support/helpers.php

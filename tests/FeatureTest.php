@@ -19,12 +19,15 @@ class FeatureTest extends TestCase
 {
     public function testReportException(): void
     {
-        $response = $this->get('/report-exception');
-        $response->assertSee('This is a test page.');
+        $logFile = $this->app['config']->get('logging.channels.single.path');
+        file_exists($logFile) and unlink($logFile);
 
-        $logPath = $this->app['config']->get('logging.channels.single.path');
-        $content = file_get_contents($logPath);
+        $response = $this->get('/report-exception');
+        $response->assertSee('This is an exception report test page.');
+
+        $content = file_get_contents($logFile);
         $this->assertStringContainsString('What happened?', $content);
+
         collect($this->app->make(CollectorManager::class))
             ->each(function (Collector $collector) use ($content): void {
                 $this->assertStringContainsString($collector->getName(), $content);
@@ -34,10 +37,12 @@ class FeatureTest extends TestCase
     public function testReport(): void
     {
         $this->markTestSkipped(__METHOD__);
-
+        ob_start();
         exception_notify_report('What happened?', 'dump');
+        $output = ob_get_clean(); // `echo` and `not afterResponse`
+
         $report = (string) $this->app->make(CollectorManager::class);
-        $this->assertMatchesSnapshot($report);
-        // $this->expectOutputString($report);
+        $this->assertEquals($report, $output);
+        // $this->assertMatchesSnapshot($report);
     }
 }

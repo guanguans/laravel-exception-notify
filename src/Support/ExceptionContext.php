@@ -46,13 +46,13 @@ class ExceptionContext
      */
     public static function get(Throwable $throwable): array
     {
-        return static::getEvalContext($throwable) ?? static::getFileContext($throwable);
+        return static::getEvalContext($throwable) ?: static::getFileContext($throwable);
     }
 
     /**
      * Get the exception code context when eval() failed.
      *
-     * @return \string[]|void|null
+     * @return array<int, string>|void
      */
     protected static function getEvalContext(Throwable $throwable)
     {
