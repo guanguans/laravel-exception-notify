@@ -17,14 +17,13 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 use Guanguans\Notify\Contracts\MessageInterface;
 use GuzzleHttp\Exception\ClientException;
-use Mockery;
 use Nyholm\NSA;
 
 class BarkChannelTest extends TestCase
 {
     public function testCreateMessage(): void
     {
-        $legacyMock = Mockery::mock(BarkChannel::class);
+        $legacyMock = \Mockery::mock(BarkChannel::class);
         $legacyMock->shouldAllowMockingProtectedMethods()
             ->shouldReceive('createMessage')
             ->once()
@@ -40,7 +39,7 @@ class BarkChannelTest extends TestCase
 
     public function testReport(): void
     {
-        $legacyMock = Mockery::mock(BarkChannel::class);
+        $legacyMock = \Mockery::mock(BarkChannel::class);
         $legacyMock->shouldAllowMockingProtectedMethods()
             ->shouldReceive('report')
             ->once()

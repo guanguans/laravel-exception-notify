@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void                                                     mixin($mixin, $replace = true)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
+ *
  * @mixin \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
  */
 class ExceptionNotify extends Facade

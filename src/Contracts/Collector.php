@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Stringable;
 
-interface Collector extends Stringable, Arrayable
+interface Collector extends \Stringable, Arrayable
 {
     public function getName(): string;
 

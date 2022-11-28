@@ -28,6 +28,7 @@ trait OptionsProperty
 
     /**
      * @return \any|array
+     *
      * @noinspection MultipleReturnStatementsInspection
      */
     public function get($key = null, $default = null)

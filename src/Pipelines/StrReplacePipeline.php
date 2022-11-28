@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
-
 class StrReplacePipeline
 {
-    public function handle(string $report, Closure $next, string $search, string $replace): string
+    public function handle(string $report, \Closure $next, string $search, string $replace): string
     {
         return $next(str_replace($search, $replace, $report));
     }

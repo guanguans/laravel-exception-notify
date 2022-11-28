@@ -37,7 +37,6 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
-use Throwable;
 
 class ExceptionNotifyManager extends Manager
 {
@@ -63,12 +62,12 @@ class ExceptionNotifyManager extends Manager
         $this->config = $container->make('config');
     }
 
-    public function reportIf($condition, Throwable $throwable): void
+    public function reportIf($condition, \Throwable $throwable): void
     {
         value($condition) and $this->report($throwable);
     }
 
-    public function report(Throwable $throwable): void
+    public function report(\Throwable $throwable): void
     {
         try {
             if ($this->shouldntReport($throwable)) {
@@ -77,12 +76,12 @@ class ExceptionNotifyManager extends Manager
 
             $this->registerException($throwable);
             $this->dispatchReportExceptionJob();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->container['log']->error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
 
-    protected function registerException(Throwable $throwable): void
+    protected function registerException(\Throwable $throwable): void
     {
         $this->container->instance('exception.notify.exception', $throwable);
     }
@@ -99,7 +98,7 @@ class ExceptionNotifyManager extends Manager
     }
 
     /** @noinspection MultipleReturnStatementsInspection */
-    public function shouldntReport(Throwable $throwable): bool
+    public function shouldntReport(\Throwable $throwable): bool
     {
         if (! $this->container['config']['exception-notify.enabled']) {
             return true;
@@ -123,7 +122,7 @@ class ExceptionNotifyManager extends Manager
             ->isAccepted();
     }
 
-    public function shouldReport(Throwable $throwable): bool
+    public function shouldReport(\Throwable $throwable): bool
     {
         return ! $this->shouldntReport($throwable);
     }

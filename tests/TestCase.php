@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-use Exception;
 use Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
@@ -30,7 +29,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
-use Mockery;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -90,7 +88,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUpApplicationRoutes(): void
     {
         Route::get('/report-exception', static function (): string {
-            ExceptionNotify::onChannel('dump', 'log')->report(new Exception('What happened?'));
+            ExceptionNotify::onChannel('dump', 'log')->report(new \Exception('What happened?'));
 
             return 'This is an exception report test page.';
         });
@@ -99,9 +97,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        if ($container = Mockery::getContainer()) {
+        if ($container = \Mockery::getContainer()) {
             $this->addToAssertionCount($container->Mockery_getExpectationCount());
         }
-        Mockery::close();
+        \Mockery::close();
     }
 }

@@ -16,15 +16,14 @@ use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Fluent;
-use Stringable;
-use Throwable;
 
-class CollectorManager extends Fluent implements Stringable
+class CollectorManager extends Fluent implements \Stringable
 {
     /**
      * @param Collector[] $collectors
      *
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
+     *
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
@@ -44,7 +43,7 @@ class CollectorManager extends Fluent implements Stringable
         $this->attributes[$offset] = $value;
     }
 
-    public function toReport(Throwable $throwable): string
+    public function toReport(\Throwable $throwable): string
     {
         return collect($this)
             ->mapWithKeys(function (Collector $collector) use ($throwable) {

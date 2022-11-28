@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
-
 class UrlEncodePipeline
 {
-    public function handle(string $report, Closure $next): string
+    public function handle(string $report, \Closure $next): string
     {
         return $next(urlencode($report));
     }

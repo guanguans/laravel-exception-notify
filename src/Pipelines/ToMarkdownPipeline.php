@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
-
 class ToMarkdownPipeline
 {
     public function handle(
         string $report,
-        Closure $next,
+        \Closure $next,
         string $mark = <<<'md'
 ```
 %s

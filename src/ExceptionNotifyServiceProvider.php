@@ -141,6 +141,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * @psalm-suppress UndefinedInterfaceMethod
+     *
      * @noinspection OffsetOperationsInspection
      */
     protected function registerReportingEvent(): void
@@ -152,6 +153,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * @psalm-suppress UndefinedInterfaceMethod
+     *
      * @noinspection OffsetOperationsInspection
      */
     protected function registerReportedEvent(): void
