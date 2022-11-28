@@ -48,8 +48,13 @@ abstract class Collector implements CollectorContract
     public function __toString()
     {
         return (string) json_encode(
-            $this->applyPipeCollect(),
+            $this->toArray(),
             JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
         );
+    }
+
+    public function toArray()
+    {
+        return $this->applyPipeCollect();
     }
 }

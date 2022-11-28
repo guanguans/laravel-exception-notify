@@ -34,7 +34,7 @@
 ## 安装
 
 ```bash
-$ composer require guanguans/laravel-exception-notify -vvv
+composer require guanguans/laravel-exception-notify -vvv
 ```
 
 ## 配置
@@ -44,7 +44,7 @@ $ composer require guanguans/laravel-exception-notify -vvv
 #### laravel
 
 ```bash
-$ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
+php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
 #### lumen
@@ -100,7 +100,7 @@ public function report(Exception $e)
 }
 ```
 
-### 通知结果
+### 通知结果(息知)
 
 ![息知](docs/xiZhi.jpg)
 
@@ -121,7 +121,7 @@ public function boot()
 ## 测试
 
 ```bash
-$ composer test
+composer test
 ```
 
 ## 变更日志

@@ -32,7 +32,7 @@
 ## Installation
 
 ```bash
-$ composer require guanguans/laravel-exception-notify -vvv
+composer require guanguans/laravel-exception-notify -vvv
 ```
 
 ## Configuration
@@ -42,7 +42,7 @@ $ composer require guanguans/laravel-exception-notify -vvv
 #### laravel
 
 ```bash
-$ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
+php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
 #### lumen
@@ -98,7 +98,7 @@ public function report(Exception $e)
 }
 ```
 
-### Notification result
+### Notification result(Xi Zhi)
 
 ![xiZhi](docs/xiZhi.jpg)
 
@@ -119,7 +119,7 @@ public function boot()
 ## Testing
 
 ```bash
-$ composer test
+composer test
 ```
 
 ## Changelog

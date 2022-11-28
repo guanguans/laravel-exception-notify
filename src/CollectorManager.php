@@ -15,7 +15,6 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 use Stringable;
 use Throwable;
@@ -47,19 +46,13 @@ class CollectorManager extends Fluent implements Stringable
 
     public function toReport(Throwable $throwable): string
     {
-        return (string) collect($this)
-            ->transform(static function (Collector $collector) use ($throwable) {
+        return collect($this)
+            ->mapWithKeys(function (Collector $collector) use ($throwable) {
                 $collector instanceof ExceptionAware and $collector->setException($throwable);
 
-                return $collector;
+                return [$collector->getName() => $collector->toArray()];
             })
-            ->pipe(static function (Collection $collection): string {
-                $report = $collection->reduce(static function (string $carry, Collector $collector): string {
-                    return $carry.PHP_EOL.sprintf('%s: %s', $collector->getName(), (string) $collector);
-                }, '');
-
-                return trim($report);
-            });
+            ->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
 
     public function __toString()
