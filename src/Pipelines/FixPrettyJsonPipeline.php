@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
 
-class FixJsonPipeline
+class FixPrettyJsonPipeline
 {
     /**
      * @var \Guanguans\LaravelExceptionNotify\Support\JsonFixer
@@ -26,11 +26,15 @@ class FixJsonPipeline
         $this->jsonFixer = $jsonFixer;
     }
 
-    public function handle(string $report, \Closure $next, string $missingValue = 'null'): string
+    public function handle(string $report, \Closure $next, string $missingValue = '"..."'): string
     {
         try {
-            // 暂未支持
-            return $next($this->jsonFixer->silent(false)->missingValue($missingValue)->fix($report));
+            $fixedJson = $this->jsonFixer->silent(false)->missingValue($missingValue)->fix($report);
+
+            return $next(json_encode(
+                json_decode($fixedJson, true),
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+            ));
         } catch (\Throwable $e) {
             return $next($report);
         }

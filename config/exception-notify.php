@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Pipelines\AppendContentPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\FixJsonPipeline;
+use Guanguans\LaravelExceptionNotify\Pipelines\FixPrettyJsonPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\StrReplacePipeline;
 use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
@@ -157,7 +157,7 @@ return [
             'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 1024),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
             ],
         ],
 
@@ -168,7 +168,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 1024),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
             ],
         ],
 
@@ -180,7 +180,7 @@ return [
             'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 20000),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
             ],
         ],
@@ -191,7 +191,7 @@ return [
             'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 2000),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
             ],
         ],
 
@@ -203,7 +203,7 @@ return [
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 30720),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
                 sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],
@@ -277,7 +277,7 @@ return [
             'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 4096),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
             ],
         ],
 
@@ -287,7 +287,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
             'pipeline' => [
                 sprintf('%s:%s', LengthLimitPipeline::class, 5120),
-                // FixJsonPipeline::class,
+                FixPrettyJsonPipeline::class,
             ],
         ],
 

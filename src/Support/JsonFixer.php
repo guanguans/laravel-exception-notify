@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support;
 
+use function is_bool;
+
 /**
  * This file is modified from https://github.com/adhocore/php-json-fixer.
  */
@@ -69,17 +71,15 @@ class JsonFixer
     /**
      * Set missing value.
      *
-     * @param mixed $value
-     *
      * @return $this
      */
     public function missingValue(string $value)
     {
-        if (null === $value) {
-            $value = 'null';
-        } elseif (\is_bool($value)) {
-            $value = $value ? 'true' : 'false';
-        }
+        // if (null === $value) {
+        //     $value = 'null';
+        // } elseif (is_bool($value)) {
+        //     $value = $value ? 'true' : 'false';
+        // }
 
         $this->missingValue = $value;
 
