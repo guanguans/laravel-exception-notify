@@ -12,9 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipelines;
 
-use Closure;
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
-use Throwable;
 
 class FixJsonPipeline
 {
@@ -28,12 +26,12 @@ class FixJsonPipeline
         $this->jsonFixer = $jsonFixer;
     }
 
-    public function handle(string $report, Closure $next, string $missingValue = 'null'): string
+    public function handle(string $report, \Closure $next, string $missingValue = 'null'): string
     {
         try {
             // 暂未支持
             return $next($this->jsonFixer->silent(false)->missingValue($missingValue)->fix($report));
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             return $next($report);
         }
     }

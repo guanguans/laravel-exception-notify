@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support;
 
-use RuntimeException;
-
 /**
  * This file is modified from https://github.com/adhocore/php-json-fixer.
  */
@@ -274,7 +272,7 @@ class JsonFixer
             return $json;
         }
 
-        throw new RuntimeException(\sprintf('Could not fix JSON (tried padding `%s`)', \substr($tmpJson, $length)));
+        throw new \RuntimeException(\sprintf('Could not fix JSON (tried padding `%s`)', \substr($tmpJson, $length)));
     }
 
     /* trait PadsJson */
