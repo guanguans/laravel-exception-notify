@@ -17,10 +17,10 @@ namespace Guanguans\LaravelExceptionNotify\Support\Macros;
  */
 class CollectionMacro
 {
-    public function reduces(): callable
+    public function reduceWithKeys(): callable
     {
         return function (callable $callback, $carry = null) {
-            return array_reduces($this->items, $callback, $carry);
+            return array_reduce_with_keys($this->items, $callback, $carry);
         };
     }
 }
