@@ -16,7 +16,7 @@ class LengthLimitPipeline
 {
     public function handle(string $report, \Closure $next, int $length = -1): string
     {
-        $length > 0 and $report = substr($report, 0, $length * 95 / 100).'...';
+        $length > 0 and $report = substr($report, 0, (int) ($length * 95 / 100)).'...';
 
         return $next($report);
     }
