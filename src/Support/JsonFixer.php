@@ -12,50 +12,58 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support;
 
-use Guanguans\LaravelExceptionNotify\Support\Traits\PadsJson;
+use RuntimeException;
 
 /**
  * This file is modified from https://github.com/adhocore/php-json-fixer.
  */
 class JsonFixer
 {
-    use PadsJson;
-
-    /** @var array Current token stack indexed by position */
+    /**
+     * @var array Current token stack indexed by position
+     */
     protected $stack = [];
 
-    /** @var bool If current char is within a string */
+    /**
+     * @var bool If current char is within a string
+     */
     protected $inStr = false;
 
-    /** @var bool Whether to throw Exception on failure */
+    /**
+     * @var bool Whether to throw Exception on failure
+     */
     protected $silent = false;
 
-    /** @var array The complementary pairs */
+    /**
+     * @var array The complementary pairs
+     */
     protected $pairs = [
         '{' => '}',
         '[' => ']',
         '"' => '"',
     ];
 
-    /** @var int The last seen object `{` type position */
+    /**
+     * @var int The last seen object `{` type position
+     */
     protected $objectPos = -1;
 
     /** @var int The last seen array `[` type position */
     protected $arrayPos = -1;
 
-    /** @var string Missing value. (Options: true, false, null) */
+    /**
+     * @var string Missing value. (Options: true, false, null)
+     */
     protected $missingValue = 'null';
 
     /**
      * Set/unset silent mode.
      *
-     * @param bool $silent
-     *
      * @return $this
      */
-    public function silent($silent = true)
+    public function silent(bool $silent = true)
     {
-        $this->silent = (bool) $silent;
+        $this->silent = $silent;
 
         return $this;
     }
@@ -67,7 +75,7 @@ class JsonFixer
      *
      * @return $this
      */
-    public function missingValue($value)
+    public function missingValue(string $value)
     {
         if (null === $value) {
             $value = 'null';
@@ -89,7 +97,7 @@ class JsonFixer
      *
      * @throws \RuntimeException when fixing fails
      */
-    public function fix($json)
+    public function fix(string $json)
     {
         [$head, $json, $tail] = $this->trim($json);
 
@@ -118,7 +126,7 @@ class JsonFixer
         return $match;
     }
 
-    protected function isValid($json)
+    protected function isValid($json): bool
     {
         /** @psalm-suppress UnusedFunctionCall */
         \json_decode($json);
@@ -171,7 +179,7 @@ class JsonFixer
         while (isset($json[++$index])) {
             [$prev, $char] = [$char, $json[$index]];
 
-            $next = isset($json[$index + 1]) ? $json[$index + 1] : '';
+            $next = $json[$index + 1] ?? '';
 
             if (! \in_array($char, [' ', "\n", "\r"])) {
                 $this->stack($prev, $char, $index, $next);
@@ -205,6 +213,9 @@ class JsonFixer
         return \end($this->stack);
     }
 
+    /**
+     * @noinspection OffsetOperationsInspection
+     */
     protected function popToken($token = null)
     {
         // Last one
@@ -235,7 +246,7 @@ class JsonFixer
         return $this->inStr;
     }
 
-    protected function updatePos($char, $index)
+    protected function updatePos($char, int $index)
     {
         if ('{' === $char) {
             $this->objectPos = $index;
@@ -263,6 +274,104 @@ class JsonFixer
             return $json;
         }
 
-        throw new \RuntimeException(\sprintf('Could not fix JSON (tried padding `%s`)', \substr($tmpJson, $length)));
+        throw new RuntimeException(\sprintf('Could not fix JSON (tried padding `%s`)', \substr($tmpJson, $length)));
+    }
+
+    /* trait PadsJson */
+    public function pad($tmpJson)
+    {
+        if (! $this->inStr) {
+            $tmpJson = \rtrim($tmpJson, ',');
+            while (',' === $this->lastToken()) {
+                $this->popToken();
+            }
+        }
+
+        $tmpJson = $this->padLiteral($tmpJson);
+        $tmpJson = $this->padObject($tmpJson);
+
+        return $this->padStack($tmpJson);
+    }
+
+    protected function padLiteral($tmpJson)
+    {
+        if ($this->inStr) {
+            return $tmpJson;
+        }
+
+        $match = \preg_match('/(tr?u?e?|fa?l?s?e?|nu?l?l?)$/', $tmpJson, $matches);
+
+        if (! $match || null === $literal = $this->maybeLiteral($matches[1])) {
+            return $tmpJson;
+        }
+
+        return \substr($tmpJson, 0, -\strlen($matches[1])).$literal;
+    }
+
+    protected function padStack($tmpJson)
+    {
+        foreach (\array_reverse($this->stack, true) as $token) {
+            if (isset($this->pairs[$token])) {
+                $tmpJson .= $this->pairs[$token];
+            }
+        }
+
+        return $tmpJson;
+    }
+
+    protected function padObject($tmpJson)
+    {
+        if (! $this->objectNeedsPadding($tmpJson)) {
+            return $tmpJson;
+        }
+
+        $part = \substr($tmpJson, $this->objectPos + 1);
+        if (\preg_match('/(\s*\"[^"]+\"\s*:\s*[^,]+,?)+$/', $part, $matches)) {
+            return $tmpJson;
+        }
+
+        if ($this->inStr) {
+            $tmpJson .= '"';
+        }
+
+        $tmpJson = $this->padIf($tmpJson, ':');
+        $tmpJson .= $this->missingValue;
+
+        if ('"' === $this->lastToken()) {
+            $this->popToken();
+        }
+
+        return $tmpJson;
+    }
+
+    protected function objectNeedsPadding($tmpJson): bool
+    {
+        $last = \substr($tmpJson, -1);
+        $empty = '{' === $last && ! $this->inStr;
+
+        return ! $empty && $this->arrayPos < $this->objectPos;
+    }
+
+    protected function padString($string)
+    {
+        $last = \substr($string, -1);
+        $last2 = \substr($string, -2);
+
+        if ('\"' === $last2 || '"' !== $last) {
+            return $string.'"';
+        }
+
+        // @codeCoverageIgnoreStart
+        return null;
+        // @codeCoverageIgnoreEnd
+    }
+
+    protected function padIf($string, $substr)
+    {
+        if (\substr($string, -\strlen($substr)) !== $substr) {
+            return $string.$substr;
+        }
+
+        return $string;
     }
 }

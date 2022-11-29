@@ -13,10 +13,12 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
+use Rector\CodeQuality\Rector\Assign\SplitListAssignToSeparateLineRector;
 use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
+use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Enum\PreferenceSelfThis;
 use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
@@ -32,6 +34,7 @@ use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
+use Rector\EarlyReturn\Rector\If_\ChangeOrIfReturnToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Laravel\Set\LaravelLevelSetList;
 use Rector\Laravel\Set\LaravelSetList;
@@ -44,6 +47,7 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector;
 use Rector\TypeDeclaration\Rector\Closure\AddClosureReturnTypeRector;
 use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 
@@ -92,6 +96,11 @@ return static function (RectorConfig $rectorConfig): void {
         ReturnTypeDeclarationRector::class,
         AddClosureReturnTypeRector::class,
         GetClassOnNullRector::class,
+        AddArrayReturnDocTypeRector::class,
+        ExplicitBoolCompareRector::class,
+        SplitListAssignToSeparateLineRector::class,
+        ConsistentPregDelimiterRector::class,
+        ChangeOrIfReturnToEarlyReturnRector::class,
 
         // paths
         '**/fixtures*',
@@ -137,7 +146,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitSetList::PHPUNIT_YIELD_DATA_PROVIDER,
     ]);
 
-    $rectorConfig->disableParallel();
+    // $rectorConfig->disableParallel();
     $rectorConfig->importNames(true, false);
     $rectorConfig->nestedChainMethodCallLimit(3);
     $rectorConfig->phpstanConfig(__DIR__.'/phpstan.neon');

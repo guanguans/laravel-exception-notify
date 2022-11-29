@@ -46,7 +46,7 @@ class CollectorManager extends Fluent implements \Stringable
     public function toReport(\Throwable $throwable): string
     {
         return collect($this)
-            ->mapWithKeys(function (Collector $collector) use ($throwable) {
+            ->mapWithKeys(static function (Collector $collector) use ($throwable): array {
                 $collector instanceof ExceptionAware and $collector->setException($throwable);
 
                 return [$collector->getName() => $collector->toArray()];
