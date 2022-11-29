@@ -124,7 +124,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
                     [
                         'id' => 'exception-notify',
                         'policy' => 'token_bucket',
-                        'limit' => (int) config('app.debug') ? 50 : 1,
+                        'limit' => config('app.debug') ? 50 : 1,
                         'interval' => '1 minutes',
                         'rate' => [
                             'amount' => 1,
