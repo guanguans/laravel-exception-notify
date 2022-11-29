@@ -2,6 +2,14 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.14.1 - 2022-11-29
+
+### What's Changed
+
+- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/26
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.0...v2.14.1
+
 ## v2.14.0 - 2022-11-28
 
 **Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.13.0...v2.14.0
