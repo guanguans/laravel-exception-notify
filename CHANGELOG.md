@@ -2,6 +2,14 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.14.3 - 2023-01-18
+
+### What's Changed
+
+- Update rector/rector requirement from ^0.14.8 to ^0.14.8 || ^0.15.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/27
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.2...v2.14.3
+
 ## v2.14.2 - 2022-11-29
 
 **Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.1...v2.14.2
