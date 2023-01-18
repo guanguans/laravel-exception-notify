@@ -93,7 +93,10 @@ class ExceptionNotifyManager extends Manager
         foreach ($drivers as $driver) {
             $dispatch = dispatch(ReportExceptionJob::create($driver, $report))
                 ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
-            'sync' === $connection and method_exists($dispatch, 'afterResponse') and $dispatch->afterResponse();
+
+            if (! $this->container->runningInConsole() && 'sync' === $connection && method_exists($dispatch, 'afterResponse')) {
+                $dispatch->afterResponse();
+            }
         }
     }
 
