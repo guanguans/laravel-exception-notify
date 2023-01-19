@@ -11,7 +11,7 @@
     processIsolation="false"
     stopOnFailure="false"
     verbose="true"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
 >
     <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"-->
     <!--<coverage>

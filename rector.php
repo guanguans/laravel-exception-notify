@@ -146,7 +146,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitSetList::PHPUNIT_YIELD_DATA_PROVIDER,
     ]);
 
-    // $rectorConfig->disableParallel();
+    $rectorConfig->disableParallel();
     $rectorConfig->importNames(true, false);
     $rectorConfig->nestedChainMethodCallLimit(3);
     $rectorConfig->phpstanConfig(__DIR__.'/phpstan.neon');

@@ -27,6 +27,7 @@
 
 ## Requirement
 
+* PHP >= 7.2
 * laravel >= 5.5
 
 ## Installation
