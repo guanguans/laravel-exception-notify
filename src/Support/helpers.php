@@ -40,7 +40,7 @@ if (! function_exists('call')) {
 
 if (! function_exists('var_output')) {
     /**
-     * @return string|void
+     * @return string|void|null
      *
      * @noinspection DebugFunctionUsageInspection
      */

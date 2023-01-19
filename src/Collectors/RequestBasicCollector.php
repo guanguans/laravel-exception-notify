@@ -29,6 +29,7 @@ class RequestBasicCollector extends Collector
 
     /**
      * @psalm-suppress InvalidScalarArgument
+     * @psalm-suppress InvalidArgument
      *
      * @return array{url: string, ip: string|null, method: string, action: mixed, duration: string}
      */

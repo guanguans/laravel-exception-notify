@@ -51,7 +51,7 @@ class ExceptionContext
     /**
      * Get the exception code context when eval() failed.
      *
-     * @return array<int, string>|void
+     * @return array<int, string>|void|null
      */
     protected static function getEvalContext(\Throwable $throwable)
     {
