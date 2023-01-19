@@ -2,6 +2,10 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.14.4 - 2023-01-19
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.3...v2.14.4
+
 ## v2.14.3 - 2023-01-18
 
 ### What's Changed
