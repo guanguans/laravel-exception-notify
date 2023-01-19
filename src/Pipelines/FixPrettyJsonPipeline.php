@@ -35,7 +35,7 @@ class FixPrettyJsonPipeline
                 json_decode($fixedJson, true),
                 JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
             ));
-        } catch (\Throwable $e) {
+        } catch (\Throwable $throwable) {
             return $next($report);
         }
     }

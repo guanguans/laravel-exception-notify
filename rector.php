@@ -111,7 +111,9 @@ return static function (RectorConfig $rectorConfig): void {
         '**/Source/*',
         '**/Expected/*',
         '**/Expected*',
-        'tests/ExceptionNotifyManagerTest.php',
+        __DIR__.'/tests/ExceptionNotifyManagerTest.php',
+        __DIR__.'/tests/CollectorManagerTest.php',
+        __DIR__.'/src/Support/Macros/RequestMacro.php',
     ]);
 
     $rectorConfig->sets([
@@ -127,7 +129,7 @@ return static function (RectorConfig $rectorConfig): void {
         // SetList::PRIVATIZATION,
         SetList::PSR_4,
         SetList::TYPE_DECLARATION,
-        SetList::TYPE_DECLARATION_STRICT,
+        // SetList::TYPE_DECLARATION_STRICT,
         SetList::EARLY_RETURN,
 
         // LaravelLevelSetList::UP_TO_LARAVEL_70,

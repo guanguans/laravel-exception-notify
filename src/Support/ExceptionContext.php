@@ -31,7 +31,7 @@ class ExceptionContext
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
                 $maxLineLen = max(mb_strlen((string) array_key_last($collection->toArray())), mb_strlen($markedExceptionLine));
             })
-            ->mapWithKeys(static function ($code, $line) use (&$exceptionLine, &$markedExceptionLine, &$maxLineLen) {
+            ->mapWithKeys(static function ($code, $line) use (&$exceptionLine, &$markedExceptionLine, &$maxLineLen): array {
                 $line === $exceptionLine and $line = $markedExceptionLine;
                 $line = sprintf("%{$maxLineLen}s", $line);
 
@@ -67,7 +67,7 @@ class ExceptionContext
     {
         return collect(explode("\n", file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
-            ->mapWithKeys(static function ($value, $key) {
+            ->mapWithKeys(static function ($value, $key): array {
                 return [$key + 1 => $value];
             })
             ->all();

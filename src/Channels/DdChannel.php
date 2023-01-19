@@ -17,6 +17,8 @@ class DdChannel extends Channel
     /**
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
+     *
+     * @return never-return
      */
     public function report(string $report): void
     {
