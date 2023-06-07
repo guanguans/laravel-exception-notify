@@ -21,9 +21,6 @@ class ReportedEvent
      */
     public $channel;
 
-    /**
-     * @var mixed
-     */
     public $result;
 
     public function __construct(Channel $channel, $result)

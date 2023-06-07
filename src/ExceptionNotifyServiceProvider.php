@@ -44,9 +44,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         // $this->registerReportedEvent();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function register(): void
     {
         // Adapt lumen
@@ -163,9 +160,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function provides()
     {
         return [

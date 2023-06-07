@@ -30,9 +30,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class ExceptionNotify extends Facade
 {
-    /**
-     * {@inheritdoc}
-     */
     protected static function getFacadeAccessor()
     {
         return 'exception.notify';

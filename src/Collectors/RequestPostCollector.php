@@ -27,7 +27,7 @@ class RequestPostCollector extends Collector
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(Request $request, ?callable $pipe = null)
+    public function __construct(Request $request, callable $pipe = null)
     {
         $this->request = $request;
         $this->pipe = $pipe

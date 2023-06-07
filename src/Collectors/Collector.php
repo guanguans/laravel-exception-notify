@@ -23,7 +23,7 @@ abstract class Collector implements CollectorContract
      */
     protected $pipe;
 
-    public function __construct(?callable $pipe = null)
+    public function __construct(callable $pipe = null)
     {
         $this->pipe = $pipe;
     }

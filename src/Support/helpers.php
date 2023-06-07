@@ -27,8 +27,6 @@ if (! function_exists('call')) {
      *
      * @param callable|string      $callback
      * @param array<string, mixed> $parameters
-     *
-     * @return mixed
      */
     function call($callback, array $parameters = [], ?string $defaultMethod = 'handle')
     {
@@ -98,8 +96,6 @@ if (! function_exists('exception_notify_report')) {
 if (! function_exists('is_callable_with_at_sign')) {
     /**
      * Determine if the given string is in Class@method syntax.
-     *
-     * @param mixed $callback
      */
     function is_callable_with_at_sign($callback): bool
     {
