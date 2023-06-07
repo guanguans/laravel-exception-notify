@@ -2,6 +2,18 @@
 
 All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
 
+## v2.16.0 - 2023-06-07
+
+### What's Changed
+
+- Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/36
+- Bump dependabot/fetch-metadata from 1.4.0 to 1.5.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/38
+- Bump dependabot/fetch-metadata from 1.5.0 to 1.5.1 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/39
+- Bump actions/stale from 7 to 8 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/35
+- Update rector/rector requirement from ^0.15.7 to ^0.15.7 || ^0.17.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/40
+
+**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.15.0...v2.16.0
+
 ## v2.15.0 - 2023-03-20
 
 ### What's Changed
