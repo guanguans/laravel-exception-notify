@@ -161,7 +161,7 @@ class JsonFixer
         return $this->padString($json);
     }
 
-    protected function reset()
+    protected function reset(): void
     {
         $this->stack = [];
         $this->inStr = false;
@@ -203,7 +203,7 @@ class JsonFixer
         return $this->fixOrFail($json);
     }
 
-    protected function stack($prev, $char, $index, $next)
+    protected function stack($prev, $char, $index, $next): void
     {
         if ($this->maybeStr($prev, $char, $index)) {
             return;
@@ -262,7 +262,7 @@ class JsonFixer
         return $this->inStr;
     }
 
-    protected function updatePos($char, int $index)
+    protected function updatePos($char, int $index): void
     {
         if ('{' === $char) {
             $this->objectPos = $index;

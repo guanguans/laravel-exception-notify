@@ -78,13 +78,13 @@ return (new Config())
     // ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     // ->registerCustomFixers(new PedroTroller\CS\Fixer\Fixers())
     ->setRules([
-        // '@PHP70Migration' => true,
-        // '@PHP70Migration:risky' => true,
-        // '@PHP71Migration' => true,
-        // '@PHP71Migration:risky' => true,
-        // '@PHP73Migration' => true,
-        // '@PHP74Migration' => true,
-        // '@PHP74Migration:risky' => true,
+        '@PHP70Migration' => true,
+        '@PHP70Migration:risky' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        '@PHP73Migration' => true,
+        '@PHP74Migration' => true,
+        '@PHP74Migration:risky' => true,
         // '@PHP80Migration' => true,
         // '@PHP80Migration:risky' => true,
         // '@PHP81Migration' => true,

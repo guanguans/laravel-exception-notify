@@ -49,12 +49,8 @@ abstract class Collector implements CollectorContract
     protected function applyPipeCollect()
     {
         return collect($this->collect())
-            ->when($this->pipe, function (Collection $collection) {
-                return collect($collection->pipe($this->pipe));
-            })
-            ->filter(static function ($item) {
-                return ! blank($item);
-            })
+            ->when($this->pipe, fn (Collection $collection) => collect($collection->pipe($this->pipe)))
+            ->filter(static fn ($item) => ! blank($item))
             ->all();
     }
 }

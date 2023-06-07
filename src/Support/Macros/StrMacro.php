@@ -34,15 +34,11 @@ class StrMacro
 
     public static function lcfirst(): callable
     {
-        return static function ($string): string {
-            return lcfirst($string);
-        };
+        return static fn ($string): string => lcfirst($string);
     }
 
     public static function ucwords(): callable
     {
-        return static function ($string): string {
-            return ucwords($string);
-        };
+        return static fn ($string): string => ucwords($string);
     }
 }

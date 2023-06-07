@@ -100,9 +100,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     protected function registerExceptionNotifyManager(): void
     {
-        $this->app->singleton(ExceptionNotifyManager::class, static function ($app): ExceptionNotifyManager {
-            return new ExceptionNotifyManager($app);
-        });
+        $this->app->singleton(ExceptionNotifyManager::class, static fn ($app): ExceptionNotifyManager => new ExceptionNotifyManager($app));
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');

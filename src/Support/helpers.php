@@ -15,9 +15,7 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
-        return array_filter($array, static function ($item) {
-            return ! blank($item);
-        });
+        return array_filter($array, static fn ($item) => ! blank($item));
     }
 }
 

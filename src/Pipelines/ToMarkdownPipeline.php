@@ -18,10 +18,10 @@ class ToMarkdownPipeline
         string $report,
         \Closure $next,
         string $mark = <<<'md'
-```
-%s
-```
-md
+            ```
+            %s
+            ```
+            md
     ): string {
         return $next(sprintf($mark, $report));
     }

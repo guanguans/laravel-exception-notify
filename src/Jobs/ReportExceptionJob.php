@@ -97,9 +97,7 @@ class ReportExceptionJob implements ShouldQueue
         return (new Pipeline(app()))
             ->send($report)
             ->through($this->getChannelPipeline())
-            ->then(static function ($report) {
-                return $report;
-            });
+            ->then(static fn ($report) => $report);
     }
 
     protected function fireReportingEvent(string $report): void
