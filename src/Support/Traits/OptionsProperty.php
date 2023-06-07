@@ -14,22 +14,49 @@ namespace Guanguans\LaravelExceptionNotify\Support\Traits;
 
 trait OptionsProperty
 {
-    /**
-     * @var array
-     */
-    protected $options = [];
+    protected array $options = [];
+
+    public function __call($method, $parameters)
+    {
+        $this->options[$method] = \count($parameters) > 0 ? $parameters[0] : true;
+
+        return $this;
+    }
+
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
+
+    public function __set($key, $value): void
+    {
+        $this->offsetSet($key, $value);
+    }
+
+    public function __isset($key)
+    {
+        return $this->offsetExists($key);
+    }
+
+    public function __unset($key): void
+    {
+        $this->offsetUnset($key);
+    }
 
     public function set($name, $value = null): void
     {
-        $options = is_array($name) ? $name : [$name => $value];
+        $options = \is_array($name) ? $name : [$name => $value];
 
         $this->options = array_merge($this->options, $options);
     }
 
     /**
-     * @return \any|array
-     *
      * @noinspection MultipleReturnStatementsInspection
+     *
+     * @param null|mixed $key
+     * @param null|mixed $default
+     *
+     * @return \any|array
      */
     public function get($key = null, $default = null)
     {
@@ -37,7 +64,7 @@ trait OptionsProperty
             return $this->options;
         }
 
-        if (array_key_exists($key, $this->options)) {
+        if (\array_key_exists($key, $this->options)) {
             return $this->options[$key];
         }
 
@@ -62,32 +89,5 @@ trait OptionsProperty
     public function offsetUnset($offset): void
     {
         unset($this->options[$offset]);
-    }
-
-    public function __call($method, $parameters)
-    {
-        $this->options[$method] = count($parameters) > 0 ? $parameters[0] : true;
-
-        return $this;
-    }
-
-    public function __get($key)
-    {
-        return $this->get($key);
-    }
-
-    public function __set($key, $value): void
-    {
-        $this->offsetSet($key, $value);
-    }
-
-    public function __isset($key)
-    {
-        return $this->offsetExists($key);
-    }
-
-    public function __unset($key): void
-    {
-        $this->offsetUnset($key);
     }
 }

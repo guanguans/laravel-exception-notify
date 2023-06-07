@@ -29,10 +29,7 @@ use Symfony\Component\RateLimiter\Storage\CacheStorage;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
-    /**
-     * @var bool
-     */
-    protected $defer = false;
+    protected bool $defer = false;
 
     public function boot(): void
     {
@@ -51,6 +48,14 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->registerExceptionNotifyManager();
         $this->registerCollectorManager();
         $this->registerRateLimiter();
+    }
+
+    public function provides()
+    {
+        return [
+            ExceptionNotifyManager::class,
+            'exception.notifier',
+        ];
     }
 
     /**
@@ -79,7 +84,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             /** @var \Guanguans\LaravelExceptionNotify\Contracts\Collector[] $collection */
             $collection = collect($container['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
-                    if (! is_array($parameters)) {
+                    if (! \is_array($parameters)) {
                         [$parameters, $class] = [$class, $parameters];
                     }
 
@@ -158,13 +163,5 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         foreach ($this->app['config']['exception-notify.reported'] as $listener) {
             $this->app['events']->listen(ReportedEvent::class, $listener);
         }
-    }
-
-    public function provides()
-    {
-        return [
-            ExceptionNotifyManager::class,
-            'exception.notifier',
-        ];
     }
 }

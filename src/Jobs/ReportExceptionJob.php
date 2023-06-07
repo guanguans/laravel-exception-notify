@@ -25,47 +25,32 @@ use Illuminate\Support\Facades\Log;
 
 class ReportExceptionJob implements ShouldQueue
 {
+    use CreateStatic;
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    use CreateStatic;
 
     /**
      * 在超时之前任务可以运行的秒数.
-     *
-     * @var int
      */
-    public $timeout = 30;
+    public int $timeout = 30;
 
     /**
      * 任务可尝试的次数.
-     *
-     * @var int
      */
-    public $tries = 3;
+    public int $tries = 3;
 
     /**
      * 任务失败前允许的最大异常数.
-     *
-     * @var int
      */
-    public $maxExceptions = 3;
+    public int $maxExceptions = 3;
 
-    /**
-     * @var \Guanguans\LaravelExceptionNotify\Contracts\Channel
-     */
-    protected $channel;
+    protected \Guanguans\LaravelExceptionNotify\Contracts\Channel $channel;
 
-    /**
-     * @var string
-     */
-    protected $report;
+    protected string $report;
 
-    /**
-     * @var string
-     */
-    protected $pipedReport;
+    protected string $pipedReport;
 
     public function __construct(Channel $channel, string $report)
     {
@@ -79,6 +64,24 @@ class ReportExceptionJob implements ShouldQueue
         $this->fireReportingEvent($this->pipedReport);
         $result = $this->channel->report($this->pipedReport);
         $this->fireReportedEvent($result);
+    }
+
+    /**
+     * 任务未能处理.
+     */
+    public function failed(\Throwable $throwable): void
+    {
+        Log::error($throwable->getMessage(), ['exception' => $throwable]);
+    }
+
+    /**
+     * 计算在重试任务之前需等待的秒数.
+     *
+     * @return int[]
+     */
+    public function backoff(): array
+    {
+        return [1, 10, 30];
     }
 
     /**
@@ -107,23 +110,5 @@ class ReportExceptionJob implements ShouldQueue
     protected function fireReportedEvent($result): void
     {
         event(new ReportedEvent($this->channel, $result));
-    }
-
-    /**
-     * 任务未能处理.
-     */
-    public function failed(\Throwable $throwable): void
-    {
-        Log::error($throwable->getMessage(), ['exception' => $throwable]);
-    }
-
-    /**
-     * 计算在重试任务之前需等待的秒数.
-     *
-     * @return int[]
-     */
-    public function backoff(): array
-    {
-        return [1, 10, 30];
     }
 }

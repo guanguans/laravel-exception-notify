@@ -31,12 +31,14 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Contracts\Container\Container;
 use Nyholm\NSA;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class ExceptionNotifyManagerTest extends TestCase
 {
-    /**
-     * @var ExceptionNotifyManager
-     */
-    private $exceptionNotifyManager;
+    private ExceptionNotifyManager $exceptionNotifyManager;
 
     protected function setUp(): void
     {
@@ -86,17 +88,17 @@ class ExceptionNotifyManagerTest extends TestCase
     {
         $channelConfig = NSA::invokeMethod($this->exceptionNotifyManager, 'getChannelConfig', 'null');
         $this->assertIsArray($channelConfig);
-        $this->assertEquals($channelConfig, ['driver' => 'null']);
+        $this->assertSame($channelConfig, ['driver' => 'null']);
 
         $channelConfig = NSA::invokeMethod($this->exceptionNotifyManager, 'getChannelConfig', 'log');
         $this->assertIsArray($channelConfig);
-        $this->assertEquals($channelConfig, $this->app['config']->get('exception-notify.channels.log'));
+        $this->assertSame($channelConfig, $this->app['config']->get('exception-notify.channels.log'));
     }
 
     public function testGetDefaultDriver(): void
     {
         $this->assertIsString($defaultDriver = $this->exceptionNotifyManager->getDefaultDriver());
-        $this->assertEquals($defaultDriver, $this->app['config']['exception-notify.default']);
+        $this->assertSame($defaultDriver, $this->app['config']['exception-notify.default']);
     }
 
     public function testGetContainer(): void
@@ -203,6 +205,6 @@ class ExceptionNotifyManagerTest extends TestCase
 
     public function testCall(): void
     {
-        $this->assertEquals($this->exceptionNotifyManager->getName(), $this->exceptionNotifyManager->getDefaultDriver());
+        $this->assertSame($this->exceptionNotifyManager->getName(), $this->exceptionNotifyManager->getDefaultDriver());
     }
 }

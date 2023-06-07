@@ -15,12 +15,14 @@ namespace Guanguans\LaravelExceptionNotify\Tests;
 use Guanguans\LaravelExceptionNotify\CollectorManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class CollectorManagerTest extends TestCase
 {
-    /**
-     * @var CollectorManager
-     */
-    private $collectorManager;
+    private CollectorManager $collectorManager;
 
     protected function setUp(): void
     {

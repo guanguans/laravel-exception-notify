@@ -17,11 +17,11 @@ use Illuminate\Contracts\Container\Container;
 class LaravelCollector extends Collector
 {
     /**
-     * @var \Illuminate\Foundation\Application|\Illuminate\Contracts\Container\Container
+     * @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application
      */
     protected $app;
 
-    public function __construct(Container $container, callable $pipe = null)
+    public function __construct(Container $container, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->app = $container;
@@ -30,7 +30,7 @@ class LaravelCollector extends Collector
     /**
      * @return array<string, mixed>
      */
-    public function collect()
+    public function collect(): array
     {
         return [
             'name' => $this->app['config']['app.name'],
@@ -38,7 +38,7 @@ class LaravelCollector extends Collector
             'environment' => $this->app->environment(),
             'locale' => value(function () {
                 if (! method_exists($this->app, 'getLocale')) {
-                    return null;
+                    return;
                 }
 
                 return $this->app->getLocale();

@@ -16,12 +16,9 @@ use Illuminate\Http\Request;
 
 class RequestMiddlewareCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->request = $request;

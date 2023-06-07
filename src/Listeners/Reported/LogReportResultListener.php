@@ -17,10 +17,7 @@ use Psr\Log\LoggerInterface;
 
 class LogReportResultListener
 {
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
+    protected \Psr\Log\LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {

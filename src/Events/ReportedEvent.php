@@ -16,10 +16,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 
 class ReportedEvent
 {
-    /**
-     * @var \Guanguans\LaravelExceptionNotify\Contracts\Channel
-     */
-    public $channel;
+    public \Guanguans\LaravelExceptionNotify\Contracts\Channel $channel;
 
     public $result;
 

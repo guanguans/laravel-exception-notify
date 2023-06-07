@@ -16,10 +16,7 @@ use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
 
 class FixPrettyJsonPipeline
 {
-    /**
-     * @var \Guanguans\LaravelExceptionNotify\Support\JsonFixer
-     */
-    protected $jsonFixer;
+    protected \Guanguans\LaravelExceptionNotify\Support\JsonFixer $jsonFixer;
 
     public function __construct(JsonFixer $jsonFixer)
     {

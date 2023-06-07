@@ -31,6 +31,11 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
 use Spatie\Snapshots\MatchesSnapshots;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     use MatchesSnapshots;
@@ -39,6 +44,15 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
         $this->setUpApplicationRoutes();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        if ($container = \Mockery::getContainer()) {
+            $this->addToAssertionCount($container->Mockery_getExpectationCount());
+        }
+        \Mockery::close();
     }
 
     protected function getPackageProviders($app)
@@ -92,14 +106,5 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
             return 'This is an exception report test page.';
         });
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        if ($container = \Mockery::getContainer()) {
-            $this->addToAssertionCount($container->Mockery_getExpectationCount());
-        }
-        \Mockery::close();
     }
 }

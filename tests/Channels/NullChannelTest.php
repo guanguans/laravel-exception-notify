@@ -16,6 +16,11 @@ use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class NullChannelTest extends TestCase
 {
     public function testReport(): void

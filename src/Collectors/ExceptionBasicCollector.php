@@ -26,7 +26,7 @@ class ExceptionBasicCollector extends Collector implements ExceptionAwareContrac
     public function collect()
     {
         return [
-            'class' => get_class($this->exception),
+            'class' => \get_class($this->exception),
             'message' => $this->exception->getmessage(),
             'code' => $this->exception->getCode(),
             'file' => $this->exception->getfile(),

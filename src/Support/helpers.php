@@ -25,7 +25,7 @@ if (! function_exists('call')) {
     /**
      * Call the given Closure / class@method and inject its dependencies.
      *
-     * @param callable|string      $callback
+     * @param callable|string $callback
      * @param array<string, mixed> $parameters
      */
     function call($callback, array $parameters = [], ?string $defaultMethod = 'handle')
@@ -38,19 +38,21 @@ if (! function_exists('call')) {
 
 if (! function_exists('var_output')) {
     /**
-     * @return string|void|null
-     *
      * @noinspection DebugFunctionUsageInspection
+     *
+     * @param mixed $expression
+     *
+     * @return null|string|void
      */
     function var_output($expression, bool $return = false)
     {
         $patterns = [
-            "/array \(\n\)/" => '[]',
-            "/array \(\n\s+\)/" => '[]',
-            "/array \(/" => '[',
-            "/^([ ]*)\)(,?)$/m" => '$1]$2',
-            "/=>[ ]?\n[ ]+\[/" => '=> [',
-            "/([ ]*)(\'[^\']+\') => ([\[\'])/" => '$1$2 => $3',
+            "/array \\(\n\\)/" => '[]',
+            "/array \\(\n\\s+\\)/" => '[]',
+            '/array \\(/' => '[',
+            '/^([ ]*)\\)(,?)$/m' => '$1]$2',
+            "/=>[ ]?\n[ ]+\\[/" => '=> [',
+            "/([ ]*)(\\'[^\\']+\\') => ([\\[\\'])/" => '$1$2 => $3',
         ];
 
         $export = var_export($expression, true);
@@ -65,12 +67,14 @@ if (! function_exists('var_output')) {
 
 if (! function_exists('array_reduce_with_keys')) {
     /**
-     * @return mixed|null
+     * @param null|mixed $carry
+     *
+     * @return null|mixed
      */
     function array_reduce_with_keys(array $array, callable $callback, $carry = null)
     {
         foreach ($array as $key => $value) {
-            $carry = call_user_func($callback, $carry, $value, $key);
+            $carry = $callback($carry, $value, $key);
         }
 
         return $carry;
@@ -96,6 +100,8 @@ if (! function_exists('exception_notify_report')) {
 if (! function_exists('is_callable_with_at_sign')) {
     /**
      * Determine if the given string is in Class@method syntax.
+     *
+     * @param mixed $callback
      */
     function is_callable_with_at_sign($callback): bool
     {

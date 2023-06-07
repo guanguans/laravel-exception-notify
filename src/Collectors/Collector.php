@@ -19,18 +19,31 @@ use Illuminate\Support\Str;
 abstract class Collector implements CollectorContract
 {
     /**
-     * @var callable|null
+     * @var null|callable
      */
     protected $pipe;
 
-    public function __construct(callable $pipe = null)
+    public function __construct(?callable $pipe = null)
     {
         $this->pipe = $pipe;
+    }
+
+    public function __toString()
+    {
+        return (string) json_encode(
+            $this->toArray(),
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+        );
     }
 
     public function getName(): string
     {
         return Str::ucwords(Str::snake(Str::beforeLast(class_basename($this), 'Collector'), ' '));
+    }
+
+    public function toArray()
+    {
+        return $this->applyPipeCollect();
     }
 
     protected function applyPipeCollect()
@@ -43,18 +56,5 @@ abstract class Collector implements CollectorContract
                 return ! blank($item);
             })
             ->all();
-    }
-
-    public function __toString()
-    {
-        return (string) json_encode(
-            $this->toArray(),
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        );
-    }
-
-    public function toArray()
-    {
-        return $this->applyPipeCollect();
     }
 }

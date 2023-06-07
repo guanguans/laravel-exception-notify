@@ -18,16 +18,13 @@ use Illuminate\Support\Str;
 
 class RequestPostCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
     /**
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         $this->request = $request;
         $this->pipe = $pipe

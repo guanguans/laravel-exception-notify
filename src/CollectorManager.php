@@ -27,11 +27,16 @@ class CollectorManager extends Fluent implements \Stringable
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct($collectors = [])
+    public function __construct(array $collectors = [])
     {
         foreach ($collectors as $index => $collector) {
             $this->offsetSet($index, $collector);
         }
+    }
+
+    public function __toString()
+    {
+        return $this->toReport(app('exception.notify.exception'));
     }
 
     public function offsetSet($offset, $value): void
@@ -52,10 +57,5 @@ class CollectorManager extends Fluent implements \Stringable
                 return [$collector->getName() => $collector->toArray()];
             })
             ->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-    }
-
-    public function __toString()
-    {
-        return $this->toReport(app('exception.notify.exception'));
     }
 }

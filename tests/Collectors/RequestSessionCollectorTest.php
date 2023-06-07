@@ -15,6 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Tests\Collectors;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class RequestSessionCollectorTest extends TestCase
 {
     public function testCollect(): void

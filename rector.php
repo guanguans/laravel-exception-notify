@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-soar.
+ * This file is part of the guanguans/laravel-exception-notify.
  *
  * (c) guanguans <ityaozm@gmail.com>
  *

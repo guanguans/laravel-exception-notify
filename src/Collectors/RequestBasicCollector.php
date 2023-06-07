@@ -16,12 +16,9 @@ use Illuminate\Http\Request;
 
 class RequestBasicCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request, ?callable $pipe = null)
     {
         parent::__construct($pipe);
         $this->request = $request;
@@ -31,7 +28,7 @@ class RequestBasicCollector extends Collector
      * @psalm-suppress InvalidScalarArgument
      * @psalm-suppress InvalidArgument
      *
-     * @return array{url: string, ip: string|null, method: string, action: mixed, duration: string}
+     * @return array{url: string, ip: null|string, method: string, action: mixed, duration: string}
      */
     public function collect()
     {
@@ -41,7 +38,7 @@ class RequestBasicCollector extends Collector
             'method' => $this->request->method(),
             'action' => optional($this->request->route())->getActionName(),
             'duration' => value(function () {
-                $startTime = defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
+                $startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
                 return floor((microtime(true) - $startTime) * 1000).'ms';
             }),

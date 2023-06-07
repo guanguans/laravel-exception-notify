@@ -18,6 +18,11 @@ use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 use Guanguans\Notify\Contracts\MessageInterface;
 use Nyholm\NSA;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class WeWorkChannelTest extends TestCase
 {
     public function testCreateMessage(): void

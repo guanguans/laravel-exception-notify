@@ -15,6 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Tests;
 use Guanguans\LaravelExceptionNotify\CollectorManager;
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class FeatureTest extends TestCase
 {
     public function testReportException(): void
@@ -42,7 +47,7 @@ class FeatureTest extends TestCase
         $output = ob_get_clean(); // `echo` and `not afterResponse`
 
         $report = (string) $this->app->make(CollectorManager::class);
-        $this->assertEquals($report, $output);
+        $this->assertSame($report, $output);
         // $this->assertMatchesSnapshot($report);
     }
 }

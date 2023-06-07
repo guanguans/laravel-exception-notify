@@ -25,7 +25,7 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      */
-    public function __construct(callable $pipe = null)
+    public function __construct(?callable $pipe = null)
     {
         $this->pipe = $pipe
             ?: static function (Collection $collection) {
@@ -40,7 +40,7 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
     /**
      * @return string[]
      */
-    public function collect()
+    public function collect(): array
     {
         return explode("\n", $this->exception->getTraceAsString());
     }

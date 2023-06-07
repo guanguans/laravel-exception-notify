@@ -19,6 +19,11 @@ use Guanguans\Notify\Contracts\MessageInterface;
 use GuzzleHttp\Exception\ClientException;
 use Nyholm\NSA;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class BarkChannelTest extends TestCase
 {
     public function testCreateMessage(): void

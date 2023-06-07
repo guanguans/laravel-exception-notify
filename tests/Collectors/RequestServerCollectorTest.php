@@ -15,6 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Tests\Collectors;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class RequestServerCollectorTest extends TestCase
 {
     public function testCollect(): void

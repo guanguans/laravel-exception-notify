@@ -16,15 +16,9 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 
 class ReportingEvent
 {
-    /**
-     * @var \Guanguans\LaravelExceptionNotify\Contracts\Channel
-     */
-    public $channel;
+    public \Guanguans\LaravelExceptionNotify\Contracts\Channel $channel;
 
-    /**
-     * @var string
-     */
-    public $report;
+    public string $report;
 
     public function __construct(Channel $channel, string $report)
     {

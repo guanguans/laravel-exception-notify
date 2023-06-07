@@ -16,6 +16,11 @@ use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class DdChannelTest extends TestCase
 {
     public function testReport(): void

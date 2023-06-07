@@ -15,6 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Tests\Collectors;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class RequestCookieCollectorTest extends TestCase
 {
     public function testCollect(): void

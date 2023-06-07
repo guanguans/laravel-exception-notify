@@ -16,15 +16,9 @@ use Illuminate\Support\Facades\Log;
 
 class LogChannel extends Channel
 {
-    /**
-     * @var string
-     */
-    protected $level;
+    protected string $level;
 
-    /**
-     * @var string
-     */
-    protected $channel;
+    protected string $channel;
 
     public function __construct(string $channel, string $level)
     {
