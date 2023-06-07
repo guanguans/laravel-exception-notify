@@ -44,9 +44,7 @@ class ExceptionNotifyManager extends Manager
         __call as macroCall;
     }
 
-    /**
-     * @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application
-     */
+    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $container;
 
     protected \Illuminate\Contracts\Config\Repository $config;

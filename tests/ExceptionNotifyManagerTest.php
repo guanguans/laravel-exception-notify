@@ -88,7 +88,7 @@ class ExceptionNotifyManagerTest extends TestCase
     {
         $channelConfig = NSA::invokeMethod($this->exceptionNotifyManager, 'getChannelConfig', 'null');
         $this->assertIsArray($channelConfig);
-        $this->assertSame($channelConfig, ['driver' => 'null']);
+        $this->assertSame(['driver' => 'null'], $channelConfig);
 
         $channelConfig = NSA::invokeMethod($this->exceptionNotifyManager, 'getChannelConfig', 'log');
         $this->assertIsArray($channelConfig);

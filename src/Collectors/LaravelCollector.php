@@ -16,9 +16,7 @@ use Illuminate\Contracts\Container\Container;
 
 class LaravelCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application
-     */
+    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $app;
 
     public function __construct(Container $container, ?callable $pipe = null)

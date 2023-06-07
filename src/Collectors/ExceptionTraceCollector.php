@@ -36,7 +36,7 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function collect(): array
     {

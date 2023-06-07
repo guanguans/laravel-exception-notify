@@ -19,41 +19,29 @@ use function is_bool;
  */
 class JsonFixer
 {
-    /**
-     * @var array Current token stack indexed by position
-     */
+    /** @var array Current token stack indexed by position */
     protected array $stack = [];
 
-    /**
-     * @var bool If current char is within a string
-     */
+    /** @var bool If current char is within a string */
     protected bool $inStr = false;
 
-    /**
-     * @var bool Whether to throw Exception on failure
-     */
+    /** @var bool Whether to throw Exception on failure */
     protected bool $silent = false;
 
-    /**
-     * @var array The complementary pairs
-     */
+    /** @var array The complementary pairs */
     protected array $pairs = [
         '{' => '}',
         '[' => ']',
         '"' => '"',
     ];
 
-    /**
-     * @var int The last seen object `{` type position
-     */
+    /** @var int The last seen object `{` type position */
     protected int $objectPos = -1;
 
     /** @var int The last seen array `[` type position */
     protected int $arrayPos = -1;
 
-    /**
-     * @var string Missing value. (Options: true, false, null)
-     */
+    /** @var string Missing value. (Options: true, false, null) */
     protected string $missingValue = 'null';
 
     /**

@@ -20,7 +20,7 @@ use Illuminate\Support\Fluent;
 class CollectorManager extends Fluent implements \Stringable
 {
     /**
-     * @param Collector[] $collectors
+     * @param array<Collector> $collectors
      *
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      *

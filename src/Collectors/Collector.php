@@ -18,9 +18,7 @@ use Illuminate\Support\Str;
 
 abstract class Collector implements CollectorContract
 {
-    /**
-     * @var null|callable
-     */
+    /** @var null|callable */
     protected $pipe;
 
     public function __construct(?callable $pipe = null)

@@ -77,7 +77,7 @@ class ReportExceptionJob implements ShouldQueue
     /**
      * 计算在重试任务之前需等待的秒数.
      *
-     * @return int[]
+     * @return array<int>
      */
     public function backoff(): array
     {
@@ -85,7 +85,7 @@ class ReportExceptionJob implements ShouldQueue
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getChannelPipeline(): array
     {
