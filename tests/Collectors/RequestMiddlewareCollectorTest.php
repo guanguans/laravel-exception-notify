@@ -10,21 +10,9 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Tests\Collectors;
-
 use Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector;
-use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
-/**
- * @internal
- *
- * @small
- */
-class RequestMiddlewareCollectorTest extends TestCase
-{
-    public function testCollect(): void
-    {
-        $requestMiddlewareCollector = new RequestMiddlewareCollector($this->app['request']);
-        $this->assertNull($requestMiddlewareCollector->collect());
-    }
-}
+it('collect', function (): void {
+    $requestMiddlewareCollector = new RequestMiddlewareCollector($this->app['request']);
+    expect($requestMiddlewareCollector->collect())->toBeNull();
+});
