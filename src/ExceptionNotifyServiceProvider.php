@@ -90,7 +90,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
                     return $this->app->make($class, (array) $parameters);
                 })
-                ->values();
+                ->values()
+                ->all();
 
             return new CollectorManager($collection);
         });

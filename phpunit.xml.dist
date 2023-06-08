@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   backupGlobals="false"
   backupStaticAttributes="false"
   bootstrap="vendor/autoload.php"
@@ -43,7 +42,7 @@
       </exclude>
     </whitelist>
   </filter>
-  <listeners>
+  <!--<listeners>
     <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
       <arguments>
         <array>
@@ -59,5 +58,5 @@
         </array>
       </arguments>
     </listener>
-  </listeners>
+  </listeners>-->
 </phpunit>

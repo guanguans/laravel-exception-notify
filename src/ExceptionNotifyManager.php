@@ -47,7 +47,7 @@ class ExceptionNotifyManager extends Manager
     /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $container;
 
-    protected \Illuminate\Contracts\Config\Repository $config;
+    protected $config;
 
     public function __construct(Container $container)
     {
@@ -59,8 +59,11 @@ class ExceptionNotifyManager extends Manager
 
     /**
      * Handle dynamic method calls into the method.
+     *
+     * @param mixed $method
+     * @param mixed $parameters
      */
-    public function __call(string $method, array $parameters)
+    public function __call($method, $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
