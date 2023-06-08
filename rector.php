@@ -78,8 +78,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->paths([
-        // __DIR__.'/config',
-        __DIR__.'/routes',
+        __DIR__.'/config',
+        // __DIR__.'/routes',
         __DIR__.'/src',
         __DIR__.'/tests',
         // __DIR__.'/.php-cs-fixer.php',
@@ -111,29 +111,22 @@ return static function (RectorConfig $rectorConfig): void {
         VarConstantCommentRector::class,
 
         DisallowedEmptyRuleFixerRector::class => [
-            __DIR__.'/src/Support/QueryAnalyzer.php',
+            // __DIR__.'/src/Support/QueryAnalyzer.php',
         ],
         RemoveExtraParametersRector::class => [
-            __DIR__.'/src/Macros/QueryBuilderMacro.php',
+            // __DIR__.'/src/Macros/QueryBuilderMacro.php',
         ],
         ExplicitBoolCompareRector::class => [
-            __DIR__.'/src/JavascriptRenderer.php',
+            // __DIR__.'/src/JavascriptRenderer.php',
         ],
         RenameForeachValueVariableToMatchExprVariableRector::class => [
-            __DIR__.'/src/OutputManager.php',
+            // __DIR__.'/src/OutputManager.php',
         ],
         RenameParamToMatchTypeRector::class => [
-            __DIR__.'/src/Bootstrapper.php',
-            __DIR__.'/src/Contracts/Output.php',
-            __DIR__.'/src/Contracts/Sanitizer.php',
-            __DIR__.'/src/Events',
-            __DIR__.'/src/OutputManager.php',
-            __DIR__.'/src/Outputs',
-            __DIR__.'/src/Support/helpers.php',
+            // __DIR__.'/src/Support/helpers.php',
         ],
         NormalizeNamespaceByPSR4ComposerAutoloadRector::class => [
             __DIR__.'/src/Support/helpers.php',
-            __DIR__.'/routes',
             __DIR__.'/src/tests',
         ],
         StaticClosureRector::class => [
