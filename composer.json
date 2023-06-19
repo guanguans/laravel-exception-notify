@@ -128,7 +128,6 @@
         },
         "laravel": {
             "aliases": {
-                "ExceptionNotifier": "Guanguans\\LaravelExceptionNotify\\Facades\\ExceptionNotify",
                 "ExceptionNotify": "Guanguans\\LaravelExceptionNotify\\Facades\\ExceptionNotify"
             },
             "providers": [

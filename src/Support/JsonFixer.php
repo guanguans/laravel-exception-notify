@@ -35,7 +35,9 @@ class JsonFixer
         '"' => '"',
     ];
 
-    /** @var int The last seen object `{` type position */
+    /**
+     * @var int The last seen object `{` type position
+     */
     protected int $objectPos = -1;
 
     /** @var int The last seen array `[` type position */
@@ -340,19 +342,17 @@ class JsonFixer
         return ! $empty && $this->arrayPos < $this->objectPos;
     }
 
-    protected function padString($string)
-    {
-        $last = substr($string, -1);
-        $last2 = substr($string, -2);
+   protected function padString($string)
+   {
+       $last = substr($string, -1);
+       $last2 = substr($string, -2);
 
-        if ('\"' === $last2 || '"' !== $last) {
-            return $string.'"';
-        }
+       if ('\"' === $last2 || '"' !== $last) {
+           return $string.'"';
+       }
 
-        // @codeCoverageIgnoreStart
-
-        // @codeCoverageIgnoreEnd
-    }
+       return ''; // @codeCoverageIgnore
+   }
 
     protected function padIf($string, $substr)
     {

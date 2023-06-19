@@ -14,9 +14,9 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Support\Macros\CollectionMacro;
-use Guanguans\LaravelExceptionNotify\Support\Macros\RequestMacro;
-use Guanguans\LaravelExceptionNotify\Support\Macros\StrMacro;
+use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
+use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
+use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\Request;
