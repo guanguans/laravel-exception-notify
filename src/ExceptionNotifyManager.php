@@ -31,12 +31,13 @@ use Guanguans\LaravelExceptionNotify\Channels\WeWorkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 class ExceptionNotifyManager extends Manager
 {
@@ -92,6 +93,8 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
+     * @throws BindingResolutionException
+     *
      * @noinspection MultipleReturnStatementsInspection
      */
     public function shouldntReport(\Throwable $throwable): bool
@@ -112,10 +115,13 @@ class ExceptionNotifyManager extends Manager
 
         return ! $this
             ->container
-            ->make(RateLimiterFactory::class)
-            ->create(md5($throwable->getMessage().$throwable->getCode().$throwable->getFile().$throwable->getLine()))
-            ->consume()
-            ->isAccepted();
+            ->make(RateLimiter::class)
+            ->attempt(
+                md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
+                config('exception-notify.rate_limiter.max_attempts'),
+                static fn (): bool => true,
+                config('exception-notify.rate_limiter.decay_seconds')
+            );
     }
 
     public function shouldReport(\Throwable $throwable): bool

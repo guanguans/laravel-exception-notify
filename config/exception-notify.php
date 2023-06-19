@@ -76,23 +76,8 @@ return [
     |
     */
     'rate_limiter' => [
-        // Config(相同异常生产环境默认每 5 分钟通知 1 次).
-        'config' => [
-            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
-            'rate' => [
-                // https://www.php.net/manual/en/datetime.formats.php
-                'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '5 minutes'),
-            ],
-        ],
-
-        // Storage.
-        'storage' => [
-            // \Psr\Cache\CacheItemPoolInterface::class
-            'class' => Symfony\Component\Cache\Adapter\PhpFilesAdapter::class,
-            'parameters' => [
-                'directory' => storage_path('framework/cache/exception-notify'),
-            ],
-        ],
+        'max_attempts' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
+        'decay_seconds' => 300,
     ],
 
     /*

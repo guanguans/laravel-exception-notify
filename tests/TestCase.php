@@ -71,7 +71,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
         $app['config']->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
         $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
-        $app['config']->set('exception-notify.rate_limiter.config.limit', 1000);
+        $app['config']->set('exception-notify.rate_limiter.max_attempts', 1000);
         $app['config']->set('exception-notify.collector', [
             LaravelCollector::class,
             AdditionCollector::class,
