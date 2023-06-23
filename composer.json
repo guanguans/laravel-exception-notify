@@ -144,10 +144,7 @@
         "post-update-cmd": [
             "@cghooks update"
         ],
-        "ai-commit": [
-            "@php ./vendor/bin/ai-commit config set generator bito_cli --global --ansi",
-            "@php ./vendor/bin/ai-commit commit --ansi"
-        ],
+        "ai-commit": "@php ./vendor/bin/ai-commit commit --generator=bito_cli --ansi",
         "benchmark": "@php ./vendor/bin/phpbench run --warmup=1 --retry-threshold=1 --iterations=3 --revs=5 --ansi -v",
         "cghooks": "@php ./vendor/bin/cghooks --ansi -v",
         "checks": [
