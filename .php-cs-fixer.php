@@ -10,6 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Illuminate\Support\Facades\File;
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
@@ -37,21 +38,7 @@ $finder = Finder::create()
         'vendor/',
         '__snapshots__/',
     ])
-    ->append([
-        __FILE__,
-        // __DIR__.'/bin/facades.php',
-        __DIR__.'/.phpstorm.meta.php',
-        __DIR__.'/_ide_helper.php',
-        __DIR__.'/composer-unused.php',
-        __DIR__.'/doctum.php',
-        __DIR__.'/rector.php',
-        __DIR__.'/rector-laravel.php',
-        __DIR__.'/monorepo-builder.php',
-        __DIR__.'/phparkitect.php',
-        // __DIR__.'/examples/soar.options.docblock.php',
-        __DIR__.'/examples/soar.options.example.php',
-        __DIR__.'/examples/soar.options.full.php',
-    ])
+    ->append(glob(__DIR__.'/{*.php,.*.php}', GLOB_BRACE))
     ->notPath([
         'bootstrap/*',
         'storage/*',
@@ -66,7 +53,7 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-if (! is_dir($dir = __DIR__.'/build/php-cs-fixer') && ! mkdir($dir, 0777, true) && ! is_dir($dir)) {
+if (! is_dir($dir = __DIR__.'/build/php-cs-fixer') && ! mkdir($dir, 0755, true) && ! is_dir($dir)) {
     throw new RuntimeException("The directory [$dir] was not created.");
 }
 
