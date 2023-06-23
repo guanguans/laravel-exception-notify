@@ -69,6 +69,7 @@
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "friendsofphp/php-cs-fixer": "^3.14",
+        "guanguans/ai-commit": "^1.6",
         "jetbrains/phpstorm-attributes": "^1.0",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.13",
         "mockery/mockery": "^1.6",
@@ -142,6 +143,10 @@
         ],
         "post-update-cmd": [
             "@cghooks update"
+        ],
+        "ai-commit": [
+            "@php ./vendor/bin/ai-commit config set generator bito_cli --global --ansi",
+            "@php ./vendor/bin/ai-commit commit --ansi"
         ],
         "benchmark": "@php ./vendor/bin/phpbench run --warmup=1 --retry-threshold=1 --iterations=3 --revs=5 --ansi -v",
         "cghooks": "@php ./vendor/bin/cghooks --ansi -v",
