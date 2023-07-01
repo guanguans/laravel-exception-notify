@@ -86,7 +86,7 @@
         "spatie/pest-plugin-snapshots": "^1.1 || ^2.0",
         "symfony/thanks": "^1.2",
         "symfony/var-dumper": "^5.4 || ^6.0",
-        "vimeo/psalm": "^5.12"
+        "vimeo/psalm": "^5.13"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
