@@ -10,12 +10,8 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Illuminate\Support\Facades\File;
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
-
-// oskarstark/php-cs-fixer-ga
-require_once __DIR__.'/vendor/autoload.php';
 
 $header = <<<'HEADER'
     This file is part of the guanguans/laravel-exception-notify.
@@ -38,7 +34,7 @@ $finder = Finder::create()
         'vendor/',
         '__snapshots__/',
     ])
-    ->append(glob(__DIR__.'/{*.php,.*.php}', GLOB_BRACE))
+    ->append(glob(__DIR__.'/{*,.*}.php', GLOB_BRACE))
     ->notPath([
         'bootstrap/*',
         'storage/*',
@@ -53,15 +49,11 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-if (! is_dir($dir = __DIR__.'/build/php-cs-fixer') && ! mkdir($dir, 0755, true) && ! is_dir($dir)) {
-    throw new RuntimeException("The directory [$dir] was not created.");
-}
-
 return (new Config())
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
-    ->setCacheFile(__DIR__.'/build/php-cs-fixer/.php-cs-fixer.cache')
+    ->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     // ->registerCustomFixers(new PedroTroller\CS\Fixer\Fixers())
     ->setRules([
