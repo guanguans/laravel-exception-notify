@@ -2,10 +2,13 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
+use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Cache\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 use Illuminate\Support\Traits\Conditionable;
 use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\CallableTypeNode;
@@ -31,10 +34,13 @@ use Symfony\Component\Finder\Finder;
  * $ php -f ./bin/facades.php -- --lint
  */
 
+Str::mixin(new StrMacro());
+Stringable::mixin(new StringableMacro());
+
 $linting = in_array('--lint', $argv);
 
 $finder = (new Finder)
-    ->in(__DIR__.'/../src/Illuminate/Support/Facades')
+    ->in(__DIR__.'/../src/Facades')
     ->notName('Facade.php');
 
 resolveFacades($finder)->each(function ($facade) use ($linting) {
@@ -125,7 +131,7 @@ function resolveFacades($finder)
 {
     return collect($finder)
         ->map(fn ($file) => $file->getBaseName('.php'))
-        ->map(fn ($name) => "\\Illuminate\\Support\\Facades\\{$name}")
+        ->map(fn ($name) => "\\Guanguans\\LaravelExceptionNotify\\Facades\\{$name}")
         ->map(fn ($class) => new ReflectionClass($class));
 }
 
