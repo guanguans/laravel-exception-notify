@@ -11,6 +11,8 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
@@ -31,6 +33,32 @@ if (! function_exists('call')) {
         is_callable($callback) and $defaultMethod = null;
 
         return app()->call($callback, $parameters, $defaultMethod);
+    }
+}
+
+if (! function_exists('str')) {
+    /**
+     * Get a new stringable object from the given string.
+     *
+     * @return Stringable|\Stringable
+     */
+    function str(?string $string = null)
+    {
+        if (0 === func_num_args()) {
+            return new class() implements \Stringable {
+                public function __call($method, $parameters)
+                {
+                    return Str::$method(...$parameters);
+                }
+
+                public function __toString()
+                {
+                    return '';
+                }
+            };
+        }
+
+        return Str::of($string);
     }
 }
 

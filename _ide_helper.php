@@ -31,11 +31,26 @@ namespace Illuminate\Support {
      * @method string beforeLast($subject, $search)
      * @method string lcfirst($string)
      * @method string ucwords($string)
+     * @method string squish($string)
      *
      * @see \Guanguans\LaravelExceptionNotify\Macros\StrMacro
      * @see \Illuminate\Support\Str
      */
     class Str
+    {
+    }
+
+    /**
+     * @method \Illuminate\Support\Stringable beforeLast($search)
+     * @method \Illuminate\Support\Stringable lcfirst()
+     * @method \Illuminate\Support\Stringable ucwords()
+     * @method \Illuminate\Support\Stringable squish()
+     * @method string toString()
+     *
+     * @see \Guanguans\LaravelExceptionNotify\Macros\StringableMacro
+     * @see \Illuminate\Support\Stringable
+     */
+    class Stringable
     {
     }
 }

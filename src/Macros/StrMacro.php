@@ -41,4 +41,9 @@ class StrMacro
     {
         return static fn ($string): string => ucwords($string);
     }
+
+    public static function squish(): callable
+    {
+        return static fn ($value): string => preg_replace('~(\s|\x{3164}|\x{1160})+~u', ' ', preg_replace('~^[\s\x{FEFF}]+|[\s\x{FEFF}]+$~u', '', $value));
+    }
 }
