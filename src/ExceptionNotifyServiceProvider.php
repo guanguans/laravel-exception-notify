@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
-use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
 use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
 use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
@@ -38,8 +36,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         Collection::mixin($this->app->make(CollectionMacro::class));
         Str::mixin($this->app->make(StrMacro::class));
         Stringable::mixin($this->app->make(StringableMacro::class));
-        // $this->registerReportingEvent();
-        // $this->registerReportedEvent();
     }
 
     public function register(): void
@@ -105,29 +101,5 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
-    }
-
-    /**
-     * @psalm-suppress UndefinedInterfaceMethod
-     *
-     * @noinspection OffsetOperationsInspection
-     */
-    protected function registerReportingEvent(): void
-    {
-        foreach ($this->app['config']['exception-notify.reporting'] as $listener) {
-            $this->app['events']->listen(ReportingEvent::class, $listener);
-        }
-    }
-
-    /**
-     * @psalm-suppress UndefinedInterfaceMethod
-     *
-     * @noinspection OffsetOperationsInspection
-     */
-    protected function registerReportedEvent(): void
-    {
-        foreach ($this->app['config']['exception-notify.reported'] as $listener) {
-            $this->app['events']->listen(ReportedEvent::class, $listener);
-        }
     }
 }
