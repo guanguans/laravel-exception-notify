@@ -10,8 +10,8 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Exceptions;
+namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-class Exception extends \Exception
+interface ThrowableContract extends \Throwable
 {
 }

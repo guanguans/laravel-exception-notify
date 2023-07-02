@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Exceptions;
 
-class BadMethodCallException extends Exception
+use Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract;
+
+class BadMethodCallException extends \BadMethodCallException implements ThrowableContract
 {
 }
