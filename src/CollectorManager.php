@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Fluent;
 
@@ -52,7 +52,7 @@ class CollectorManager extends Fluent implements \Stringable
     {
         return collect($this)
             ->mapWithKeys(static function (Collector $collector) use ($throwable): array {
-                $collector instanceof ExceptionAware and $collector->setException($throwable);
+                $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
                 return [$collector->name() => $collector->toArray()];
             })

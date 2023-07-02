@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface ExceptionAware
+interface ExceptionAwareContract
 {
     public function setException(\Throwable $throwable);
 }
