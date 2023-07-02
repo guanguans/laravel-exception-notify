@@ -54,7 +54,7 @@ class CollectorManager extends Fluent implements \Stringable
             ->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
-                return [$collector->name() => $collector->toArray()];
+                return [$collector->name() => $collector->collect()];
             })
             ->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }

@@ -17,7 +17,7 @@ class ChoreCollector extends Collector
     /**
      * @return array{time: string, memory: string}
      */
-    public function collect()
+    public function collect(): array
     {
         return [
             'time' => date('Y-m-d H:i:s'),

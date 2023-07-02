@@ -14,5 +14,5 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 
 it('collect', function (): void {
     $requestSessionCollector = new RequestSessionCollector($this->app['request']);
-    expect($requestSessionCollector->collect())->toBeNull();
+    expect($requestSessionCollector->collect())->toBeArray();
 });

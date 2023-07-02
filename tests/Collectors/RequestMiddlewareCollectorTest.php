@@ -14,5 +14,5 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector;
 
 it('collect', function (): void {
     $requestMiddlewareCollector = new RequestMiddlewareCollector($this->app['request']);
-    expect($requestMiddlewareCollector->collect())->toBeNull();
+    expect($requestMiddlewareCollector->collect())->toBeArray();
 });

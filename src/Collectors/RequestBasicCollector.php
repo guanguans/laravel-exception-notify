@@ -18,9 +18,8 @@ class RequestBasicCollector extends Collector
 {
     protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, ?callable $pipe = null)
+    public function __construct(Request $request)
     {
-        parent::__construct($pipe);
         $this->request = $request;
     }
 
@@ -30,7 +29,7 @@ class RequestBasicCollector extends Collector
      *
      * @return array{url: string, ip: null|string, method: string, action: mixed, duration: string}
      */
-    public function collect()
+    public function collect(): array
     {
         return [
             'url' => $this->request->url(),

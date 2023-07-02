@@ -18,13 +18,12 @@ class RequestQueryCollector extends Collector
 {
     protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, ?callable $pipe = null)
+    public function __construct(Request $request)
     {
-        parent::__construct($pipe);
         $this->request = $request;
     }
 
-    public function collect()
+    public function collect(): array
     {
         return $this->request->query();
     }

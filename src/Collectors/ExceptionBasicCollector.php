@@ -23,7 +23,7 @@ class ExceptionBasicCollector extends Collector implements ExceptionAwareContrac
     /**
      * @return array{class: class-string<\Throwable>|true, message: string, code: int|string, file: string, line: int, preview: array<mixed>}
      */
-    public function collect()
+    public function collect(): array
     {
         return [
             'class' => \get_class($this->exception),

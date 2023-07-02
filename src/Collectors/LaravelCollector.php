@@ -19,9 +19,8 @@ class LaravelCollector extends Collector
     /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $app;
 
-    public function __construct(Container $container, ?callable $pipe = null)
+    public function __construct(Container $container)
     {
-        parent::__construct($pipe);
         $this->app = $container;
     }
 
