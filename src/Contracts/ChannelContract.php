@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface Channel extends NameContract
+interface ChannelContract extends NameContract
 {
     public function report(string $report);
 }

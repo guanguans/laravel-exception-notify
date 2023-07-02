@@ -114,7 +114,7 @@ public function boot()
 {
     // 扩展自定义通道
     \ExceptionNotifier::extend('YourChannel', function (\Illuminate\Contracts\Container\Container $container){
-        // 返回 \Guanguans\LaravelExceptionNotify\Contracts\Channel 的实例          
+        // 返回 \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract 的实例          
     });
 }
 ```

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Jobs;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
@@ -46,13 +46,13 @@ class ReportExceptionJob implements ShouldQueue
      */
     public int $maxExceptions = 3;
 
-    protected \Guanguans\LaravelExceptionNotify\Contracts\Channel $channel;
+    protected \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract $channel;
 
     protected string $report;
 
     protected string $pipedReport;
 
-    public function __construct(Channel $channel, string $report)
+    public function __construct(ChannelContract $channel, string $report)
     {
         $this->channel = $channel;
         $this->report = $report;

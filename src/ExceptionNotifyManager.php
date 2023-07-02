@@ -40,7 +40,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
 /**
- * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
+ * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
  */
 class ExceptionNotifyManager extends Manager
 {
