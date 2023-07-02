@@ -99,7 +99,7 @@ return [
     |
     */
     'collector' => [
-        Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,

@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Contracts\Container\Container;
 
-class LaravelCollector extends Collector
+class ApplicationCollector extends Collector
 {
     /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $app;

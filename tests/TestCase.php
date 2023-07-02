@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
+use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector;
@@ -73,7 +73,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
         $app['config']->set('exception-notify.rate_limiter.max_attempts', 1000);
         $app['config']->set('exception-notify.collector', [
-            LaravelCollector::class,
+            ApplicationCollector::class,
             ChoreCollector::class,
             PhpInfoCollector::class,
             ExceptionBasicCollector::class,
