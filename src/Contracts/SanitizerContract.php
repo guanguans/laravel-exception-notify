@@ -10,12 +10,8 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Pipelines;
+namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-class AppendContentPipeline
+interface SanitizerContract
 {
-    public function handle(string $report, \Closure $next, string $content): string
-    {
-        return $next($report.$content);
-    }
 }

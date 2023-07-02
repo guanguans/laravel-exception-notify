@@ -10,9 +10,9 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Pipelines;
+namespace Guanguans\LaravelExceptionNotify\Sanitizers;
 
-class ToMarkdownPipeline
+class ToMarkdownSanitizer
 {
     public function handle(
         string $report,

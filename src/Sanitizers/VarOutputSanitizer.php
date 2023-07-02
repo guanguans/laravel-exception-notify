@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Pipelines;
+namespace Guanguans\LaravelExceptionNotify\Sanitizers;
 
-class UrlEncodePipeline
+class VarOutputSanitizer
 {
     public function handle(string $report, \Closure $next): string
     {
-        return $next(urlencode($report));
+        return $next(var_output($report, true));
     }
 }

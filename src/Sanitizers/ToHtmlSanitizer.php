@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Pipelines;
+namespace Guanguans\LaravelExceptionNotify\Sanitizers;
 
-class TrimPipeline
+class ToHtmlSanitizer
 {
-    public function handle(string $report, \Closure $next, string $chars = " \t\n\r\0\x0B"): string
+    public function handle(string $report, \Closure $next, string $label = '<pre>%s</pre>'): string
     {
-        return $next(trim($report, $chars));
+        return $next(sprintf($label, $report));
     }
 }
