@@ -15,7 +15,6 @@ namespace Guanguans\LaravelExceptionNotify\Jobs;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -25,7 +24,6 @@ use Illuminate\Support\Facades\Log;
 
 class ReportExceptionJob implements ShouldQueue
 {
-    use CreateStatic;
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
     use InteractsWithQueue;
     use Queueable;

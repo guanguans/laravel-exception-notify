@@ -178,7 +178,7 @@ class ExceptionNotifyManager extends Manager
         $report = (string) $this->container->make(CollectorManager::class);
         $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
         foreach ($drivers as $driver) {
-            $dispatch = dispatch(ReportExceptionJob::create($driver, $report))
+            $dispatch = dispatch(new ReportExceptionJob($driver, $report))
                 ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
 
             if (! $this->container->runningInConsole() && 'sync' === $connection && method_exists($dispatch, 'afterResponse')) {
