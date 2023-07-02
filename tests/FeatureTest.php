@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\CollectorManager;
-use Guanguans\LaravelExceptionNotify\Contracts\Collector;
+use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 
 it('report exception', function (): void {
     $logFile = $this->app['config']->get('logging.channels.single.path');
@@ -24,7 +24,7 @@ it('report exception', function (): void {
     $this->assertStringContainsString('What happened?', $content);
 
     collect($this->app->make(CollectorManager::class))
-        ->each(function (Collector $collector) use ($content): void {
+        ->each(function (CollectorContract $collector) use ($content): void {
             $this->assertStringContainsString($collector->name(), $content);
         });
 });

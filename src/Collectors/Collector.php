@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Collector as CollectorContract;
+use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

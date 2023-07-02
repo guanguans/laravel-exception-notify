@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Collector;
+use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Fluent;
@@ -20,7 +20,7 @@ use Illuminate\Support\Fluent;
 class CollectorManager extends Fluent implements \Stringable
 {
     /**
-     * @param array<Collector> $collectors
+     * @param array<CollectorContract> $collectors
      *
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      *
@@ -41,8 +41,8 @@ class CollectorManager extends Fluent implements \Stringable
 
     public function offsetSet($offset, $value): void
     {
-        if (! $value instanceof Collector) {
-            throw new InvalidArgumentException(sprintf('Collector must be instance of %s', Collector::class));
+        if (! $value instanceof CollectorContract) {
+            throw new InvalidArgumentException(sprintf('Collector must be instance of %s', CollectorContract::class));
         }
 
         $this->attributes[$offset] = $value;
@@ -51,7 +51,7 @@ class CollectorManager extends Fluent implements \Stringable
     public function toReport(\Throwable $throwable): string
     {
         return collect($this)
-            ->mapWithKeys(static function (Collector $collector) use ($throwable): array {
+            ->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
                 return [$collector->name() => $collector->toArray()];

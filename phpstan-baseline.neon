@@ -6,7 +6,7 @@ parameters:
 			path: src/Channels/Channel.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<string,array\\>\\:\\:mapWithKeys\\(\\) expects callable\\(array, \"\\\\000\\*\\\\000attributes\"\\|\"\\\\000\\*\\\\000attributes\"\\)\\: array, Closure\\(Guanguans\\\\LaravelExceptionNotify\\\\Contracts\\\\Collector\\)\\: non\\-empty\\-array\\<string, array\\> given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<string,array\\>\\:\\:mapWithKeys\\(\\) expects callable\\(array, \"\\\\000\\*\\\\000attributes\"\\|\"\\\\000\\*\\\\000attributes\"\\)\\: array, Closure\\(Guanguans\\\\LaravelExceptionNotify\\\\Contracts\\\\CollectorContract\\)\\: non\\-empty\\-array\\<string, array\\> given\\.$#"
 			count: 1
 			path: src/CollectorManager.php
 

@@ -81,7 +81,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function registerCollectorManager(): void
     {
         $this->app->singleton(CollectorManager::class, function (Container $container): CollectorManager {
-            /** @var array<\Guanguans\LaravelExceptionNotify\Contracts\Collector> $collection */
+            /** @var array<\Guanguans\LaravelExceptionNotify\Contracts\CollectorContract> $collection */
             $collection = collect($container['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
                     if (! \is_array($parameters)) {
