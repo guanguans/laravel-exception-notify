@@ -50,7 +50,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         return [
             ExceptionNotifyManager::class,
-            'exception.notifier',
+            'exception.notify',
         ];
     }
 
@@ -100,6 +100,5 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->app->singleton(ExceptionNotifyManager::class, static fn ($app): ExceptionNotifyManager => new ExceptionNotifyManager($app));
 
         $this->app->alias(ExceptionNotifyManager::class, 'exception.notify');
-        $this->app->alias(ExceptionNotifyManager::class, 'exception.notifier');
     }
 }
