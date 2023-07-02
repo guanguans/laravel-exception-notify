@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-class AdditionCollector extends Collector
+class ChoreCollector extends Collector
 {
     /**
      * @return array{time: string, memory: string}

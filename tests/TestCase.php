@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-use Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector;
@@ -74,7 +74,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('exception-notify.rate_limiter.max_attempts', 1000);
         $app['config']->set('exception-notify.collector', [
             LaravelCollector::class,
-            AdditionCollector::class,
+            ChoreCollector::class,
             PhpInfoCollector::class,
             ExceptionBasicCollector::class,
             ExceptionTraceCollector::class,
