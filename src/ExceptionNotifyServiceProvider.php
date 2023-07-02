@@ -81,10 +81,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             $collection = collect($container['config']['exception-notify.collector'])
                 ->map(function ($parameters, $class) {
                     if (! \is_array($parameters)) {
-                        [$parameters, $class] = [$class, $parameters];
+                        [$parameters, $class] = [(array) $class, $parameters];
                     }
 
-                    return $this->app->make($class, (array) $parameters);
+                    return $this->app->make($class, $parameters);
                 })
                 ->values()
                 ->all();

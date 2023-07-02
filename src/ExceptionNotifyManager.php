@@ -176,6 +176,7 @@ class ExceptionNotifyManager extends Manager
     protected function dispatchReportExceptionJob(): void
     {
         $report = (string) $this->container->make(CollectorManager::class);
+
         $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
         foreach ($drivers as $driver) {
             $dispatch = dispatch(new ReportExceptionJob($driver, $report))
