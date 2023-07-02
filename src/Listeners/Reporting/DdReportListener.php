@@ -24,6 +24,6 @@ class DdReportListener
      */
     public function handle(ReportingEvent $reportingEvent): void
     {
-        dd($reportingEvent->channel->getName(), $reportingEvent->report);
+        dd($reportingEvent->channel->name(), $reportingEvent->report);
     }
 }

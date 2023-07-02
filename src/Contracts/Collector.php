@@ -16,7 +16,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 interface Collector extends \Stringable, Arrayable
 {
-    public function getName(): string;
+    public function name(): string;
 
     public function collect();
 }

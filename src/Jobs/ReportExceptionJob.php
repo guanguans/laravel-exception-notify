@@ -89,7 +89,7 @@ class ReportExceptionJob implements ShouldQueue
      */
     protected function getChannelPipeline(): array
     {
-        return config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), []);
+        return config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->name()), []);
     }
 
     protected function pipelineReport(string $report): string

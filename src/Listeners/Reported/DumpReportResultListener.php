@@ -19,6 +19,6 @@ class DumpReportResultListener
     public function handle(ReportedEvent $reportedEvent): void
     {
         /** @noinspection ForgottenDebugOutputInspection */
-        dump($reportedEvent->channel->getName(), $reportedEvent->result);
+        dump($reportedEvent->channel->name(), $reportedEvent->result);
     }
 }

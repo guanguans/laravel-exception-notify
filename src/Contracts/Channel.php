@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface Channel
 {
-    public function getName(): string;
+    public function name(): string;
 
     public function report(string $report);
 }

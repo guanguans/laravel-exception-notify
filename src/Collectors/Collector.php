@@ -34,7 +34,7 @@ abstract class Collector implements CollectorContract
         );
     }
 
-    public function getName(): string
+    public function name(): string
     {
         return Str::ucwords(Str::snake(Str::beforeLast(class_basename($this), 'Collector'), ' '));
     }

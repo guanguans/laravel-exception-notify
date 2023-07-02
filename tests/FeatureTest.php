@@ -25,7 +25,7 @@ it('report exception', function (): void {
 
     collect($this->app->make(CollectorManager::class))
         ->each(function (Collector $collector) use ($content): void {
-            $this->assertStringContainsString($collector->getName(), $content);
+            $this->assertStringContainsString($collector->name(), $content);
         });
 });
 

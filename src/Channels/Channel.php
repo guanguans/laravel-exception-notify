@@ -20,7 +20,7 @@ abstract class Channel implements ChannelContract
 {
     use CreateStatic;
 
-    public function getName(): string
+    public function name(): string
     {
         return Str::lcfirst(Str::beforeLast(class_basename($this), 'Channel'));
     }
