@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface CollectorContract extends \Stringable, NameContract
+interface CollectorContract extends NameContract
 {
     public function collect(): array;
 }
