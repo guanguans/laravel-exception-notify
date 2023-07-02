@@ -184,5 +184,5 @@ it('create xi zhi driver', function (): void {
 });
 
 it('call', function (): void {
-    expect($this->exceptionNotifyManager->getDefaultDriver())->toBe($this->exceptionNotifyManager->getName());
+    expect($this->exceptionNotifyManager->getDefaultDriver())->toBe($this->exceptionNotifyManager->name());
 });

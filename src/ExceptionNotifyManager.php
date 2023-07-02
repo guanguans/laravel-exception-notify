@@ -39,6 +39,9 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 
+/**
+ * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
+ */
 class ExceptionNotifyManager extends Manager
 {
     use Macroable {

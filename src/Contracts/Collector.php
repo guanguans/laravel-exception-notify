@@ -14,9 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 use Illuminate\Contracts\Support\Arrayable;
 
-interface Collector extends \Stringable, Arrayable
+interface Collector extends \Stringable, Arrayable, NameContract
 {
-    public function name(): string;
-
     public function collect();
 }
