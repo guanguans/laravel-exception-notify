@@ -17,14 +17,6 @@ use Illuminate\Support\Str;
 
 abstract class Collector implements CollectorContract
 {
-    public function __toString()
-    {
-        return (string) json_encode(
-            $this->collect(),
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-        );
-    }
-
     public function name(): string
     {
         return Str::ucwords(Str::snake(Str::beforeLast(class_basename($this), 'Collector'), ' '));

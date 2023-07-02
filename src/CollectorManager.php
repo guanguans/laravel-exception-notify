@@ -25,7 +25,9 @@ class CollectorManager extends Fluent implements \Stringable
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      *
      * @noinspection MagicMethodsValidityInspection
+     * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
+     * @noinspection MissingParentCallInspection
      */
     public function __construct(array $collectors = [])
     {
@@ -39,6 +41,13 @@ class CollectorManager extends Fluent implements \Stringable
         return $this->toReport(app('exception.notify.exception'));
     }
 
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     * @noinspection MissingParentCallInspection
+     *
+     * @param array-key $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value): void
     {
         if (! $value instanceof CollectorContract) {
