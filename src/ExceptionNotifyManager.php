@@ -88,8 +88,7 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $this->registerException($throwable);
-            $this->dispatchReportExceptionJob();
+            $this->dispatchReportExceptionJob($throwable);
         } catch (\Throwable $throwable) {
             $this->container['log']->error($throwable->getMessage(), ['exception' => $throwable]);
         }
@@ -168,21 +167,20 @@ class ExceptionNotifyManager extends Manager
         return $this;
     }
 
-    protected function registerException(\Throwable $throwable): void
+    protected function dispatchReportExceptionJob(\Throwable $throwable): void
     {
-        $this->container->instance('exception.notify.exception', $throwable);
-    }
-
-    protected function dispatchReportExceptionJob(): void
-    {
-        $report = (string) $this->container->make(CollectorManager::class);
+        $report = $this->container->make(CollectorManager::class)->toReport($throwable);
 
         $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
         foreach ($drivers as $driver) {
             $dispatch = dispatch(new ReportExceptionJob($driver, $report))
                 ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
 
-            if (! $this->container->runningInConsole() && 'sync' === $connection && method_exists($dispatch, 'afterResponse')) {
+            if (
+                ! $this->container->runningInConsole()
+                && 'sync' === $connection
+                && method_exists($dispatch, 'afterResponse')
+            ) {
                 $dispatch->afterResponse();
             }
         }

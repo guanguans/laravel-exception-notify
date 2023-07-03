@@ -17,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Fluent;
 
-class CollectorManager extends Fluent implements \Stringable
+class CollectorManager extends Fluent
 {
     /**
      * @param array<CollectorContract> $collectors
@@ -34,11 +34,6 @@ class CollectorManager extends Fluent implements \Stringable
         foreach ($collectors as $index => $collector) {
             $this->offsetSet($index, $collector);
         }
-    }
-
-    public function __toString()
-    {
-        return $this->toReport(app('exception.notify.exception'));
     }
 
     /**
