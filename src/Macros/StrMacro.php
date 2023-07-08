@@ -23,6 +23,7 @@ class StrMacro
             if ('' === $search) {
                 return $subject;
             }
+
             $pos = mb_strrpos($subject, $search);
             if (false === $pos) {
                 return $subject;
@@ -44,6 +45,10 @@ class StrMacro
 
     public static function squish(): callable
     {
-        return static fn ($value): string => preg_replace('~(\s|\x{3164}|\x{1160})+~u', ' ', preg_replace('~^[\s\x{FEFF}]+|[\s\x{FEFF}]+$~u', '', $value));
+        return static fn ($value): string => preg_replace(
+            '~(\s|\x{3164}|\x{1160})+~u',
+            ' ',
+            preg_replace('~^[\s\x{FEFF}]+|[\s\x{FEFF}]+$~u', '', $value)
+        );
     }
 }
