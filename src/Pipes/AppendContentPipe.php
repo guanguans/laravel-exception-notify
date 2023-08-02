@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Sanitizers;
+namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-class VarOutputSanitizer
+class AppendContentPipe
 {
-    public function handle(string $report, \Closure $next): string
+    public function handle(string $report, \Closure $next, string $content): string
     {
-        return $next(var_output($report, true));
+        return $next($report.$content);
     }
 }

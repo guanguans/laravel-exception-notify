@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Sanitizers;
+namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-class AppendContentSanitizer
+class UrlEncodePipe
 {
-    public function handle(string $report, \Closure $next, string $content): string
+    public function handle(string $report, \Closure $next): string
     {
-        return $next($report.$content);
+        return $next(urlencode($report));
     }
 }
