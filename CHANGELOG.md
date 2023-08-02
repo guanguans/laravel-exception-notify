@@ -1,328 +1,373 @@
+<!--- BEGIN HEADER -->
 # Changelog
 
-All notable changes to `guanguans/laravel-exception-notify` will be documented in this file.
+All notable changes to this project will be documented in this file.
+<!--- END HEADER -->
+
+<a name="unreleased"></a>
+## [Unreleased]
+
 
-## v2.16.0 - 2023-06-07
+<a name="3.0.0-beta1"></a>
+## [3.0.0-beta1] - 2023-08-02
+### Docs
+- **changelog:** Add changelog template file
 
-### What's Changed
+### Feat
+- **ExceptionNotifyServiceProvider:** Add StringableMacro to mixins
+- **deps:** add laravel/lumen-framework dependency
+- **monorepo-builder.php:** add monorepo-builder.php file
 
-- Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/36
-- Bump dependabot/fetch-metadata from 1.4.0 to 1.5.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/38
-- Bump dependabot/fetch-metadata from 1.5.0 to 1.5.1 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/39
-- Bump actions/stale from 7 to 8 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/35
-- Update rector/rector requirement from ^0.15.7 to ^0.15.7 || ^0.17.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/40
+### Fix
+- **StrMacro:** Fix squish function
+- **contracts:** Rename ExceptionAware interface to ExceptionAwareContract
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.15.0...v2.16.0
+### Refactor
+- **.php-cs-fixer.php:** optimize file inclusion
+- **Channel:** change getName method to name
+- **ChannelContract:** Rename interface Channel to ChannelContract
+- **Collector:** remove __toString method
+- **Collector:** rename Collector to CollectorContract
+- **CollectorManager:** remove __toString method and Stringable interface
+- **CollectorManager:** change toArray method to collect
+- **Exceptions:** rename Exception.php to ThrowableContract.php
+- **Sanitizers:** rename Sanitizers to Pipes
+- **collector:** Rename LaravelCollector to ApplicationCollector
+- **collector:** remove Stringable interface implementation
+- **collectors:** rename AdditionCollector to ChoreCollector
+- **collectors:** rename ExceptionAware namespace
+- **contracts:** extend Channel and Collector with NameContract
+- **facades:** Update facades namespace
+- **jobs:** refactor ReportExceptionJob
+- **options:** remove OptionsProperty trait
+- **php-cs-fixer:** use glob and update directory permissions
+- **service-provider:** Update service provider aliases
 
-## v2.15.0 - 2023-03-20
+### Pull Requests
+- Merge pull request [#42](https://github.com/guanguans/monorepo-builder-worker/issues/42) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.6.0
+- Merge pull request [#41](https://github.com/guanguans/monorepo-builder-worker/issues/41) from guanguans/dependabot/composer/dms/phpunit-arraysubset-asserts-tw-0.4.0or-tw-0.5.0
 
-### What's Changed
 
-- Bump dependabot/fetch-metadata from 1.3.5 to 1.3.6 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/31
-- Update nunomaduro/larastan requirement from ^1.0 to ^1.0 || ^2.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/30
+<a name="v2.16.0"></a>
+## [v2.16.0] - 2023-06-07
+### Pull Requests
+- Merge pull request [#40](https://github.com/guanguans/monorepo-builder-worker/issues/40) from guanguans/dependabot/composer/rector/rector-tw-0.15.7or-tw-0.17.0
+- Merge pull request [#35](https://github.com/guanguans/monorepo-builder-worker/issues/35) from guanguans/dependabot/github_actions/actions/stale-8
+- Merge pull request [#39](https://github.com/guanguans/monorepo-builder-worker/issues/39) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.5.1
+- Merge pull request [#38](https://github.com/guanguans/monorepo-builder-worker/issues/38) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.5.0
+- Merge pull request [#36](https://github.com/guanguans/monorepo-builder-worker/issues/36) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.4.0
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.4...v2.15.0
 
-## v2.14.4 - 2023-01-19
+<a name="v2.15.0"></a>
+## [v2.15.0] - 2023-03-20
+### Pull Requests
+- Merge pull request [#30](https://github.com/guanguans/monorepo-builder-worker/issues/30) from guanguans/dependabot/composer/nunomaduro/larastan-tw-1.0or-tw-2.0
+- Merge pull request [#31](https://github.com/guanguans/monorepo-builder-worker/issues/31) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.3.6
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.3...v2.14.4
 
-## v2.14.3 - 2023-01-18
+<a name="v2.14.4"></a>
+## [v2.14.4] - 2023-01-19
 
-### What's Changed
+<a name="v2.14.3"></a>
+## [v2.14.3] - 2023-01-18
+### Pull Requests
+- Merge pull request [#27](https://github.com/guanguans/monorepo-builder-worker/issues/27) from guanguans/dependabot/composer/rector/rector-tw-0.14.8or-tw-0.15.0
 
-- Update rector/rector requirement from ^0.14.8 to ^0.14.8 || ^0.15.0 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/27
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.2...v2.14.3
+<a name="v2.14.2"></a>
+## [v2.14.2] - 2022-11-29
 
-## v2.14.2 - 2022-11-29
+<a name="v2.14.1"></a>
+## [v2.14.1] - 2022-11-29
+### Pull Requests
+- Merge pull request [#26](https://github.com/guanguans/monorepo-builder-worker/issues/26) from guanguans/imgbot
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.1...v2.14.2
 
-## v2.14.1 - 2022-11-29
+<a name="v2.14.0"></a>
+## [v2.14.0] - 2022-11-28
 
-### What's Changed
+<a name="v2.13.0"></a>
+## [v2.13.0] - 2022-11-26
 
-- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/26
+<a name="v2.12.0"></a>
+## [v2.12.0] - 2022-06-09
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.14.0...v2.14.1
+<a name="v2.11.5"></a>
+## [v2.11.5] - 2022-05-16
 
-## v2.14.0 - 2022-11-28
+<a name="v2.11.4"></a>
+## [v2.11.4] - 2022-05-12
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.13.0...v2.14.0
+<a name="v2.11.3"></a>
+## [v2.11.3] - 2022-05-05
 
-## v2.13.0 - 2022-11-26
+<a name="v2.11.2"></a>
+## [v2.11.2] - 2022-05-04
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.12.0...v2.13.0
+<a name="v2.11.1"></a>
+## [v2.11.1] - 2022-05-04
 
-## v2.12.0 - 2022-06-09
+<a name="v2.11.0"></a>
+## [v2.11.0] - 2022-05-04
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.5...v2.12.0
+<a name="v2.10.0"></a>
+## [v2.10.0] - 2022-04-29
 
-## v2.11.5 - 2022-05-16
+<a name="v2.9.0"></a>
+## [v2.9.0] - 2022-04-16
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.4...v2.11.5
+<a name="v2.8.0"></a>
+## [v2.8.0] - 2022-04-09
+### Pull Requests
+- Merge pull request [#21](https://github.com/guanguans/monorepo-builder-worker/issues/21) from guanguans/dependabot/github_actions/codecov/codecov-action-3
 
-## v2.11.4 - 2022-05-12
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.3...v2.11.4
+<a name="v2.7.1"></a>
+## [v2.7.1] - 2022-03-30
+### Pull Requests
+- Merge pull request [#20](https://github.com/guanguans/monorepo-builder-worker/issues/20) from guanguans/issue-19-Job错误
 
-## v2.11.3 - 2022-05-05
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.2...v2.11.3
+<a name="v2.7.0"></a>
+## [v2.7.0] - 2022-03-29
 
-## v2.11.2 - 2022-05-04
+<a name="v2.6.3"></a>
+## [v2.6.3] - 2022-03-29
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.1...v2.11.2
+<a name="v2.6.2"></a>
+## [v2.6.2] - 2022-03-27
 
-## v2.11.1 - 2022-05-04
+<a name="v2.6.1"></a>
+## [v2.6.1] - 2022-03-27
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.11.0...v2.11.1
+<a name="v2.6.0"></a>
+## [v2.6.0] - 2022-03-26
 
-## v2.11.0 - 2022-05-04
+<a name="v2.5.1"></a>
+## [v2.5.1] - 2022-03-23
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.10.0...v2.11.0
+<a name="v2.5.0"></a>
+## [v2.5.0] - 2022-03-23
 
-## v2.10.0 - 2022-04-29
+<a name="v2.4.0"></a>
+## [v2.4.0] - 2022-03-23
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.9.0...v2.10.0
+<a name="v2.3.0"></a>
+## [v2.3.0] - 2022-03-23
 
-## v2.9.0 - 2022-04-16
+<a name="v2.2.0"></a>
+## [v2.2.0] - 2022-03-23
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.8.0...v2.9.0
+<a name="v2.1.3"></a>
+## [v2.1.3] - 2022-03-23
+### Pull Requests
+- Merge pull request [#18](https://github.com/guanguans/monorepo-builder-worker/issues/18) from guanguans/dependabot/github_actions/actions/cache-3
 
-## v2.8.0 - 2022-04-09
 
-## What's Changed
+<a name="v2.1.2"></a>
+## [v2.1.2] - 2022-03-15
 
-- Bump codecov/codecov-action from 2.1.0 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/21
+<a name="v2.1.1"></a>
+## [v2.1.1] - 2022-03-14
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.7.1...v2.8.0
+<a name="v2.1.0"></a>
+## [v2.1.0] - 2022-03-14
 
-## v2.7.1 - 2022-03-30
+<a name="v2.0.8"></a>
+## [v2.0.8] - 2022-03-14
 
-## What's Changed
+<a name="v2.0.7"></a>
+## [v2.0.7] - 2022-03-14
 
-- Issue 19 job 错误 by @guanguans in https://github.com/guanguans/laravel-exception-notify/pull/20
+<a name="v2.0.6"></a>
+## [v2.0.6] - 2022-03-13
 
-## New Contributors
+<a name="v2.0.5"></a>
+## [v2.0.5] - 2022-03-13
 
-- @guanguans made their first contribution in https://github.com/guanguans/laravel-exception-notify/pull/20
+<a name="v2.0.4"></a>
+## [v2.0.4] - 2022-03-13
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.7.0...v2.7.1
+<a name="v2.0.3"></a>
+## [v2.0.3] - 2022-03-13
 
-## v2.7.0 - 2022-03-29
+<a name="v2.0.2"></a>
+## [v2.0.2] - 2022-03-13
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.6.3...v2.7.0
+<a name="v2.0.1"></a>
+## [v2.0.1] - 2022-03-13
 
-## v2.6.3 - 2022-03-29
+<a name="v2.0.0"></a>
+## [v2.0.0] - 2022-03-13
+### Pull Requests
+- Merge pull request [#17](https://github.com/guanguans/monorepo-builder-worker/issues/17) from guanguans/imgbot
+- Merge pull request [#16](https://github.com/guanguans/monorepo-builder-worker/issues/16) from guanguans/imgbot
+- Merge pull request [#15](https://github.com/guanguans/monorepo-builder-worker/issues/15) from guanguans/dependabot/github_actions/actions/checkout-3
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.6.2...v2.6.3
 
-## v2.6.2 - 2022-03-27
+<a name="v1.2.3"></a>
+## [v1.2.3] - 2022-02-28
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.6.1...v2.6.2
+<a name="v1.2.2"></a>
+## [v1.2.2] - 2022-02-27
 
-## v2.6.1 - 2022-03-26
+<a name="v1.2.1"></a>
+## [v1.2.1] - 2022-02-22
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.6.0...v2.6.1
+<a name="v1.2.0"></a>
+## [v1.2.0] - 2022-02-14
 
-## v2.6.0 - 2022-03-26
+<a name="v1.1.12"></a>
+## [v1.1.12] - 2021-12-03
 
-- Support QQ channel bot
+<a name="v1.1.11"></a>
+## [v1.1.11] - 2021-11-07
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.5.1...v2.6.0
+<a name="v1.1.10"></a>
+## [v1.1.10] - 2021-11-07
 
-## v2.5.1 - 2022-03-23
+<a name="v1.1.9"></a>
+## [v1.1.9] - 2021-11-07
+### Pull Requests
+- Merge pull request [#13](https://github.com/guanguans/monorepo-builder-worker/issues/13) from guanguans/imgbot
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.5.0...v2.5.1
 
-## v2.5.0 - 2022-03-23
+<a name="v1.1.8"></a>
+## [v1.1.8] - 2021-11-06
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.4.0...v2.5.0
+<a name="v1.1.7"></a>
+## [v1.1.7] - 2021-11-05
 
-## v2.4.0 - 2022-03-23
+<a name="v1.1.6"></a>
+## [v1.1.6] - 2021-11-03
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.3.0...v2.4.0
+<a name="v1.1.5"></a>
+## [v1.1.5] - 2021-10-16
+### Pull Requests
+- Merge pull request [#11](https://github.com/guanguans/monorepo-builder-worker/issues/11) from JimChenWYU/main
 
-## v2.3.0 - 2022-03-23
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.2.0...v2.3.0
+<a name="v1.1.4"></a>
+## [v1.1.4] - 2021-10-10
 
-## v2.2.0 - 2022-03-23
+<a name="v1.1.3"></a>
+## [v1.1.3] - 2021-10-09
+### Pull Requests
+- Merge pull request [#10](https://github.com/guanguans/monorepo-builder-worker/issues/10) from PrintNow/main
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.3...v2.2.0
 
-## v2.1.3 - 2022-03-23
+<a name="v1.1.2"></a>
+## [v1.1.2] - 2021-10-08
+### Pull Requests
+- Merge pull request [#7](https://github.com/guanguans/monorepo-builder-worker/issues/7) from guanguans/dependabot/composer/friendsofphp/php-cs-fixer-tw-2.16or-tw-3.0
 
-## What's Changed
 
-- Bump actions/cache from 2 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/18
+<a name="v1.1.1"></a>
+## [v1.1.1] - 2021-09-30
 
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.2...v2.1.3
-
-## v2.1.2 - 2022-03-15
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.1...v2.1.2
-
-## v2.1.1 - 2022-03-14
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.1.0...v2.1.1
-
-## v2.1.0 - 2022-03-14
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.8...v2.1.0
-
-## v2.0.8 - 2022-03-14
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.7...v2.0.8
-
-## v2.0.7 - 2022-03-14
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.6...v2.0.7
-
-## v2.0.6 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.5...v2.0.6
-
-## v2.0.5 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.4...v2.0.5
-
-## v2.0.4 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.3...v2.0.4
-
-## v2.0.3 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.2...v2.0.3
-
-## v2.0.2 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.1...v2.0.2
-
-## v2.0.1 - 2022-03-13
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v2.0.0...v2.0.1
-
-## v2.0.0 - 2022-03-12
-
-![usage](https://user-images.githubusercontent.com/22309277/158031144-f86dd132-2116-488d-8691-cf0ddc0718e5.png)
-
-## What's Changed
-
-- Bump actions/checkout from 2 to 3 by @dependabot in https://github.com/guanguans/laravel-exception-notify/pull/15
-- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/16
-- [ImgBot] Optimize images by @imgbot in https://github.com/guanguans/laravel-exception-notify/pull/17
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.2...v2.0.0
-
-## v1.2.3 - 2022-02-28
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.2...v1.2.3
-
-## v1.2.2 - 2022-02-27
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.1...v1.2.2
-
-## v1.2.1 - 2022-02-22
-
-**Full Changelog**: https://github.com/guanguans/laravel-exception-notify/compare/v1.2.0...v1.2.1
-
-## 1.2.0 - 2022-02-14
-
-- Support laravel9.
-
-## 1.1.12 - 2021-12-03
-
-- Optimize exception context string.
-- Update config example for the custom collector.
-
-## 1.1.11 - 2021-11-07
-
-- Add handle with at sign call string.
-- Add mark exception line number.
-
-## 1.1.10 - 2021-11-07
-
-- Add global function `notifier_report`.
-
-## 1.1.9 - 2021-11-07
-
-- Add Custom information collector.
-
-## 1.1.8 - 2021-11-06
-
-- Add some collectors.
-
-## 1.1.7 - 2021-11-05
-
-- Optimize collectors.
-
-## 1.1.6 - 2021-11-03
-
-- Add collect request header info.
-
-## 1.1.5 - 2021-10-16
-
-- Fix the error of the push configuration file path.
-
-## 1.1.4 - 2021-10-10
-
-- `Notifier::class` alias `exception.notifier`.
-
-## 1.1.3 - 2021-10-09
-
-- Fix the queue is still executed synchronously in the case of asynchronous configuration of the queue(#8).
-- Fix markdown template.
-
-## 1.1.2 - 2021-10-08
-
-- Optimize service registration.
-
-## 1.1.1 - 2021-09-30
-
-- Fix that the configuration is not loaded in the lumen environment.
-
-## 1.1.0 - 2021-09-29
-
-- Adapt lumen.
-- Update github config files.
-
-## 1.0.7 - 2021-07-22
-
-- Fix Dispatch not exists method `afterResponse` error.
-- Rename `exception_trace` -> `exception_stack_trace`.
-- Update php-cs-fixer config file.
-
-## 1.0.6 - 2021-07-08
-
-- Optimize `ExceptionNotifyServiceProvider`.
-- Fix config `exception_stack_trace` option.
-
-## 1.0.5 - 2021-07-08
-
-- Rename property `on` -> `enabled`.
-- Add InvalidCallException.
-
-## 1.0.4 - 2021-07-06
-
-- Optimize create client instance.
-- Fix request method information name.
-
-## 1.0.3 - 2021-07-04
-
-- Optimize Notifier.
-
-## 1.0.2 - 2021-07-04
-
-- Add `on`、`env`、`dontReport` config options.
-
-## 1.0.1 - 2021-07-04
-
-- Optimize Notifier.
-- Optimize SendExceptionNotification job.
-
-## 1.0.0 - 2021-07-04
-
-- Initial release.
+<a name="v1.1.0"></a>
+## [v1.1.0] - 2021-09-29
+### Pull Requests
+- Merge pull request [#6](https://github.com/guanguans/monorepo-builder-worker/issues/6) from guanguans/dependabot/composer/vimeo/psalm-tw-3.11or-tw-4.0
+- Merge pull request [#5](https://github.com/guanguans/monorepo-builder-worker/issues/5) from guanguans/dependabot/composer/overtrue/phplint-tw-2.3or-tw-3.0
+- Merge pull request [#4](https://github.com/guanguans/monorepo-builder-worker/issues/4) from guanguans/dependabot/github_actions/codecov/codecov-action-2.1.0
+
+
+<a name="v1.0.7"></a>
+## [v1.0.7] - 2021-07-22
+
+<a name="v1.0.6"></a>
+## [v1.0.6] - 2021-07-08
+
+<a name="v1.0.5"></a>
+## [v1.0.5] - 2021-07-08
+
+<a name="v1.0.4"></a>
+## [v1.0.4] - 2021-07-06
+
+<a name="v1.0.3"></a>
+## [v1.0.3] - 2021-07-04
+
+<a name="v1.0.2"></a>
+## [v1.0.2] - 2021-07-04
+### Pull Requests
+- Merge pull request [#2](https://github.com/guanguans/monorepo-builder-worker/issues/2) from guanguans/imgbot
+
+
+<a name="v1.0.1"></a>
+## [v1.0.1] - 2021-07-04
+
+<a name="v1.0.0"></a>
+## v1.0.0 - 2021-07-04
+### Pull Requests
+- Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
+
+
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-beta1...HEAD
+[3.0.0-beta1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.16.0...3.0.0-beta1
+[v2.16.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.15.0...v2.16.0
+[v2.15.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.4...v2.15.0
+[v2.14.4]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.3...v2.14.4
+[v2.14.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.2...v2.14.3
+[v2.14.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.1...v2.14.2
+[v2.14.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.0...v2.14.1
+[v2.14.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.13.0...v2.14.0
+[v2.13.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.12.0...v2.13.0
+[v2.12.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.5...v2.12.0
+[v2.11.5]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.4...v2.11.5
+[v2.11.4]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.3...v2.11.4
+[v2.11.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.2...v2.11.3
+[v2.11.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.1...v2.11.2
+[v2.11.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.11.0...v2.11.1
+[v2.11.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.10.0...v2.11.0
+[v2.10.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.9.0...v2.10.0
+[v2.9.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.8.0...v2.9.0
+[v2.8.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.7.1...v2.8.0
+[v2.7.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.7.0...v2.7.1
+[v2.7.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.6.3...v2.7.0
+[v2.6.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.6.2...v2.6.3
+[v2.6.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.6.1...v2.6.2
+[v2.6.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.6.0...v2.6.1
+[v2.6.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.5.1...v2.6.0
+[v2.5.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.5.0...v2.5.1
+[v2.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.4.0...v2.5.0
+[v2.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.3.0...v2.4.0
+[v2.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.2.0...v2.3.0
+[v2.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.1.3...v2.2.0
+[v2.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.1.2...v2.1.3
+[v2.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.1.1...v2.1.2
+[v2.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.1.0...v2.1.1
+[v2.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.8...v2.1.0
+[v2.0.8]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.7...v2.0.8
+[v2.0.7]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.6...v2.0.7
+[v2.0.6]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.5...v2.0.6
+[v2.0.5]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.4...v2.0.5
+[v2.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.3...v2.0.4
+[v2.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.2...v2.0.3
+[v2.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.1...v2.0.2
+[v2.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.0.0...v2.0.1
+[v2.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.2.3...v2.0.0
+[v1.2.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.2.2...v1.2.3
+[v1.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.2.1...v1.2.2
+[v1.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.2.0...v1.2.1
+[v1.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.12...v1.2.0
+[v1.1.12]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.11...v1.1.12
+[v1.1.11]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.10...v1.1.11
+[v1.1.10]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.9...v1.1.10
+[v1.1.9]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.8...v1.1.9
+[v1.1.8]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.7...v1.1.8
+[v1.1.7]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.6...v1.1.7
+[v1.1.6]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.5...v1.1.6
+[v1.1.5]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.4...v1.1.5
+[v1.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.3...v1.1.4
+[v1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.2...v1.1.3
+[v1.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.1...v1.1.2
+[v1.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.7...v1.1.0
+[v1.0.7]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.6...v1.0.7
+[v1.0.6]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.5...v1.0.6
+[v1.0.5]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.4...v1.0.5
+[v1.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.3...v1.0.4
+[v1.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.2...v1.0.3
+[v1.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.1...v1.0.2
+[v1.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/v1.0.0...v1.0.1
