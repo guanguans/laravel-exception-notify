@@ -20,7 +20,7 @@ class DdChannel extends Channel
      *
      * @return never-return
      */
-    public function report(string $report): void
+    public function report(string $report)
     {
         dd($report);
     }

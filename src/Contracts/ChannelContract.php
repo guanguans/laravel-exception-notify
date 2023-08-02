@@ -17,5 +17,5 @@ interface ChannelContract extends NameContract
     /**
      * @return mixed
      */
-    public function report(string $content);
+    public function report(string $report);
 }

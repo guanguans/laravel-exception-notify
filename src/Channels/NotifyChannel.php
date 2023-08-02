@@ -17,7 +17,7 @@ use Guanguans\Notify\Contracts\MessageInterface;
 
 abstract class NotifyChannel extends Channel
 {
-    protected \Guanguans\Notify\Clients\Client $client;
+    protected Client $client;
 
     public function __construct(Client $client)
     {
