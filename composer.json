@@ -68,8 +68,10 @@
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
+        "ergebnis/composer-normalize": "^2.28",
         "friendsofphp/php-cs-fixer": "^3.14",
-        "guanguans/ai-commit": "^1.6",
+        "guanguans/ai-commit": "^1.7",
+        "guanguans/monorepo-builder-worker": "^1.1",
         "jetbrains/phpstorm-attributes": "^1.0",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.13",
         "laravel/lumen-framework": "^7.0 || ^8.0 || ^9.0 || ^10.0",
@@ -87,7 +89,7 @@
         "spatie/pest-plugin-snapshots": "^1.1 || ^2.0",
         "symfony/thanks": "^1.2",
         "symfony/var-dumper": "^5.4 || ^6.0",
-        "vimeo/psalm": "^5.13"
+        "vimeo/psalm": "^5.14"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -108,7 +110,8 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true,
-            "symfony/thanks": true
+            "symfony/thanks": true,
+            "ergebnis/composer-normalize": true
         },
         "apcu-autoloader": true,
         "classmap-authoritative": false,
@@ -146,19 +149,28 @@
             "@cghooks update"
         ],
         "ai-commit": "@php ./vendor/bin/ai-commit commit --generator=bito_cli --ansi",
+        "ai-commit-no-verify": "@ai-commit --no-verify",
         "benchmark": "@php ./vendor/bin/phpbench run --warmup=1 --retry-threshold=1 --iterations=3 --revs=5 --ansi -v",
         "cghooks": "@php ./vendor/bin/cghooks --ansi -v",
+        "changelog": "@php ./vendor/bin/conventional-changelog --ansi -v",
+        "changelog-major": "@changelog --major",
+        "changelog-minor": "@changelog --minor",
+        "changelog-patch": "@changelog --patch",
         "checks": [
-            "@mark-start",
+            "@composer-normalize",
             "@composer-validate",
-            "@mark-separate",
             "@md-lint",
-            "@mark-separate",
             "@lint",
-            "@mark-separate",
-            "@style-lint",
-            "@mark-finish"
+            "@style-lint"
         ],
+        "composer-bin-all-update": "@composer bin all update --ansi -v",
+        "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",
+        "composer-normalize": "@composer normalize --dry-run --diff --ansi -v",
+        "composer-parallel": "@composer parallel --ansi -v",
+        "composer-parallel-checks": "@composer-parallel composer-validate md-lint lint style-lint test psalm",
+        "composer-require-checker": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v",
+        "composer-unused": "@php ./vendor/bin/composer-unused --ansi -v",
+        "composer-unused-checker": "@php ./vendor/bin/composer-unused --ansi -v",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "facades-lint": "@facades-update -- --lint",
         "facades-update": "/usr/local/opt/php@8.1/bin/php -f ./bin/facades.php",
@@ -171,7 +183,7 @@
         "mark-start": "printf '\\n!\\n!\\t\\033[0;36m%s\\033[0m\\n!\\n\\n' \"Started\"",
         "md-fix": "@md-lint --fix",
         "md-lint": "lint-md --config .lintmdrc ./*.md ./.github/ ./docs/",
-        "pest": "@php ./vendor/bin/pest",
+        "pest": "@php ./vendor/bin/pest --coverage",
         "pest-coverage": "@pest --coverage-html=./build/phpunit/ --coverage-clover=./clover.xml --coverage",
         "pest-migrate-configuration": "@pest --migrate-configuration",
         "phpstan": "@php ./vendor/bin/phpstan analyse --ansi -v",
