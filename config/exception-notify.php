@@ -18,90 +18,57 @@ use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Enable exception notification report switch.
-    |--------------------------------------------------------------------------
-    |
-    | If set to false, the exception notification report will not be enabled.
-    |
-    */
+    /**
+     * Enable or disable exception notification report.
+     */
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
-    /*
-    |--------------------------------------------------------------------------
-    | A list of the application environments that are reported.
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify a list of the application environments that should
-    | be reported.
-    |
-    | ```
-    | [production, local]
-    | ```
-    */
+    /**
+     * The list of environments that should be reported.
+     *
+     * ```
+     * ['production', 'local']
+     * ```
+     */
     'env' => ['*'],
 
-    /*
-    |--------------------------------------------------------------------------
-    | A list of the exception types that are not reported.
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify a list of the exception types that should not be
-    | reported.
-    |
-    | ```
-    | [
-    |     HttpResponseException::class,
-    |     HttpException::class,
-    | ]
-    | ```
-    */
+    /**
+     * The list of exception that should not be reported.
+     *
+     * ```
+     * [
+     *     HttpResponseException::class,
+     *     HttpException::class
+     * ]
+     * ```
+     */
     'dont_report' => [],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Connection of queue.
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * The name of queue connection that used to send exception notification.
+     */
     'queue_connection' => env('EXCEPTION_NOTIFY_QUEUE_CONNECTION', config('queue.default', 'sync')),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Exception notification rate limiter.
-    |--------------------------------------------------------------------------
-    |
-    | The exception notification rate limiter is used to prevent sending
-    | exception notification to the same channel too frequently.
-    |
-    */
-    'rate_limiter' => [
-        'max_attempts' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
-        'decay_seconds' => 300,
+    /**
+     * The rate limit of same exception.
+     */
+    'rate_limit' => [
+        'max_attempts' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_MAX_ATTEMPTS', config('app.debug') ? 50 : 1),
+        'decay_seconds' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_DECAY_SECONDS', 300),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Report title.
-    |--------------------------------------------------------------------------
-    |
-    | The title of the exception notification report.
-    |
-    */
-    'title' => env('EXCEPTION_NOTIFY_REPORT_TITLE', sprintf('%s application exception report', config('app.name'))),
+    /**
+     * The title of exception notification report.
+     */
+    'title' => env('EXCEPTION_NOTIFY_TITLE', sprintf('The %s application exception report', config('app.name'))),
 
-    /*
-    |--------------------------------------------------------------------------
-    | List of collectors.
-    |--------------------------------------------------------------------------
-    |
-    | Responsible for collecting the exception data.
-    |
-    */
-    'collector' => [
+    /**
+     * The list of collector.
+     */
+    'collectors' => [
         Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
@@ -115,24 +82,14 @@ return [
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | default channel.
-    |--------------------------------------------------------------------------
-    |
-    | The default channel of the exception notification report.
-    |
-    */
-    'default' => env('EXCEPTION_NOTIFY_DEFAULT_CHANNEL', 'log'),
+    /**
+     * The default channel.
+     */
+    'default' => env('EXCEPTION_NOTIFY_CHANNEL', 'log'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Supported channels.
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify a list of the supported channels.
-    |
-    */
+    /**
+     * The list of channels.
+     */
     'channels' => [
         // Bark
         'bark' => [

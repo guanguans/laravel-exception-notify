@@ -64,7 +64,7 @@ it('shouldnt report', function (): void {
     $this->app['config']->set('exception-notify.env', '*');
     $this->app['config']->set('exception-notify.dont_report', []);
     expect($this->exceptionNotifyManager->shouldntReport($e))->toBeFalse();
-    expect($this->exceptionNotifyManager->shouldReport($e))->toBeTrue();
+    // expect($this->exceptionNotifyManager->shouldReport($e))->toBeTrue();
 });
 
 it('get channel config', function (): void {

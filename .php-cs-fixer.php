@@ -55,7 +55,6 @@ return (new Config())
     ->setUsingCache(false)
     ->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
-    // ->registerCustomFixers(new PedroTroller\CS\Fixer\Fixers())
     ->setRules([
         '@PHP70Migration' => true,
         '@PHP70Migration:risky' => true,
@@ -244,14 +243,15 @@ return (new Config())
                 'inheritDoc',
             ],
         ],
-        'phpdoc_to_comment' => [
-            'ignored_tags' => [
-                'lang',
-                'noinspection',
-                'var',
-                'see',
-            ],
-        ],
+        // 'phpdoc_to_comment' => [
+        //     'ignored_tags' => [
+        //         'lang',
+        //         'noinspection',
+        //         'var',
+        //         'see',
+        //     ],
+        // ],
+        'phpdoc_to_comment' => false,
 
         // return_notation
         'simplified_null_return' => true,
@@ -366,24 +366,4 @@ return (new Config())
         ],
         PhpCsFixerCustomFixers\Fixer\SingleSpaceBeforeStatementFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer::name() => true,
-
-        // // https://github.com/PedroTroller/PhpCSFixer-Custom-Fixers
-        // // 'PedroTroller/order_behat_steps' => ['instanceof' => ['Behat\Behat\Context\Context']],
-        // 'PedroTroller/ordered_with_getter_and_setter_first' => true,
-        // 'PedroTroller/exceptions_punctuation' => true,
-        // 'PedroTroller/forbidden_functions' => [
-        //     'comment' => '@TODO remove this line',
-        //     'functions' => ['var_dump', 'dump', 'die'],
-        // ],
-        // 'PedroTroller/line_break_between_method_arguments' => [
-        //     'max-args' => 5,
-        //     'max-length' => 120,
-        //     // 'automatic-argument-merge' => true,
-        //     // 'inline-attributes' => false,
-        // ],
-        // 'PedroTroller/line_break_between_statements' => true,
-        // 'PedroTroller/comment_line_to_phpdoc_block' => true,
-        // 'PedroTroller/useless_code_after_return' => true,
-        // // 'PedroTroller/doctrine_migrations' => ['instanceof' => ['Doctrine\Migrations\AbstractMigration']],
-        // // 'PedroTroller/phpspec' => ['instanceof' => ['PhpSpec\ObjectBehavior']],
     ]);

@@ -120,9 +120,9 @@ class ExceptionNotifyManager extends Manager
             ->make(RateLimiter::class)
             ->attempt(
                 md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
-                config('exception-notify.rate_limiter.max_attempts'),
+                config('exception-notify.rate_limit.max_attempts'),
                 static fn (): bool => true,
-                config('exception-notify.rate_limiter.decay_seconds')
+                config('exception-notify.rate_limit.decay_seconds')
             );
     }
 
