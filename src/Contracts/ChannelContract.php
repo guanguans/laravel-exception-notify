@@ -14,5 +14,8 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface ChannelContract extends NameContract
 {
-    public function report(string $report);
+    /**
+     * @return mixed
+     */
+    public function report(string $content);
 }

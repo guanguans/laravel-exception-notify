@@ -44,23 +44,25 @@ class ReportExceptionJob implements ShouldQueue
      */
     public int $maxExceptions = 3;
 
-    protected \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract $channel;
+    protected ChannelContract $channel;
 
     protected string $report;
-
-    protected string $pipedReport;
 
     public function __construct(ChannelContract $channel, string $report)
     {
         $this->channel = $channel;
         $this->report = $report;
-        $this->pipedReport = $this->pipelineReport($report);
     }
 
+    /**
+     * @noinspection PhpUnreachableStatementInspection
+     */
     public function handle(): void
     {
-        $this->fireReportingEvent($this->pipedReport);
-        $result = $this->channel->report($this->pipedReport);
+        $pipedReport = $this->getPipedReport();
+
+        $this->fireReportingEvent($pipedReport);
+        $result = $this->channel->report($pipedReport);
         $this->fireReportedEvent($result);
     }
 
@@ -82,20 +84,17 @@ class ReportExceptionJob implements ShouldQueue
         return [1, 10, 30];
     }
 
-    /**
-     * @return array<mixed>
-     */
-    protected function getChannelPipeline(): array
+    protected function getChannelPipes(): array
     {
         return config(sprintf('exception-notify.channels.%s.sanitizers', $this->channel->name()), []);
     }
 
-    protected function pipelineReport(string $report): string
+    protected function getPipedReport(): string
     {
         return (new Pipeline(app()))
-            ->send($report)
-            ->through($this->getChannelPipeline())
-            ->then(static fn ($report) => $report);
+            ->send($this->report)
+            ->through($this->getChannelPipes())
+            ->thenReturn();
     }
 
     protected function fireReportingEvent(string $report): void
