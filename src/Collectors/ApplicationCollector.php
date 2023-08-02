@@ -16,12 +16,12 @@ use Illuminate\Contracts\Container\Container;
 
 class ApplicationCollector extends Collector
 {
-    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
-    protected $app;
+    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application|\Laravel\Lumen\Application */
+    protected $container;
 
     public function __construct(Container $container)
     {
-        $this->app = $container;
+        $this->container = $container;
     }
 
     /**
@@ -30,17 +30,11 @@ class ApplicationCollector extends Collector
     public function collect(): array
     {
         return [
-            'name' => $this->app['config']['app.name'],
-            'version' => $this->app->version(),
-            'environment' => $this->app->environment(),
-            'locale' => value(function () {
-                if (! method_exists($this->app, 'getLocale')) {
-                    return;
-                }
-
-                return $this->app->getLocale();
-            }),
-            'in console' => $this->app->runningInConsole(),
+            'name' => config('app.name'),
+            'version' => $this->container->version(),
+            'environment' => $this->container->environment(),
+            'locale' => method_exists($this->container, 'getLocale') ? $this->container->getLocale() : null,
+            'in console' => $this->container->runningInConsole(),
         ];
     }
 }

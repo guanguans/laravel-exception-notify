@@ -14,5 +14,5 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface ExceptionAwareContract
 {
-    public function setException(\Throwable $throwable);
+    public function setException(\Throwable $throwable): void;
 }

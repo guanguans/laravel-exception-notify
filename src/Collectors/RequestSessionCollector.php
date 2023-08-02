@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 class RequestSessionCollector extends Collector
 {
-    protected \Illuminate\Http\Request $request;
+    protected Request $request;
 
     public function __construct(Request $request)
     {
