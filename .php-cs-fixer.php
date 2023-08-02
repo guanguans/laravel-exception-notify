@@ -249,6 +249,7 @@ return (new Config())
                 'lang',
                 'noinspection',
                 'var',
+                'see',
             ],
         ],
 
