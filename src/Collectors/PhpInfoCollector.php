@@ -17,11 +17,11 @@ class PhpInfoCollector extends Collector
     /**
      * @return array{version: string, interface: string}
      */
-    public function collect()
+    public function collect(): array
     {
         return [
             'version' => implode('.', [PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION]),
-            'interface' => PHP_SAPI,
+            'interface' => \PHP_SAPI,
         ];
     }
 }

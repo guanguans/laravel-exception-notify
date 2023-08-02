@@ -11,13 +11,13 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
-        return array_filter($array, static function ($item) {
-            return ! blank($item);
-        });
+        return array_filter($array, static fn ($item) => ! blank($item));
     }
 }
 
@@ -25,7 +25,7 @@ if (! function_exists('call')) {
     /**
      * Call the given Closure / class@method and inject its dependencies.
      *
-     * @param callable|string      $callback
+     * @param callable|string $callback
      * @param array<string, mixed> $parameters
      */
     function call($callback, array $parameters = [], ?string $defaultMethod = 'handle')
@@ -36,21 +36,49 @@ if (! function_exists('call')) {
     }
 }
 
+if (! function_exists('str')) {
+    /**
+     * Get a new stringable object from the given string.
+     *
+     * @return Stringable|\Stringable
+     */
+    function str(?string $string = null)
+    {
+        if (0 === func_num_args()) {
+            return new class() implements \Stringable {
+                public function __call($method, $parameters)
+                {
+                    return Str::$method(...$parameters);
+                }
+
+                public function __toString()
+                {
+                    return '';
+                }
+            };
+        }
+
+        return Str::of($string);
+    }
+}
+
 if (! function_exists('var_output')) {
     /**
-     * @return string|void|null
-     *
      * @noinspection DebugFunctionUsageInspection
+     *
+     * @param mixed $expression
+     *
+     * @return null|string|void
      */
     function var_output($expression, bool $return = false)
     {
         $patterns = [
-            "/array \(\n\)/" => '[]',
-            "/array \(\n\s+\)/" => '[]',
-            "/array \(/" => '[',
-            "/^([ ]*)\)(,?)$/m" => '$1]$2',
-            "/=>[ ]?\n[ ]+\[/" => '=> [',
-            "/([ ]*)(\'[^\']+\') => ([\[\'])/" => '$1$2 => $3',
+            "/array \\(\n\\)/" => '[]',
+            "/array \\(\n\\s+\\)/" => '[]',
+            '/array \\(/' => '[',
+            '/^([ ]*)\\)(,?)$/m' => '$1]$2',
+            "/=>[ ]?\n[ ]+\\[/" => '=> [',
+            "/([ ]*)(\\'[^\\']+\\') => ([\\[\\'])/" => '$1$2 => $3',
         ];
 
         $export = var_export($expression, true);
@@ -65,12 +93,14 @@ if (! function_exists('var_output')) {
 
 if (! function_exists('array_reduce_with_keys')) {
     /**
-     * @return mixed|null
+     * @param null|mixed $carry
+     *
+     * @return null|mixed
      */
     function array_reduce_with_keys(array $array, callable $callback, $carry = null)
     {
         foreach ($array as $key => $value) {
-            $carry = call_user_func($callback, $carry, $value, $key);
+            $carry = $callback($carry, $value, $key);
         }
 
         return $carry;
@@ -96,6 +126,8 @@ if (! function_exists('exception_notify_report')) {
 if (! function_exists('is_callable_with_at_sign')) {
     /**
      * Determine if the given string is in Class@method syntax.
+     *
+     * @param mixed $callback
      */
     function is_callable_with_at_sign($callback): bool
     {

@@ -10,16 +10,9 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Tests\Collectors;
-
 use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
-use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
-class RequestSessionCollectorTest extends TestCase
-{
-    public function testCollect(): void
-    {
-        $requestSessionCollector = new RequestSessionCollector($this->app['request']);
-        $this->assertNull($requestSessionCollector->collect());
-    }
-}
+it('collect', function (): void {
+    $requestSessionCollector = new RequestSessionCollector($this->app['request']);
+    expect($requestSessionCollector->collect())->toBeArray();
+});

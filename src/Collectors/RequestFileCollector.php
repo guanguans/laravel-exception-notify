@@ -16,21 +16,17 @@ use Illuminate\Http\Request;
 
 class RequestFileCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request)
     {
-        parent::__construct($pipe);
         $this->request = $request;
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
-    public function collect()
+    public function collect(): array
     {
         $files = $this->request->allFiles();
         array_walk_recursive($files, static function (&$file): void {

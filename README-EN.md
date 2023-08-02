@@ -112,7 +112,7 @@ public function boot()
 {
     // Extend custom channel
     \ExceptionNotifier::extend('YourChannel', function (\Illuminate\Contracts\Container\Container $container){
-        // return instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.          
+        // return instance of the `\Guanguans\LaravelExceptionNotify\Contracts\ChannelContract`.          
     });
 }
 ```

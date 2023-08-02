@@ -51,7 +51,7 @@ class ExceptionContext
     /**
      * Get the exception code context when eval() failed.
      *
-     * @return array<int, string>|void|null
+     * @return null|array<int, string>|void
      */
     protected static function getEvalContext(\Throwable $throwable)
     {
@@ -67,9 +67,7 @@ class ExceptionContext
     {
         return collect(explode("\n", file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
-            ->mapWithKeys(static function ($value, $key): array {
-                return [$key + 1 => $value];
-            })
+            ->mapWithKeys(static fn ($value, $key): array => [$key + 1 => $value])
             ->all();
     }
 }

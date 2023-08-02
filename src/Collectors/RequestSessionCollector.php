@@ -17,22 +17,19 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 class RequestSessionCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request)
     {
-        parent::__construct($pipe);
         $this->request = $request;
     }
 
-    public function collect()
+    public function collect(): array
     {
         try {
-            return optional($this->request->getSession())->all();
+            return (array) optional($this->request->getSession())->all();
         } catch (SessionNotFoundException $sessionNotFoundException) {
+            return [];
         }
     }
 }

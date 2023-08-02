@@ -12,9 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Concerns\ExceptionAware;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware as ExceptionAwareContract;
-use Illuminate\Support\Collection;
+use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Illuminate\Support\Str;
 
 class ExceptionTraceCollector extends Collector implements ExceptionAwareContract
@@ -22,26 +21,12 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
     use ExceptionAware;
 
     /**
-     * @noinspection MagicMethodsValidityInspection
-     * @noinspection PhpMissingParentConstructorInspection
+     * @return array<string>
      */
-    public function __construct(callable $pipe = null)
+    public function collect(): array
     {
-        $this->pipe = $pipe
-            ?: static function (Collection $collection) {
-                return $collection
-                    ->filter(static function ($trace) {
-                        return ! Str::contains($trace, 'vendor');
-                    })
-                    ->values();
-            };
-    }
-
-    /**
-     * @return string[]
-     */
-    public function collect()
-    {
-        return explode("\n", $this->exception->getTraceAsString());
+        return collect(explode("\n", $this->exception->getTraceAsString()))
+            ->filter(static fn ($trace) => ! Str::contains($trace, 'vendor'))
+            ->all();
     }
 }

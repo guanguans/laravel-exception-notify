@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Guanguans\LaravelExceptionNotify\Pipelines\AppendContentPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\FixPrettyJsonPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\LengthLimitPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\StrReplacePipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\ToHtmlPipeline;
-use Guanguans\LaravelExceptionNotify\Pipelines\ToMarkdownPipeline;
+use Guanguans\LaravelExceptionNotify\Pipes\AppendContentPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\LengthLimitPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\StrReplacePipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
 
 return [
     /*
@@ -76,23 +76,8 @@ return [
     |
     */
     'rate_limiter' => [
-        // Config(相同异常生产环境默认每 5 分钟通知 1 次).
-        'config' => [
-            'limit' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
-            'rate' => [
-                // https://www.php.net/manual/en/datetime.formats.php
-                'interval' => env('EXCEPTION_NOTIFY_INTERVAL', '5 minutes'),
-            ],
-        ],
-
-        // Storage.
-        'storage' => [
-            // \Psr\Cache\CacheItemPoolInterface::class
-            'class' => \Symfony\Component\Cache\Adapter\PhpFilesAdapter::class,
-            'parameters' => [
-                'directory' => storage_path('framework/cache/exception-notify'),
-            ],
-        ],
+        'max_attempts' => (int) env('EXCEPTION_NOTIFY_LIMIT', config('app.debug') ? 50 : 1),
+        'decay_seconds' => 300,
     ],
 
     /*
@@ -114,16 +99,16 @@ return [
     |
     */
     'collector' => [
-        \Guanguans\LaravelExceptionNotify\Collectors\LaravelCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\AdditionCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
-        \Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
@@ -155,9 +140,9 @@ return [
             'base_uri' => env('EXCEPTION_NOTIFY_BARK_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
             'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 1024),
-                FixPrettyJsonPipeline::class,
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 1024),
+                FixPrettyJsonPipe::class,
             ],
         ],
 
@@ -166,9 +151,9 @@ return [
             'driver' => 'chanify',
             'base_uri' => env('EXCEPTION_NOTIFY_CHANIFY_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 1024),
-                FixPrettyJsonPipeline::class,
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 1024),
+                FixPrettyJsonPipe::class,
             ],
         ],
 
@@ -178,10 +163,10 @@ return [
             'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 20000),
-                FixPrettyJsonPipeline::class,
-                sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 20000),
+                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', AppendContentPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
             ],
         ],
 
@@ -189,9 +174,9 @@ return [
         'discord' => [
             'driver' => 'discord',
             'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 2000),
-                FixPrettyJsonPipeline::class,
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 2000),
+                FixPrettyJsonPipe::class,
             ],
         ],
 
@@ -201,10 +186,10 @@ return [
             'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 30720),
-                FixPrettyJsonPipeline::class,
-                sprintf('%s:%s', AppendContentPipeline::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 30720),
+                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', AppendContentPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],
 
@@ -213,7 +198,7 @@ return [
             'driver' => 'log',
             'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default', 'stack')),
             'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
-            'pipeline' => [],
+            'pipes' => [],
         ],
 
         // 邮件
@@ -224,8 +209,8 @@ return [
             'dsn' => env('EXCEPTION_NOTIFY_MAIL_DSN'),
             'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
             'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
-            'pipeline' => [
-                ToHtmlPipeline::class,
+            'pipes' => [
+                ToHtmlPipe::class,
             ],
         ],
 
@@ -234,8 +219,8 @@ return [
             'driver' => 'pushDeer',
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
             'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
-            'pipeline' => [
-                ToMarkdownPipeline::class,
+            'pipes' => [
+                ToMarkdownPipe::class,
             ],
         ],
 
@@ -247,9 +232,9 @@ return [
             'token' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_TOKEN'),
             'channel_id' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_CHANNEL_ID'),
             'environment' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_ENVIRONMENT', 'production'),
-            'pipeline' => [
+            'pipes' => [
                 // 错误码(304003) https://bot.q.qq.com/wiki/develop/api/openapi/error/error.html
-                sprintf('%s:%s,%s', StrReplacePipeline::class, '.php', '.PHP'),
+                sprintf('%s:%s,%s', StrReplacePipe::class, '.php', '.PHP'),
             ],
         ],
 
@@ -257,7 +242,7 @@ return [
         'serverChan' => [
             'driver' => 'serverChan',
             'token' => env('EXCEPTION_NOTIFY_SERVERCHAN_TOKEN'),
-            'pipeline' => [],
+            'pipes' => [],
         ],
 
         // Slack
@@ -265,8 +250,8 @@ return [
             'driver' => 'slack',
             'webhook_url' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK_URL'),
             'channel' => env('EXCEPTION_NOTIFY_SLACK_CHANNEL'),
-            'pipeline' => [
-                ToMarkdownPipeline::class,
+            'pipes' => [
+                ToMarkdownPipe::class,
             ],
         ],
 
@@ -275,9 +260,9 @@ return [
             'driver' => 'telegram',
             'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
             'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 4096),
-                FixPrettyJsonPipeline::class,
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 4096),
+                FixPrettyJsonPipe::class,
             ],
         ],
 
@@ -285,9 +270,9 @@ return [
         'weWork' => [
             'driver' => 'weWork',
             'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
-            'pipeline' => [
-                sprintf('%s:%s', LengthLimitPipeline::class, 5120),
-                FixPrettyJsonPipeline::class,
+            'pipes' => [
+                sprintf('%s:%s', LengthLimitPipe::class, 5120),
+                FixPrettyJsonPipe::class,
             ],
         ],
 
@@ -296,8 +281,8 @@ return [
             'driver' => 'xiZhi',
             'type' => env('EXCEPTION_NOTIFY_XIZHI_TYPE', 'single'), // [single, channel]
             'token' => env('EXCEPTION_NOTIFY_XIZHI_TOKEN'),
-            'pipeline' => [
-                ToMarkdownPipeline::class,
+            'pipes' => [
+                ToMarkdownPipe::class,
             ],
         ],
     ],

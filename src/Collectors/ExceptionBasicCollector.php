@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Concerns\ExceptionAware;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware as ExceptionAwareContract;
+use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
 class ExceptionBasicCollector extends Collector implements ExceptionAwareContract
@@ -21,12 +21,12 @@ class ExceptionBasicCollector extends Collector implements ExceptionAwareContrac
     use ExceptionAware;
 
     /**
-     * @return array{class: class-string<\Throwable>|true, message: string, code: int|string, file: string, line: int, preview: mixed[]}
+     * @return array{class: class-string<\Throwable>|true, message: string, code: int|string, file: string, line: int, preview: array<mixed>}
      */
-    public function collect()
+    public function collect(): array
     {
         return [
-            'class' => get_class($this->exception),
+            'class' => \get_class($this->exception),
             'message' => $this->exception->getmessage(),
             'code' => $this->exception->getCode(),
             'file' => $this->exception->getfile(),

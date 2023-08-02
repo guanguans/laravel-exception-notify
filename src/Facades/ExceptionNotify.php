@@ -12,26 +12,34 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Facades;
 
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager onChannel(...$channels)
- * @method static void                                                     report(\Throwable $throwable)
- * @method static void                                                     reportIf($condition, \Throwable $throwable)
- * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend($driver, \Closure $callback)
- * @method static bool                                                     shouldReport(\Throwable $throwable)
- * @method static bool                                                     shouldntReport(\Throwable $throwable)
- * @method static void                                                     macro($name, $macro)
- * @method static void                                                     mixin($mixin, $replace = true)
+ * @method static void reportIf(void $condition, \Throwable $throwable)
+ * @method static void report(\Throwable $throwable)
+ * @method static bool shouldntReport(\Throwable $throwable)
+ * @method static bool shouldReport(\Throwable $throwable)
+ * @method static void getDefaultDriver()
+ * @method static ExceptionNotifyManager onChannel(void ...$channels)
+ * @method static void getContainer()
+ * @method static void setContainer(\Illuminate\Contracts\Container\Container $container)
+ * @method static void forgetDrivers()
+ * @method static mixed driver(null|string $driver = null)
+ * @method static ExceptionNotifyManager extend(string $driver, \Closure $callback)
+ * @method static array getDrivers()
+ * @method static void macro(string $name, callable|object $macro)
+ * @method static void mixin(object $mixin, bool $replace = true)
+ * @method static bool hasMacro(string $name)
+ * @method static void flushMacros()
+ * @method static mixed macroCall(string $method, array $parameters)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
- *
- * @mixin \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
  */
 class ExceptionNotify extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'exception.notify';
+        return ExceptionNotifyManager::class;
     }
 }

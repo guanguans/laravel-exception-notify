@@ -16,18 +16,14 @@ use Illuminate\Http\Request;
 
 class RequestServerCollector extends Collector
 {
-    /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
+    protected \Illuminate\Http\Request $request;
 
-    public function __construct(Request $request, callable $pipe = null)
+    public function __construct(Request $request)
     {
-        parent::__construct($pipe);
         $this->request = $request;
     }
 
-    public function collect()
+    public function collect(): array
     {
         return $this->request->server();
     }

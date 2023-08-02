@@ -1,64 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    backupGlobals="false"
-    backupStaticAttributes="false"
-    bootstrap="vendor/autoload.php"
-    colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    processIsolation="false"
-    stopOnFailure="false"
-    verbose="true"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  backupGlobals="false"
+  backupStaticAttributes="false"
+  bootstrap="vendor/autoload.php"
+  cacheResultFile="build/phpunit/.phpunit.result.cache"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="false"
+  verbose="true"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
-    <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"-->
-    <!--<coverage>
-        <include>
-            <directory suffix=".php">src/</directory>
-        </include>
-        <exclude>
-            <file>src/Skeleton.php</file>
-        </exclude>
-    </coverage>-->
-    <testsuites>
-        <testsuite name="Guanguans Test Suite">
-            <directory>tests/</directory>
-            <exclude>vendor/</exclude>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-            <exclude>
-                <directory>src/Contracts/</directory>
-                <directory>src/Exceptions/</directory>
-                <directory>src/Events/</directory>
-                <directory>src/Facades/</directory>
-                <directory>src/Listeners/</directory>
-                <directory>src/Pipelines/</directory>
-                <directory>src/Support/</directory>
-                <file>src/Channels/DdChannel.php</file>
-                <file>src/ExceptionNotifyServiceProvider.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-    <listeners>
-        <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
-            <arguments>
-                <array>
-                    <element key="slowThreshold">
-                        <integer>500</integer>
-                    </element>
-                    <element key="reportLength">
-                        <integer>10</integer>
-                    </element>
-                    <element key="stopOnSlow">
-                        <boolean>false</boolean>
-                    </element>
-                </array>
-            </arguments>
-        </listener>
-    </listeners>
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"-->
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <exclude>
+      <directory>src/Contracts/</directory>
+      <directory>src/Exceptions/</directory>
+      <directory>src/Events/</directory>
+      <directory>src/Facades/</directory>
+      <directory>src/Listeners/</directory>
+      <directory>src/Pipelines/</directory>
+      <directory>src/Support/</directory>
+      <file>src/Channels/DdChannel.php</file>
+      <file>src/ExceptionNotifyServiceProvider.php</file>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="Guanguans Test Suite">
+      <directory>tests/</directory>
+      <exclude>vendor/</exclude>
+    </testsuite>
+  </testsuites>
+  <!--<listeners>
+    <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
+      <arguments>
+        <array>
+          <element key="slowThreshold">
+            <integer>500</integer>
+          </element>
+          <element key="reportLength">
+            <integer>10</integer>
+          </element>
+          <element key="stopOnSlow">
+            <boolean>false</boolean>
+          </element>
+        </array>
+      </arguments>
+    </listener>
+  </listeners>-->
 </phpunit>

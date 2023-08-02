@@ -12,15 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel as ChannelContract;
-use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Illuminate\Support\Str;
 
 abstract class Channel implements ChannelContract
 {
-    use CreateStatic;
-
-    public function getName(): string
+    public function name(): string
     {
         return Str::lcfirst(Str::beforeLast(class_basename($this), 'Channel'));
     }

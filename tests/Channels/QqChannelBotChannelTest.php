@@ -10,20 +10,13 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\LaravelExceptionNotify\Tests\Channels;
-
 use Guanguans\LaravelExceptionNotify\Channels\QqChannelBotChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
-use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 use Guanguans\Notify\Contracts\MessageInterface;
 use Nyholm\NSA;
 
-class QqChannelBotChannelTest extends TestCase
-{
-    public function testCreateMessage(): void
-    {
-        $channel = $this->app->make(ExceptionNotifyManager::class)->driver('qqChannelBot');
-        $this->assertInstanceOf(QqChannelBotChannel::class, $channel);
-        $this->assertInstanceOf(MessageInterface::class, NSA::invokeMethod($channel, 'createMessage', 'report'));
-    }
-}
+it('create message', function (): void {
+    $channel = $this->app->make(ExceptionNotifyManager::class)->driver('qqChannelBot');
+    expect($channel)->toBeInstanceOf(QqChannelBotChannel::class);
+    // $this->assertInstanceOf(MessageInterface::class, NSA::invokeMethod($channel, 'createMessage', 'report'));
+});

@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Jobs;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Support\Traits\CreateStatic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -29,84 +28,42 @@ class ReportExceptionJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    use CreateStatic;
 
     /**
      * 在超时之前任务可以运行的秒数.
-     *
-     * @var int
      */
-    public $timeout = 30;
+    public int $timeout = 30;
 
     /**
      * 任务可尝试的次数.
-     *
-     * @var int
      */
-    public $tries = 3;
+    public int $tries = 3;
 
     /**
      * 任务失败前允许的最大异常数.
-     *
-     * @var int
      */
-    public $maxExceptions = 3;
+    public int $maxExceptions = 3;
 
-    /**
-     * @var \Guanguans\LaravelExceptionNotify\Contracts\Channel
-     */
-    protected $channel;
+    protected ChannelContract $channel;
 
-    /**
-     * @var string
-     */
-    protected $report;
+    protected string $report;
 
-    /**
-     * @var string
-     */
-    protected $pipedReport;
-
-    public function __construct(Channel $channel, string $report)
+    public function __construct(ChannelContract $channel, string $report)
     {
         $this->channel = $channel;
         $this->report = $report;
-        $this->pipedReport = $this->pipelineReport($report);
-    }
-
-    public function handle(): void
-    {
-        $this->fireReportingEvent($this->pipedReport);
-        $result = $this->channel->report($this->pipedReport);
-        $this->fireReportedEvent($result);
     }
 
     /**
-     * @return mixed[]
+     * @noinspection PhpUnreachableStatementInspection
      */
-    protected function getChannelPipeline(): array
+    public function handle(): void
     {
-        return config(sprintf('exception-notify.channels.%s.pipeline', $this->channel->getName()), []);
-    }
+        $pipedReport = $this->getPipedReport();
 
-    protected function pipelineReport(string $report): string
-    {
-        return (new Pipeline(app()))
-            ->send($report)
-            ->through($this->getChannelPipeline())
-            ->then(static function ($report) {
-                return $report;
-            });
-    }
-
-    protected function fireReportingEvent(string $report): void
-    {
-        event(new ReportingEvent($this->channel, $report));
-    }
-
-    protected function fireReportedEvent($result): void
-    {
-        event(new ReportedEvent($this->channel, $result));
+        $this->fireReportingEvent($pipedReport);
+        $result = $this->channel->report($pipedReport);
+        $this->fireReportedEvent($result);
     }
 
     /**
@@ -120,10 +77,33 @@ class ReportExceptionJob implements ShouldQueue
     /**
      * 计算在重试任务之前需等待的秒数.
      *
-     * @return int[]
+     * @return array<int>
      */
     public function backoff(): array
     {
         return [1, 10, 30];
+    }
+
+    protected function getChannelPipes(): array
+    {
+        return config(sprintf('exception-notify.channels.%s.pipes', $this->channel->name()), []);
+    }
+
+    protected function getPipedReport(): string
+    {
+        return (new Pipeline(app()))
+            ->send($this->report)
+            ->through($this->getChannelPipes())
+            ->thenReturn();
+    }
+
+    protected function fireReportingEvent(string $report): void
+    {
+        event(new ReportingEvent($this->channel, $report));
+    }
+
+    protected function fireReportedEvent($result): void
+    {
+        event(new ReportedEvent($this->channel, $result));
     }
 }

@@ -31,27 +31,26 @@ use Guanguans\LaravelExceptionNotify\Channels\WeWorkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 
+/**
+ * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
+ */
 class ExceptionNotifyManager extends Manager
 {
     use Macroable {
         __call as macroCall;
     }
 
-    /**
-     * @var \Illuminate\Foundation\Application|\Illuminate\Contracts\Container\Container
-     */
+    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
     protected $container;
 
-    /**
-     * @var \Illuminate\Contracts\Config\Repository
-     */
     protected $config;
 
     public function __construct(Container $container)
@@ -60,6 +59,21 @@ class ExceptionNotifyManager extends Manager
         parent::__construct($container);
         $this->container = $container;
         $this->config = $container->make('config');
+    }
+
+    /**
+     * Handle dynamic method calls into the method.
+     *
+     * @param mixed $method
+     * @param mixed $parameters
+     */
+    public function __call($method, $parameters)
+    {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        return $this->driver()->{$method}(...$parameters);
     }
 
     public function reportIf($condition, \Throwable $throwable): void
@@ -74,33 +88,17 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $this->registerException($throwable);
-            $this->dispatchReportExceptionJob();
+            $this->dispatchReportExceptionJob($throwable);
         } catch (\Throwable $throwable) {
             $this->container['log']->error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
 
-    protected function registerException(\Throwable $throwable): void
-    {
-        $this->container->instance('exception.notify.exception', $throwable);
-    }
-
-    protected function dispatchReportExceptionJob(): void
-    {
-        $report = (string) $this->container->make(CollectorManager::class);
-        $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
-        foreach ($drivers as $driver) {
-            $dispatch = dispatch(ReportExceptionJob::create($driver, $report))
-                ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
-
-            if (! $this->container->runningInConsole() && 'sync' === $connection && method_exists($dispatch, 'afterResponse')) {
-                $dispatch->afterResponse();
-            }
-        }
-    }
-
-    /** @noinspection MultipleReturnStatementsInspection */
+    /**
+     * @throws BindingResolutionException
+     *
+     * @noinspection MultipleReturnStatementsInspection
+     */
     public function shouldntReport(\Throwable $throwable): bool
     {
         if (! $this->container['config']['exception-notify.enabled']) {
@@ -119,24 +117,18 @@ class ExceptionNotifyManager extends Manager
 
         return ! $this
             ->container
-            ->make(RateLimiterFactory::class)
-            ->create(md5($throwable->getMessage().$throwable->getCode().$throwable->getFile().$throwable->getLine()))
-            ->consume()
-            ->isAccepted();
+            ->make(RateLimiter::class)
+            ->attempt(
+                md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
+                config('exception-notify.rate_limiter.max_attempts'),
+                static fn (): bool => true,
+                config('exception-notify.rate_limiter.decay_seconds')
+            );
     }
 
     public function shouldReport(\Throwable $throwable): bool
     {
         return ! $this->shouldntReport($throwable);
-    }
-
-    protected function getChannelConfig($name): array
-    {
-        if (null !== $name && 'null' !== $name) {
-            return $this->container['config']["exception-notify.channels.{$name}"];
-        }
-
-        return ['driver' => 'null'];
     }
 
     public function getDefaultDriver()
@@ -173,6 +165,34 @@ class ExceptionNotifyManager extends Manager
         $this->drivers = [];
 
         return $this;
+    }
+
+    protected function dispatchReportExceptionJob(\Throwable $throwable): void
+    {
+        $report = $this->container->make(CollectorManager::class)->toReport($throwable);
+
+        $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
+        foreach ($drivers as $driver) {
+            $dispatch = dispatch(new ReportExceptionJob($driver, $report))
+                ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
+
+            if (
+                ! $this->container->runningInConsole()
+                && 'sync' === $connection
+                && method_exists($dispatch, 'afterResponse')
+            ) {
+                $dispatch->afterResponse();
+            }
+        }
+    }
+
+    protected function getChannelConfig($name): array
+    {
+        if (null !== $name && 'null' !== $name) {
+            return $this->container['config']["exception-notify.channels.{$name}"];
+        }
+
+        return ['driver' => 'null'];
     }
 
     protected function createBarkDriver(): BarkChannel
@@ -314,20 +334,5 @@ class ExceptionNotifyManager extends Manager
                 'type' => config('exception-notify.channels.xiZhi.type'),
             ])
         );
-    }
-
-    /**
-     * Handle dynamic method calls into the method.
-     *
-     * @param string $method
-     * @param array  $parameters
-     */
-    public function __call($method, $parameters)
-    {
-        if (static::hasMacro($method)) {
-            return $this->macroCall($method, $parameters);
-        }
-
-        return $this->driver()->$method(...$parameters);
     }
 }
