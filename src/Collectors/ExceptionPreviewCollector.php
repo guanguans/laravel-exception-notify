@@ -14,8 +14,9 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
+use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
-class ExceptionBasicCollector extends Collector implements ExceptionAwareContract
+class ExceptionPreviewCollector extends Collector implements ExceptionAwareContract
 {
     use ExceptionAware;
 
@@ -24,12 +25,6 @@ class ExceptionBasicCollector extends Collector implements ExceptionAwareContrac
      */
     public function collect(): array
     {
-        return [
-            'class' => \get_class($this->exception),
-            'message' => $this->exception->getmessage(),
-            'code' => $this->exception->getCode(),
-            'file' => $this->exception->getfile(),
-            'line' => $this->exception->getLine(),
-        ];
+        return exceptioncontext::getformattedcontext($this->exception);
     }
 }
