@@ -16,8 +16,11 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 
 class ReportedEvent
 {
-    public \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract $channel;
+    public ChannelContract $channel;
 
+    /**
+     * @var mixed
+     */
     public $result;
 
     public function __construct(ChannelContract $channel, $result)

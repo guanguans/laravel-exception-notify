@@ -16,7 +16,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 
 class ReportingEvent
 {
-    public \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract $channel;
+    public ChannelContract $channel;
 
     public string $report;
 
