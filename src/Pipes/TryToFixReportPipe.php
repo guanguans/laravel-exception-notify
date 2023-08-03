@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
 use Illuminate\Support\Collection;
 
-class FixPrettyJsonPipe
+class TryToFixReportPipe
 {
     protected JsonFixer $jsonFixer;
 
@@ -27,11 +27,14 @@ class FixPrettyJsonPipe
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): string
     {
         try {
-            $report = $next($collectors);
-            $fixedJson = $this->jsonFixer->silent(false)->missingValue($missingValue)->fix($report);
+            $fixedReport = $this
+                ->jsonFixer
+                ->silent(false)
+                ->missingValue($missingValue)
+                ->fix($report = $next($collectors));
 
             return json_encode(
-                json_decode($fixedJson, true),
+                json_decode($fixedReport, true, 512, JSON_THROW_ON_ERROR),
                 JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
             );
         } catch (\Throwable $throwable) {

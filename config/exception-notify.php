@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Guanguans\LaravelExceptionNotify\Pipes\AppendContentPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\LengthLimitPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\StrReplacePipe;
-use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\AppendKeywordCollectorsPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthReportPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrReportPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipeReport;
+use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownReportPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\TryToFixReportPipe;
 
 return [
     /**
@@ -99,8 +99,8 @@ return [
             'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
             'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 1024),
-                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
+                TryToFixReportPipe::class,
             ],
         ],
 
@@ -110,8 +110,8 @@ return [
             'base_uri' => env('EXCEPTION_NOTIFY_CHANIFY_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 1024),
-                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
+                TryToFixReportPipe::class,
             ],
         ],
 
@@ -122,9 +122,9 @@ return [
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 20000),
-                FixPrettyJsonPipe::class,
-                sprintf('%s:%s', AppendContentPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                sprintf('%s:%s', LimitLengthReportPipe::class, 20000),
+                TryToFixReportPipe::class,
+                sprintf('%s:%s', AppendKeywordCollectorsPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
             ],
         ],
 
@@ -133,8 +133,8 @@ return [
             'driver' => 'discord',
             'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 2000),
-                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 2000),
+                TryToFixReportPipe::class,
             ],
         ],
 
@@ -145,9 +145,9 @@ return [
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipes' => [
-                FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LengthLimitPipe::class, 30720),
-                sprintf('%s:%s', AppendContentPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
+                TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 30720),
+                sprintf('%s:%s', AppendKeywordCollectorsPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],
 
@@ -168,7 +168,7 @@ return [
             'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
             'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
             'pipes' => [
-                ToHtmlPipe::class,
+                ToHtmlPipeReport::class,
             ],
         ],
 
@@ -178,7 +178,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
             'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
             'pipes' => [
-                ToMarkdownPipe::class,
+                ToMarkdownReportPipe::class,
             ],
         ],
 
@@ -192,7 +192,7 @@ return [
             'environment' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_ENVIRONMENT', 'production'),
             'pipes' => [
                 // 错误码(304003) https://bot.q.qq.com/wiki/develop/api/openapi/error/error.html
-                sprintf('%s:%s,%s', StrReplacePipe::class, '.php', '.PHP'),
+                sprintf('%s:%s,%s', ReplaceStrReportPipe::class, '.php', '.PHP'),
             ],
         ],
 
@@ -209,7 +209,7 @@ return [
             'webhook_url' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK_URL'),
             'channel' => env('EXCEPTION_NOTIFY_SLACK_CHANNEL'),
             'pipes' => [
-                ToMarkdownPipe::class,
+                ToMarkdownReportPipe::class,
             ],
         ],
 
@@ -219,8 +219,8 @@ return [
             'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
             'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 4096),
-                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 4096),
+                TryToFixReportPipe::class,
             ],
         ],
 
@@ -229,8 +229,8 @@ return [
             'driver' => 'weWork',
             'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 5120),
-                FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 5120),
+                TryToFixReportPipe::class,
             ],
         ],
 
@@ -240,7 +240,7 @@ return [
             'type' => env('EXCEPTION_NOTIFY_XIZHI_TYPE', 'single'), // [single, channel]
             'token' => env('EXCEPTION_NOTIFY_XIZHI_TOKEN'),
             'pipes' => [
-                ToMarkdownPipe::class,
+                ToMarkdownReportPipe::class,
             ],
         ],
     ],

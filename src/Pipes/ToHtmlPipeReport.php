@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-class VarOutputPipe
+use Illuminate\Support\Collection;
+
+class ToHtmlPipeReport
 {
-    public function handle(\Illuminate\Support\Collection $collectors, \Closure $next): string
+    public function handle(Collection $collectors, \Closure $next, string $tag = '<pre>%s</pre>'): string
     {
-        return $next(var_output($report, true));
+        return sprintf($tag, $next($collectors));
     }
 }

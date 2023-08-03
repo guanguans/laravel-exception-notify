@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Illuminate\Support\Collection;
 
-class AppendContentPipe
+class AppendKeywordCollectorsPipe
 {
     public function handle(Collection $collectors, \Closure $next, string $keyword, $key = 'keyword'): string
     {
@@ -23,16 +23,18 @@ class AppendContentPipe
             ? $choreName
             : array_key_first($collectors->all());
 
-        $collectors = $collectors->transform(static function (
-            array $collector,
-            string $name
-        ) use ($keyword, $key, $collectorName) {
-            if ($name === $collectorName) {
-                $collector[$key] = $keyword;
-            }
+        $collectors = $collectors->transform(
+            static function (
+                array $collector,
+                string $name
+            ) use ($collectorName, $key, $keyword) {
+                if ($name === $collectorName) {
+                    $collector[$key] = $keyword;
+                }
 
-            return $collector;
-        });
+                return $collector;
+            }
+        );
 
         return $next($collectors);
     }

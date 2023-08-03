@@ -14,16 +14,16 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ToMarkdownPipe
+class ToMarkdownReportPipe
 {
     public function handle(
         Collection $collectors,
         \Closure $next,
-        string $mark = <<<'md'
+        string $mark = <<<'mark'
             ```
             %s
             ```
-            md
+            mark
     ): string {
         return sprintf($mark, $next($collectors));
     }
