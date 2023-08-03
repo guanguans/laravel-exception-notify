@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 class PrependContentPipe
 {
-    public function handle(string $report, \Closure $next, string $content): string
+    public function handle(\Illuminate\Support\Collection $collectors, \Closure $next, string $content): string
     {
         return $next($content.$report);
     }

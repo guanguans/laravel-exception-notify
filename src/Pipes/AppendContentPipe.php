@@ -12,10 +12,28 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
+use Illuminate\Support\Collection;
+
 class AppendContentPipe
 {
-    public function handle(string $report, \Closure $next, string $content): string
+    public function handle(Collection $collectors, \Closure $next, string $keyword, $key = 'keyword'): string
     {
-        return $next($report.$content);
+        $collectorName = $collectors->has($choreName = ChoreCollector::name())
+            ? $choreName
+            : array_key_first($collectors->all());
+
+        $collectors = $collectors->transform(static function (
+            array $collector,
+            string $name
+        ) use ($keyword, $key, $collectorName) {
+            if ($name === $collectorName) {
+                $collector[$key] = $keyword;
+            }
+
+            return $collector;
+        });
+
+        return $next($collectors);
     }
 }

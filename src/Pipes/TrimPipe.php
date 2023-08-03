@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 class TrimPipe
 {
-    public function handle(string $report, \Closure $next, string $chars = " \t\n\r\0\x0B"): string
+    public function handle(\Illuminate\Support\Collection $collectors, \Closure $next, string $chars = " \t\n\r\0\x0B"): string
     {
         return $next(trim($report, $chars));
     }

@@ -17,8 +17,8 @@ use Illuminate\Support\Str;
 
 abstract class Collector implements CollectorContract
 {
-    public function name(): string
+    public static function name(): string
     {
-        return Str::ucwords(Str::snake(Str::beforeLast(class_basename($this), class_basename(__CLASS__)), ' '));
+        return Str::ucwords(Str::snake(Str::beforeLast(class_basename(static::class), class_basename(__CLASS__)), ' '));
     }
 }

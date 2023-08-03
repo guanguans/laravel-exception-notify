@@ -145,8 +145,8 @@ return [
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipes' => [
-                sprintf('%s:%s', LengthLimitPipe::class, 30720),
                 FixPrettyJsonPipe::class,
+                sprintf('%s:%s', LengthLimitPipe::class, 30720),
                 sprintf('%s:%s', AppendContentPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],

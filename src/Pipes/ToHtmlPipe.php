@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Illuminate\Support\Collection;
+
 class ToHtmlPipe
 {
-    public function handle(string $report, \Closure $next, string $label = '<pre>%s</pre>'): string
+    public function handle(Collection $collectors, \Closure $next, string $label = '<pre>%s</pre>'): string
     {
-        return $next(sprintf($label, $report));
+        return sprintf($label, $next($collectors));
     }
 }

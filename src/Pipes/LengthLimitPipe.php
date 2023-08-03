@@ -12,12 +12,17 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Illuminate\Support\Collection;
+
 class LengthLimitPipe
 {
-    public function handle(string $report, \Closure $next, int $length = -1): string
+    public function handle(Collection $collectors, \Closure $next, int $length = -1): string
     {
-        $length > 0 and $report = substr($report, 0, (int) ($length * 90 / 100));
+        $report = $next($collectors);
+        if ($length > 0) {
+            $report = substr($report, 0, (int) ($length * 90 / 100));
+        }
 
-        return $next($report);
+        return $report;
     }
 }

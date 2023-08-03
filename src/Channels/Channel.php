@@ -17,8 +17,8 @@ use Illuminate\Support\Str;
 
 abstract class Channel implements ChannelContract
 {
-    public function name(): string
+    public static function name(): string
     {
-        return Str::lcfirst(Str::beforeLast(class_basename($this), 'Channel'));
+        return Str::lcfirst(Str::beforeLast(class_basename(static::class), 'Channel'));
     }
 }

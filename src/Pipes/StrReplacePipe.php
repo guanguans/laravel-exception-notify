@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Illuminate\Support\Collection;
+
 class StrReplacePipe
 {
-    public function handle(string $report, \Closure $next, string $search, string $replace): string
+    public function handle(Collection $collectors, \Closure $next, string $search, string $replace): string
     {
-        return $next(str_replace($search, $replace, $report));
+        return str_replace($search, $replace, $next($collectors));
     }
 }

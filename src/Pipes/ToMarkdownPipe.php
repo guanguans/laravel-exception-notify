@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Illuminate\Support\Collection;
+
 class ToMarkdownPipe
 {
     public function handle(
-        string $report,
+        Collection $collectors,
         \Closure $next,
         string $mark = <<<'md'
             ```
@@ -23,6 +25,6 @@ class ToMarkdownPipe
             ```
             md
     ): string {
-        return $next(sprintf($mark, $report));
+        return sprintf($mark, $next($collectors));
     }
 }

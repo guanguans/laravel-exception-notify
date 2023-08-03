@@ -14,5 +14,5 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface NameContract
 {
-    public function name(): string;
+    public static function name(): string;
 }

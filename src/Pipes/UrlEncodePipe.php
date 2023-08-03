@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 class UrlEncodePipe
 {
-    public function handle(string $report, \Closure $next): string
+    public function handle(\Illuminate\Support\Collection $collectors, \Closure $next): string
     {
         return $next(urlencode($report));
     }

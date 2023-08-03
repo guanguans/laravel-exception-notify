@@ -34,7 +34,6 @@ use Guanguans\Notify\Factory;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -169,20 +168,18 @@ class ExceptionNotifyManager extends Manager
 
     protected function dispatchReportExceptionJob(\Throwable $throwable): void
     {
-        $report = $this->container->make(CollectorManager::class)->toReport($throwable);
+        $drivers = array_keys($this->getDrivers() ?: [$this->getDefaultDriver() => $this->driver()]);
+        $reports = $this->container->make(CollectorManager::class)->toReports($drivers, $throwable);
 
-        $drivers = $this->getDrivers() ?: Arr::wrap($this->driver());
-        foreach ($drivers as $driver) {
-            $dispatch = dispatch(new ReportExceptionJob($driver, $report))
-                ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
+        $dispatch = dispatch(new ReportExceptionJob($reports))
+            ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
 
-            if (
-                ! $this->container->runningInConsole()
-                && 'sync' === $connection
-                && method_exists($dispatch, 'afterResponse')
-            ) {
-                $dispatch->afterResponse();
-            }
+        if (
+            ! $this->container->runningInConsole()
+            && 'sync' === $connection
+            && method_exists($dispatch, 'afterResponse')
+        ) {
+            $dispatch->afterResponse();
         }
     }
 

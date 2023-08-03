@@ -15,9 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Jobs;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
@@ -44,14 +44,11 @@ class ReportExceptionJob implements ShouldQueue
      */
     public int $maxExceptions = 3;
 
-    protected ChannelContract $channel;
+    protected array $reports;
 
-    protected string $report;
-
-    public function __construct(ChannelContract $channel, string $report)
+    public function __construct(array $reports)
     {
-        $this->channel = $channel;
-        $this->report = $report;
+        $this->reports = $reports;
     }
 
     /**
@@ -59,11 +56,14 @@ class ReportExceptionJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $pipedReport = $this->getPipedReport();
+        foreach ($this->reports as $channelName => $report) {
+            /** @var ChannelContract $channel */
+            $channel = ExceptionNotify::driver($channelName);
 
-        $this->fireReportingEvent($pipedReport);
-        $result = $this->channel->report($pipedReport);
-        $this->fireReportedEvent($result);
+            event(new ReportingEvent($channel, $report));
+            $result = $channel->report($report);
+            event(new ReportedEvent($channel, $result));
+        }
     }
 
     /**
@@ -82,28 +82,5 @@ class ReportExceptionJob implements ShouldQueue
     public function backoff(): array
     {
         return [1, 10, 30];
-    }
-
-    protected function getChannelPipes(): array
-    {
-        return config(sprintf('exception-notify.channels.%s.pipes', $this->channel->name()), []);
-    }
-
-    protected function getPipedReport(): string
-    {
-        return (new Pipeline(app()))
-            ->send($this->report)
-            ->through($this->getChannelPipes())
-            ->thenReturn();
-    }
-
-    protected function fireReportingEvent(string $report): void
-    {
-        event(new ReportingEvent($this->channel, $report));
-    }
-
-    protected function fireReportedEvent($result): void
-    {
-        event(new ReportedEvent($this->channel, $result));
     }
 }

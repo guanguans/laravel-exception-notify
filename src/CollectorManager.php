@@ -15,6 +15,8 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
+use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
 
 class CollectorManager extends Fluent
@@ -52,14 +54,27 @@ class CollectorManager extends Fluent
         $this->attributes[$offset] = $value;
     }
 
-    public function toReport(\Throwable $throwable): string
+    public function toReports(array $channels, \Throwable $throwable): array
     {
-        return collect($this)
+        return collect($channels)
+            ->mapWithKeys(fn (string $channel): array => [$channel => $this->toReport($channel, $throwable)])
+            ->all();
+    }
+
+    protected function toReport(string $channel, \Throwable $throwable): string
+    {
+        $collectors = collect($this)
             ->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
                 return [$collector->name() => $collector->collect()];
-            })
-            ->toJson(JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+            });
+
+        return (new Pipeline(app()))
+            ->send($collectors)
+            ->through(config("exception-notify.channels.$channel.pipes", []))
+            ->then(fn (Collection $collectors): string => $collectors->toJson(
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+            ));
     }
 }
