@@ -33,10 +33,10 @@ use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Traits\Tappable;
 
 /**
  * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
@@ -46,19 +46,7 @@ class ExceptionNotifyManager extends Manager
     use Macroable {
         __call as macroCall;
     }
-
-    /** @var \Illuminate\Contracts\Container\Container|\Illuminate\Foundation\Application */
-    protected $container;
-
-    protected $config;
-
-    public function __construct(Container $container)
-    {
-        // 版本兼容
-        parent::__construct($container);
-        $this->container = $container;
-        $this->config = $container->make('config');
-    }
+    use Tappable;
 
     /**
      * Handle dynamic method calls into the method.
@@ -72,24 +60,46 @@ class ExceptionNotifyManager extends Manager
             return $this->macroCall($method, $parameters);
         }
 
-        return $this->driver()->{$method}(...$parameters);
+        return parent::__call($method, $parameters);
     }
 
-    public function reportIf($condition, \Throwable $throwable): void
+    /**
+     * @param mixed $condition
+     * @param array<string>|string $channels
+     */
+    public function reportIf($condition, \Throwable $throwable, $channels = null): void
     {
-        value($condition) and $this->report($throwable);
+        value($condition) and $this->report($throwable, $channels);
     }
 
-    public function report(\Throwable $throwable): void
+    /**
+     * @param array<string>|string $channels
+     */
+    public function report(\Throwable $throwable, $channels = null): void
     {
         try {
             if ($this->shouldntReport($throwable)) {
                 return;
             }
 
-            $this->dispatchReportExceptionJob($throwable);
+            $reports = app(CollectorManager::class)->toReports(
+                (array) ($channels ?? $this->getDefaultDriver()),
+                $throwable
+            );
+
+            $dispatch = dispatch(new ReportExceptionJob($reports))->onConnection(
+                $connection = config('exception-notify.queue_connection')
+            );
+
+            if (
+                ! $this->container->runningInConsole()
+                && 'sync' === $connection
+                && method_exists($dispatch, 'afterResponse')
+            ) {
+                $dispatch->afterResponse();
+            }
         } catch (\Throwable $throwable) {
-            $this->container['log']->error($throwable->getMessage(), ['exception' => $throwable]);
+            app('log')->error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
 
@@ -100,15 +110,15 @@ class ExceptionNotifyManager extends Manager
      */
     public function shouldntReport(\Throwable $throwable): bool
     {
-        if (! $this->container['config']['exception-notify.enabled']) {
+        if (! config('exception-notify.enabled')) {
             return true;
         }
 
-        if (! Str::is($this->container['config']['exception-notify.env'], (string) $this->container->environment())) {
+        if (! Str::is(config('exception-notify.env'), (string) $this->container->environment())) {
             return true;
         }
 
-        foreach ($this->container['config']['exception-notify.dont_report'] as $type) {
+        foreach (config('exception-notify.dont_report') as $type) {
             if ($throwable instanceof $type) {
                 return true;
             }
@@ -132,64 +142,7 @@ class ExceptionNotifyManager extends Manager
 
     public function getDefaultDriver()
     {
-        return $this->container['config']['exception-notify.default'];
-    }
-
-    /**
-     * @return $this
-     */
-    public function onChannel(...$channels)
-    {
-        foreach ($channels as $channel) {
-            $this->driver($channel);
-        }
-
-        return $this;
-    }
-
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    public function setContainer(Container $container)
-    {
-        $this->container = $container;
-
-        return $this;
-    }
-
-    public function forgetDrivers()
-    {
-        $this->drivers = [];
-
-        return $this;
-    }
-
-    protected function dispatchReportExceptionJob(\Throwable $throwable): void
-    {
-        $drivers = array_keys($this->getDrivers() ?: [$this->getDefaultDriver() => $this->driver()]);
-        $reports = $this->container->make(CollectorManager::class)->toReports($drivers, $throwable);
-
-        $dispatch = dispatch(new ReportExceptionJob($reports))
-            ->onConnection($connection = $this->config->get('exception-notify.queue_connection'));
-
-        if (
-            ! $this->container->runningInConsole()
-            && 'sync' === $connection
-            && method_exists($dispatch, 'afterResponse')
-        ) {
-            $dispatch->afterResponse();
-        }
-    }
-
-    protected function getChannelConfig($name): array
-    {
-        if (null !== $name && 'null' !== $name) {
-            return $this->container['config']["exception-notify.channels.{$name}"];
-        }
-
-        return ['driver' => 'null'];
+        return config('exception-notify.default');
     }
 
     protected function createBarkDriver(): BarkChannel

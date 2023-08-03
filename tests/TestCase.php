@@ -102,7 +102,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUpApplicationRoutes(): void
     {
         Route::get('/report-exception', static function (): string {
-            ExceptionNotify::onChannel('dump', 'log')->report(new \Exception('What happened?'));
+            ExceptionNotify::report(new \Exception('What happened?'), ['dump', 'log']);
 
             return 'This is an exception report test page.';
         });
