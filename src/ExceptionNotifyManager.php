@@ -82,18 +82,14 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $reports = app(CollectorManager::class)->toReports(
+            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->toReports(
                 (array) ($channels ?? $this->getDefaultDriver()),
                 $throwable
-            );
-
-            $dispatch = dispatch(new ReportExceptionJob($reports))->onConnection(
-                $connection = config('exception-notify.queue_connection')
-            );
+            )));
 
             if (
                 ! $this->container->runningInConsole()
-                && 'sync' === $connection
+                && 'sync' === config('exception-notify.queue_connection')
                 && method_exists($dispatch, 'afterResponse')
             ) {
                 $dispatch->afterResponse();

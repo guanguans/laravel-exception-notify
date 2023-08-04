@@ -25,30 +25,20 @@ use Illuminate\Support\Facades\Log;
 class ReportExceptionJob implements ShouldQueue
 {
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
+    // use SerializesModels;
     use InteractsWithQueue;
     use Queueable;
-    use SerializesModels;
-
-    /**
-     * 在超时之前任务可以运行的秒数.
-     */
-    public int $timeout = 30;
-
-    /**
-     * 任务可尝试的次数.
-     */
-    public int $tries = 3;
-
-    /**
-     * 任务失败前允许的最大异常数.
-     */
-    public int $maxExceptions = 3;
 
     protected array $reports;
 
     public function __construct(array $reports)
     {
         $this->reports = $reports;
+
+        $this->onConnection(config('exception-notify.queue.connection'));
+        if ($queue = config('exception-notify.queue.queue')) {
+            $this->onQueue($queue);
+        }
     }
 
     /**
@@ -72,15 +62,5 @@ class ReportExceptionJob implements ShouldQueue
     public function failed(\Throwable $throwable): void
     {
         Log::error($throwable->getMessage(), ['exception' => $throwable]);
-    }
-
-    /**
-     * 计算在重试任务之前需等待的秒数.
-     *
-     * @return array<int>
-     */
-    public function backoff(): array
-    {
-        return [1, 10, 30];
     }
 }

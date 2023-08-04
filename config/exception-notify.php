@@ -45,9 +45,12 @@ return [
     'dont_report' => [],
 
     /**
-     * The name of queue connection that used to send exception notification.
+     * The queue of exception notification report.
      */
-    'queue_connection' => env('EXCEPTION_NOTIFY_QUEUE_CONNECTION', config('queue.default', 'sync')),
+    'queue' => [
+        'connection' => env('EXCEPTION_NOTIFY_QUEUE_CONNECTION', config('queue.default', 'sync')),
+        'queue' => env('EXCEPTION_NOTIFY_QUEUE_QUEUE'),
+    ],
 
     /**
      * The rate limit of same exception.
