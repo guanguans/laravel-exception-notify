@@ -127,7 +127,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     protected function toAlias(string $class, ?string $prefix = null): string
     {
-        $prefix ??= 'exception-notify.';
+        $prefix ??= 'exception.notify.';
 
         $alias = Str::snake(class_basename($class), '.');
         if (Str::startsWith($alias, Str::replaceLast('.', '', $prefix))) {
