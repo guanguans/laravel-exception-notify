@@ -16,23 +16,23 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static void reportIf(void $condition, \Throwable $throwable)
- * @method static void report(\Throwable $throwable)
+ * @method static void reportIf(mixed $condition, \Throwable $throwable, array|string $channels = null)
+ * @method static void report(\Throwable $throwable, array|string $channels = null)
  * @method static bool shouldntReport(\Throwable $throwable)
  * @method static bool shouldReport(\Throwable $throwable)
  * @method static void getDefaultDriver()
- * @method static ExceptionNotifyManager onChannel(void ...$channels)
- * @method static void getContainer()
- * @method static void setContainer(\Illuminate\Contracts\Container\Container $container)
- * @method static void forgetDrivers()
  * @method static mixed driver(null|string $driver = null)
- * @method static ExceptionNotifyManager extend(string $driver, \Closure $callback)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)
  * @method static array getDrivers()
+ * @method static \Illuminate\Contracts\Container\Container getContainer()
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager setContainer(\Illuminate\Contracts\Container\Container $container)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager forgetDrivers()
  * @method static void macro(string $name, callable|object $macro)
  * @method static void mixin(object $mixin, bool $replace = true)
  * @method static bool hasMacro(string $name)
  * @method static void flushMacros()
  * @method static mixed macroCall(string $method, array $parameters)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(null|callable $callback = null)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
  */

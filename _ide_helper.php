@@ -28,7 +28,6 @@ namespace Illuminate\Support {
     }
 
     /**
-     * @method string beforeLast($subject, $search)
      * @method string lcfirst($string)
      * @method string ucwords($string)
      * @method string squish($string)
@@ -41,7 +40,6 @@ namespace Illuminate\Support {
     }
 
     /**
-     * @method \Illuminate\Support\Stringable beforeLast($search)
      * @method \Illuminate\Support\Stringable lcfirst()
      * @method \Illuminate\Support\Stringable ucwords()
      * @method \Illuminate\Support\Stringable squish()
