@@ -13,10 +13,11 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class ToHtmlPipe extends SprintfPipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $format = '<pre>%s</pre>'): string
+    public function handle(Collection $collectors, \Closure $next, string $format = '<pre>%s</pre>'): Stringable
     {
         return parent::handle($collectors, $next, $format);
     }

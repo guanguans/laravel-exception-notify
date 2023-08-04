@@ -13,10 +13,11 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class AddKeywordPipe extends AddValuePipe
 {
-    public function handle(Collection $collectors, \Closure $next, $value, $key = 'keyword', ?string $collectorName = null): string
+    public function handle(Collection $collectors, \Closure $next, $value, $key = 'keyword', ?string $collectorName = null): Stringable
     {
         return parent::handle($collectors, $next, $value, $key, $collectorName);
     }

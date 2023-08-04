@@ -18,6 +18,7 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Stringable;
 
 class CollectorManager extends Fluent
 {
@@ -63,13 +64,13 @@ class CollectorManager extends Fluent
 
     protected function mapToReport(string $channel, \Throwable $throwable): string
     {
-        return (new Pipeline(app()))
+        return (string) (new Pipeline(app()))
             ->send(collect($this)->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
                 return [$collector::name() => $collector->collect()];
             }))
             ->through(config("exception-notify.channels.$channel.pipes", []))
-            ->then(fn (Collection $collectors): string => to_pretty_json($collectors->jsonSerialize()));
+            ->then(fn (Collection $collectors): Stringable => str(to_pretty_json($collectors->jsonSerialize())));
     }
 }

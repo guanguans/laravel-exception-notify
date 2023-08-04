@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class SprintfPipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $format): string
+    public function handle(Collection $collectors, \Closure $next, string $format): Stringable
     {
-        return sprintf($format, $next($collectors));
+        return str(sprintf($format, $next($collectors)));
     }
 }

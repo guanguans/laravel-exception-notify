@@ -14,6 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class AddValuePipe
 {
@@ -21,7 +22,7 @@ class AddValuePipe
      * @param mixed $value
      * @param null|array-key $key
      */
-    public function handle(Collection $collectors, \Closure $next, $value, $key = null, ?string $collectorName = null): string
+    public function handle(Collection $collectors, \Closure $next, $value, $key = null, ?string $collectorName = null): Stringable
     {
         $collectorName ??= ChoreCollector::name();
         $collectorName = (string) ($collectors->has($collectorName) ? $collectorName : array_key_first($collectors->all()));

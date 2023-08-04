@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class LimitLengthPipe
 {
-    public function handle(Collection $collectors, \Closure $next, int $length, float $percentage = 0.9): string
+    public function handle(Collection $collectors, \Closure $next, int $length, float $percentage = 0.9): Stringable
     {
-        return substr($next($collectors), 0, (int) ($length * $percentage));
+        return $next($collectors)->substr(0, (int) ($length * $percentage));
     }
 }

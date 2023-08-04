@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class ReplaceStrPipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $search, string $replace): string
+    public function handle(Collection $collectors, \Closure $next, string $search, string $replace): Stringable
     {
-        return str_replace($search, $replace, $next($collectors));
+        return $next($collectors)->replace($search, $replace);
     }
 }

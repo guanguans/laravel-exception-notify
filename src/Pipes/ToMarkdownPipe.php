@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Stringable;
 
 class ToMarkdownPipe extends SprintfPipe
 {
@@ -24,7 +25,7 @@ class ToMarkdownPipe extends SprintfPipe
             %s
             ```
             mark
-    ): string {
+    ): Stringable {
         return parent::handle($collectors, $next, $format);
     }
 }
