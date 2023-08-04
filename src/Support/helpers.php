@@ -10,13 +10,15 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use Laravel\Lumen\Application as LumenApplication;
 
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
-        return array_filter($array, static fn ($item) => ! blank($item));
+        return array_filter($array, static fn ($item) => filled($item));
     }
 }
 
@@ -40,11 +42,11 @@ if (! function_exists('array_reduce_with_keys')) {
 
 if (! function_exists('str')) {
     /**
-     * Get a new stringable object from the given string.
+     * @param mixed $string
      *
      * @return Stringable|\Stringable
      */
-    function str(?string $string = null)
+    function str($string = null)
     {
         if (0 === func_num_args()) {
             return new class() implements \Stringable {
@@ -66,12 +68,14 @@ if (! function_exists('str')) {
 
 if (! function_exists('to_pretty_json')) {
     /**
+     * @param mixed $value
+     *
      * @throws JsonException
      */
-    function to_pretty_json(array $score, int $options = 0, int $depth = 512): string
+    function to_pretty_json($value, int $options = 0, int $depth = 512): string
     {
         return json_encode(
-            $score,
+            $value,
             JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR | $options,
             $depth
         );

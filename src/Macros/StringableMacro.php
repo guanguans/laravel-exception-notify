@@ -19,11 +19,6 @@ use Illuminate\Support\Str;
  */
 class StringableMacro
 {
-    public function beforeLast(): callable
-    {
-        return fn ($search) => new static(Str::beforeLast($this->value, $search));
-    }
-
     public function lcfirst(): callable
     {
         return fn () => new static(Str::lcfirst($this->value));

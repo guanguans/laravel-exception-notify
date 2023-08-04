@@ -17,22 +17,6 @@ namespace Guanguans\LaravelExceptionNotify\Macros;
  */
 class StrMacro
 {
-    public static function beforeLast(): callable
-    {
-        return static function ($subject, $search) {
-            if ('' === $search) {
-                return $subject;
-            }
-
-            $pos = mb_strrpos($subject, $search);
-            if (false === $pos) {
-                return $subject;
-            }
-
-            return static::substr($subject, 0, $pos);
-        };
-    }
-
     public static function lcfirst(): callable
     {
         return static fn ($string): string => lcfirst($string);
