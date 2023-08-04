@@ -36,6 +36,7 @@ class ReportExceptionJob implements ShouldQueue
         $this->reports = $reports;
 
         $this->onConnection(config('exception-notify.queue.connection'));
+
         if ($queue = config('exception-notify.queue.queue')) {
             $this->onQueue($queue);
         }
