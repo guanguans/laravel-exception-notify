@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
 use Illuminate\Support\Collection;
 
-class TryToFixReportPipe
+class FixPrettyJsonPipe
 {
     protected JsonFixer $jsonFixer;
 

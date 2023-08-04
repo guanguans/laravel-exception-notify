@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ToHtmlPipeReport
+class ToHtmlPipe
 {
     public function handle(Collection $collectors, \Closure $next, string $tag = '<pre>%s</pre>'): string
     {

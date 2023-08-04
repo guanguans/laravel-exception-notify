@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class LimitLengthReportPipe
+class LimitLengthPipe
 {
     public function handle(Collection $collectors, \Closure $next, int $length): string
     {

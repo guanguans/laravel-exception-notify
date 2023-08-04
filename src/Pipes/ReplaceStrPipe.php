@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ReplaceStrReportPipe
+class ReplaceStrPipe
 {
     public function handle(Collection $collectors, \Closure $next, string $search, string $replace): string
     {

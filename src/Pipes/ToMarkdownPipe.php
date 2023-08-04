@@ -14,7 +14,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ToMarkdownReportPipe
+class ToMarkdownPipe
 {
     public function handle(
         Collection $collectors,
