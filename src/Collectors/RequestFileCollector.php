@@ -23,12 +23,10 @@ class RequestFileCollector extends Collector
         $this->request = $request;
     }
 
-    /**
-     * @return array<mixed>
-     */
     public function collect(): array
     {
         $files = $this->request->allFiles();
+
         array_walk_recursive($files, static function (&$file): void {
             $file = [
                 'name' => $file->getClientOriginalName(),

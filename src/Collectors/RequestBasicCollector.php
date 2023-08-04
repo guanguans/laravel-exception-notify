@@ -26,8 +26,6 @@ class RequestBasicCollector extends Collector
     /**
      * @psalm-suppress InvalidScalarArgument
      * @psalm-suppress InvalidArgument
-     *
-     * @return array{url: string, ip: null|string, method: string, action: mixed, duration: string}
      */
     public function collect(): array
     {

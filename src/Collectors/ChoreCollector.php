@@ -14,9 +14,6 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class ChoreCollector extends Collector
 {
-    /**
-     * @return array{time: string, memory: string}
-     */
     public function collect(): array
     {
         return [

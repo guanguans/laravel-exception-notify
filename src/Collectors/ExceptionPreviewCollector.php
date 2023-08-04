@@ -20,9 +20,6 @@ class ExceptionPreviewCollector extends Collector implements ExceptionAwareContr
 {
     use ExceptionAware;
 
-    /**
-     * @return array{class: class-string<\Throwable>|true, message: string, code: int|string, file: string, line: int, preview: array<mixed>}
-     */
     public function collect(): array
     {
         return exceptioncontext::getformattedcontext($this->exception);

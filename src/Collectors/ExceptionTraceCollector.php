@@ -20,9 +20,6 @@ class ExceptionTraceCollector extends Collector implements ExceptionAwareContrac
 {
     use ExceptionAware;
 
-    /**
-     * @return array<string>
-     */
     public function collect(): array
     {
         return collect(explode(PHP_EOL, $this->exception->getTraceAsString()))

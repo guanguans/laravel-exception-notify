@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 interface ChannelContract
 {
     /**
-     * @return mixed
+     * @return mixed|never-return|void
      */
     public function report(string $report);
 }

@@ -28,11 +28,9 @@ class RequestPostCollector extends Collector
     {
         return collect($this->request->post())
             ->transform(static function ($val, $key) {
-                Str::is([
-                    'password',
-                    '*password',
-                    'password*',
-                ], $key) and $val = '******';
+                if (Str::of($key)->is(['password', '*password', 'password*', '*password*'])) {
+                    $val = '******';
+                }
 
                 return $val;
             })
