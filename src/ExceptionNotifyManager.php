@@ -33,6 +33,7 @@ use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -89,7 +90,7 @@ class ExceptionNotifyManager extends Manager
 
             if (
                 ! $this->container->runningInConsole()
-                && 'sync' === config('exception-notify.queue_connection')
+                && 'sync' === config('exception-notify.queue.connection')
                 && method_exists($dispatch, 'afterResponse')
             ) {
                 $dispatch->afterResponse();
@@ -114,10 +115,8 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        foreach (config('exception-notify.except') as $type) {
-            if ($throwable instanceof $type) {
-                return true;
-            }
+        if (Arr::first(config('exception-notify.except'), static fn (string $type): bool => $throwable instanceof $type)) {
+            return true;
         }
 
         return ! $this
