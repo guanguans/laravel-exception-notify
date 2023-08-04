@@ -82,7 +82,7 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->toReports(
+            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->mapToReports(
                 (array) ($channels ?? $this->getDefaultDriver()),
                 $throwable
             )));

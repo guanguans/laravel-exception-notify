@@ -35,10 +35,7 @@ class FixPrettyJsonPipe
                 ->missingValue($missingValue)
                 ->fix($report);
 
-            return json_encode(
-                json_decode($fixedReport, true, 512, JSON_THROW_ON_ERROR),
-                JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-            );
+            return to_pretty_json(json_decode($fixedReport, true, 512, JSON_THROW_ON_ERROR));
         } catch (\Throwable $throwable) {
             return $report;
         }

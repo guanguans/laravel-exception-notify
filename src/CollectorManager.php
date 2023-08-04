@@ -54,27 +54,22 @@ class CollectorManager extends Fluent
         $this->attributes[$offset] = $value;
     }
 
-    public function toReports(array $channels, \Throwable $throwable): array
+    public function mapToReports(array $channels, \Throwable $throwable): array
     {
         return collect($channels)
-            ->mapWithKeys(fn (string $channel): array => [$channel => $this->toReport($channel, $throwable)])
+            ->mapWithKeys(fn (string $channel): array => [$channel => $this->mapToReport($channel, $throwable)])
             ->all();
     }
 
-    protected function toReport(string $channel, \Throwable $throwable): string
+    protected function mapToReport(string $channel, \Throwable $throwable): string
     {
-        $collectors = collect($this)
-            ->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
+        return (new Pipeline(app()))
+            ->send(collect($this)->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
                 return [$collector::name() => $collector->collect()];
-            });
-
-        return (new Pipeline(app()))
-            ->send($collectors)
+            }))
             ->through(config("exception-notify.channels.$channel.pipes", []))
-            ->then(fn (Collection $collectors): string => $collectors->toJson(
-                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-            ));
+            ->then(fn (Collection $collectors): string => to_pretty_json($collectors->jsonSerialize()));
     }
 }
