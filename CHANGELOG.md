@@ -8,6 +8,38 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.0.0-rc1"></a>
+## [3.0.0-rc1] - 2023-08-05
+### Docs
+- **_ide_helper:** Remove unused methods
+
+### Feat
+- **ExceptionNotifyManager:** add optional channels parameter to reportIf method
+- **JsonFixer:** Update fix method
+- **exception-notify:** Add ExceptionPreviewCollector
+
+### Fix
+- **ExceptionNotifyManager:** Fix queue connection config key
+- **collectors:** fix Illuminate\Container\Container import
+
+### Refactor
+- **DdChannel:** remove return type declaration
+- **SanitizerContract:** remove unused interface
+- **StringableMacro:** Remove beforeLast method
+- **collector:** rename toReports to mapToReports
+- **collector-manager:** refactor toReports method
+- **collectors:** update ApplicationCollector
+- **config:** Update exception-notify.php
+- **jobs:** optimize ReportExceptionJob
+- **pipes:** rename AppendKeywordCollectorsPipe to AddKeywordPipe
+- **pipes:** rename AppendContentPipe to AppendKeywordCollectorsPipe
+- **pipes:** use Stringable for handle return type
+- **pipes:** Extend AddKeywordPipe from AddValuePipe
+- **src:** Refactor ExceptionNotifyServiceProvider registerCollectorManager method
+- **src:** update ReportExceptionJob.php
+- **src:** remove unused code
+
+
 <a name="3.0.0-beta1"></a>
 ## [3.0.0-beta1] - 2023-08-02
 ### Docs
@@ -303,7 +335,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-beta1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc1...HEAD
+[3.0.0-rc1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-beta1...3.0.0-rc1
 [3.0.0-beta1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.16.0...3.0.0-beta1
 [v2.16.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.15.0...v2.16.0
 [v2.15.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.14.4...v2.15.0
