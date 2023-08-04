@@ -14,10 +14,10 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ToHtmlPipe
+class ToHtmlPipe extends SprintfPipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $tag = '<pre>%s</pre>'): string
+    public function handle(Collection $collectors, \Closure $next, string $format = '<pre>%s</pre>'): string
     {
-        return sprintf($tag, $next($collectors));
+        return parent::handle($collectors, $next, $format);
     }
 }

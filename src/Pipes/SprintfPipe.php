@@ -14,17 +14,10 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Illuminate\Support\Collection;
 
-class ToMarkdownPipe extends SprintfPipe
+class SprintfPipe
 {
-    public function handle(
-        Collection $collectors,
-        \Closure $next,
-        string $format = <<<'mark'
-            ```
-            %s
-            ```
-            mark
-    ): string {
-        return parent::handle($collectors, $next, $format);
+    public function handle(Collection $collectors, \Closure $next, string $format): string
+    {
+        return sprintf($format, $next($collectors));
     }
 }

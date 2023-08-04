@@ -16,8 +16,8 @@ use Illuminate\Support\Collection;
 
 class LimitLengthPipe
 {
-    public function handle(Collection $collectors, \Closure $next, int $length): string
+    public function handle(Collection $collectors, \Closure $next, int $length, float $percentage = 0.9): string
     {
-        return substr($next($collectors), 0, (int) ($length * 90 / 100));
+        return substr($next($collectors), 0, (int) ($length * $percentage));
     }
 }

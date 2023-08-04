@@ -27,11 +27,13 @@ class FixPrettyJsonPipe
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): string
     {
         try {
+            $report = $next($collectors);
+
             $fixedReport = $this
                 ->jsonFixer
                 ->silent(false)
                 ->missingValue($missingValue)
-                ->fix($report = $next($collectors));
+                ->fix($report);
 
             return json_encode(
                 json_decode($fixedReport, true, 512, JSON_THROW_ON_ERROR),

@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Log;
 class ReportExceptionJob implements ShouldQueue
 {
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
-    // use SerializesModels;
     use InteractsWithQueue;
     use Queueable;
+    use SerializesModels;
 
     protected array $reports;
 

@@ -12,30 +12,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Illuminate\Support\Collection;
 
-class AddKeywordPipe
+class AddKeywordPipe extends AddValuePipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $keyword, $key = 'keyword'): string
+    public function handle(Collection $collectors, \Closure $next, $value, $key = 'keyword', ?string $collectorName = null): string
     {
-        $collectorName = $collectors->has($choreName = ChoreCollector::name())
-            ? $choreName
-            : array_key_first($collectors->all());
-
-        $collectors = $collectors->transform(
-            static function (
-                array $collector,
-                string $name
-            ) use ($collectorName, $key, $keyword) {
-                if ($name === $collectorName) {
-                    $collector[$key] = $keyword;
-                }
-
-                return $collector;
-            }
-        );
-
-        return $next($collectors);
+        return parent::handle($collectors, $next, $value, $key, $collectorName);
     }
 }
