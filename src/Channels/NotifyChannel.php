@@ -12,10 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\Notify\Clients\Client;
 use Guanguans\Notify\Contracts\MessageInterface;
 
-abstract class NotifyChannel extends Channel
+abstract class NotifyChannel implements ChannelContract
 {
     protected Client $client;
 

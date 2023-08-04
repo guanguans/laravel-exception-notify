@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-class NullChannel extends Channel
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+
+class NullChannel implements ChannelContract
 {
     public function report(string $report): void
     {

@@ -67,7 +67,7 @@ class CollectorManager extends Fluent
             ->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
                 $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
-                return [$collector->name() => $collector->collect()];
+                return [$collector::name() => $collector->collect()];
             });
 
         return (new Pipeline(app()))

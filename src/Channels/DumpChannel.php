@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-class DumpChannel extends Channel
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+
+class DumpChannel implements ChannelContract
 {
     /**
      * @noinspection ForgottenDebugOutputInspection

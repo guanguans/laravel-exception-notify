@@ -12,9 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Illuminate\Support\Facades\Log;
 
-class LogChannel extends Channel
+class LogChannel implements ChannelContract
 {
     protected string $level;
 
