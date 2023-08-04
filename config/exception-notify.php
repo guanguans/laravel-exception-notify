@@ -42,11 +42,11 @@ return [
     ],
 
     /**
-     * The queue of exception notification report.
+     * The options of report exception job.
      */
-    'queue' => [
-        'connection' => env('EXCEPTION_NOTIFY_QUEUE_CONNECTION', config('queue.default', 'sync')),
-        'queue' => env('EXCEPTION_NOTIFY_QUEUE_QUEUE'),
+    'job' => [
+        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
+        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
 
     /**

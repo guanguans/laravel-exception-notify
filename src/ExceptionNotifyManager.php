@@ -90,7 +90,7 @@ class ExceptionNotifyManager extends Manager
 
             if (
                 ! $this->container->runningInConsole()
-                && 'sync' === config('exception-notify.queue.connection')
+                && 'sync' === config('exception-notify.job.connection')
                 && method_exists($dispatch, 'afterResponse')
             ) {
                 $dispatch->afterResponse();
