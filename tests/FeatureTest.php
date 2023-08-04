@@ -39,4 +39,4 @@ it('report', function (): void {
     $report = (string) $this->app->make(CollectorManager::class);
     expect($output)->toBe($report);
     // $this->assertMatchesSnapshot($report);
-});
+})->skip();

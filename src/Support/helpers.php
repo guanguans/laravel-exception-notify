@@ -10,7 +10,6 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
@@ -21,18 +20,21 @@ if (! function_exists('array_filter_filled')) {
     }
 }
 
-if (! function_exists('call')) {
+if (! function_exists('array_reduce_with_keys')) {
     /**
-     * Call the given Closure / class@method and inject its dependencies.
+     * @param null|mixed $carry
      *
-     * @param callable|string $callback
-     * @param array<string, mixed> $parameters
+     * @return null|mixed
+     *
+     * @codeCoverageIgnore
      */
-    function call($callback, array $parameters = [], ?string $defaultMethod = 'handle')
+    function array_reduce_with_keys(array $array, callable $callback, $carry = null)
     {
-        is_callable($callback) and $defaultMethod = null;
+        foreach ($array as $key => $value) {
+            $carry = $callback($carry, $value, $key);
+        }
 
-        return app()->call($callback, $parameters, $defaultMethod);
+        return $carry;
     }
 }
 
@@ -62,75 +64,23 @@ if (! function_exists('str')) {
     }
 }
 
-if (! function_exists('var_output')) {
+if (! function_exists('to_pretty_json')) {
     /**
-     * @noinspection DebugFunctionUsageInspection
-     *
-     * @param mixed $expression
-     *
-     * @return null|string|void
+     * @throws JsonException
      */
-    function var_output($expression, bool $return = false)
+    function to_pretty_json(array $score, int $options = 0, int $depth = 512): string
     {
-        $patterns = [
-            "/array \\(\n\\)/" => '[]',
-            "/array \\(\n\\s+\\)/" => '[]',
-            '/array \\(/' => '[',
-            '/^([ ]*)\\)(,?)$/m' => '$1]$2',
-            "/=>[ ]?\n[ ]+\\[/" => '=> [',
-            "/([ ]*)(\\'[^\\']+\\') => ([\\[\\'])/" => '$1$2 => $3',
-        ];
-
-        $export = var_export($expression, true);
-        $export = preg_replace(array_keys($patterns), array_values($patterns), $export);
-        if ($return) {
-            return $export;
-        }
-
-        echo $export;
+        return json_encode(
+            $score,
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR | $options,
+            $depth
+        );
     }
 }
 
-if (! function_exists('array_reduce_with_keys')) {
-    /**
-     * @param null|mixed $carry
-     *
-     * @return null|mixed
-     */
-    function array_reduce_with_keys(array $array, callable $callback, $carry = null)
+if (! function_exists('is_lumen')) {
+    function is_lumen(?Container $app = null): bool
     {
-        foreach ($array as $key => $value) {
-            $carry = $callback($carry, $value, $key);
-        }
-
-        return $carry;
-    }
-}
-
-if (! function_exists('exception_notify_report_if')) {
-    function exception_notify_report_if($condition, $exception, ...$channels): void
-    {
-        value($condition) and exception_notify_report($exception, ...$channels);
-    }
-}
-
-if (! function_exists('exception_notify_report')) {
-    function exception_notify_report($exception, ...$channels): void
-    {
-        $exception instanceof Throwable or $exception = new Exception($exception);
-
-        ExceptionNotify::onChannel(...$channels)->report($exception);
-    }
-}
-
-if (! function_exists('is_callable_with_at_sign')) {
-    /**
-     * Determine if the given string is in Class@method syntax.
-     *
-     * @param mixed $callback
-     */
-    function is_callable_with_at_sign($callback): bool
-    {
-        return is_string($callback) && str_contains($callback, '@');
+        return ($app ?? app()) instanceof LumenApplication;
     }
 }
