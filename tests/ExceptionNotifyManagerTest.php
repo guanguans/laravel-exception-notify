@@ -57,12 +57,12 @@ it('shouldnt report', function (): void {
 
     $this->app['config']->set('exception-notify.enabled', true);
     $this->app['config']->set('exception-notify.env', '*');
-    $this->app['config']->set('exception-notify.dont_report', [Exception::class]);
+    $this->app['config']->set('exception-notify.except', [Exception::class]);
     expect($this->exceptionNotifyManager->shouldntReport($e))->toBeTrue();
 
     $this->app['config']->set('exception-notify.enabled', true);
     $this->app['config']->set('exception-notify.env', '*');
-    $this->app['config']->set('exception-notify.dont_report', []);
+    $this->app['config']->set('exception-notify.except', []);
     expect($this->exceptionNotifyManager->shouldntReport($e))->toBeFalse();
     // expect($this->exceptionNotifyManager->shouldReport($e))->toBeTrue();
 });

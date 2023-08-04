@@ -25,24 +25,21 @@ return [
 
     /**
      * The list of environments that should be reported.
-     *
-     * ```
-     * ['production', 'local']
-     * ```
      */
-    'env' => ['*'],
+    'env' => [
+        // 'production',
+        // 'local',
+        // 'testing',
+        '*',
+    ],
 
     /**
      * The list of exception that should not be reported.
-     *
-     * ```
-     * [
-     *     HttpResponseException::class,
-     *     HttpException::class
-     * ]
-     * ```
      */
-    'dont_report' => [],
+    'except' => [
+        // Symfony\Component\HttpKernel\Exception\HttpException::class,
+        // Illuminate\Http\Exceptions\HttpResponseException::class,
+    ],
 
     /**
      * The queue of exception notification report.
@@ -95,66 +92,90 @@ return [
      * The list of channels.
      */
     'channels' => [
-        // Bark
+        /**
+         * Bark
+         *
+         * @see https://github.com/Finb/Bark
+         */
         'bark' => [
             'driver' => 'bark',
             'base_uri' => env('EXCEPTION_NOTIFY_BARK_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
             'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
                 TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
             ],
         ],
 
-        // Chanify
+        /**
+         * Chanify
+         *
+         * @see https://github.com/chanify/chanify-ios
+         */
         'chanify' => [
             'driver' => 'chanify',
             'base_uri' => env('EXCEPTION_NOTIFY_CHANIFY_BASE_URI'),
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
                 TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 1024),
             ],
         ],
 
-        // 钉钉群机器人
+        /**
+         * 钉钉群机器人
+         *
+         * @see https://developers.dingtalk.com/document/app/custom-robot-access
+         */
         'dingTalk' => [
             'driver' => 'dingTalk',
             'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 20000),
-                TryToFixReportPipe::class,
                 sprintf('%s:%s', AppendKeywordCollectorsPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 20000),
             ],
         ],
 
-        // Discord
+        /**
+         * Discord
+         *
+         * @see https://discord.com/developers/docs/resources/webhook#edit-webhook-message
+         */
         'discord' => [
             'driver' => 'discord',
             'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 2000),
                 TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 2000),
             ],
         ],
 
-        // 飞书群机器人
+        /**
+         * 飞书群机器人
+         *
+         * @see https://www.feishu.cn/hc/zh-CN/articles/360024984973
+         */
         'feiShu' => [
             'driver' => 'feiShu',
             'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipes' => [
+                sprintf('%s:%s', AppendKeywordCollectorsPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
                 TryToFixReportPipe::class,
                 sprintf('%s:%s', LimitLengthReportPipe::class, 30720),
-                sprintf('%s:%s', AppendKeywordCollectorsPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
             ],
         ],
 
-        // Log
+        /**
+         * Log
+         *
+         * @see Illuminate\Log\LogManager
+         */
         'log' => [
             'driver' => 'log',
             'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default', 'stack')),
@@ -162,8 +183,13 @@ return [
             'pipes' => [],
         ],
 
-        // 邮件
-        // 安装依赖 composer require symfony/mailer -vvv
+        /**
+         * 邮件
+         *
+         * 安装依赖 composer require symfony/mailer -v
+         *
+         * @see https://symfony.com/doc/current/mailer.html
+         */
         'mail' => [
             'driver' => 'mail',
             // smtp://53***11@qq.com:***password***@smtp.qq.com:465?verify_peer=0
@@ -175,7 +201,11 @@ return [
             ],
         ],
 
-        // Push Deer
+        /**
+         * Push Deer
+         *
+         * @see http://pushdeer.com
+         */
         'pushDeer' => [
             'driver' => 'pushDeer',
             'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
@@ -185,8 +215,13 @@ return [
             ],
         ],
 
-        // QQ Channel Bot
-        // 安装依赖 composer require textalk/websocket -vvv
+        /**
+         * QQ Channel Bot
+         *
+         * 安装依赖 composer require textalk/websocket -v
+         *
+         * @see https://bot.q.qq.com/wiki/develop/api/openapi/message/post_messages.html
+         */
         'qqChannelBot' => [
             'driver' => 'qqChannelBot',
             'appid' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_APPID'),
@@ -199,14 +234,22 @@ return [
             ],
         ],
 
-        // Server 酱
+        /**
+         * Server 酱
+         *
+         * @see https://sct.ftqq.com
+         */
         'serverChan' => [
             'driver' => 'serverChan',
             'token' => env('EXCEPTION_NOTIFY_SERVERCHAN_TOKEN'),
             'pipes' => [],
         ],
 
-        // Slack
+        /**
+         * Slack
+         *
+         * @see https://api.slack.com/messaging/webhooks
+         */
         'slack' => [
             'driver' => 'slack',
             'webhook_url' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK_URL'),
@@ -216,28 +259,40 @@ return [
             ],
         ],
 
-        // Telegram
+        /**
+         * Telegram
+         *
+         * @see https://core.telegram.org/bots/api#sendmessage
+         */
         'telegram' => [
             'driver' => 'telegram',
             'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
             'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 4096),
                 TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 4096),
             ],
         ],
 
-        // 企业微信群机器人
+        /**
+         * 企业微信群机器人
+         *
+         * @see https://open.work.weixin.qq.com/api/doc/90000/90136/91770
+         */
         'weWork' => [
             'driver' => 'weWork',
             'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
             'pipes' => [
-                sprintf('%s:%s', LimitLengthReportPipe::class, 5120),
                 TryToFixReportPipe::class,
+                sprintf('%s:%s', LimitLengthReportPipe::class, 5120),
             ],
         ],
 
-        // 息知
+        /**
+         * 息知
+         *
+         * @see https://xz.qqoq.net/#/index
+         */
         'xiZhi' => [
             'driver' => 'xiZhi',
             'type' => env('EXCEPTION_NOTIFY_XIZHI_TYPE', 'single'), // [single, channel]

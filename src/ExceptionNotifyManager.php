@@ -114,7 +114,7 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        foreach (config('exception-notify.dont_report') as $type) {
+        foreach (config('exception-notify.except') as $type) {
             if ($throwable instanceof $type) {
                 return true;
             }
