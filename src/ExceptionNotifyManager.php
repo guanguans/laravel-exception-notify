@@ -130,6 +130,9 @@ class ExceptionNotifyManager extends Manager
             );
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function shouldReport(\Throwable $throwable): bool
     {
         return ! $this->shouldntReport($throwable);

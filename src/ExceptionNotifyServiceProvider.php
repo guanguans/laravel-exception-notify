@@ -64,12 +64,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         Stringable::mixin($this->app->make(StringableMacro::class));
     }
 
-    /**
-     * Set up the config.
-     *
-     * @psalm-suppress UndefinedClass
-     * @psalm-suppress UndefinedInterfaceMethod
-     */
     protected function setupConfig(): void
     {
         /** @noinspection RealpathInStreamContextInspection */
