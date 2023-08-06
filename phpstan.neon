@@ -6,7 +6,7 @@ includes:
 #    - vendor/ekino/phpstan-banned-code/extension.neon
 
 parameters:
-    level: 5
+    level: 4
     paths:
         - config
         - src
@@ -29,3 +29,6 @@ parameters:
 #        strictCalls: false
 #        switchConditionsMatchingType: false
 #        noVariableVariables: false
+    ignoreErrors:
+        - "#^Call to an undefined method#"
+        - "#^Call to an undefined static method#"

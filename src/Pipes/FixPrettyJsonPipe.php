@@ -27,9 +27,9 @@ class FixPrettyJsonPipe
 
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): Stringable
     {
-        try {
-            $report = $next($collectors);
+        $report = $next($collectors);
 
+        try {
             $fixedReport = $this
                 ->jsonFixer
                 ->silent(false)

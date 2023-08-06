@@ -1,36 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: "#^Property Guanguans\\\\LaravelExceptionNotify\\\\Collectors\\\\ApplicationCollector\\:\\:\\$container \\(Illuminate\\\\Foundation\\\\Application\\|Laravel\\\\Lumen\\\\Application\\) does not accept Illuminate\\\\Container\\\\Container\\.$#"
 			count: 1
-			path: src/Channels/Channel.php
+			path: src/Collectors/ApplicationCollector.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<string,array\\>\\:\\:mapWithKeys\\(\\) expects callable\\(array, \"\\\\000\\*\\\\000attributes\"\\|\"\\\\000\\*\\\\000attributes\"\\)\\: array, Closure\\(Guanguans\\\\LaravelExceptionNotify\\\\Contracts\\\\CollectorContract\\)\\: non\\-empty\\-array\\<string, array\\> given\\.$#"
+			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Macros\\\\CollectionMacro\\:\\:\\$items\\.$#"
 			count: 1
-			path: src/CollectorManager.php
+			path: src/Macros/CollectionMacro.php
 
 		-
-			message: "#^Call to method configure\\(\\) on an unknown class Laravel\\\\Lumen\\\\Application\\.$#"
-			count: 1
-			path: src/ExceptionNotifyServiceProvider.php
-
-		-
-			message: "#^Class Laravel\\\\Lumen\\\\Application not found\\.$#"
-			count: 1
-			path: src/ExceptionNotifyServiceProvider.php
+			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Macros\\\\StringableMacro\\:\\:\\$value\\.$#"
+			count: 4
+			path: src/Macros/StringableMacro.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Jobs/ReportExceptionJob.php
-
-		-
-			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Support\\\\Macros\\\\CollectionMacro\\:\\:\\$items\\.$#"
-			count: 1
-			path: src/Support/Macros/CollectionMacro.php
-
-		-
-			message: "#^Function var_output\\(\\) never returns void so it can be removed from the return type\\.$#"
-			count: 1
-			path: src/Support/helpers.php
+			count: 3
+			path: src/Macros/StringableMacro.php
