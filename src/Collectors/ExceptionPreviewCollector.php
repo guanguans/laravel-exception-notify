@@ -22,6 +22,6 @@ class ExceptionPreviewCollector extends Collector implements ExceptionAwareContr
 
     public function collect(): array
     {
-        return exceptioncontext::getformattedcontext($this->exception);
+        return ExceptionContext::getFormattedContext($this->exception);
     }
 }
