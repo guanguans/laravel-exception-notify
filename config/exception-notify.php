@@ -104,7 +104,7 @@ return [
             'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
             'pipes' => [
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
 
@@ -119,7 +119,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             'pipes' => [
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
 
@@ -134,9 +134,9 @@ return [
             'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
             'pipes' => [
-                sprintf('%s:%s', AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 20000),
+                hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
         ],
 
@@ -150,7 +150,7 @@ return [
             'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
             'pipes' => [
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 2000),
+                hydrate_pipe(LimitLengthPipe::class, 2000),
             ],
         ],
 
@@ -165,9 +165,9 @@ return [
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
             'pipes' => [
-                sprintf('%s:%s', AddKeywordPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
+                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 30720),
+                hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
 
@@ -270,7 +270,7 @@ return [
             'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
             'pipes' => [
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 4096),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -284,7 +284,7 @@ return [
             'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
             'pipes' => [
                 FixPrettyJsonPipe::class,
-                sprintf('%s:%s', LimitLengthPipe::class, 5120),
+                hydrate_pipe(LimitLengthPipe::class, 5120),
             ],
         ],
 

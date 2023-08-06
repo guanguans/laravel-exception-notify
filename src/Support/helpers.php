@@ -88,3 +88,13 @@ if (! function_exists('is_lumen')) {
         return ($app ?? app()) instanceof LumenApplication;
     }
 }
+
+if (! function_exists('hydrate_pipe')) {
+    /**
+     * @param class-string $pipe
+     */
+    function hydrate_pipe(string $pipe, ...$parameters): string
+    {
+        return sprintf('%s:%s', $pipe, implode(',', $parameters));
+    }
+}
