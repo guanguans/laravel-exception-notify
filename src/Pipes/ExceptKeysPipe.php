@@ -16,12 +16,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
-class RemoveKeysPipe
+class ExceptKeysPipe
 {
     /**
      * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
-    public function handle(Collection $collectors, \Closure $next, string $collectorName, string $keys): Stringable
+    public function handle(Collection $collectors, \Closure $next, string $keys, string $collectorName): Stringable
     {
         $keys = explode('|', $keys);
 
