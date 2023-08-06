@@ -20,7 +20,7 @@ abstract class Collector implements CollectorContract
     public static function name(): string
     {
         return (string) Str::of(class_basename(static::class))
-            ->beforeLast(class_basename(__CLASS__))
+            ->beforeLast(class_basename(self::class))
             ->snake(' ')
             ->ucwords();
     }

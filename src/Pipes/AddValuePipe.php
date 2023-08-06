@@ -32,7 +32,7 @@ class AddValuePipe
             static function (
                 array $collector,
                 string $name
-            ) use ($collectorName, $key, $value) {
+            ) use ($collectorName, $key, $value): array {
                 if ($name === $collectorName) {
                     return Arr::add($collector, $key, $value);
                 }

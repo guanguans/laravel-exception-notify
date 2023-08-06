@@ -27,12 +27,12 @@ class RequestPostCollector extends Collector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->transform(static function ($val, $key) {
+            ->transform(static function ($value, $key) {
                 if (Str::of($key)->is(['password', '*password', 'password*', '*password*'])) {
-                    $val = '******';
+                    return '******';
                 }
 
-                return $val;
+                return $value;
             })
             ->all();
     }

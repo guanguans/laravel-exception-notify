@@ -29,7 +29,7 @@ class ExceptKeysPipe
             static function (
                 array $collector,
                 string $name
-            ) use ($collectorName, $keys) {
+            ) use ($collectorName, $keys): array {
                 if ($name === $collectorName) {
                     return Arr::except($collector, $keys);
                 }

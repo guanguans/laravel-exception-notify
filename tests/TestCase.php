@@ -52,6 +52,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         if ($container = \Mockery::getContainer()) {
             $this->addToAssertionCount($container->Mockery_getExpectationCount());
         }
+
         \Mockery::close();
     }
 

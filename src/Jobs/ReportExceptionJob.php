@@ -64,7 +64,7 @@ class ReportExceptionJob implements ShouldQueue
             }
         }
 
-        if ($this->lastThrowable) {
+        if ($this->lastThrowable instanceof \Throwable) {
             throw $this->lastThrowable;
         }
     }

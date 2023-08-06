@@ -71,6 +71,6 @@ class CollectorManager extends Fluent
                 return [$collector::name() => $collector->collect()];
             }))
             ->through(config("exception-notify.channels.$channel.pipes", []))
-            ->then(fn (Collection $collectors): Stringable => str(to_pretty_json($collectors->jsonSerialize())));
+            ->then(static fn (Collection $collectors): Stringable => str(to_pretty_json($collectors->jsonSerialize())));
     }
 }

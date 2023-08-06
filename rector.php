@@ -42,7 +42,7 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->importNames(true, false);
+    $rectorConfig->importNames(false, false);
     $rectorConfig->importShortClasses(false);
     // $rectorConfig->disableParallel();
     $rectorConfig->parallel(300);
@@ -94,6 +94,7 @@ return static function (RectorConfig $rectorConfig): void {
         // InlineIfToExplicitIfRector::class,
         LogicalToBooleanRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
+        RenameParamToMatchTypeRector::class,
 
         DisallowedEmptyRuleFixerRector::class => [
             // __DIR__.'/src/Support/QueryAnalyzer.php',
@@ -106,9 +107,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         RenameForeachValueVariableToMatchExprVariableRector::class => [
             // __DIR__.'/src/OutputManager.php',
-        ],
-        RenameParamToMatchTypeRector::class => [
-            // __DIR__.'/src/Support/helpers.php',
         ],
         StaticClosureRector::class => [
             __DIR__.'/tests',

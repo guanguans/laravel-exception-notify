@@ -18,7 +18,7 @@ use Laravel\Lumen\Application as LumenApplication;
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
-        return array_filter($array, static fn ($item) => filled($item));
+        return array_filter($array, static fn ($item): bool => filled($item));
     }
 }
 
