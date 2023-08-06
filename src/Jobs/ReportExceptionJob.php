@@ -31,6 +31,8 @@ class ReportExceptionJob implements ShouldQueue
 
     protected array $reports;
 
+    private ?\Throwable $lastThrowable = null;
+
     public function __construct(array $reports)
     {
         $this->reports = $reports;
@@ -43,17 +45,27 @@ class ReportExceptionJob implements ShouldQueue
     }
 
     /**
+     * @throws \Throwable
+     *
      * @noinspection PhpUnreachableStatementInspection
      */
     public function handle(): void
     {
-        foreach ($this->reports as $channelName => $report) {
-            /** @var ChannelContract $channel */
-            $channel = ExceptionNotify::driver($channelName);
+        foreach ($this->reports as $name => $report) {
+            try {
+                /** @var ChannelContract $channel */
+                $channel = ExceptionNotify::driver($name);
 
-            event(new ReportingEvent($channel, $report));
-            $result = $channel->report($report);
-            event(new ReportedEvent($channel, $result));
+                event(new ReportingEvent($channel, $report));
+                $result = $channel->report($report);
+                event(new ReportedEvent($channel, $result));
+            } catch (\Throwable $throwable) {
+                $this->lastThrowable = $throwable;
+            }
+        }
+
+        if ($this->lastThrowable) {
+            throw $this->lastThrowable;
         }
     }
 
