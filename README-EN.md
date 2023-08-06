@@ -27,8 +27,8 @@
 
 ## Requirement
 
-* PHP >= 7.2
-* laravel >= 5.5
+* PHP >= 7.4
+* laravel >= 7.0
 
 ## Installation
 
@@ -90,10 +90,9 @@ EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82
 ```php
 public function report(Exception $e)
 {
-    // 默认通道
-    \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
-    // 指定通道
-    \ExceptionNotifier::onChannel('dingTalk', 'mail')->reportIf($this->shouldReport($e), $e);
+    \ExceptionNotifier::reportIf($this->shouldReport($e), $e); // 默认通道
+    \ExceptionNotifier::reportIf($this->shouldReport($e), $e, 'dingTalk'); // 指定通道
+    \ExceptionNotifier::reportIf($this->shouldReport($e), $e, ['dingTalk', 'mail']); // 指定多个通道
 
     parent::report($e);
 }
