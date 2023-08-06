@@ -28,7 +28,6 @@ class CollectorManager extends Fluent
      * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      *
      * @noinspection MagicMethodsValidityInspection
-     * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      * @noinspection MissingParentCallInspection
      */
@@ -40,19 +39,16 @@ class CollectorManager extends Fluent
     }
 
     /**
-     * @noinspection PhpMissingParentCallCommonInspection
-     * @noinspection MissingParentCallInspection
-     *
      * @param array-key $offset
      * @param mixed $value
      */
     public function offsetSet($offset, $value): void
     {
         if (! $value instanceof CollectorContract) {
-            throw new InvalidArgumentException(sprintf('Collector must be instance of %s', CollectorContract::class));
+            throw new InvalidArgumentException(sprintf('The value must be an instance of %s', CollectorContract::class));
         }
 
-        $this->attributes[$offset] = $value;
+        parent::offsetSet($offset, $value);
     }
 
     public function mapToReports(array $channels, \Throwable $throwable): array
