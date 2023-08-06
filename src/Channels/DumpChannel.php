@@ -17,11 +17,13 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 class DumpChannel implements ChannelContract
 {
     /**
+     * @return mixed
+     *
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
      */
-    public function report(string $report): void
+    public function report(string $report)
     {
-        dump($report);
+        return dump($report);
     }
 }

@@ -17,12 +17,12 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 class DdChannel implements ChannelContract
 {
     /**
+     * @return never-return
+     *
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
-     *
-     * @return never-return
      */
-    public function report(string $report)
+    public function report(string $report): void
     {
         dd($report);
     }

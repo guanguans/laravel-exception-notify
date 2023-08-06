@@ -21,7 +21,7 @@ class LogChannel implements ChannelContract
 
     protected string $channel;
 
-    public function __construct(string $channel, string $level)
+    public function __construct(string $channel = 'daily', string $level = 'error')
     {
         $this->channel = $channel;
         $this->level = $level;
@@ -29,6 +29,6 @@ class LogChannel implements ChannelContract
 
     public function report(string $report): void
     {
-        Log::channel($this->channel)->{$this->level}($report);
+        Log::channel($this->channel)->log($this->level, $report);
     }
 }

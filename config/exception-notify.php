@@ -178,7 +178,7 @@ return [
          */
         'log' => [
             'driver' => 'log',
-            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', config('logging.default', 'stack')),
+            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', 'daily'),
             'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
             'pipes' => [],
         ],

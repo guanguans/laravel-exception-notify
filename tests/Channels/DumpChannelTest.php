@@ -19,5 +19,5 @@ it('report', function (): void {
 
     // $this->expectOutputString('report');
     // $channel->report('report');
-    expect($channel->report('report'))->toBeNull();
+    expect($channel->report('report'))->toBe('report');
 });
