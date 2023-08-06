@@ -76,6 +76,7 @@ return [
         Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
