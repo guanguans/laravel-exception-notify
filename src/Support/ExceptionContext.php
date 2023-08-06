@@ -26,12 +26,12 @@ class ExceptionContext
     public static function getFormattedContext(\Throwable $throwable): array
     {
         return collect(static::get($throwable))
-            ->tap(static function (Collection $collection) use ($throwable, &$exceptionLine, &$markedExceptionLine, &$maxLineLen): void {
+            ->tap(static function (Collection $collection) use (&$exceptionLine, $throwable, &$markedExceptionLine, &$maxLineLen): void {
                 $exceptionLine = $throwable->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
                 $maxLineLen = max(mb_strlen((string) array_key_last($collection->toArray())), mb_strlen($markedExceptionLine));
             })
-            ->mapWithKeys(static function ($code, $line) use (&$exceptionLine, &$markedExceptionLine, &$maxLineLen): array {
+            ->mapWithKeys(static function ($code, $line) use ($exceptionLine, $markedExceptionLine, $maxLineLen): array {
                 $line === $exceptionLine and $line = $markedExceptionLine;
                 $line = sprintf("%{$maxLineLen}s", $line);
 

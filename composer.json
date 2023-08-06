@@ -158,7 +158,8 @@
             "@md-lint",
             "@lint",
             "@style-lint",
-            "@test"
+            "@test",
+            "@psalm"
         ],
         "composer-bin-all-update": "@composer bin all update --ansi -v",
         "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",

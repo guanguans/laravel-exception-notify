@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.22.0@fc2c6ab4d5fa5d644d8617089f012f3bb84b8703">
+<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d">
   <file src="src/Collectors/RequestHeaderCollector.php">
-    <UndefinedMagicMethod occurrences="1">
+    <UndefinedMagicMethod>
       <code>headers</code>
     </UndefinedMagicMethod>
   </file>
+  <file src="src/ExceptionNotifyManager.php">
+    <UndefinedInterfaceMethod>
+      <code>environment</code>
+      <code>runningInConsole</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Macros/StrMacro.php">
+    <InvalidReturnType>
+      <code>string</code>
+    </InvalidReturnType>
+  </file>
   <file src="src/Support/ExceptionContext.php">
-    <UnusedVariable occurrences="1">
+    <UnusedVariable>
       <code>$exceptionLine</code>
     </UnusedVariable>
-  </file>
-  <file src="src/Support/Macros/CollectionMacro.php">
-    <InaccessibleProperty occurrences="1">
-      <code>$this-&gt;items</code>
-    </InaccessibleProperty>
-  </file>
-  <file src="src/Support/Traits/CreateStatic.php">
-    <TooManyArguments occurrences="1">
-      <code>new static(...$parameters)</code>
-    </TooManyArguments>
+    <InvalidArrayOffset>
+      <code><![CDATA[[$line => $code]]]></code>
+    </InvalidArrayOffset>
   </file>
 </files>

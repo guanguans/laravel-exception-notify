@@ -58,6 +58,10 @@ class CollectorManager extends Fluent
             ->all();
     }
 
+    /**
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
+     */
     protected function mapToReport(string $channel, \Throwable $throwable): string
     {
         return (string) (new Pipeline(app()))

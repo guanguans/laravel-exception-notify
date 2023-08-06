@@ -27,6 +27,9 @@ class StrMacro
         return static fn ($string): string => ucwords($string);
     }
 
+    /**
+     * @psalm-suppress InvalidReturnStatement
+     */
     public static function squish(): callable
     {
         return static fn ($value): string => preg_replace(
