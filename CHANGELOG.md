@@ -8,6 +8,32 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.0.0-rc2"></a>
+## [3.0.0-rc2] - 2023-08-06
+### Docs
+- **readme:** update PHP and Laravel requirements
+
+### Feat
+- **Jobs:** Improve exception reporting
+- **Pipes:** Add RemoveKeysPipe
+- **collectors:** Add RequestRawFileCollector
+- **pipes:** add OnlyKeysPipe class
+
+### Fix
+- **channels:** Update LogChannel constructor
+- **collector:** fix Collector::name method
+- **collectors:** Rename ExceptionPreviewCollector to ExceptionContextCollector
+- **psalm:** fix undefined interface method in ExceptionNotifyManager
+- **src:** Add hydrate_pipe helper function to helpers.php
+
+### Refactor
+- **collectors:** Update ExceptionPreviewCollector and ExceptionTraceCollector
+- **config:** update exception-notify.php
+- **exceptions:** remove BadMethodCallException class
+- **pipes:** update AddValuePipe
+- **src:** remove unused code
+
+
 <a name="3.0.0-rc1"></a>
 ## [3.0.0-rc1] - 2023-08-05
 ### Docs
@@ -335,7 +361,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc2...HEAD
+[3.0.0-rc2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc1...3.0.0-rc2
 [3.0.0-rc1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-beta1...3.0.0-rc1
 [3.0.0-beta1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.16.0...3.0.0-beta1
 [v2.16.0]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.15.0...v2.16.0
