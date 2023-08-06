@@ -70,7 +70,7 @@ return [
         Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ExceptionPreviewCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,

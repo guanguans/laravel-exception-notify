@@ -16,7 +16,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
-class ExceptionPreviewCollector extends Collector implements ExceptionAwareContract
+class ExceptionContextCollector extends Collector implements ExceptionAwareContract
 {
     use ExceptionAware;
 
