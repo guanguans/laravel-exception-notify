@@ -13,11 +13,12 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\CollectorManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 
-beforeEach(function (): void {
-    $this->collectorManager = $this->app->make(CollectorManager::class);
-});
+it('will throw `InvalidArgumentException`', function (): void {
+    /** @noinspection PhpParamsInspection */
+    new CollectorManager(['foo']);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
-it('offset set', function (): void {
-    $this->expectException(InvalidArgumentException::class);
-    $this->collectorManager->offsetSet('key', 'value');
-});
+it('can map to reports', function (): void {
+    expect(new CollectorManager([]))
+        ->mapToReports(['null', 'log'], new Exception())->toBeArray();
+})->group(__DIR__, __FILE__);

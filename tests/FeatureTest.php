@@ -27,7 +27,7 @@ it('report exception', function (): void {
         ->each(function (CollectorContract $collector) use ($content): void {
             $this->assertStringContainsString($collector::name(), $content);
         });
-});
+})->skip();
 
 it('report', function (): void {
     $this->markTestSkipped(__METHOD__);

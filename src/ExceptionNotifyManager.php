@@ -100,12 +100,17 @@ class ExceptionNotifyManager extends Manager
         }
     }
 
+    public function getDefaultDriver()
+    {
+        return config('exception-notify.default');
+    }
+
     /**
      * @throws BindingResolutionException
      *
      * @noinspection MultipleReturnStatementsInspection
      */
-    public function shouldntReport(\Throwable $throwable): bool
+    protected function shouldntReport(\Throwable $throwable): bool
     {
         if (! config('exception-notify.enabled')) {
             return true;
@@ -128,19 +133,6 @@ class ExceptionNotifyManager extends Manager
                 static fn (): bool => true,
                 config('exception-notify.rate_limit.decay_seconds')
             );
-    }
-
-    /**
-     * @throws BindingResolutionException
-     */
-    public function shouldReport(\Throwable $throwable): bool
-    {
-        return ! $this->shouldntReport($throwable);
-    }
-
-    public function getDefaultDriver()
-    {
-        return config('exception-notify.default');
     }
 
     protected function createBarkDriver(): BarkChannel
