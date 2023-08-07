@@ -12,25 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Tests;
 
-use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
 use phpmock\phpunit\PHPMock;
-use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 /**
@@ -40,7 +25,6 @@ use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    use MatchesSnapshots;
     use PHPMock;
     use VarDumperTestTrait;
 
@@ -68,45 +52,16 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment($app): void
     {
-        $app['config']->set('exception-notify', require __DIR__.'/../config/exception-notify.php');
-        $app['config']->set('exception-notify.enabled', true);
-        $app['config']->set('exception-notify.channels.bark.token', 'GQpdjXqYuCrQDWpW');
-        $app['config']->set('exception-notify.channels.log.channel', 'single');
+        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
         $app['config']->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
         $app['config']->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
         $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
-        $app['config']->set('exception-notify.rate_limiter.max_attempts', 1000);
-        $app['config']->set('exception-notify.collector', [
-            ApplicationCollector::class,
-            ChoreCollector::class,
-            PhpInfoCollector::class,
-            ExceptionBasicCollector::class,
-            ExceptionTraceCollector::class,
-            RequestBasicCollector::class,
-            RequestHeaderCollector::class,
-            RequestQueryCollector::class,
-            RequestPostCollector::class,
-            RequestFileCollector::class,
-            RequestMiddlewareCollector::class,
-            RequestServerCollector::class,
-            RequestCookieCollector::class,
-            RequestSessionCollector::class,
-        ]);
-
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
-
-        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
     }
 
     protected function defineRoutes($router): void
     {
         Route::any('report-exception', static fn () => tap(response('report-exception'), function (): void {
-            ExceptionNotify::report(new \Exception('What happened?'), ['dump', 'log', 'null']);
+            ExceptionNotify::report(new \Exception('What happened?'), 'dump');
         }));
     }
 }
