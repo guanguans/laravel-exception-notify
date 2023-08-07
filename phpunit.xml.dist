@@ -20,12 +20,6 @@
       <directory suffix=".php">src/</directory>
     </include>
     <exclude>
-      <directory>src/Contracts/</directory>
-      <directory>src/Exceptions/</directory>
-      <directory>src/Events/</directory>
-      <directory>src/Facades/</directory>
-      <directory>src/Listeners/</directory>
-      <directory>src/Pipelines/</directory>
       <directory>src/Support/</directory>
       <file>src/Channels/DdChannel.php</file>
       <file>src/ExceptionNotifyServiceProvider.php</file>
