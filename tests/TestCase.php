@@ -29,7 +29,9 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Route;
+use phpmock\phpunit\PHPMock;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 /**
  * @internal
@@ -39,11 +41,12 @@ use Spatie\Snapshots\MatchesSnapshots;
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     use MatchesSnapshots;
+    use PHPMock;
+    use VarDumperTestTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->setUpApplicationRoutes();
     }
 
     protected function tearDown(): void
@@ -63,7 +66,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
-    protected function getEnvironmentSetUp($app): void
+    protected function defineEnvironment($app): void
     {
         $app['config']->set('exception-notify', require __DIR__.'/../config/exception-notify.php');
         $app['config']->set('exception-notify.enabled', true);
@@ -100,7 +103,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
     }
 
-    protected function setUpApplicationRoutes(): void
+    protected function defineRoutes($router): void
     {
         Route::get('/report-exception', static function (): string {
             ExceptionNotify::report(new \Exception('What happened?'), ['dump', 'log']);
