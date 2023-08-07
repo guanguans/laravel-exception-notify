@@ -52,10 +52,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment($app): void
     {
-        $app['config']->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
-        $app['config']->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
-        $app['config']->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
-        $app['config']->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
+        config()->set('app.key', 'base64:6Cu/ozj4gPtIjmXjr8EdVnGFNsdRqZfHfVjQkmTlg4Y=');
+        config()->set('exception-notify.job.queue', 'exception-notify');
+        config()->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
+        config()->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
+        config()->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
     }
 
     protected function defineRoutes($router): void
