@@ -10,14 +10,10 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
-it('report', function (): void {
-    $channel = $this->app->make(ExceptionNotifyManager::class)->driver('dump');
-    expect($channel)->toBeInstanceOf(DumpChannel::class);
-
-    // $this->expectOutputString('report');
-    // $channel->report('report');
-    expect($channel->report('report'))->toBe('report');
-});
+it('can report', function (): void {
+    expect($this->app->make(ExceptionNotifyManager::class)->driver('dump'))
+        ->report('report')
+        ->toBe('report');
+})->group(__DIR__, __FILE__);

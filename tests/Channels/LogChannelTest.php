@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
 it('can report', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('dd'))
+    expect($this->app->make(ExceptionNotifyManager::class)->driver('log'))
         ->report('report')
         ->toBeNull();
-})->group(__DIR__, __FILE__)->skip();
+})->group(__DIR__, __FILE__);
