@@ -105,10 +105,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineRoutes($router): void
     {
-        Route::get('/report-exception', static function (): string {
-            ExceptionNotify::report(new \Exception('What happened?'), ['dump', 'log']);
-
-            return 'This is an exception report test page.';
-        });
+        Route::any('report-exception', static fn () => tap(response('report-exception'), function (): void {
+            ExceptionNotify::report(new \Exception('What happened?'), ['dump', 'log', 'null']);
+        }));
     }
 }
