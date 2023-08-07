@@ -16,16 +16,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 /**
- * This is file is modified from the laravel/telescope.
+ * @see https://github.com/laravel/telescope/blob/4.x/src/ExceptionContext.php
  */
 class ExceptionContext
 {
-    /**
-     * Get the formatted exception code context for the given exception.
-     */
-    public static function getFormattedContext(\Throwable $throwable): array
+    public static function get(\Throwable $throwable): array
     {
-        return collect(static::get($throwable))
+        return collect(static::getOriginal($throwable))
             ->tap(static function (Collection $collection) use (&$exceptionLine, $throwable, &$markedExceptionLine, &$maxLineLen): void {
                 $exceptionLine = $throwable->getLine();
                 $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
@@ -40,32 +37,24 @@ class ExceptionContext
             ->all();
     }
 
-    /**
-     * Get the exception code context for the given exception.
-     */
-    public static function get(\Throwable $throwable): array
+    public static function getOriginal(\Throwable $throwable): array
     {
-        return static::getEvalContext($throwable) ?: static::getFileContext($throwable);
+        return static::getEval($throwable) ?: static::getFile($throwable);
     }
 
     /**
-     * Get the exception code context when eval() failed.
-     *
      * @return null|array<int, string>|void
      */
-    protected static function getEvalContext(\Throwable $throwable)
+    protected static function getEval(\Throwable $throwable)
     {
         if (Str::contains($throwable->getFile(), "eval()'d code")) {
             return [$throwable->getLine() => "eval()'d code"];
         }
     }
 
-    /**
-     * Get the exception code context from a file.
-     */
-    protected static function getFileContext(\Throwable $throwable): array
+    protected static function getFile(\Throwable $throwable): array
     {
-        return collect(explode("\n", file_get_contents($throwable->getFile())))
+        return collect(explode(PHP_EOL, file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
             ->mapWithKeys(static fn ($value, $key): array => [$key + 1 => $value])
             ->all();
