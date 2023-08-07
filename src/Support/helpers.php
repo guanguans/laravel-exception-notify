@@ -45,6 +45,8 @@ if (! function_exists('str')) {
      * @param mixed $string
      *
      * @return Stringable|\Stringable
+     *
+     * @codeCoverageIgnore
      */
     function str($string = null)
     {
@@ -95,6 +97,6 @@ if (! function_exists('hydrate_pipe')) {
      */
     function hydrate_pipe(string $pipe, ...$parameters): string
     {
-        return sprintf('%s:%s', $pipe, implode(',', $parameters));
+        return empty($parameters) ? $pipe : sprintf('%s:%s', $pipe, implode(',', $parameters));
     }
 }
