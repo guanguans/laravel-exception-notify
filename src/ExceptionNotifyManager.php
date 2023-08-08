@@ -126,12 +126,28 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        return ! app(RateLimiter::class)->attempt(
-            md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
+        return ! $this->attempt(
+            md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getTraceAsString()),
             config('exception-notify.rate_limit.max_attempts'),
             static fn (): bool => true,
             config('exception-notify.rate_limit.decay_seconds')
         );
+    }
+
+    /**
+     * Attempts to execute a callback if it's not limited.
+     *
+     * @return bool|mixed
+     */
+    protected function attempt(string $key, int $maxAttempts, \Closure $callback, int $decaySeconds = 60)
+    {
+        if (app(RateLimiter::class)->tooManyAttempts($key, $maxAttempts)) {
+            return false;
+        }
+
+        return tap($callback() ?: true, function () use ($key, $decaySeconds): void {
+            app(RateLimiter::class)->hit($key, $decaySeconds);
+        });
     }
 
     protected function createBarkDriver(): BarkChannel
