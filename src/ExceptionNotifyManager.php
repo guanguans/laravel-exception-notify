@@ -83,10 +83,9 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->mapToReports(
-                (array) ($channels ?? config('exception-notify.defaults')),
-                $throwable
-            )));
+            $dispatch = dispatch(new ReportExceptionJob(
+                app(CollectorManager::class)->mapToReports($this->getChannels($channels), $throwable)
+            ));
 
             if (
                 ! $this->container->runningInConsole()
@@ -105,6 +104,19 @@ class ExceptionNotifyManager extends Manager
     public function getDefaultDriver()
     {
         return Arr::first(config('exception-notify.defaults'));
+    }
+
+    /**
+     * @param array|string $channels
+     */
+    protected function getChannels($channels): array
+    {
+        $channels ??= config('exception-notify.defaults');
+        if (\is_string($channels)) {
+            $channels = explode(',', $channels);
+        }
+
+        return (array) $channels;
     }
 
     /**

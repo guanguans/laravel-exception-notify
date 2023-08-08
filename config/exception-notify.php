@@ -87,7 +87,7 @@ return [
     /**
      * The default reported channels.
      */
-    'defaults' => [
+    'defaults' => env('EXCEPTION_NOTIFY_DEFAULTS', [
         // 'bark',
         // 'chanify',
         // 'dingTalk',
@@ -104,7 +104,7 @@ return [
         // 'telegram',
         // 'weWork',
         // 'xiZhi',
-    ],
+    ]),
 
     /**
      * The list of channels.
