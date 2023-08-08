@@ -84,7 +84,7 @@ class ExceptionNotifyManager extends Manager
             }
 
             $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->mapToReports(
-                (array) ($channels ?? $this->getDefaultDriver()),
+                (array) ($channels ?? config('exception-notify.defaults')),
                 $throwable
             )));
 
@@ -104,7 +104,7 @@ class ExceptionNotifyManager extends Manager
 
     public function getDefaultDriver()
     {
-        return config('exception-notify.default');
+        return Arr::first(config('exception-notify.defaults'));
     }
 
     /**

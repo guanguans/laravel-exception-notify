@@ -85,9 +85,26 @@ return [
     ],
 
     /**
-     * The default channel.
+     * The default reported channels.
      */
-    'default' => env('EXCEPTION_NOTIFY_CHANNEL', 'log'),
+    'defaults' => [
+        // 'bark',
+        // 'chanify',
+        // 'dingTalk',
+        // 'discord',
+        // 'dump',
+        // 'feiShu',
+        'log',
+        // 'mail',
+        // 'null',
+        // 'pushDeer',
+        // 'qqChannelBot',
+        // 'serverChan',
+        // 'slack',
+        // 'telegram',
+        // 'weWork',
+        // 'xiZhi',
+    ],
 
     /**
      * The list of channels.
