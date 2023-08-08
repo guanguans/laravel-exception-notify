@@ -8,6 +8,28 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.0.0"></a>
+## [3.0.0] - 2023-08-08
+### Feat
+- **tests:** add PHPMock trait
+
+### Refactor
+- **ExceptionContext:** simplify code and fix method name
+- **ExceptionNotify:** improve getFacadeAccessor method
+- **ExceptionNotifyManager:** simplify rate limiting logic
+- **LogChannel:** use app('log') instead of Log facade
+- **composer:** Remove unused dependencies
+- **jobs:** Remove unused Log import
+- **naming:** Rename variable to match method call return type
+- **src:** Refactor ExceptionNotifyManager
+
+### Test
+- **Channels:** Remove redundant test files
+- **CollectorManagerTest:** remove unnecessary test
+- **FeatureTest:** report exception with file upload
+- **NotifyChannelTest:** Add test for reporting
+
+
 <a name="3.0.0-rc2"></a>
 ## [3.0.0-rc2] - 2023-08-06
 ### Docs
@@ -361,7 +383,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc2...3.0.0
 [3.0.0-rc2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc1...3.0.0-rc2
 [3.0.0-rc1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-beta1...3.0.0-rc1
 [3.0.0-beta1]: https://github.com/guanguans/monorepo-builder-worker/compare/v2.16.0...3.0.0-beta1
