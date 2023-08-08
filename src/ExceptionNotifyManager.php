@@ -124,15 +124,12 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        return ! $this
-            ->container
-            ->make(RateLimiter::class)
-            ->attempt(
-                md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
-                config('exception-notify.rate_limit.max_attempts'),
-                static fn (): bool => true,
-                config('exception-notify.rate_limit.decay_seconds')
-            );
+        return ! app(RateLimiter::class)->attempt(
+            md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getMessage().$throwable->getTraceAsString()),
+            config('exception-notify.rate_limit.max_attempts'),
+            static fn (): bool => true,
+            config('exception-notify.rate_limit.decay_seconds')
+        );
     }
 
     protected function createBarkDriver(): BarkChannel
