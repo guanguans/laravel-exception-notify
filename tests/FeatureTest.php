@@ -16,6 +16,7 @@ it('report exception', function (): void {
     $this->post('report-exception?foo=bar&bar=baz', [
         'foo' => 'bar',
         'bar' => 'baz',
+        'password' => 'password',
         'file' => new UploadedFile(__FILE__, basename(__FILE__)),
     ])->assertSuccessful();
 })->group(__DIR__, __FILE__);

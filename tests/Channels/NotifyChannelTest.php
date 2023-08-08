@@ -23,9 +23,18 @@ use Guanguans\LaravelExceptionNotify\Channels\TelegramChannel;
 use Guanguans\LaravelExceptionNotify\Channels\WeWorkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\Notify\Clients\Client;
 use Guanguans\Notify\Contracts\MessageInterface;
 use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Support\Str;
+
+it('can report', function (): void {
+    $mockClient = Mockery::mock(Client::class);
+    $mockClient->allows('send')->andReturn('report');
+
+    expect(new BarkChannel($mockClient))
+        ->report('report')->toBe('report');
+})->group(__DIR__, __FILE__);
 
 it('can create message', function (): void {
     $collection = collect([
