@@ -30,6 +30,14 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ExceptKeysPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\OnlyKeysPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
 use Illuminate\Support\Facades\Route;
 use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
@@ -91,12 +99,22 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestServerCollector::class,
             RequestSessionCollector::class,
         ]);
+        config()->set('exception-notify.channels.null.pipes', [
+            hydrate_pipe(OnlyKeysPipe::class, 'time|foo', ChoreCollector::name()),
+            hydrate_pipe(ExceptKeysPipe::class, 'memory|foo', ChoreCollector::name()),
+            hydrate_pipe(AddKeywordPipe::class, 'keyword'),
+            ToHtmlPipe::class,
+            ToMarkdownPipe::class,
+            FixPrettyJsonPipe::class,
+            hydrate_pipe(LimitLengthPipe::class, 512),
+            hydrate_pipe(ReplaceStrPipe::class, '.php', '.PHP'),
+        ]);
     }
 
     protected function defineRoutes($router): void
     {
         Route::any('report-exception', static fn () => tap(response('report-exception'), function (): void {
-            ExceptionNotify::report(new \Exception('What happened?'), 'dump');
+            ExceptionNotify::report(new \Exception('What happened?'), ['bark', 'dump', 'null']);
         }));
     }
 }

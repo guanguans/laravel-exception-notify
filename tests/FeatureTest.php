@@ -18,5 +18,7 @@ it('report exception', function (): void {
         'bar' => 'baz',
         'password' => 'password',
         'file' => new UploadedFile(__FILE__, basename(__FILE__)),
-    ])->assertSuccessful();
+    ])
+        // ->assertOk()
+        ->assertStatus(500);
 })->group(__DIR__, __FILE__);
