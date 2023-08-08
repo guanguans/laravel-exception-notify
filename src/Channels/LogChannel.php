@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Illuminate\Support\Facades\Log;
 
 class LogChannel implements ChannelContract
 {
@@ -29,6 +28,6 @@ class LogChannel implements ChannelContract
 
     public function report(string $report): void
     {
-        Log::channel($this->channel)->log($this->level, $report);
+        app('log')->channel($this->channel)->log($this->level, $report);
     }
 }

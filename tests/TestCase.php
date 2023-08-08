@@ -38,7 +38,6 @@ use Guanguans\LaravelExceptionNotify\Pipes\OnlyKeysPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
-use Illuminate\Support\Facades\Route;
 use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
@@ -90,12 +89,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             PhpInfoCollector::class,
             RequestBasicCollector::class,
             RequestCookieCollector::class,
+            RequestRawFileCollector::class,
             RequestFileCollector::class,
             RequestHeaderCollector::class,
             RequestMiddlewareCollector::class,
             RequestPostCollector::class,
             RequestQueryCollector::class,
-            RequestRawFileCollector::class,
             RequestServerCollector::class,
             RequestSessionCollector::class,
         ]);
@@ -113,7 +112,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineRoutes($router): void
     {
-        Route::any('report-exception', static fn () => tap(response('report-exception'), function (): void {
+        $router->any('report-exception', static fn () => tap(response('report-exception'), function (): void {
             ExceptionNotify::report(new \Exception('What happened?'), ['bark', 'dump', 'null']);
         }));
     }
