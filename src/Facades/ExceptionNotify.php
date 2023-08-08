@@ -38,7 +38,11 @@ use Illuminate\Support\Facades\Facade;
  */
 class ExceptionNotify extends Facade
 {
-    protected static function getFacadeAccessor()
+    /**
+     * @noinspection MissingParentCallInspection
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
+    protected static function getFacadeAccessor(): string
     {
         return ExceptionNotifyManager::class;
     }
