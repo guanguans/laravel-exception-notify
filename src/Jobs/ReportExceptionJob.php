@@ -20,7 +20,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class ReportExceptionJob implements ShouldQueue
 {
@@ -67,13 +66,5 @@ class ReportExceptionJob implements ShouldQueue
         if ($this->lastThrowable instanceof \Throwable) {
             throw $this->lastThrowable;
         }
-    }
-
-    /**
-     * 任务未能处理.
-     */
-    public function failed(\Throwable $throwable): void
-    {
-        Log::error($throwable->getMessage(), ['exception' => $throwable]);
     }
 }
