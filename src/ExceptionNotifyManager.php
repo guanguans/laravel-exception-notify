@@ -95,6 +95,8 @@ class ExceptionNotifyManager extends Manager
             ) {
                 $dispatch->afterResponse();
             }
+
+            // unset($dispatch);
         } catch (\Throwable $throwable) {
             app('log')->error($throwable->getMessage(), ['exception' => $throwable]);
         }

@@ -13,12 +13,13 @@ declare(strict_types=1);
 use Illuminate\Http\UploadedFile;
 
 it('report exception', function (): void {
-    $this->post('report-exception?foo=bar&bar=baz', [
-        'foo' => 'bar',
-        'bar' => 'baz',
-        'password' => 'password',
-        'file' => new UploadedFile(__FILE__, basename(__FILE__)),
-    ])
+    $this
+        ->post('report-exception?foo=bar&bar=baz', [
+            'foo' => 'bar',
+            'bar' => 'baz',
+            'password' => 'password',
+            'file' => new UploadedFile(__FILE__, basename(__FILE__)),
+        ])
         // ->assertOk()
         ->assertStatus(500);
 })->group(__DIR__, __FILE__);
