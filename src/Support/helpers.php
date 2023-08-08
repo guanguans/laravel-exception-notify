@@ -97,6 +97,6 @@ if (! function_exists('hydrate_pipe')) {
      */
     function hydrate_pipe(string $pipe, ...$parameters): string
     {
-        return empty($parameters) ? $pipe : sprintf('%s:%s', $pipe, implode(',', $parameters));
+        return [] === $parameters ? $pipe : sprintf('%s:%s', $pipe, implode(',', $parameters));
     }
 }

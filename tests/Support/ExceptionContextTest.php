@@ -19,7 +19,7 @@ it('can get exception context', function (): void {
 
     try {
         eval('throw new Exception("eval");');
-    } catch (Exception $e) {
-        expect(ExceptionContext::get($e))->toBeArray();
+    } catch (Exception $exception) {
+        expect(ExceptionContext::get($exception))->toBeArray();
     }
 })->group(__DIR__, __FILE__);

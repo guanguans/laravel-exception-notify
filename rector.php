@@ -17,6 +17,7 @@ use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
+use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
 use Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector;
 use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
@@ -30,6 +31,7 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveEmptyClassMethodRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\StmtsAwareInterface\ReturnEarlyIfVariableRector;
+use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchExprVariableRector;
 use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
@@ -95,6 +97,7 @@ return static function (RectorConfig $rectorConfig): void {
         LogicalToBooleanRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         RenameParamToMatchTypeRector::class,
+        RenameVariableToMatchMethodCallReturnTypeRector::class,
 
         DisallowedEmptyRuleFixerRector::class => [
             // __DIR__.'/src/Support/QueryAnalyzer.php',
@@ -110,6 +113,9 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         StaticClosureRector::class => [
             __DIR__.'/tests',
+        ],
+        StaticArrowFunctionRector::class => [
+            __DIR__.'/tests/ExceptionNotifyManagerTest.php',
         ],
         // ReturnEarlyIfVariableRector::class => [
         //     __DIR__.'/src/Support/EscapeArg.php',
