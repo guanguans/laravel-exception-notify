@@ -14,6 +14,15 @@ declare(strict_types=1);
 
 use Laravel\Lumen\Application;
 
+it('can explode env', function (): void {
+    expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy();
+    expect(env_explode('ENV_EXPLODE_EMPTY'))->toBe(['']);
+    expect(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull();
+    // expect(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue();
+    // expect(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse();
+    // expect(env_explode('ENV_EXPLODE_NULL'))->toBeNull();
+})->group(__DIR__, __FILE__);
+
 it('can return Stringable', function (): void {
     expect(str())->toBeInstanceOf(Stringable::class);
     expect(str('foo'))->toBeInstanceOf(Illuminate\Support\Stringable::class);

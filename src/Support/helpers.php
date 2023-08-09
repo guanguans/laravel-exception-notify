@@ -23,11 +23,11 @@ if (! function_exists('env_explode')) {
      *
      * @noinspection LaravelFunctionsInspection
      */
-    function env_explode(string $key, $default = null, string $delimiter = ',', ?int $limit = null): ?array
+    function env_explode(string $key, $default = null, string $delimiter = ',', int $limit = PHP_INT_MAX)
     {
         $env = env($key, $default);
-        if (is_scalar($env)) {
-            return (array) explode($delimiter, (string) $env, $limit);
+        if (is_string($env)) {
+            return explode($delimiter, $env, $limit);
         }
 
         return $env;
