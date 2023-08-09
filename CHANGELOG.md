@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.0.2"></a>
+## [3.0.2] - 2023-08-09
+### Docs
+- **README.md:** update README.md
+
+### Feat
+- **helper functions:** add env_explode helper function
+
+### Fix
+- **ExceptionNotifyManager:** fix return value when callback returns null
+- **helper:** Fix env_explode function
+
+### Refactor
+- **config:** update exception-notify.php
+
+
 <a name="3.0.1"></a>
 ## [3.0.1] - 2023-08-08
 ### Feat
@@ -393,7 +409,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.2...HEAD
+[3.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc2...3.0.0
 [3.0.0-rc2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0-rc1...3.0.0-rc2
