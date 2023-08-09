@@ -15,6 +15,25 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Laravel\Lumen\Application as LumenApplication;
 
+if (! function_exists('env_explode')) {
+    /**
+     * @param mixed $default
+     *
+     * @return mixed
+     *
+     * @noinspection LaravelFunctionsInspection
+     */
+    function env_explode(string $key, $default = null, string $delimiter = ',', ?int $limit = null): ?array
+    {
+        $env = env($key, $default);
+        if (is_scalar($env)) {
+            return (array) explode($delimiter, (string) $env, $limit);
+        }
+
+        return $env;
+    }
+}
+
 if (! function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
