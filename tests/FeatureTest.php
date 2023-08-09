@@ -20,6 +20,5 @@ it('report exception', function (): void {
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
         ])
-        // ->assertOk()
-        ->assertStatus(500);
+        ->assertOk();
 })->group(__DIR__, __FILE__);
