@@ -114,5 +114,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $router->any('report-exception', static fn () => tap(response('report-exception'), function (): void {
             ExceptionNotify::report(new \Exception('What happened?'), ['bark', 'dump', 'null']);
         }));
+
+        $router->any('exception', static fn () => tap(response('exception'), function (): void {
+            throw new \Exception('What happened?');
+        }));
     }
 }
