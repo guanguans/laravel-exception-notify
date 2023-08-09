@@ -17,6 +17,8 @@ use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
 use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
 use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -29,6 +31,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 {
     protected bool $defer = false;
 
+    /**
+     * @throws \ReflectionException
+     * @throws BindingResolutionException
+     */
     public function register(): void
     {
         $this->setupConfig();
@@ -39,7 +45,15 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->setupConfig();
+        $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $handler): ExceptionHandler {
+            if (method_exists($handler, 'reportable')) {
+                $handler->reportable(function (\Throwable $e) use ($handler): void {
+                    $this->app->make(ExceptionNotifyManager::class)->reportIf($handler->shouldReport($e), $e);
+                });
+            }
+
+            return $handler;
+        });
     }
 
     public function provides(): array
@@ -53,13 +67,13 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      * @throws \ReflectionException
      */
     public function registerMacros(): void
     {
-        Request::mixin($this->app->make(RequestMacro::class));
         Collection::mixin($this->app->make(CollectionMacro::class));
+        Request::mixin($this->app->make(RequestMacro::class));
         Str::mixin($this->app->make(StrMacro::class));
         Stringable::mixin($this->app->make(StringableMacro::class));
     }
