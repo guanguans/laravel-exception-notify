@@ -129,7 +129,12 @@ class ExceptionNotifyManager extends Manager
         }
 
         return ! $this->attempt(
-            md5($throwable->getFile().$throwable->getLine().$throwable->getCode().$throwable->getTraceAsString()),
+            md5(implode('|', [
+                $throwable->getFile(),
+                $throwable->getLine(),
+                $throwable->getCode(),
+                $throwable->getTraceAsString(),
+            ])),
             config('exception-notify.rate_limit.max_attempts'),
             static fn (): bool => true,
             config('exception-notify.rate_limit.decay_seconds')
