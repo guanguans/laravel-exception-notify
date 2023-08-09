@@ -14,7 +14,6 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
-use Guanguans\LaravelExceptionNotify\Channels\DdChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DiscordChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
@@ -179,11 +178,6 @@ class ExceptionNotifyManager extends Manager
                 'base_uri' => config('exception-notify.channels.chanify.base_uri'),
             ]))
         );
-    }
-
-    protected function createDdDriver(): DdChannel
-    {
-        return new DdChannel();
     }
 
     protected function createDingTalkDriver(): DingTalkChannel
