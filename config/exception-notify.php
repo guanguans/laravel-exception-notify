@@ -26,12 +26,12 @@ return [
     /**
      * The list of environments that should be reported.
      */
-    'env' => [
+    'env' => env_explode('EXCEPTION_NOTIFY_ENV', [
         // 'production',
         // 'local',
         // 'testing',
         '*',
-    ],
+    ]),
 
     /**
      * The list of exception that should not be reported.
@@ -87,7 +87,7 @@ return [
     /**
      * The default reported channels.
      */
-    'defaults' => env('EXCEPTION_NOTIFY_DEFAULTS', [
+    'defaults' => env_explode('EXCEPTION_NOTIFY_DEFAULTS', [
         // 'bark',
         // 'chanify',
         // 'dingTalk',
