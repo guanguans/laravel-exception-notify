@@ -147,7 +147,7 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * Attempts to execute a callback if it's not limited.
+     * @see RateLimiter::attempt
      *
      * @return bool|mixed
      */
@@ -157,7 +157,11 @@ class ExceptionNotifyManager extends Manager
             return false;
         }
 
-        return tap($callback() ?: true, function () use ($key, $decaySeconds): void {
+        if (null === ($result = $callback())) {
+            $result = true;
+        }
+
+        return tap($result, static function () use ($key, $decaySeconds): void {
             app(RateLimiter::class)->hit($key, $decaySeconds);
         });
     }
