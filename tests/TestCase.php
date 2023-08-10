@@ -97,7 +97,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestServerCollector::class,
             RequestSessionCollector::class,
         ]);
-        config()->set('exception-notify.channels.null.pipes', [
+        config()->set('exception-notify.channels.dump.pipes', [
             hydrate_pipe(OnlyKeysPipe::class, 'time|foo', ChoreCollector::name()),
             hydrate_pipe(ExceptKeysPipe::class, 'memory|foo', ChoreCollector::name()),
             hydrate_pipe(AddKeywordPipe::class, 'keyword'),

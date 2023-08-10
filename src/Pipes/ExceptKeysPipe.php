@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
@@ -21,23 +20,13 @@ class ExceptKeysPipe
     /**
      * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
-    public function handle(Collection $collectors, \Closure $next, string $keys, string $collectorName): Stringable
+    public function handle(Collection $collectors, \Closure $next, string $keys, ?string $name = null): Stringable
     {
-        $keys = explode('|', $keys);
+        $keys = (array) explode('|', $keys);
+        if ($name) {
+            $keys = array_map(static fn (string $key): string => "$name.$key", $keys);
+        }
 
-        $collectors = $collectors->transform(
-            static function (
-                array $collector,
-                string $name
-            ) use ($collectorName, $keys): array {
-                if ($name === $collectorName) {
-                    return Arr::except($collector, $keys);
-                }
-
-                return $collector;
-            }
-        );
-
-        return $next($collectors);
+        return $next($collectors->except($keys));
     }
 }
