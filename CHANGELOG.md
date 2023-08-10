@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.3"></a>
+## [3.1.3] - 2023-08-10
+### Feat
+- **ReportExceptionJob:** Add retry functionality
+
+### Fix
+- **Jobs:** Fix ReportExceptionJob timeout and retryAfter values
+
+
 <a name="3.1.2"></a>
 ## [3.1.2] - 2023-08-10
 ### Docs
@@ -451,7 +460,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.3...HEAD
+[3.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.1.3
 [3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.2...3.1.0
