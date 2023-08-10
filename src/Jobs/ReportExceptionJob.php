@@ -28,7 +28,10 @@ class ReportExceptionJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    protected array $reports;
+    /**
+     * @var array<string, string>
+     */
+    private array $reports;
 
     private ?\Throwable $lastThrowable = null;
 
@@ -45,8 +48,6 @@ class ReportExceptionJob implements ShouldQueue
 
     /**
      * @throws \Throwable
-     *
-     * @noinspection PhpUnreachableStatementInspection
      */
     public function handle(): void
     {
