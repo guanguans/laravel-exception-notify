@@ -8,6 +8,23 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.2"></a>
+## [3.1.2] - 2023-08-10
+### Docs
+- **readme:** Update README.md
+
+### Fix
+- **CollectorManager:** Fix collector mapping
+
+### Refactor
+- **Pipes:** refactor ExceptKeysPipe
+- **ReportExceptionJob:** improve type hinting
+- **collectors:** update ChoreCollector
+- **collectors:** simplify RequestSessionCollector
+- **collectors:** Use getMarked method to get exception context
+- **pipes:** rename AddValuePipe to AddChorePipe
+
+
 <a name="3.1.1"></a>
 ## [3.1.1] - 2023-08-10
 ### Fix
@@ -434,7 +451,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...HEAD
+[3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.2...3.1.0
 [3.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.1...3.0.2
