@@ -135,27 +135,20 @@ class ExceptionNotifyManager extends Manager
                 $throwable->getTraceAsString(),
             ])),
             config('exception-notify.rate_limit.max_attempts'),
-            static fn (): bool => true,
             config('exception-notify.rate_limit.decay_seconds')
         );
     }
 
     /**
-     * @return bool|mixed
-     *
      * @see RateLimiter::attempt
      */
-    protected function attempt(string $key, int $maxAttempts, \Closure $callback, int $decaySeconds = 60)
+    protected function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
     {
         if (app(RateLimiter::class)->tooManyAttempts($key, $maxAttempts)) {
             return false;
         }
 
-        if (null === ($result = $callback())) {
-            $result = true;
-        }
-
-        return tap($result, static function () use ($key, $decaySeconds): void {
+        return tap(true, static function () use ($key, $decaySeconds): void {
             app(RateLimiter::class)->hit($key, $decaySeconds);
         });
     }
