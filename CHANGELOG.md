@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.1"></a>
+## [3.1.1] - 2023-08-10
+### Fix
+- **src:** unset dispatch in ExceptionNotifyManager
+
+### Refactor
+- **ExceptionNotifyManager:** remove unused callback parameter
+
+### Test
+- **ExceptionNotifyManagerTest:** spy runningInConsole method
+- **FeatureTest:** Improve exception reporting
+
+### Pull Requests
+- Merge pull request [#44](https://github.com/guanguans/monorepo-builder-worker/issues/44) from guanguans/imgbot
+
+
 <a name="3.1.0"></a>
 ## [3.1.0] - 2023-08-09
 ### Feat
@@ -418,7 +434,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...HEAD
+[3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.2...3.1.0
 [3.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.0.1
