@@ -47,6 +47,9 @@ return [
     'job' => [
         'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
         'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
+        'tries' => (int) env('EXCEPTION_NOTIFY_JOB_TRIES', 1),
+        'timeout' => (int) env('EXCEPTION_NOTIFY_JOB_QUEUE_TIMEOUT', 30),
+        'retry_after' => (int) env('EXCEPTION_NOTIFY_JOB_QUEUE_RETRY_AFTER', 300),
     ],
 
     /**

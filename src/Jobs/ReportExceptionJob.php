@@ -34,6 +34,16 @@ class ReportExceptionJob implements ShouldQueue
     public int $tries = 1;
 
     /**
+     * 在超时之前任务可以运行的秒数
+     */
+    public int $timeout = 30;
+
+    /**
+     * 重试任务前等待的秒数
+     */
+    public int $retryAfter = 300;
+
+    /**
      * @var array<string, string>
      */
     private array $reports;
@@ -48,6 +58,18 @@ class ReportExceptionJob implements ShouldQueue
 
         if ($queue = config('exception-notify.job.queue')) {
             $this->onQueue($queue);
+        }
+
+        if ($tries = config('exception-notify.job.tries')) {
+            $this->tries = $tries;
+        }
+
+        if ($timeout = config('exception-notify.job.timeout')) {
+            $this->timeout = $timeout;
+        }
+
+        if ($retryAfter = config('exception-notify.job.retry_after')) {
+            $this->retryAfter = $retryAfter;
         }
     }
 
