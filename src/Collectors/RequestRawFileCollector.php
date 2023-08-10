@@ -25,6 +25,6 @@ class RequestRawFileCollector extends Collector
 
     public function collect(): array
     {
-        return $this->request->files->all();
+        return $_FILES;
     }
 }

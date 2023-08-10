@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 class RequestSessionCollector extends Collector
 {
@@ -26,10 +25,6 @@ class RequestSessionCollector extends Collector
 
     public function collect(): array
     {
-        try {
-            return (array) optional($this->request->getSession())->all();
-        } catch (SessionNotFoundException $sessionNotFoundException) {
-            return [];
-        }
+        return $this->request->hasSession() ? $this->request->session()->all() : [];
     }
 }
