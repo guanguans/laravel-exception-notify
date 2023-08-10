@@ -51,7 +51,6 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 
 ```php
 $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
-$app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### 申请通道 `token`、`secret` 等信息
@@ -84,11 +83,11 @@ EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 
 ### laravel7 及以下版本和 lumen 中需在 `app/Exceptions/Handler.php` 的 `report` 方法中添加
 
 ```php
-public function report(Exception $e)
+public function report(Throwable $exception)
 {
-    \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
+    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::reportIf($this->shouldReport($exception), $exception);
 
-    parent::report($e);
+    parent::report($exception);
 }
 ```
 

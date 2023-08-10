@@ -51,7 +51,6 @@ Add the following snippet to the `bootstrap/app.php` file under the `Register Se
 
 ```php
 $app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
-$app->boot(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### Apply for channel `token` or `secret` information
@@ -84,11 +83,11 @@ EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 
 ### Laravel7 and below versions and lumen need to be added to the `report` method of `app/Exceptions/Handler.php`
 
 ```php
-public function report(Exception $e)
+public function report(Throwable $exception)
 {
-    \ExceptionNotifier::reportIf($this->shouldReport($e), $e);
+    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::reportIf($this->shouldReport($exception), $exception);
 
-    parent::report($e);
+    parent::report($exception);
 }
 ```
 
