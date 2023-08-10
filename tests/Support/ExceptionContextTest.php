@@ -14,12 +14,12 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
-it('can get exception context', function (): void {
-    expect(ExceptionContext::get(new Exception()))->toBeArray();
+it('can get marked exception context', function (): void {
+    expect(ExceptionContext::getMarked(new Exception()))->toBeArray();
 
     try {
         eval('throw new Exception("eval");');
     } catch (Exception $exception) {
-        expect(ExceptionContext::get($exception))->toBeArray();
+        expect(ExceptionContext::getMarked($exception))->toBeArray();
     }
 })->group(__DIR__, __FILE__);

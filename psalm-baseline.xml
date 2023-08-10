@@ -20,8 +20,6 @@
     <UnusedVariable>
       <code>$exceptionLine</code>
     </UnusedVariable>
-    <InvalidArrayOffset>
-      <code><![CDATA[[$line => $code]]]></code>
-    </InvalidArrayOffset>
+    <InvalidArrayOffset/>
   </file>
 </files>

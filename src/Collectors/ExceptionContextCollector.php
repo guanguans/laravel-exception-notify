@@ -22,6 +22,6 @@ class ExceptionContextCollector extends Collector implements ExceptionAwareContr
 
     public function collect(): array
     {
-        return ExceptionContext::get($this->exception);
+        return ExceptionContext::getMarked($this->exception);
     }
 }

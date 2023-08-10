@@ -20,24 +20,31 @@ use Illuminate\Support\Str;
  */
 class ExceptionContext
 {
-    public static function get(\Throwable $throwable): array
+    /**
+     * @psalm-suppress InvalidArrayOffset
+     */
+    public static function getMarked(\Throwable $throwable, string $mark = '➤'): array
     {
-        return collect(static::getOriginal($throwable))
-            ->tap(static function (Collection $collection) use (&$exceptionLine, $throwable, &$markedExceptionLine, &$maxLineLen): void {
+        return collect(static::get($throwable))
+            ->tap(static function (Collection $collection) use (&$exceptionLine, $throwable, &$markedExceptionLine, $mark, &$maxLineLen): void {
                 $exceptionLine = $throwable->getLine();
-                $markedExceptionLine = sprintf('➤ %s', $exceptionLine);
-                $maxLineLen = max(mb_strlen((string) array_key_last($collection->toArray())), mb_strlen($markedExceptionLine));
+                $markedExceptionLine = "$mark $exceptionLine";
+                $maxLineLen = max(
+                    mb_strlen((string) array_key_last($collection->toArray())),
+                    mb_strlen($markedExceptionLine)
+                );
             })
-            ->mapWithKeys(static function ($code, $line) use ($exceptionLine, $markedExceptionLine, $maxLineLen): array {
-                $line === $exceptionLine and $line = $markedExceptionLine;
-                $line = sprintf("%{$maxLineLen}s", $line);
+            ->mapWithKeys(static function (string $code, int $line) use ($exceptionLine, $markedExceptionLine, $maxLineLen): array {
+                if ($line === $exceptionLine) {
+                    $line = $markedExceptionLine;
+                }
 
-                return [$line => $code];
+                return [sprintf("%{$maxLineLen}s", $line) => $code];
             })
             ->all();
     }
 
-    public static function getOriginal(\Throwable $throwable): array
+    public static function get(\Throwable $throwable): array
     {
         return static::getEval($throwable) ?: static::getFile($throwable);
     }
