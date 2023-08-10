@@ -29,6 +29,11 @@ class ReportExceptionJob implements ShouldQueue
     use SerializesModels;
 
     /**
+     * 任务可尝试的次数
+     */
+    public int $tries = 1;
+
+    /**
      * @var array<string, string>
      */
     private array $reports;
