@@ -19,36 +19,18 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
 class ReportExceptionJob implements ShouldQueue
 {
     // use \Illuminate\Foundation\Bus\Dispatchable\Dispatchable;
+    // use \Illuminate\Queue\SerializesModels;
     use InteractsWithQueue;
     use Queueable;
-    use SerializesModels;
-
-    /**
-     * 任务可尝试的次数
-     */
-    public int $tries = 1;
-
-    /**
-     * 在超时之前任务可以运行的秒数
-     */
-    public int $timeout = 30;
-
-    /**
-     * 重试任务前等待的秒数
-     */
-    public int $retryAfter = 300;
 
     /**
      * @var array<string, string>
      */
     private array $reports;
-
-    private ?\Throwable $lastThrowable = null;
 
     public function __construct(array $reports)
     {
@@ -59,22 +41,10 @@ class ReportExceptionJob implements ShouldQueue
         if ($queue = config('exception-notify.job.queue')) {
             $this->onQueue($queue);
         }
-
-        if ($tries = config('exception-notify.job.tries')) {
-            $this->tries = $tries;
-        }
-
-        if ($timeout = config('exception-notify.job.timeout')) {
-            $this->timeout = $timeout;
-        }
-
-        if ($retryAfter = config('exception-notify.job.retry_after')) {
-            $this->retryAfter = $retryAfter;
-        }
     }
 
     /**
-     * @throws \Throwable
+     * @noinspection BadExceptionsProcessingInspection
      */
     public function handle(): void
     {
@@ -87,12 +57,8 @@ class ReportExceptionJob implements ShouldQueue
                 $result = $channel->report($report);
                 event(new ReportedEvent($channel, $result));
             } catch (\Throwable $throwable) {
-                $this->lastThrowable = $throwable;
+                app('log')->error($throwable->getMessage(), ['exception' => $throwable]);
             }
-        }
-
-        if ($this->lastThrowable instanceof \Throwable) {
-            throw $this->lastThrowable;
         }
     }
 }
