@@ -47,6 +47,15 @@ it('can report', function (): void {
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
         ->report(new Exception())->toBeNull();
+
+    config()->set('exception-notify.enabled', true);
+    $mockApplication = Mockery::mock(Application::class);
+    $mockApplication->allows('make')->with('config')->andReturn(config());
+    // $mockApplication->allows('runningInConsole')->andReturnFalse();
+
+    /** @noinspection PhpVoidFunctionResultUsedInspection */
+    expect(new ExceptionNotifyManager($mockApplication))
+        ->report(new Exception())->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('should not report', function (): void {
