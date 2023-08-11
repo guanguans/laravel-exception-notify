@@ -16,7 +16,9 @@ use Illuminate\Container\Container;
 
 class ApplicationCollector extends Collector
 {
-    /** @var \Illuminate\Foundation\Application|\Laravel\Lumen\Application */
+    /**
+     * @var \Illuminate\Foundation\Application|\Laravel\Lumen\Application
+     */
     protected Container $container;
 
     public function __construct(Container $container)

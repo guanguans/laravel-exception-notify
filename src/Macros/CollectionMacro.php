@@ -19,6 +19,10 @@ class CollectionMacro
 {
     public function reduceWithKeys(): callable
     {
-        return fn (callable $callback, $carry = null) => array_reduce_with_keys($this->items, $callback, $carry);
+        return fn (callable $callback, $carry = null) => array_reduce_with_keys(
+            $this->items,
+            $callback,
+            $carry
+        );
     }
 }

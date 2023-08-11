@@ -110,8 +110,6 @@ class ExceptionNotifyManager extends Manager
 
     /**
      * @throws BindingResolutionException
-     *
-     * @noinspection MultipleReturnStatementsInspection
      */
     protected function shouldntReport(\Throwable $throwable): bool
     {

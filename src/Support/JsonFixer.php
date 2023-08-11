@@ -319,7 +319,7 @@ final class JsonFixer
             $tmpJson .= '"';
         }
 
-        $tmpJson = $this->padIf($tmpJson, ':');
+        $tmpJson = $this->padIf($tmpJson);
         $tmpJson .= $this->missingValue;
 
         if ('"' === $this->lastToken()) {
@@ -351,10 +351,10 @@ final class JsonFixer
         // @codeCoverageIgnoreEnd
     }
 
-    private function padIf(string $string, string $substr): string
+    private function padIf(string $string): string
     {
-        if (substr($string, -\strlen($substr)) !== $substr) {
-            return $string.$substr;
+        if (':' !== substr($string, -\strlen(':'))) {
+            return $string.':';
         }
 
         return $string;
