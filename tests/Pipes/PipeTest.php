@@ -35,6 +35,9 @@ it('can collect', function (): void {
         )
         ->through(FixPrettyJsonPipe::class)
         ->then(
+            /**
+             * @throws JsonException
+             */
             static fn (Collection $collectors): Stringable => str(to_pretty_json($collectors->jsonSerialize()))
                 ->substr(-256)
         );

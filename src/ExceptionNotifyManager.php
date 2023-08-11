@@ -31,7 +31,6 @@ use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\Notify\Factory;
 use Illuminate\Cache\RateLimiter;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
@@ -108,9 +107,6 @@ class ExceptionNotifyManager extends Manager
         return Arr::first((array) config('exception-notify.defaults'));
     }
 
-    /**
-     * @throws BindingResolutionException
-     */
     protected function shouldntReport(\Throwable $throwable): bool
     {
         if (! config('exception-notify.enabled')) {

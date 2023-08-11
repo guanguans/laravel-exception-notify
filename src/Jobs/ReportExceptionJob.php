@@ -43,9 +43,6 @@ class ReportExceptionJob implements ShouldQueue
         }
     }
 
-    /**
-     * @noinspection BadExceptionsProcessingInspection
-     */
     public function handle(): void
     {
         foreach ($this->reports as $name => $report) {

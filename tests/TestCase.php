@@ -53,7 +53,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::tearDown();
         if ($container = \Mockery::getContainer()) {
-            $this->addToAssertionCount($container->Mockery_getExpectationCount());
+            $this->addToAssertionCount($container->mockery_getExpectationCount());
         }
 
         \Mockery::close();

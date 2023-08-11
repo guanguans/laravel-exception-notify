@@ -1,7 +1,5 @@
 <?php
 
-/** @noinspection NullPointerExceptionInspection */
-
 declare(strict_types=1);
 
 /**
@@ -12,8 +10,10 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Illuminate\Http\Request;
+
 it('can get headers', function (): void {
-    expect(request())
+    expect($this->app->make(Request::class))
         ->headers()->toBeArray()
         ->headers('user-agent')->toBeString();
 })->group(__DIR__, __FILE__);
