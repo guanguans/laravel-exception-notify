@@ -15,21 +15,22 @@ declare(strict_types=1);
 use Laravel\Lumen\Application;
 
 it('can explode env', function (): void {
-    expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy();
-    expect(env_explode('ENV_EXPLODE_EMPTY'))->toBe(['']);
-    expect(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull();
-    // expect(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue();
-    // expect(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse();
-    // expect(env_explode('ENV_EXPLODE_NULL'))->toBeNull();
+    expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy()
+        ->and(env_explode('ENV_EXPLODE_EMPTY'))->toBe([''])
+        ->and(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull()
+        // ->and(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue()
+        // ->and(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse()
+        // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
+    ;
 })->group(__DIR__, __FILE__);
 
 it('can return Stringable', function (): void {
-    expect(str())->toBeInstanceOf(Stringable::class);
-    expect(str('foo'))->toBeInstanceOf(Illuminate\Support\Stringable::class);
+    expect(str())->toBeInstanceOf(Stringable::class)
+        ->and(str('foo'))->toBeInstanceOf(Illuminate\Support\Stringable::class);
 })->group(__DIR__, __FILE__);
 
 it('can is lumen', function (): void {
-    expect(is_lumen())->toBeFalse();
-    expect(is_lumen(app()))->toBeFalse();
-    expect(is_lumen(app(Application::class)))->toBeTrue();
+    expect(is_lumen())->toBeFalse()
+        ->and(is_lumen(app()))->toBeFalse()
+        ->and(is_lumen(app(Application::class)))->toBeTrue();
 })->group(__DIR__, __FILE__);

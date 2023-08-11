@@ -49,11 +49,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
     use PHPMock;
     use VarDumperTestTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -64,7 +59,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         \Mockery::close();
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             ExceptionNotifyServiceProvider::class,
@@ -107,12 +102,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineRoutes($router): void
     {
-        $router->any('report-exception', static fn () => tap(response('report-exception'), function (): void {
+        $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
             ExceptionNotify::report(new \Exception('What happened?'), ['bark', 'dump', 'null']);
         }));
 
-        $router->any('exception', static fn () => tap(response('exception'), function (): void {
-            throw new \Exception('What happened?');
+        $router->any('exception', static fn () => tap(response('exception'), static function (): void {
+            throw new \RuntimeException('What happened?');
         }));
     }
 }
