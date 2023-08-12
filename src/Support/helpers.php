@@ -119,3 +119,25 @@ if (! function_exists('hydrate_pipe')) {
         return [] === $parameters ? $pipe : sprintf('%s:%s', $pipe, implode(',', $parameters));
     }
 }
+
+if (! function_exists('human_bytes')) {
+    /**
+     * Convert bytes to human readable format.
+     *
+     * @param int $bytes the amount of bytes to convert to human readable format
+     * @param int $decimals the number of decimals to use in the resulting string
+     *
+     * @see https://stackoverflow.com/a/23888858/1580028
+     */
+    function human_bytes(int $bytes, int $decimals = 2): string
+    {
+        $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $factor = (int) floor((strlen((string) $bytes) - 1) / 3);
+
+        if (0 === $factor) {
+            $decimals = 0;
+        }
+
+        return sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
+    }
+}
