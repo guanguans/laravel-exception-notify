@@ -107,7 +107,7 @@ class ExceptionNotifyManager extends Manager
         return Arr::first((array) config('exception-notify.defaults'));
     }
 
-    protected function shouldntReport(\Throwable $throwable): bool
+    public function shouldntReport(\Throwable $throwable): bool
     {
         if (! config('exception-notify.enabled')) {
             return true;

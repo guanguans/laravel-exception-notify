@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
 use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
 use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
@@ -54,6 +55,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
             return $handler;
         });
+
+        $this->registerCommands();
     }
 
     public function provides(): array
@@ -120,6 +123,15 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         );
 
         $this->alias(CollectorManager::class);
+    }
+
+    protected function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                TestCommand::class,
+            ]);
+        }
     }
 
     /**
