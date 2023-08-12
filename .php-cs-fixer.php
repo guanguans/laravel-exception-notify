@@ -290,6 +290,10 @@ return (new Config())
                 'yield_from',
             ],
         ],
+        'new_with_braces' => [
+            'anonymous_class'=>false,
+            'named_class'=>false,
+        ],
         'statement_indentation' => true,
         'global_namespace_import' => [
             'import_classes' => false,

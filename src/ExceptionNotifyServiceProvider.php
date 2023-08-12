@@ -48,7 +48,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->setupConfig()
             ->registerMacros()
             ->registerExceptionNotifyManager()
-            ->registerCollectorManager();
+            ->registerCollectorManager()
+            ->registerTestCommand();
     }
 
     public function boot(): void
@@ -127,6 +128,16 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         );
 
         $this->alias(CollectorManager::class);
+
+        return $this;
+    }
+
+    protected function registerTestCommand(): self
+    {
+        $this->app->singleton(TestCommand::class);
+
+        $this->alias(TestCommand::class);
+        $this->app->alias(TestCommand::class, 'command.exception-notify.test');
 
         return $this;
     }

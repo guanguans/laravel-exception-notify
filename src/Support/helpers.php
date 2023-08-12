@@ -61,6 +61,8 @@ if (! function_exists('array_reduce_with_keys')) {
 
 if (! function_exists('array_is_list')) {
     /**
+     * @psalm-suppress UnusedForeachValue
+     *
      * @see \Symfony\Polyfill\Php81\Php81::array_is_list
      */
     function array_is_list(array $array): bool
