@@ -59,6 +59,28 @@ if (! function_exists('array_reduce_with_keys')) {
     }
 }
 
+if (! function_exists('array_is_list')) {
+    /**
+     * @see \Symfony\Polyfill\Php81\Php81::array_is_list
+     */
+    function array_is_list(array $array): bool
+    {
+        if ([] === $array || $array === array_values($array)) {
+            return true;
+        }
+
+        $nextKey = -1;
+
+        foreach ($array as $k => $v) {
+            if ($k !== ++$nextKey) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 if (! function_exists('str')) {
     /**
      * @param mixed $string
