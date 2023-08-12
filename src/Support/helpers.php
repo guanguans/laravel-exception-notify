@@ -61,8 +61,6 @@ if (! function_exists('array_reduce_with_keys')) {
 
 if (! function_exists('array_is_list')) {
     /**
-     * @psalm-suppress UnusedForeachValue
-     *
      * @codeCoverageIgnore
      *
      * @see \Symfony\Polyfill\Php81\Php81::array_is_list
@@ -75,8 +73,9 @@ if (! function_exists('array_is_list')) {
 
         $nextKey = -1;
 
-        foreach ($array as $k => $v) {
-            if ($k !== ++$nextKey) {
+        $keys = array_keys($array);
+        foreach ($keys as $key) {
+            if ($key !== ++$nextKey) {
                 return false;
             }
         }

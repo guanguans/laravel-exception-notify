@@ -20,6 +20,5 @@
     <UnusedVariable>
       <code>$exceptionLine</code>
     </UnusedVariable>
-    <InvalidArrayOffset/>
   </file>
 </files>

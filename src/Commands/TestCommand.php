@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Commands;
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
@@ -48,14 +49,14 @@ class TestCommand extends Command
         $this->output->section('The current main configuration is as follows:');
         $this->output->listing($this->getMainConfigurations());
 
-        $exception = new \RuntimeException('Test for exception-notify.');
-        if ($exceptionNotifyManager->shouldReport($exception)) {
-            throw $exception;
+        $runtimeException = new RuntimeException('Test for exception-notify.');
+        if ($exceptionNotifyManager->shouldReport($runtimeException)) {
+            throw $runtimeException;
         }
 
         $this->error = sprintf(
             'The exception [%s] should not be reported. Please check the configuration.',
-            \get_class($exception)
+            \get_class($runtimeException)
         );
     }
 
