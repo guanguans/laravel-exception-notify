@@ -91,11 +91,17 @@ public function report(Throwable $exception)
 }
 ```
 
-### 通知结果(息知)
+### 测试异常通知
 
- 息知 1                         | 息知 2                         | 息知 3                         
-------------------------------|------------------------------|------------------------------ 
- ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) 
+```shell
+php artisan exception-notify:test
+```
+
+### 通知示例(息知)
+
+| 1                            | 2                            | 3                            |
+|------------------------------|------------------------------|------------------------------|
+| ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) |
 
 ## 扩展自定义通道
 

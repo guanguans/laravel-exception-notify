@@ -91,11 +91,17 @@ public function report(Throwable $exception)
 }
 ```
 
-### Notification result(Xi Zhi)
+### Test for exception notify
 
- Xi Zhi 1                     | Xi Zhi 2                     | Xi Zhi 3                     
-------------------------------|------------------------------|------------------------------ 
- ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) 
+```shell
+php artisan exception-notify:test
+```
+
+### Notification example(Xi Zhi)
+
+| 1                            | 2                            | 3                            |
+|------------------------------|------------------------------|------------------------------|
+| ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) |
 
 ## Extend custom channel
 
