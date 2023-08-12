@@ -141,3 +141,18 @@ if (! function_exists('human_bytes')) {
         return sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
     }
 }
+
+if (! function_exists('human_milliseconds')) {
+    function human_milliseconds(float $milliseconds): string
+    {
+        if ($milliseconds < 1) {
+            return sprintf('%s μs', round($milliseconds * 1000));
+        }
+
+        if ($milliseconds < 1000) {
+            return sprintf('%s ms', round($milliseconds, 2));
+        }
+
+        return sprintf('%s s', round($milliseconds / 1000, 2));
+    }
+}

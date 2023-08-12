@@ -34,7 +34,7 @@ class RequestFileCollector extends Collector
         array_walk_recursive($files, static function (UploadedFile &$file): void {
             $file = [
                 'name' => $file->getClientOriginalName(),
-                'size' => $file->isFile() ? ($file->getSize() / 1000).'KB' : '0',
+                'size' => human_bytes($file->isFile() ? $file->getSize() : 0),
             ];
         });
 
