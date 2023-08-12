@@ -42,23 +42,21 @@ class TestCommand extends Command
         );
     }
 
-    public function handle(ExceptionNotifyManager $exceptionNotifyManager)
+    public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
         $this->output->note('Test for exception-notify start.');
         $this->output->section('The current main configuration is as follows:');
         $this->output->listing($this->getMainConfigurations());
 
         $exception = new \RuntimeException('Test for exception-notify.');
-        if ($exceptionNotifyManager->shouldntReport($exception)) {
-            $this->error = sprintf(
-                'The exception [%s] should not be reported. Please check the configuration.',
-                \get_class($exception)
-            );
-
-            return self::FAILURE;
+        if ($exceptionNotifyManager->shouldReport($exception)) {
+            throw $exception;
         }
 
-        throw $exception;
+        $this->error = sprintf(
+            'The exception [%s] should not be reported. Please check the configuration.',
+            \get_class($exception)
+        );
     }
 
     private function getMainConfigurations(): array
