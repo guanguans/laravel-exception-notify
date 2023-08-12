@@ -38,7 +38,7 @@ it('can collect', function (): void {
             /**
              * @throws JsonException
              */
-            static fn (Collection $collectors): Stringable => str(to_pretty_json($collectors->jsonSerialize()))
+            static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))
                 ->substr(-256)
         );
 

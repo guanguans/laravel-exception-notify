@@ -87,13 +87,13 @@ if (! function_exists('str')) {
     }
 }
 
-if (! function_exists('to_pretty_json')) {
+if (! function_exists('json_pretty_encode')) {
     /**
      * @param mixed $value
      *
      * @throws JsonException
      */
-    function to_pretty_json($value, int $options = 0, int $depth = 512): string
+    function json_pretty_encode($value, int $options = 0, int $depth = 512): string
     {
         return json_encode(
             $value,
