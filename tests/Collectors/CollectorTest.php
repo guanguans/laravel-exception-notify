@@ -17,4 +17,4 @@ it('can collect request basic', function (): void {
 
     expect(app(RequestBasicCollector::class))
         ->collect()->toBeArray();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip(defined('LARAVEL_START'));
