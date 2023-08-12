@@ -34,3 +34,15 @@ it('can is lumen', function (): void {
         ->and(is_lumen(app()))->toBeFalse()
         ->and(is_lumen(app(Application::class)))->toBeTrue();
 })->group(__DIR__, __FILE__);
+
+it('can human milliseconds', function (): void {
+    expect([
+        human_milliseconds(0.5),
+        human_milliseconds(500),
+        human_milliseconds(500000),
+    ])->sequence(
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500μs'),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500ms'),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500s')
+    );
+})->group(__DIR__, __FILE__);
