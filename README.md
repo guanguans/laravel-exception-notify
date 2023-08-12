@@ -78,8 +78,6 @@ EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94
 EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 # optional
 ```
 
-## Usage
-
 ### Laravel7 and below versions and lumen need to be added to the `report` method of `app/Exceptions/Handler.php`
 
 ```php
@@ -90,6 +88,8 @@ public function report(Throwable $exception)
     parent::report($exception);
 }
 ```
+
+## Usage
 
 ### Test for exception notify
 

@@ -78,8 +78,6 @@ EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94
 EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 # 可选的
 ```
 
-## 使用
-
 ### laravel7 及以下版本和 lumen 中需在 `app/Exceptions/Handler.php` 的 `report` 方法中添加
 
 ```php
@@ -90,6 +88,8 @@ public function report(Throwable $exception)
     parent::report($exception);
 }
 ```
+
+## 使用
 
 ### 测试异常通知
 
