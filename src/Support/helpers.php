@@ -138,21 +138,21 @@ if (! function_exists('human_bytes')) {
             $decimals = 0;
         }
 
-        return sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
+        return sprintf("%.{$decimals}f%s", $bytes / (1024 ** $factor), $size[$factor]);
     }
 }
 
 if (! function_exists('human_milliseconds')) {
-    function human_milliseconds(float $milliseconds): string
+    function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
         if ($milliseconds < 1) {
-            return sprintf('%s μs', round($milliseconds * 1000));
+            return sprintf('%sμs', round($milliseconds * 1000, $precision));
         }
 
         if ($milliseconds < 1000) {
-            return sprintf('%s ms', round($milliseconds, 2));
+            return sprintf('%sms', round($milliseconds, $precision));
         }
 
-        return sprintf('%s s', round($milliseconds / 1000, 2));
+        return sprintf('%ss', round($milliseconds / 1000, $precision));
     }
 }
