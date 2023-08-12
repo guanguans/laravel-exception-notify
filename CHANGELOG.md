@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.1"></a>
+## [3.2.1] - 2023-08-13
+### Docs
+- **README:** Update README file
+- **readme:** Fix typo
+
+### Feat
+- **TestCommandTest.php:** Add test for exception-notify
+- **helper:** Add human_bytes function
+- **helpers:** add precision parameter to human_milliseconds function
+- **helpers:** Add human_milliseconds function
+- **support:** add array_is_list helper function
+
+### Refactor
+- **config:** Update .php-cs-fixer.php
+- **support:** update helpers.php
+
+### Test
+- **ExceptionNotifyManagerTest:** refactor test cases
+
+
 <a name="3.2.0"></a>
 ## [3.2.0] - 2023-08-12
 ### Docs
@@ -489,7 +510,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...HEAD
+[3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.4...3.2.0
 [3.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.3...3.1.4
 [3.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.1.3
