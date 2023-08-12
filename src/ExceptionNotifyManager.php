@@ -191,7 +191,7 @@ class ExceptionNotifyManager extends Manager
 
     protected function createDumpDriver(): DumpChannel
     {
-        return new DumpChannel();
+        return new DumpChannel;
     }
 
     protected function createFeiShuDriver(): FeiShuChannel
@@ -224,7 +224,7 @@ class ExceptionNotifyManager extends Manager
 
     protected function createNullDriver(): NullChannel
     {
-        return new NullChannel();
+        return new NullChannel;
     }
 
     protected function createPushDeerDriver(): PushDeerChannel

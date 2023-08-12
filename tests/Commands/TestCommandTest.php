@@ -34,7 +34,15 @@ it('can test for exception-notify', function (): void {
     artisan(TestCommand::class)->assertSuccessful();
 
     expect(app(TestCommand::class))->__destruct()->toBeNull();
-    expect(new TestCommand)->__destruct()->toBeNull();
+
+    $this->app->extend(TestCommand::class, function (TestCommand $testCommand) {
+        (function (): void {
+            $this->error = null;
+        })->call($testCommand);
+
+        return $testCommand;
+    });
+    expect(app(TestCommand::class))->__destruct()->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('will throws RuntimeException', function (): void {

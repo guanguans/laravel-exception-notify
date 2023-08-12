@@ -24,7 +24,7 @@ it('can collect', function (): void {
             collect(app(CollectorManager::class))
                 ->transform(static function (CollectorContract $collector): CollectorContract {
                     if ($collector instanceof ExceptionAwareContract) {
-                        $collector->setException(new Exception());
+                        $collector->setException(new Exception);
                     }
 
                     return $collector;

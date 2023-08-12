@@ -49,12 +49,12 @@ $finder = Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return (new Config())
+return (new Config)
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
     ->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
-    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
+    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers)
     ->setRules([
         '@PHP70Migration' => true,
         '@PHP70Migration:risky' => true,
@@ -291,8 +291,8 @@ return (new Config())
             ],
         ],
         'new_with_braces' => [
-            'anonymous_class'=>false,
-            'named_class'=>false,
+            'anonymous_class' => false,
+            'named_class' => false,
         ],
         'statement_indentation' => true,
         'global_namespace_import' => [

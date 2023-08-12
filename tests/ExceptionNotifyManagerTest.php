@@ -31,13 +31,13 @@ it('will throw error', function (): void {
 
 it('can report if', function (): void {
     expect($this->app->make(ExceptionNotifyManager::class))
-        ->reportIf(true, new Exception())->toBeNull();
+        ->reportIf(true, new Exception)->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can report', function (): void {
     config()->set('exception-notify.enabled', false);
     expect($this->app->make(ExceptionNotifyManager::class))
-        ->report(new Exception())->toBeNull();
+        ->report(new Exception)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
     $mockApplication = Mockery::spy(Application::class);
@@ -46,7 +46,7 @@ it('can report', function (): void {
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
-        ->report(new Exception())->toBeNull();
+        ->report(new Exception)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
     $mockApplication = Mockery::mock(Application::class);
@@ -55,11 +55,11 @@ it('can report', function (): void {
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
-        ->report(new Exception())->toBeNull();
+        ->report(new Exception)->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('should not report', function (): void {
-    $shouldntReporter = fn () => $this->shouldntReport(new Exception());
+    $shouldntReporter = fn () => $this->shouldntReport(new Exception);
 
     config()->set('exception-notify.enabled', false);
     expect($shouldntReporter)

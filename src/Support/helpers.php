@@ -94,7 +94,7 @@ if (! function_exists('str')) {
     function str($string = null)
     {
         if (0 === func_num_args()) {
-            return new class() implements \Stringable {
+            return new class implements \Stringable {
                 public function __call($method, $parameters)
                 {
                     return Str::$method(...$parameters);

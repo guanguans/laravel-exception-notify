@@ -16,7 +16,7 @@ use Laravel\Lumen\Application;
 it('can register', function (): void {
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     /** @noinspection PhpParamsInspection */
-    expect(new ExceptionNotifyServiceProvider(new Application()))
+    expect(new ExceptionNotifyServiceProvider(new Application))
         ->register()->toBeNull();
 })->group(__DIR__, __FILE__);
 
