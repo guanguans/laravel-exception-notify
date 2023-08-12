@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.0"></a>
+## [3.2.0] - 2023-08-12
+### Docs
+- **readme:** Update README.md
+
+### Feat
+- **commands:** Add TestCommand
+
+### Fix
+- **composer:** Remove --clear-cache option from rector command
+
+### Refactor
+- **serviceprovider:** reorganize register method
+
+
 <a name="3.1.4"></a>
 ## [3.1.4] - 2023-08-11
 ### Fix
@@ -474,7 +489,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.4...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.4...3.2.0
 [3.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.3...3.1.4
 [3.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.1.3
 [3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
