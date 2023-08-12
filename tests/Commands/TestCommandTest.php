@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -31,7 +32,7 @@ beforeEach(function (): void {
 
 it('can test for exception-notify', function (): void {
     config()->set('exception-notify.enabled', false);
-    artisan(TestCommand::class)->assertSuccessful();
+    artisan(TestCommand::class)->assertExitCode(Command::SUCCESS);
 
     expect(app(TestCommand::class))->__destruct()->toBeNull();
 

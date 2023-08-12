@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Str;
 
 use function Pest\Faker\faker;
 
@@ -83,7 +84,8 @@ it('can get default driver', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can attempt key', function (): void {
-    $uuid = faker()->uuid();
+    // $uuid = faker()->uuid();
+    $uuid = Str::uuid()->toString();
     expect(fn () => $this->attempt($uuid, 3))
         ->call(app(ExceptionNotifyManager::class))->toBeTrue()
         ->call(app(ExceptionNotifyManager::class))->toBeTrue()
