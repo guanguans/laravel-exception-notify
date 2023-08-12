@@ -30,6 +30,13 @@ use Laravel\Lumen\Application as LumenApplication;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
+    public array $singletons = [
+        CollectionMacro::class => CollectionMacro::class,
+        RequestMacro::class => RequestMacro::class,
+        StringableMacro::class => StringableMacro::class,
+        StrMacro::class => StrMacro::class,
+    ];
+
     protected bool $defer = false;
 
     /**
@@ -38,25 +45,16 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->setupConfig();
-        $this->registerMacros();
-        $this->registerExceptionNotifyManager();
-        $this->registerCollectorManager();
+        $this->setupConfig()
+            ->registerMacros()
+            ->registerExceptionNotifyManager()
+            ->registerCollectorManager();
     }
 
     public function boot(): void
     {
-        $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $handler): ExceptionHandler {
-            if (method_exists($handler, 'reportable')) {
-                $handler->reportable(function (\Throwable $e) use ($handler): void {
-                    $this->app->make(ExceptionNotifyManager::class)->reportIf($handler->shouldReport($e), $e);
-                });
-            }
-
-            return $handler;
-        });
-
-        $this->registerCommands();
+        $this->extendExceptionHandler()
+            ->registerCommands();
     }
 
     public function provides(): array
@@ -69,19 +67,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         ];
     }
 
-    /**
-     * @throws BindingResolutionException
-     * @throws \ReflectionException
-     */
-    public function registerMacros(): void
-    {
-        Collection::mixin($this->app->make(CollectionMacro::class));
-        Request::mixin($this->app->make(RequestMacro::class));
-        Str::mixin($this->app->make(StrMacro::class));
-        Stringable::mixin($this->app->make(StringableMacro::class));
-    }
-
-    protected function setupConfig(): void
+    protected function setupConfig(): self
     {
         /** @noinspection RealpathInStreamContextInspection */
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
@@ -93,9 +79,25 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom($source, 'exception-notify');
+
+        return $this;
     }
 
-    protected function registerExceptionNotifyManager(): void
+    /**
+     * @throws BindingResolutionException
+     * @throws \ReflectionException
+     */
+    protected function registerMacros(): self
+    {
+        Collection::mixin($this->app->make(CollectionMacro::class));
+        Request::mixin($this->app->make(RequestMacro::class));
+        Str::mixin($this->app->make(StrMacro::class));
+        Stringable::mixin($this->app->make(StringableMacro::class));
+
+        return $this;
+    }
+
+    protected function registerExceptionNotifyManager(): self
     {
         $this->app->singleton(
             ExceptionNotifyManager::class,
@@ -103,9 +105,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         );
 
         $this->alias(ExceptionNotifyManager::class);
+
+        return $this;
     }
 
-    protected function registerCollectorManager(): void
+    protected function registerCollectorManager(): self
     {
         $this->app->singleton(
             CollectorManager::class,
@@ -123,15 +127,34 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         );
 
         $this->alias(CollectorManager::class);
+
+        return $this;
     }
 
-    protected function registerCommands(): void
+    protected function extendExceptionHandler(): self
+    {
+        $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $handler): ExceptionHandler {
+            if (method_exists($handler, 'reportable')) {
+                $handler->reportable(function (\Throwable $e) use ($handler): void {
+                    $this->app->make(ExceptionNotifyManager::class)->reportIf($handler->shouldReport($e), $e);
+                });
+            }
+
+            return $handler;
+        });
+
+        return $this;
+    }
+
+    protected function registerCommands(): self
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
                 TestCommand::class,
             ]);
         }
+
+        return $this;
     }
 
     /**
