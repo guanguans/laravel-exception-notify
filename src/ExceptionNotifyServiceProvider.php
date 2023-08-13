@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Macros\CollectionMacro;
 use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
 use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
@@ -135,9 +136,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function registerTestCommand(): self
     {
         $this->app->singleton(TestCommand::class);
-
         $this->alias(TestCommand::class);
-        $this->app->alias(TestCommand::class, 'command.exception-notify.test');
 
         return $this;
     }
@@ -171,23 +170,24 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     /**
      * @param class-string $class
      */
-    protected function alias(string $class, ?string $prefix = null): void
+    protected function alias(string $class): self
     {
-        $this->app->alias($class, $this->toAlias($class, $prefix));
+        $this->app->alias($class, $this->toAlias($class));
+
+        return $this;
     }
 
     /**
      * @param class-string $class
      */
-    protected function toAlias(string $class, ?string $prefix = null): string
+    protected function toAlias(string $class): string
     {
-        $prefix ??= 'exception.notify.';
-
-        $alias = Str::snake(class_basename($class), '.');
-        if (Str::startsWith($alias, Str::replaceLast('.', '', $prefix))) {
-            return $alias;
-        }
-
-        return $prefix.$alias;
+        return str($class)
+            ->replaceFirst(__NAMESPACE__, '')
+            ->start('\\'.class_basename(ExceptionNotify::class))
+            ->ltrim('\\')
+            ->explode('\\')
+            ->map(static fn (string $name): string => Str::snake($name, '-'))
+            ->implode('.');
     }
 }
