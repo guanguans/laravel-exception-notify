@@ -15,10 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Commands;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Illuminate\Console\Command;
-use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Arr;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 class TestCommand extends Command
 {
@@ -26,45 +23,24 @@ class TestCommand extends Command
 
     protected $description = 'Test for exception-notify';
 
-    private ?string $warning = null;
-
-    public function __destruct()
-    {
-        if (! $this->output instanceof OutputStyle) {
-            $this->output = new OutputStyle(new ArgvInput, new ConsoleOutput);
-        }
-
-        if ($this->warning) {
-            $this->output->warning($this->warning);
-
-            return;
-        }
-
-        $this->output->newLine();
-        $this->output->note(
-            <<<'note'
-                Test for exception-notify done.
-                Please check whether your channels received the exception notification report.
-                If not, please find reason in the default log.
-                note
-        );
-    }
-
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
-        $this->output->note('Test for exception-notify start.');
-        $this->output->section('The current main configuration is as follows:');
+        $this->output->section('The main configuration is as follows:');
         $this->output->listing($this->getMainConfigurations());
 
-        $runtimeException = new RuntimeException('Test for exception-notify.');
+        $runtimeException = new RuntimeException(<<<'note'
+            Test for exception-notify done.
+            Please check whether your channels received the exception notification report.
+            If not, please find reason in the default log.
+            note);
         if ($exceptionNotifyManager->shouldReport($runtimeException)) {
             throw $runtimeException;
         }
 
-        $this->warning = sprintf(
+        $this->output->warning(sprintf(
             'The exception [%s] should not be reported. Please check the configuration.',
             \get_class($runtimeException)
-        );
+        ));
     }
 
     private function getMainConfigurations(): array
