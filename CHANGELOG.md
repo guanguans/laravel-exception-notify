@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.3"></a>
+## [3.2.3] - 2023-08-13
+
 <a name="3.2.2"></a>
 ## [3.2.2] - 2023-08-13
 ### Docs
@@ -526,7 +529,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.3...HEAD
+[3.2.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.2...3.2.3
 [3.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.4...3.2.0
