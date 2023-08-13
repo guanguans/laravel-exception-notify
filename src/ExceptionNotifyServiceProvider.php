@@ -185,7 +185,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return str($class)
             ->replaceFirst(__NAMESPACE__, '')
             ->start('\\'.class_basename(ExceptionNotify::class))
-            ->ltrim('\\')
+            ->replaceFirst('\\', '')
             ->explode('\\')
             ->map(static fn (string $name): string => Str::snake($name, '-'))
             ->implode('.');
