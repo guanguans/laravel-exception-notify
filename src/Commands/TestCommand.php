@@ -26,7 +26,7 @@ class TestCommand extends Command
 
     protected $description = 'Test for exception-notify';
 
-    private ?string $error = null;
+    private ?string $warning = null;
 
     public function __destruct()
     {
@@ -34,8 +34,8 @@ class TestCommand extends Command
             $this->output = new OutputStyle(new ArgvInput, new ConsoleOutput);
         }
 
-        if ($this->error) {
-            $this->output->error($this->error);
+        if ($this->warning) {
+            $this->output->warning($this->warning);
 
             return;
         }
@@ -61,7 +61,7 @@ class TestCommand extends Command
             throw $runtimeException;
         }
 
-        $this->error = sprintf(
+        $this->warning = sprintf(
             'The exception [%s] should not be reported. Please check the configuration.',
             \get_class($runtimeException)
         );

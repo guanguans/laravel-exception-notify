@@ -14,8 +14,7 @@ use Illuminate\Http\UploadedFile;
 
 it('can report exception', function (): void {
     $this
-        ->post('report-exception?foo=bar&bar=baz', [
-            'foo' => 'bar',
+        ->post('report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
@@ -25,8 +24,7 @@ it('can report exception', function (): void {
 
 it('can auto report exception', function (): void {
     $this
-        ->post('exception?foo=bar&bar=baz', [
-            'foo' => 'bar',
+        ->post('exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
