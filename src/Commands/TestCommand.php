@@ -15,7 +15,10 @@ namespace Guanguans\LaravelExceptionNotify\Commands;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Illuminate\Console\Command;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Arr;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class TestCommand extends Command
 {
@@ -27,6 +30,10 @@ class TestCommand extends Command
 
     public function __destruct()
     {
+        if (! $this->output instanceof OutputStyle) {
+            $this->output = new OutputStyle(new ArgvInput, new ConsoleOutput);
+        }
+
         if ($this->error) {
             $this->output->error($this->error);
 

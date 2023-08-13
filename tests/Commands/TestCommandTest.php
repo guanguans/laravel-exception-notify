@@ -12,23 +12,8 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 use function Pest\Laravel\artisan;
-
-beforeEach(function (): void {
-    $this->app->extend(TestCommand::class, function (TestCommand $testCommand) {
-        if (! $testCommand->getOutput()) {
-            (function (): void {
-                $this->output = new SymfonyStyle(new ArgvInput, new ConsoleOutput);
-            })->call($testCommand);
-        }
-
-        return $testCommand;
-    });
-});
 
 it('can test for exception-notify', function (): void {
     config()->set('exception-notify.enabled', false);
