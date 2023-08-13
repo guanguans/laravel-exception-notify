@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.2"></a>
+## [3.2.2] - 2023-08-13
+### Docs
+- **ExceptionNotify:** Add shouldReport method
+
+### Fix
+- **serviceprovider:** fix class name replacement
+
+### Refactor
+- **command:** Change error variable to warning in TestCommand
+- **serviceprovider:** Refactor alias method
+
+### Test
+- **CollectorTest:** update test for collecting request basic
+
+
 <a name="3.2.1"></a>
 ## [3.2.1] - 2023-08-13
 ### Docs
@@ -510,7 +526,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.2...HEAD
+[3.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.4...3.2.0
 [3.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.3...3.1.4
