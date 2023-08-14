@@ -38,6 +38,8 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 
 /**
+ * @property \Illuminate\Foundation\Application|\Laravel\Lumen\Application $container
+ *
  * @method \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract driver($driver = null)
  *
  * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
@@ -129,15 +131,20 @@ class ExceptionNotifyManager extends Manager
         }
 
         return ! $this->attempt(
-            md5(implode('|', [
-                $throwable->getFile(),
-                $throwable->getLine(),
-                $throwable->getCode(),
-                $throwable->getTraceAsString(),
-            ])),
+            $this->toFingerprint($throwable),
             config('exception-notify.rate_limit.max_attempts'),
             config('exception-notify.rate_limit.decay_seconds')
         );
+    }
+
+    protected function toFingerprint(\Throwable $throwable): string
+    {
+        return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
+            $throwable->getFile(),
+            $throwable->getLine(),
+            $throwable->getCode(),
+            $throwable->getTraceAsString(),
+        ]));
     }
 
     /**
