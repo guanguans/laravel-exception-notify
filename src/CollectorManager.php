@@ -53,14 +53,19 @@ class CollectorManager extends Fluent
 
     public function mapToReports(array $channels, \Throwable $throwable): array
     {
-        $collectors = collect($this)->mapWithKeys(static function (CollectorContract $collector) use ($throwable): array {
-            $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
+        $collectors = collect($this)->mapWithKeys(
+            static function (CollectorContract $collector) use ($throwable): array {
+                $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
 
-            return [$collector::name() => $collector->collect()];
-        });
+                return [$collector::name() => $collector->collect()];
+            }
+        );
 
         return collect($channels)
-            ->mapWithKeys(fn (string $channel): array => [$channel => $this->mapToReport($channel, $collectors)])
+            ->mapWithKeys(fn (string $channel): array => [$channel => $this->mapToReport(
+                $channel,
+                $collectors
+            )])
             ->all();
     }
 
@@ -73,6 +78,8 @@ class CollectorManager extends Fluent
         return (string) (new Pipeline(app()))
             ->send($collectors)
             ->through(config("exception-notify.channels.$channel.pipes", []))
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
+            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode(
+                $collectors->jsonSerialize()
+            )));
     }
 }

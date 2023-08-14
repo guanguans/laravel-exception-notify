@@ -26,7 +26,13 @@ class ExceptionContext
     public static function getMarked(\Throwable $throwable, string $mark = '➤'): array
     {
         return collect(static::get($throwable))
-            ->tap(static function (Collection $collection) use (&$exceptionLine, $throwable, &$markedExceptionLine, $mark, &$maxLineLen): void {
+            ->tap(static function (Collection $collection) use (
+                &$exceptionLine,
+                $throwable,
+                &$markedExceptionLine,
+                $mark,
+                &$maxLineLen
+            ): void {
                 $exceptionLine = $throwable->getLine();
                 $markedExceptionLine = "$mark $exceptionLine";
                 $maxLineLen = max(
@@ -34,7 +40,11 @@ class ExceptionContext
                     mb_strlen($markedExceptionLine)
                 );
             })
-            ->mapWithKeys(static function (string $code, int $line) use ($exceptionLine, $markedExceptionLine, $maxLineLen): array {
+            ->mapWithKeys(static function (string $code, int $line) use (
+                $exceptionLine,
+                $markedExceptionLine,
+                $maxLineLen
+            ): array {
                 if ($line === $exceptionLine) {
                     $line = $markedExceptionLine;
                 }
@@ -63,7 +73,7 @@ class ExceptionContext
     {
         return collect(explode(PHP_EOL, file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
-            ->mapWithKeys(static fn ($value, $key): array => [$key + 1 => $value])
+            ->mapWithKeys(static fn (string $code, int $line): array => [$line + 1 => $code])
             ->all();
     }
 }
