@@ -12,13 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
-
-class ExceptionBasicCollector extends Collector implements ExceptionAwareContract
+class ExceptionBasicCollector extends ExceptionCollector
 {
-    use ExceptionAware;
-
     public function collect(): array
     {
         return [

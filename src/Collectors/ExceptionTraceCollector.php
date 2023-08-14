@@ -12,14 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Illuminate\Support\Str;
 
-class ExceptionTraceCollector extends Collector implements ExceptionAwareContract
+class ExceptionTraceCollector extends ExceptionCollector
 {
-    use ExceptionAware;
-
     public function collect(): array
     {
         return collect(explode(PHP_EOL, $this->exception->getTraceAsString()))

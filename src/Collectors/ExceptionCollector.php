@@ -12,12 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
+use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 
-class ExceptionContextCollector extends ExceptionCollector
+abstract class ExceptionCollector extends Collector implements ExceptionAwareContract
 {
-    public function collect(): array
-    {
-        return ExceptionContext::getMarked($this->exception);
-    }
+    use ExceptionAware;
 }
