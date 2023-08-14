@@ -36,7 +36,6 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
-use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 /**
@@ -46,7 +45,6 @@ use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    use PHPMock;
     use VarDumperTestTrait;
 
     protected function tearDown(): void
