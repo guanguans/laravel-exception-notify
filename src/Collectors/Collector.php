@@ -12,16 +12,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Guanguans\LaravelExceptionNotify\Collectors\Concerns\Naming;
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
-use Illuminate\Support\Str;
 
 abstract class Collector implements CollectorContract
 {
-    public static function name(): string
-    {
-        return (string) Str::of(class_basename(static::class))
-            ->beforeLast(class_basename(self::class))
-            ->snake(' ')
-            ->ucwords();
-    }
+    use Naming;
 }
