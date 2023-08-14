@@ -64,8 +64,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return [
             $this->toAlias(CollectorManager::class),
             $this->toAlias(ExceptionNotifyManager::class),
+            $this->toAlias(TestCommand::class),
             CollectorManager::class,
             ExceptionNotifyManager::class,
+            TestCommand::class,
         ];
     }
 
