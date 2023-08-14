@@ -5,12 +5,6 @@
       <code>headers</code>
     </UndefinedMagicMethod>
   </file>
-  <file src="src/ExceptionNotifyManager.php">
-    <UndefinedInterfaceMethod>
-      <code>environment</code>
-      <code>runningInConsole</code>
-    </UndefinedInterfaceMethod>
-  </file>
   <file src="src/Macros/StrMacro.php">
     <InvalidReturnType>
       <code>string</code>
