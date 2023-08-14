@@ -8,6 +8,24 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.3.0"></a>
+## [3.3.0] - 2023-08-14
+### Docs
+- **psalm:** Update psalm-baseline.xml
+
+### Feat
+- **collectors:** add Naming trait
+- **collectors:** Add ExceptionCollector class
+
+### Fix
+- **ReportExceptionJob:** Change ExceptionNotify facade to ExceptionNotifyManager
+
+### Refactor
+- **collectors:** improve PhpInfoCollector
+- **service-provider:** Reorder service providers
+- **src:** Update ExceptionNotifyManager.php
+
+
 <a name="3.2.3"></a>
 ## [3.2.3] - 2023-08-13
 
@@ -529,7 +547,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.3...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...HEAD
+[3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.3...3.3.0
 [3.2.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.2...3.2.3
 [3.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.2.2
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
