@@ -17,7 +17,7 @@ class PhpInfoCollector extends Collector
     public function collect(): array
     {
         return [
-            'version' => implode('.', [PHP_MAJOR_VERSION, PHP_MINOR_VERSION, PHP_RELEASE_VERSION]),
+            'version' => PHP_VERSION,
             'interface' => \PHP_SAPI,
         ];
     }
