@@ -38,6 +38,8 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 
 /**
+ * @method \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract driver($driver = null)
+ *
  * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
  */
 class ExceptionNotifyManager extends Manager

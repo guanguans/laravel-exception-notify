@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Jobs;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -43,12 +42,11 @@ class ReportExceptionJob implements ShouldQueue
         }
     }
 
-    public function handle(): void
+    public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
         foreach ($this->reports as $name => $report) {
             try {
-                /** @var ChannelContract $channel */
-                $channel = ExceptionNotify::driver($name);
+                $channel = $exceptionNotifyManager->driver($name);
 
                 event(new ReportingEvent($channel, $report));
                 $result = $channel->report($report);
