@@ -22,4 +22,4 @@ it('can test for exception-notify', function (): void {
 
 it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class);
-})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify done.');
+})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify.');

@@ -25,22 +25,30 @@ class TestCommand extends Command
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
-        $this->output->section('The main configuration is as follows:');
+        $this->output->note('Test for exception-notify start.');
+        $this->output->section('The main configuration is as follows.');
         $this->output->listing($this->getMainConfigurations());
 
-        $runtimeException = new RuntimeException(<<<'note'
-            Test for exception-notify done.
-            Please check whether your channels received the exception notification report.
-            If not, please find reason in the default log.
-            note);
-        if ($exceptionNotifyManager->shouldReport($runtimeException)) {
-            throw $runtimeException;
-        }
+        try {
+            $runtimeException = new RuntimeException('Test for exception-notify.');
+            if ($exceptionNotifyManager->shouldReport($runtimeException)) {
+                throw $runtimeException;
+            }
 
-        $this->output->warning(sprintf(
-            'The exception [%s] should not be reported. Please check the configuration.',
-            \get_class($runtimeException)
-        ));
+            $warning = sprintf(
+                'The exception [%s] should not be reported. Please check the configuration.',
+                \get_class($runtimeException)
+            );
+        } finally {
+            $this->output->warning(
+                $warning ?? <<<'warning'
+                    Please check whether your channels received the exception notification report.
+                    If not, please find reason in the default log.
+                    warning
+            );
+
+            $this->output->note('Test for exception-notify done.');
+        }
     }
 
     private function getMainConfigurations(): array
