@@ -36,6 +36,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 /**
@@ -45,16 +46,13 @@ use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+    use MockeryPHPUnitIntegration;
     use VarDumperTestTrait;
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-        if ($container = \Mockery::getContainer()) {
-            $this->addToAssertionCount($container->mockery_getExpectationCount());
-        }
-
         \Mockery::close();
+        parent::tearDown();
     }
 
     protected function getPackageProviders($app): array
