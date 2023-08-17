@@ -18,7 +18,7 @@ use Illuminate\Support\Stringable;
 
 class FixPrettyJsonPipe
 {
-    protected JsonFixer $jsonFixer;
+    private JsonFixer $jsonFixer;
 
     public function __construct(JsonFixer $jsonFixer)
     {
