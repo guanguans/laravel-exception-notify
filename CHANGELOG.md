@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.3.2"></a>
+## [3.3.2] - 2023-08-17
+### Refactor
+- **AddChorePipe:** optimize handle method
+- **pipes:** update FixPrettyJsonPipe
+
+### Test
+- **tests:** Add MockeryPHPUnitIntegration trait
+
+
 <a name="3.3.1"></a>
 ## [3.3.1] - 2023-08-14
 ### Refactor
@@ -553,7 +563,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.2...HEAD
+[3.3.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.3...3.3.0
 [3.2.3]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.2...3.2.3
