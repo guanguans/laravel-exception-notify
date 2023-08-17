@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 class AddChorePipe
@@ -25,14 +26,10 @@ class AddChorePipe
      */
     public function handle(Collection $collectors, \Closure $next, $value, $key): Stringable
     {
-        $choreName = ChoreCollector::name();
-
-        $collectors = $collectors->transform(
-            static fn (array $collector, string $name): array => $name === $choreName
-                ? Arr::add($collector, $key, $value)
-                : $collector
-        );
-
-        return $next($collectors);
+        return $next(collect(Arr::add(
+            $collectors->all(),
+            Str::start($key, ChoreCollector::name().'.'),
+            $value
+        )));
     }
 }
