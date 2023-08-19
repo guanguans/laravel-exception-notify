@@ -41,9 +41,9 @@ it('can report', function (): void {
         ->report(new Exception)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
-    $mockApplication = Mockery::spy(Application::class);
-    // $mockApplication->allows('make')->with('config')->andReturn(config());
-    $mockApplication->allows('runningInConsole')->andReturnFalse();
+    $mockApplication = Mockery::spy(Illuminate\Foundation\Application::class);
+    // $mockApplication->allows()->make('config')->atLeast()->once()->andReturn(config());
+    $mockApplication->allows()->runningInConsole()->atLeast()->once()->andReturnFalse();
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))

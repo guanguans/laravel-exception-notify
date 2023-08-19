@@ -49,9 +49,15 @@ class TestCase extends \Orchestra\Testbench\TestCase
     use MockeryPHPUnitIntegration;
     use VarDumperTestTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->startMockery();
+    }
+
     protected function tearDown(): void
     {
-        \Mockery::close();
+        $this->closeMockery();
         parent::tearDown();
     }
 

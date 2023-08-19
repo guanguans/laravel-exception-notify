@@ -60,14 +60,14 @@ return [
     ],
 
     /**
-     * The title of exception notification report.
-     */
-    'title' => env('EXCEPTION_NOTIFY_TITLE', sprintf('The %s application exception report', config('app.name'))),
-
-    /**
      * The creator of report using.
      */
     'report_using_creator' => env('EXCEPTION_NOTIFY_REPORT_USING_CREATOR', ReportUsingCreator::class),
+
+    /**
+     * The title of exception notification report.
+     */
+    'title' => env('EXCEPTION_NOTIFY_TITLE', sprintf('The %s application exception report', config('app.name'))),
 
     /**
      * The list of collector.
