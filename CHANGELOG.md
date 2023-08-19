@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.4.0"></a>
+## [3.4.0] - 2023-08-20
+### Feat
+- **ReportUsingCreator:** add class
+
+### Refactor
+- add return type declaration to getDefaultDriver method
+
+### Test
+- **TestCase:** Update setUp and tearDown methods
+
+### Pull Requests
+- Merge pull request [#47](https://github.com/guanguans/monorepo-builder-worker/issues/47) from guanguans/dependabot/composer/rector/rector-tw-0.17or-tw-0.18
+
+
 <a name="3.3.2"></a>
 ## [3.3.2] - 2023-08-17
 ### Refactor
@@ -563,7 +578,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...HEAD
+[3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.2...3.4.0
 [3.3.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.3...3.3.0
