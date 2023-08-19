@@ -16,6 +16,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
+use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
 return [
     /**
@@ -42,14 +43,6 @@ return [
     ],
 
     /**
-     * The options of report exception job.
-     */
-    'job' => [
-        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
-        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
-    ],
-
-    /**
      * The rate limit of same exception.
      */
     'rate_limit' => [
@@ -59,9 +52,22 @@ return [
     ],
 
     /**
+     * The options of report exception job.
+     */
+    'job' => [
+        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
+        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
+    ],
+
+    /**
      * The title of exception notification report.
      */
     'title' => env('EXCEPTION_NOTIFY_TITLE', sprintf('The %s application exception report', config('app.name'))),
+
+    /**
+     * The creator of report using.
+     */
+    'report_using_creator' => env('EXCEPTION_NOTIFY_REPORT_USING_CREATOR', ReportUsingCreator::class),
 
     /**
      * The list of collector.
