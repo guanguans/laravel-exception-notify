@@ -106,7 +106,7 @@ class ExceptionNotifyManager extends Manager
         }
     }
 
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return Arr::first((array) config('exception-notify.defaults'));
     }
