@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Illuminate\Contracts\Debug\ExceptionHandler;
+
 /**
  * @property \Illuminate\Contracts\Container\Container $container
  *
@@ -23,10 +25,13 @@ class ReportUsingCreator
      * @psalm-suppress UndefinedThisPropertyFetch
      * @psalm-suppress InaccessibleProperty
      */
-    public function __invoke(): \Closure
+    public function __invoke(ExceptionHandler $exceptionHandler): \Closure
     {
-        return function (\Throwable $e): void {
-            $this->container->make(ExceptionNotifyManager::class)->reportIf($this->shouldReport($e), $e);
+        return function (\Throwable $throwable) use ($exceptionHandler): void {
+            $this->container->make(ExceptionNotifyManager::class)->reportIf(
+                $exceptionHandler->shouldReport($throwable),
+                $throwable
+            );
         };
     }
 }
