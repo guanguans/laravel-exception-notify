@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.4.1"></a>
+## [3.4.1] - 2023-08-20
+### Fix
+- **src:** fix reportUsingCreator callable
+
+### Test
+- **Channels:** update BarkChannel
+
+
 <a name="3.4.0"></a>
 ## [3.4.0] - 2023-08-20
 ### Feat
@@ -578,7 +587,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...HEAD
+[3.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.2...3.4.0
 [3.3.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
