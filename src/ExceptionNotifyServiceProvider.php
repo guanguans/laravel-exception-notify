@@ -157,11 +157,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
                 /** @var callable(\Throwable):mixed|void $reportUsing */
                 $reportUsing = $reportUsingCreator($exceptionHandler);
-                if (! $reportUsing instanceof \Closure) {
-                    $reportUsing = \Closure::fromCallable($reportUsing);
+                if ($reportUsing instanceof \Closure) {
+                    $reportUsing = $reportUsing->bindTo($exceptionHandler, $exceptionHandler);
                 }
 
-                $exceptionHandler->reportable($reportUsing->bindTo($exceptionHandler, $exceptionHandler));
+                $exceptionHandler->reportable($reportUsing);
             }
 
             return $exceptionHandler;
