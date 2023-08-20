@@ -29,11 +29,9 @@ use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Support\Str;
 
 it('can report', function (): void {
-    $mockClient = Mockery::mock(Client::class);
-    $mockClient->allows('send')->andReturn('report');
-
-    expect(new BarkChannel($mockClient))
-        ->report('report')->toBe('report');
+    expect(new BarkChannel(
+        Mockery::spy(Client::class)->allows('send')->once()->getMock()
+    ))->report('report')->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can create message', function (): void {
