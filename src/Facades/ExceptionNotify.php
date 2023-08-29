@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static void reportIf(mixed $condition, \Throwable $throwable, array|string $channels = null)
  * @method static void report(\Throwable $throwable, array|string $channels = null)
- * @method static void getDefaultDriver()
+ * @method static string getDefaultDriver()
  * @method static bool shouldReport(\Throwable $throwable)
  * @method static mixed driver(null|string $driver = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)
