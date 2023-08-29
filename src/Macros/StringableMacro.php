@@ -28,14 +28,4 @@ class StringableMacro
     {
         return fn (): self => new static(Str::ucwords($this->value));
     }
-
-    public function squish(): callable
-    {
-        return fn (): self => new static(Str::squish($this->value));
-    }
-
-    public function toString(): callable
-    {
-        return fn (): string => $this->value;
-    }
 }
