@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
-class ToMarkdownPipe extends SprintfPipe
+class SprintfMarkdownPipe extends SprintfPipe
 {
     public function handle(
         Collection $collectors,
