@@ -14,7 +14,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
 use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
@@ -222,7 +222,7 @@ return [
             'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
             'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
             'pipes' => [
-                ToHtmlPipe::class,
+                SprintfHtmlPipe::class,
             ],
         ],
 

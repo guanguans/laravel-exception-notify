@@ -34,7 +34,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\ToHtmlPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ToMarkdownPipe;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
@@ -94,7 +94,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ]);
         config()->set('exception-notify.channels.null.pipes', [
             hydrate_pipe(AddKeywordPipe::class, 'keyword'),
-            ToHtmlPipe::class,
+            SprintfHtmlPipe::class,
             ToMarkdownPipe::class,
             FixPrettyJsonPipe::class,
             hydrate_pipe(LimitLengthPipe::class, 512),
