@@ -62,17 +62,17 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "guanguans/notify": "^1.26",
+        "guanguans/notify": "^1.27",
         "illuminate/contracts": "^7.0 || ^8.0 || ^9.0 || ^10.0",
         "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "ergebnis/composer-normalize": "^2.28",
-        "friendsofphp/php-cs-fixer": "^3.14",
+        "friendsofphp/php-cs-fixer": "^3.35",
         "guanguans/ai-commit": "^1.8",
         "guanguans/monorepo-builder-worker": "^1.2",
-        "kubawerlos/php-cs-fixer-custom-fixers": "^3.13",
+        "kubawerlos/php-cs-fixer-custom-fixers": "^3.16",
         "laravel/lumen-framework": "^7.0 || ^8.0 || ^9.0 || ^10.0",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0",
@@ -171,8 +171,8 @@
         "facade-lint": "@facade-update --lint",
         "facade-update": "/usr/local/opt/php@8.1/bin/php -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify",
         "lint": [
-            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
-            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
+            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec php74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
+            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec php74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
         ],
         "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
         "mark-separate": "printf '\\n!\\n!\\t\\033[0;33m%s\\033[0m\\n!\\n\\n' \"----------------\"",
