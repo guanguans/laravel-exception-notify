@@ -12,10 +12,10 @@ parameters:
 
 		-
 			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Macros\\\\StringableMacro\\:\\:\\$value\\.$#"
-			count: 4
+			count: 2
 			path: src/Macros/StringableMacro.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 3
+			count: 2
 			path: src/Macros/StringableMacro.php
