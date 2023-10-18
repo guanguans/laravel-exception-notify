@@ -82,7 +82,7 @@ return (new Config)
         // array_notation
 
         // basic
-        'curly_braces_position' => [
+        'braces_position' => [
             'control_structures_opening_brace' => 'same_line',
             'functions_opening_brace' => 'next_line_unless_newline_at_signature_end',
             'anonymous_functions_opening_brace' => 'same_line',
@@ -188,7 +188,7 @@ return (new Config)
         // list_notation
 
         // namespace_notation
-        'no_blank_lines_before_namespace' => false,
+        'blank_lines_before_namespace' => true,
 
         // naming
 
@@ -210,6 +210,8 @@ return (new Config)
             'methods' => [],
         ],
         'php_unit_test_class_requires_covers' => false,
+        'php_unit_data_provider_name' => true,
+        'php_unit_data_provider_return_type' => true,
 
         // phpdoc
         'phpdoc_align' => [
@@ -252,6 +254,7 @@ return (new Config)
         //     ],
         // ],
         'phpdoc_to_comment' => false,
+        'phpdoc_param_order' => true,
 
         // return_notation
         'simplified_null_return' => true,
@@ -290,7 +293,7 @@ return (new Config)
                 'yield_from',
             ],
         ],
-        'new_with_braces' => [
+        'new_with_parentheses' => [
             'anonymous_class' => false,
             'named_class' => false,
         ],
@@ -307,8 +310,8 @@ return (new Config)
             'functions' => ['print_r', 'var_dump', 'var_export'],
         ],
         // PhpCsFixerCustomFixers\Fixer\ConstructorEmptyBracesFixer::name() => true,
-        PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer::name() => true,
-        PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer::name() => true,
+        // PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer::name() => true,
+        // PhpCsFixerCustomFixers\Fixer\DataProviderReturnTypeFixer::name() => true,
         // PhpCsFixerCustomFixers\Fixer\DeclareAfterOpeningTagFixer::name() => true,
         // PhpCsFixerCustomFixers\Fixer\EmptyFunctionBodyFixer::name() => true,
         // PhpCsFixerCustomFixers\Fixer\IssetToArrayKeyExistsFixer::name() => true,
@@ -359,7 +362,7 @@ return (new Config)
         //         'var',
         //     ],
         // ],
-        PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer::name() => true,
+        // PhpCsFixerCustomFixers\Fixer\PhpdocParamOrderFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocSelfAccessorFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocSingleLineVarFixer::name() => false,

@@ -11,9 +11,7 @@ declare(strict_types=1);
  */
 
 namespace {
-    class ExceptionNotify extends \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify
-    {
-    }
+    class ExceptionNotify extends \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify {}
 }
 
 namespace Illuminate\Support {
@@ -23,9 +21,7 @@ namespace Illuminate\Support {
      * @see \Guanguans\LaravelExceptionNotify\Macros\CollectionMacro
      * @see \Illuminate\Support\Collection
      */
-    class Collection
-    {
-    }
+    class Collection {}
 
     /**
      * @method string lcfirst($string)
@@ -35,9 +31,7 @@ namespace Illuminate\Support {
      * @see \Guanguans\LaravelExceptionNotify\Macros\StrMacro
      * @see \Illuminate\Support\Str
      */
-    class Str
-    {
-    }
+    class Str {}
 
     /**
      * @method \Illuminate\Support\Stringable lcfirst()
@@ -48,9 +42,7 @@ namespace Illuminate\Support {
      * @see \Guanguans\LaravelExceptionNotify\Macros\StringableMacro
      * @see \Illuminate\Support\Stringable
      */
-    class Stringable
-    {
-    }
+    class Stringable {}
 }
 
 namespace Illuminate\Http {
@@ -60,7 +52,5 @@ namespace Illuminate\Http {
      * @see \Guanguans\LaravelExceptionNotify\Macros\RequestMacro
      * @see \Illuminate\Http\Request
      */
-    class Collection
-    {
-    }
+    class Collection {}
 }

@@ -14,6 +14,4 @@ namespace Guanguans\LaravelExceptionNotify\Exceptions;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract;
 
-class RuntimeException extends \RuntimeException implements ThrowableContract
-{
-}
+class RuntimeException extends \RuntimeException implements ThrowableContract {}

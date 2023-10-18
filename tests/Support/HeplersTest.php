@@ -17,11 +17,10 @@ use Laravel\Lumen\Application;
 it('can explode env', function (): void {
     expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy()
         ->and(env_explode('ENV_EXPLODE_EMPTY'))->toBe([''])
-        ->and(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull()
-        // ->and(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue()
-        // ->and(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse()
-        // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
-    ;
+        ->and(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull();
+    // ->and(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue()
+    // ->and(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse()
+    // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
 })->group(__DIR__, __FILE__);
 
 it('can return Stringable', function (): void {
