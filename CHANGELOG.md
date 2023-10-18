@@ -8,6 +8,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.5.0"></a>
+## [3.5.0] - 2023-10-18
+### Feat
+- **config:** Add php_unit_data_provider_name and php_unit_data_provider_return_type in .php-cs-fixer.php
+
+### Refactor
+- **pipes:** rename ToMarkdownPipe to SprintfMarkdownPipe
+- **pipes:** rename ToHtmlPipe to SprintfHtmlPipe
+
+### Pull Requests
+- Merge pull request [#51](https://github.com/guanguans/monorepo-builder-worker/issues/51) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-5
+- Merge pull request [#49](https://github.com/guanguans/monorepo-builder-worker/issues/49) from guanguans/dependabot/github_actions/actions/checkout-4
+
+
 <a name="3.4.2"></a>
 ## [3.4.2] - 2023-08-29
 ### Feat
@@ -600,7 +614,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.0...HEAD
+[3.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.2...3.5.0
 [3.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.2...3.4.0
