@@ -20,18 +20,18 @@ use Illuminate\Support\Facades\Facade;
  * @method static void report(\Throwable $throwable, array|string $channels = null)
  * @method static string getDefaultDriver()
  * @method static bool shouldReport(\Throwable $throwable)
- * @method static mixed driver(null|string $driver = null)
+ * @method static mixed driver(string|null $driver = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)
  * @method static array getDrivers()
  * @method static \Illuminate\Contracts\Container\Container getContainer()
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager setContainer(\Illuminate\Contracts\Container\Container $container)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager forgetDrivers()
- * @method static void macro(string $name, callable|object $macro)
+ * @method static void macro(string $name, object|callable $macro)
  * @method static void mixin(object $mixin, bool $replace = true)
  * @method static bool hasMacro(string $name)
  * @method static void flushMacros()
  * @method static mixed macroCall(string $method, array $parameters)
- * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(null|callable $callback = null)
+ * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(callable|null $callback = null)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
  */
