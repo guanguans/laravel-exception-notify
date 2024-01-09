@@ -11,7 +11,7 @@ declare(strict_types=1);
  */
 
 namespace {
-    class ExceptionNotify extends \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify {}
+    class ExceptionNotify extends Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify {}
 }
 
 namespace Illuminate\Support {

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
   <file src="src/Collectors/RequestHeaderCollector.php">
     <UndefinedMagicMethod>
       <code>headers</code>
     </UndefinedMagicMethod>
   </file>
   <file src="src/Support/ExceptionContext.php">
-    <UnusedVariable>
+    <UndefinedVariable>
       <code>$exceptionLine</code>
-    </UnusedVariable>
+      <code>$exceptionLine</code>
+    </UndefinedVariable>
   </file>
 </files>

@@ -169,10 +169,10 @@
         "composer-unused-checker": "@php ./vendor/bin/composer-unused --ansi -v",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "facade-lint": "@facade-update --lint",
-        "facade-update": "/usr/local/opt/php@8.1/bin/php -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify",
+        "facade-update": "/opt/homebrew/opt/php@8.1/bin/php -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify",
         "lint": [
-            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec php74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
-            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec php74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
+            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec /opt/homebrew/opt/php@7.4/bin/php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
+            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec /opt/homebrew/opt/php@7.4/bin/php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
         ],
         "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
         "mark-separate": "printf '\\n!\\n!\\t\\033[0;33m%s\\033[0m\\n!\\n\\n' \"----------------\"",
