@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.5.1"></a>
+## [3.5.1] - 2024-01-09
+### Refactor
+- **coding-style:** Remove unused Rectors
+- **monorepo-builder:** update release workers
+
+### Pull Requests
+- Merge pull request [#54](https://github.com/guanguans/monorepo-builder-worker/issues/54) from guanguans/dependabot/github_actions/actions/stale-9
+- Merge pull request [#53](https://github.com/guanguans/monorepo-builder-worker/issues/53) from guanguans/dependabot/github_actions/actions/labeler-5
+
+
 <a name="3.5.0"></a>
 ## [3.5.0] - 2023-10-18
 ### Feat
@@ -614,7 +625,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.1...HEAD
+[3.5.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.0...3.5.1
 [3.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.2...3.5.0
 [3.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...3.4.1
