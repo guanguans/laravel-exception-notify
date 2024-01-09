@@ -18,8 +18,6 @@ use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
-use Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector;
-use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
@@ -79,7 +77,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip([
         // rules
-        // AddArrayDefaultToArrayPropertyRector::class,
         // CallableThisArrayToAnonymousFunctionRector::class,
         // ChangeAndIfToEarlyReturnRector::class,
         // ExplicitBoolCompareRector::class,
@@ -88,7 +85,6 @@ return static function (RectorConfig $rectorConfig): void {
         // ReturnBinaryOrToEarlyReturnRector::class,
         // SimplifyBoolIdenticalTrueRector::class,
         // StaticClosureRector::class,
-        // UnSpreadOperatorRector::class,
 
         EncapsedStringsToSprintfRector::class,
         // InlineIfToExplicitIfRector::class,
@@ -117,9 +113,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         // ReturnEarlyIfVariableRector::class => [
         //     __DIR__.'/src/Support/EscapeArg.php',
-        // ],
-        // UnSpreadOperatorRector::class => [
-        //     __DIR__.'/src/Concerns/WithDumpable.php',
         // ],
 
         // paths
