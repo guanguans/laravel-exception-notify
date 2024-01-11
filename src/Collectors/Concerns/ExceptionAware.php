@@ -12,12 +12,18 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors\Concerns;
 
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
+
 trait ExceptionAware
 {
     protected \Throwable $exception;
 
+    protected FlattenException $flattenException;
+
     public function setException(\Throwable $throwable): void
     {
         $this->exception = $throwable;
+
+        $this->flattenException = FlattenException::createFromThrowable($throwable);
     }
 }
