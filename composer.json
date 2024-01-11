@@ -83,7 +83,7 @@
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "rector/rector": "^0.19",
-        "vimeo/psalm": "^5.18"
+        "vimeo/psalm": "^5.19"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -162,6 +162,10 @@
         ],
         "composer-bin-all-update": "@composer bin all update --ansi -v",
         "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",
+        "composer-fixer": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./composer-fixer"
+        ],
         "composer-normalize": "@composer normalize --dry-run --diff --ansi -v",
         "composer-parallel": "@composer parallel --ansi -v",
         "composer-parallel-checks": "@composer-parallel composer-validate md-lint lint style-lint test psalm",
