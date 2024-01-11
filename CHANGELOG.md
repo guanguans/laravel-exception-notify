@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.5.2"></a>
+## [3.5.2] - 2024-01-11
+### Refactor
+- **collectors:** improve exception handling
+
+
 <a name="3.5.1"></a>
 ## [3.5.1] - 2024-01-09
 ### Refactor
@@ -625,7 +631,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.2...HEAD
+[3.5.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.1...3.5.2
 [3.5.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.5.0...3.5.1
 [3.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.2...3.5.0
 [3.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...3.4.2
