@@ -102,9 +102,9 @@
     },
     "config": {
         "allow-plugins": {
+            "ergebnis/composer-normalize": true,
             "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true,
-            "ergebnis/composer-normalize": true
+            "phpstan/extension-installer": true
         },
         "apcu-autoloader": true,
         "classmap-authoritative": false,

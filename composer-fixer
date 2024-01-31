@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -13,7 +14,6 @@ declare(strict_types=1);
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -24,6 +24,8 @@ require __DIR__.'/vendor/autoload.php';
     private string $composerJsonFile;
     private string $composerBinary;
     private string $highestComposerBinary;
+    private array $exceptPackageNames;
+    private array $exceptPackageVersions;
 
     public function __construct()
     {
@@ -31,43 +33,41 @@ require __DIR__.'/vendor/autoload.php';
         $this->composerJsonFile = __DIR__.'/composer.json';
         $this->composerBinary = $this->findComposerBinary();
         $this->highestComposerBinary = $this->findComposerBinary('/opt/homebrew/opt/php@8.3/bin/php');
+        $this->exceptPackageNames = [
+        ];
+        $this->exceptPackageVersions = [
+            '*',
+            '-',
+            '@',
+        ];
     }
 
     public function __invoke(): void
     {
         $this
-            // ->updateComposerPackages()
-            ->updateComposerJsonFile($this->updateComposerDecodedJson())
-            // ->updateComposerPackages()
-            ->normalizeComposerJsonFile()
+            ->updateComposerPackages()
+            ->updateOutdatedComposerPackages()
+            ->updateComposerPackages()
+            ->normalizeComposerJson()
             ->success();
-    }
-
-    private function getComposerDecodedJson(): array
-    {
-        /** @noinspection JsonEncodingApiUsageInspection */
-        return json_decode(file_get_contents($this->composerJsonFile), true);
-    }
-
-    private function dependencyVersion(string $version): array
-    {
-        return array_slice(explode('.', ltrim($version, 'v'), 3), 0, 2);
     }
 
     private function updateComposerPackages(): self
     {
-        $this->createAndMustRunProcess("{$this->composerBinary} update -W --ansi -v");
+        $this->createAndMustRunProcess("$this->composerBinary update -W --ansi -v");
 
         return $this;
     }
 
-    private function updateComposerJsonFile(array $composerDecodedJson): self
+    /**
+     * @noinspection JsonEncodingApiUsageInspection
+     */
+    private function updateOutdatedComposerPackages(): self
     {
-        /** @noinspection JsonEncodingApiUsageInspection */
         file_put_contents(
             $this->composerJsonFile,
             json_encode(
-                $composerDecodedJson,
+                $this->getOutdatedDecodedComposerJson(),
                 JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
             ).PHP_EOL
         );
@@ -75,87 +75,79 @@ require __DIR__.'/vendor/autoload.php';
         return $this;
     }
 
-    private function updateComposerDecodedJson(): array
+    private function normalizeComposerJson(): self
     {
-        $composerOutdatedPackages = $this->getComposerOutdatedPackages();
-        $composerDecodedJson = $this->getComposerDecodedJson();
-
-        foreach ($composerOutdatedPackages as $composerOutdatedPackage) {
-            foreach (['require', 'require-dev'] as $environment) {
-                if (isset($composerDecodedJson[$environment][$composerOutdatedPackage['name']])) {
-                    $composerDecodedJson[$environment][$composerOutdatedPackage['name']] = $composerOutdatedPackage['dependency_version'];
-                }
-            }
-        }
-
-        return $composerDecodedJson;
-    }
-
-    private function normalizeComposerJsonFile(): self
-    {
-        $this->createAndMustRunProcess("{$this->composerBinary} normalize --diff --ansi -v");
+        $this->createAndMustRunProcess("$this->composerBinary normalize --diff --ansi -v");
 
         return $this;
     }
 
-    /**
-     * @param null|array|string $message
-     */
-    private function success($message = null): void
+    private function success(): void
     {
-        $this->symfonyStyle->success($message ?: 'Composer packages updated successfully!');
+        $this->symfonyStyle->success('Composer packages updated successfully!');
 
         exit(0);
     }
 
-    private function getComposerOutdatedPackages(): array
+    /**
+     * @noinspection JsonEncodingApiUsageInspection
+     */
+    private function getOutdatedDecodedComposerJson(): array
     {
-        /** @noinspection JsonEncodingApiUsageInspection */
-        $outdatedPackages = json_decode(
-            $this
-                ->createAndMustRunProcess("{$this->highestComposerBinary} outdated --format=json --direct --ansi -v")
-                ->getOutput(),
-            true
-        )['installed'];
-        $outdatedPackages = array_filter($outdatedPackages, function (array $package) {
-            return ! (
-                '*' === $package['version']
-                || str_contains($package['version'], '-')
-                || str_contains($package['version'], '@')
+        $outdatedComposerPackages = (function (): array {
+            $outdatedPackages = json_decode(
+                $this
+                    ->createAndMustRunProcess("$this->highestComposerBinary outdated --format=json --direct --ansi -v")
+                    ->getOutput(),
+                true
+            )['installed'];
+
+            $outdatedPackages = array_filter(
+                $outdatedPackages,
+                fn (array $package): bool => ! $this->strIs($this->exceptPackageNames, $package['name']) && ! $this->strIs(
+                    $this->exceptPackageVersions,
+                    $package['version']
+                )
             );
-        });
 
-        return array_map(
-            function (array $package): array {
-                $dependencyLowestVersion = $this->dependencyVersion($package['version']);
-                $dependencyHighestVersion = $this->dependencyVersion($package['latest']);
-                $dependencyVersion = '^'.implode('.', $dependencyLowestVersion);
+            $versionResolver = static fn (string $version): array => array_slice(
+                explode('.', ltrim($version, 'v'), 3),
+                0,
+                2
+            );
 
-                if ($dependencyLowestVersion[0] !== $dependencyHighestVersion[0]) {
-                    $dependencyVersion = $dependencyVersion.' || '.implode(' || ', array_map(
-                        static fn (string $main): string => "^$main.0",
-                        range($dependencyLowestVersion[0] + 1, $dependencyHighestVersion[0])
-                    ));
+            return array_map(
+                static function (array $package) use ($versionResolver): array {
+                    $dependencyLowestVersion = $versionResolver($package['version']);
+                    $dependencyHighestVersion = $versionResolver($package['latest']);
+
+                    $dependencyVersion = '^'.implode('.', $dependencyLowestVersion);
+                    if ($dependencyLowestVersion[0] !== $dependencyHighestVersion[0]) {
+                        $dependencyVersion .= ' || '.implode(' || ', array_map(
+                            static fn (string $major): string => "^$major.0",
+                            range($dependencyLowestVersion[0] + 1, $dependencyHighestVersion[0])
+                        ));
+                    }
+
+                    $package['dependency_version'] = $dependencyVersion;
+
+                    return $package;
+                },
+                $outdatedPackages
+            );
+        })();
+
+        $decodedComposerJson = json_decode(file_get_contents($this->composerJsonFile), true);
+
+        foreach ($outdatedComposerPackages as $composerOutdatedPackage) {
+            foreach (['require', 'require-dev'] as $environment) {
+                if (isset($decodedComposerJson[$environment][$composerOutdatedPackage['name']])) {
+                    $decodedComposerJson[$environment][$composerOutdatedPackage['name']] = $composerOutdatedPackage['dependency_version'];
                 }
-
-                $package['dependency_version'] = $dependencyVersion;
-
-                return $package;
-            },
-            $outdatedPackages
-        );
-    }
-
-    private function updateComposerOutdatedPackage(string $composerOutdatedPackage, string $environment): void
-    {
-        try {
-            $this->createAndMustRunProcess(sprintf(
-                "{$this->composerBinary} require $composerOutdatedPackage %s --no-scripts -W --ansi -v",
-                'require-dev' === $environment ? '--dev' : ''
-            ));
-        } catch (ProcessFailedException $processFailedException) {
-            $this->symfonyStyle->error("Failed to update composer outdated [$composerOutdatedPackage] package version.");
+            }
         }
+
+        return $decodedComposerJson;
     }
 
     private function findComposerBinary(?string $phpBinary = null): string
@@ -188,5 +180,34 @@ require __DIR__.'/vendor/autoload.php';
             ->setWorkingDirectory(dirname($this->composerJsonFile))
             ->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])
             ->mustRun(fn (string $type, string $buffer) => $this->symfonyStyle->write($buffer));
+    }
+
+    /**
+     * @param array|string $pattern
+     *
+     * @noinspection SuspiciousLoopInspection
+     */
+    private function strIs($pattern, string $value): bool
+    {
+        $patterns = (array) $pattern;
+        // $value = (string) $value;
+        if (empty($patterns)) {
+            return false;
+        }
+
+        foreach ($patterns as $pattern) {
+            $pattern = (string) $pattern;
+            if ($pattern === $value) {
+                return true;
+            }
+
+            $pattern = preg_quote($pattern, '#');
+            $pattern = str_replace('\*', '.*', $pattern);
+            if (1 === preg_match('#^'.$pattern.'\z#u', $value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 })();
