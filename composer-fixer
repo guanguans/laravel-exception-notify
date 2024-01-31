@@ -10,7 +10,6 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Composer\InstalledVersions;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -21,34 +20,43 @@ use Symfony\Component\Process\Process;
 require __DIR__.'/vendor/autoload.php';
 
 (new class {
-    private string $composerJsonFile = __DIR__.'/composer.json';
-
     private SymfonyStyle $symfonyStyle;
+    private string $composerJsonFile;
+    private string $composerBinary;
+    private string $highestComposerBinary;
 
     public function __construct()
     {
         $this->symfonyStyle = new SymfonyStyle(new ArgvInput, new ConsoleOutput);
+        $this->composerJsonFile = __DIR__.'/composer.json';
+        $this->composerBinary = $this->findComposerBinary();
+        $this->highestComposerBinary = $this->findComposerBinary('/opt/homebrew/opt/php@8.3/bin/php');
     }
 
     public function __invoke(): void
     {
         $this
-            ->updateComposerPackages()
+            // ->updateComposerPackages()
             ->updateComposerJsonFile($this->updateComposerDecodedJson())
-            ->updateComposerPackages()
+            // ->updateComposerPackages()
             ->normalizeComposerJsonFile()
             ->success();
     }
 
-    protected function getComposerDecodedJson(): array
+    private function getComposerDecodedJson(): array
     {
         /** @noinspection JsonEncodingApiUsageInspection */
         return json_decode(file_get_contents($this->composerJsonFile), true);
     }
 
+    private function dependencyVersion(string $version): array
+    {
+        return array_slice(explode('.', ltrim($version, 'v'), 3), 0, 2);
+    }
+
     private function updateComposerPackages(): self
     {
-        $this->createAndMustRunProcess("{$this->findComposerBinary()} update -W --ansi -v");
+        $this->createAndMustRunProcess("{$this->composerBinary} update -W --ansi -v");
 
         return $this;
     }
@@ -72,37 +80,11 @@ require __DIR__.'/vendor/autoload.php';
         $composerOutdatedPackages = $this->getComposerOutdatedPackages();
         $composerDecodedJson = $this->getComposerDecodedJson();
 
-        foreach ($composerDecodedJson as $option => &$value) {
-            if (! in_array($option, ['require', 'require-dev'], true)) {
-                continue;
-            }
-
-            foreach ($value as $package => &$version) {
-                if (
-                    'php' === $package
-                    || '*' === $version
-                    || str_starts_with($package, 'ext-')
-                    || str_contains($version, '-')
-                    || str_contains($version, '@')
-                    || str_contains($version, '|')
-                ) {
-                    continue;
+        foreach ($composerOutdatedPackages as $composerOutdatedPackage) {
+            foreach (['require', 'require-dev'] as $environment) {
+                if (isset($composerDecodedJson[$environment][$composerOutdatedPackage['name']])) {
+                    $composerDecodedJson[$environment][$composerOutdatedPackage['name']] = $composerOutdatedPackage['dependency_version'];
                 }
-
-                // Update composer outdated package version
-                if (in_array($package, $composerOutdatedPackages, true)) {
-                    $this->updateComposerOutdatedPackage($package, $option);
-                }
-
-                // Update composer package version
-                $version = '^'.implode(
-                    '.',
-                    array_slice(
-                        explode('.', InstalledVersions::getVersion($package), 3),
-                        0,
-                        2
-                    )
-                );
             }
         }
 
@@ -111,7 +93,7 @@ require __DIR__.'/vendor/autoload.php';
 
     private function normalizeComposerJsonFile(): self
     {
-        $this->createAndMustRunProcess("{$this->findComposerBinary()} normalize --diff --ansi -v");
+        $this->createAndMustRunProcess("{$this->composerBinary} normalize --diff --ansi -v");
 
         return $this;
     }
@@ -129,14 +111,38 @@ require __DIR__.'/vendor/autoload.php';
     private function getComposerOutdatedPackages(): array
     {
         /** @noinspection JsonEncodingApiUsageInspection */
+        $outdatedPackages = json_decode(
+            $this
+                ->createAndMustRunProcess("{$this->highestComposerBinary} outdated --format=json --direct --ansi -v")
+                ->getOutput(),
+            true
+        )['installed'];
+        $outdatedPackages = array_filter($outdatedPackages, function (array $package) {
+            return ! (
+                '*' === $package['version']
+                || str_contains($package['version'], '-')
+                || str_contains($package['version'], '@')
+            );
+        });
+
         return array_map(
-            static fn (array $package): string => $package['name'],
-            json_decode(
-                $this
-                    ->createAndMustRunProcess("{$this->findComposerBinary()} outdated --format=json --direct --ansi -v")
-                    ->getOutput(),
-                true
-            )['installed']
+            function (array $package): array {
+                $dependencyLowestVersion = $this->dependencyVersion($package['version']);
+                $dependencyHighestVersion = $this->dependencyVersion($package['latest']);
+                $dependencyVersion = '^'.implode('.', $dependencyLowestVersion);
+
+                if ($dependencyLowestVersion[0] !== $dependencyHighestVersion[0]) {
+                    $dependencyVersion = $dependencyVersion.' || '.implode(' || ', array_map(
+                        static fn (string $main): string => "^$main.0",
+                        range($dependencyLowestVersion[0] + 1, $dependencyHighestVersion[0])
+                    ));
+                }
+
+                $package['dependency_version'] = $dependencyVersion;
+
+                return $package;
+            },
+            $outdatedPackages
         );
     }
 
@@ -144,7 +150,7 @@ require __DIR__.'/vendor/autoload.php';
     {
         try {
             $this->createAndMustRunProcess(sprintf(
-                "{$this->findComposerBinary()} require $composerOutdatedPackage %s --no-scripts -W --ansi -v",
+                "{$this->composerBinary} require $composerOutdatedPackage %s --no-scripts -W --ansi -v",
                 'require-dev' === $environment ? '--dev' : ''
             ));
         } catch (ProcessFailedException $processFailedException) {
@@ -152,11 +158,11 @@ require __DIR__.'/vendor/autoload.php';
         }
     }
 
-    private function findComposerBinary(): string
+    private function findComposerBinary(?string $phpBinary = null): string
     {
         return sprintf(
             '%s %s',
-            (new PhpExecutableFinder)->find(),
+            $phpBinary ?? (new PhpExecutableFinder)->find(),
             (new Symfony\Component\Process\ExecutableFinder)->find('composer')
         );
     }
