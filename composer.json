@@ -62,17 +62,17 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "guanguans/notify": "^1.27",
+        "guanguans/notify": "^1.28",
         "illuminate/contracts": "^7.0 || ^8.0 || ^9.0 || ^10.0",
         "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
-        "ergebnis/composer-normalize": "^2.28",
-        "friendsofphp/php-cs-fixer": "^3.46",
+        "ergebnis/composer-normalize": "^2.42",
+        "friendsofphp/php-cs-fixer": "^3.48",
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
-        "kubawerlos/php-cs-fixer-custom-fixers": "^3.18",
+        "kubawerlos/php-cs-fixer-custom-fixers": "^3.19",
         "laravel/lumen-framework": "^7.0 || ^8.0 || ^9.0 || ^10.0",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0",
@@ -83,7 +83,7 @@
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "rector/rector": "^0.19",
-        "vimeo/psalm": "^5.19"
+        "vimeo/psalm": "^5.21"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -170,7 +170,7 @@
         "composer-unused-checker": "@php ./vendor/bin/composer-unused --ansi -v",
         "composer-updater": [
             "Composer\\Config::disableProcessTimeout",
-            "@php ./composer-updater"
+            "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.3/bin/php --except-packages=laravel/lumen-framework --except-packages=orchestra/testbench --except-packages=pestphp/pest-plugin-laravel --ansi"
         ],
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "facade-lint": "@facade-update --lint",

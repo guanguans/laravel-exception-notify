@@ -71,9 +71,6 @@ $status = (new SingleCommandApplication)
                 $this->exceptPackages = array_merge([
                     'php',
                     'ext-*',
-                    // 'laravel/lumen-framework',
-                    // 'orchestra/testbench',
-                    // 'pestphp/pest-plugin-laravel',
                 ], $exceptPackages);
                 $this->exceptDependencyVersions = array_merge([
                     '\*',
