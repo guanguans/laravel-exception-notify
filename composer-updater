@@ -11,6 +11,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Composer\InstalledVersions;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,6 +19,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\SingleCommandApplication;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -36,7 +38,7 @@ $status = (new SingleCommandApplication)
         assert($this instanceof SingleCommandApplication);
         assert((bool) $input->getOption('highest-php-binary'));
 
-        (new class(
+        (new class (
             $input->getOption('composer-json-path') ?: __DIR__.'/composer.json',
             $input->getOption('highest-php-binary'),
             $input->getOption('composer-binary'),
@@ -152,7 +154,7 @@ $status = (new SingleCommandApplication)
                         } else { // 单版本依赖
                             if (
                                 $this->strIs('*|*', $dependencyVersion)
-                                || ! ($version = Composer\InstalledVersions::getVersion($package))
+                                || ! ($version = InstalledVersions::getVersion($package))
                             ) {
                                 continue;
                             }
@@ -203,7 +205,7 @@ $status = (new SingleCommandApplication)
                 return sprintf(
                     '%s %s',
                     $phpBinary ?? (new PhpExecutableFinder)->find(),
-                    $composerBinary ?? (new Symfony\Component\Process\ExecutableFinder)->find('composer')
+                    $composerBinary ?? (new ExecutableFinder)->find('composer')
                 );
             }
 
@@ -219,7 +221,7 @@ $status = (new SingleCommandApplication)
                 ?string $cwd = null,
                 ?array $env = null,
                 $input = null,
-                ?float $timeout = 60
+                ?float $timeout = 300
             ): Process {
                 $process = is_string($command)
                     ? Process::fromShellCommandline($command, $cwd, $env, $input, $timeout)
