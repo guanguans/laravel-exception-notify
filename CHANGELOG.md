@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.5.3"></a>
+## [3.5.3] - 2024-02-01
+### Refactor
+- **composer-fixer:** Update composer-fixer script
+- **composer-updater:** Improve handling of multiple and single version dependencies
+
+### Pull Requests
+- Merge pull request [#56](https://github.com/guanguans/laravel-exception-notify/issues/56) from guanguans/dependabot/github_actions/actions/cache-4
+
+
 <a name="3.5.2"></a>
 ## [3.5.2] - 2024-01-11
 ### Refactor
@@ -631,7 +641,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...HEAD
+[3.5.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.2...3.5.3
 [3.5.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.1...3.5.2
 [3.5.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.0...3.5.1
 [3.5.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.4.2...3.5.0
