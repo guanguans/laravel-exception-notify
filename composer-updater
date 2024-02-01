@@ -89,6 +89,8 @@ $status = (new SingleCommandApplication)
                     ->updateComposerPackages()
                     ->updateOutdatedComposerPackages()
                     ->updateComposerPackages()
+                    ->updateOutdatedComposerPackages()
+                    ->updateComposerPackages()
                     ->normalizeComposerJson()
                     ->success();
             }
@@ -135,6 +137,7 @@ $status = (new SingleCommandApplication)
             {
                 $outdatedComposerPackages = $this->getOutdatedComposerPackages();
                 $decodedComposerJson = json_decode(file_get_contents($this->composerJsonPath), true);
+                (fn () => self::reload(null))->call(new InstalledVersions);
 
                 foreach ($decodedComposerJson as $name => &$value) {
                     if (! in_array($name, ['require', 'require-dev'], true)) {
@@ -149,17 +152,12 @@ $status = (new SingleCommandApplication)
                             continue;
                         }
 
-                        if (isset($outdatedComposerPackages[$package])) { // 多版本依赖
-                            $dependencyVersion = $outdatedComposerPackages[$package]['dependency_version'];
-                        } else { // 单版本依赖
-                            if (
-                                $this->strIs('*|*', $dependencyVersion)
-                                || ! ($version = InstalledVersions::getVersion($package))
-                            ) {
-                                continue;
-                            }
-
+                        if ($version = InstalledVersions::getVersion($package)) {
                             $dependencyVersion = $this->toDependencyVersion($version);
+                        }
+
+                        if (isset($outdatedComposerPackages[$package])) {
+                            $dependencyVersion = $outdatedComposerPackages[$package]['dependency_version'];
                         }
                     }
                 }

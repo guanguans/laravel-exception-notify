@@ -67,7 +67,7 @@
         "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0"
     },
     "require-dev": {
-        "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
+        "brainmaestro/composer-git-hooks": "^2.8",
         "ergebnis/composer-normalize": "^2.42",
         "friendsofphp/php-cs-fixer": "^3.48",
         "guanguans/ai-commit": "dev-main",
