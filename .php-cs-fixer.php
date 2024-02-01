@@ -35,6 +35,9 @@ $finder = Finder::create()
         '__snapshots__/',
     ])
     ->append(glob(__DIR__.'/{*,.*}.php', GLOB_BRACE))
+    ->append([
+        __DIR__.'/composer-updater',
+    ])
     ->notPath([
         'bootstrap/*',
         'storage/*',
@@ -328,6 +331,10 @@ return (new Config)
                 // 'throws',
                 // 'var',
             ],
+        ],
+
+        'class_definition' => [
+            'inline_constructor_arguments' => false,
         ],
 
         // https://github.com/kubawerlos/php-cs-fixer-custom-fixers
