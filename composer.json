@@ -63,8 +63,8 @@
         "php": ">=7.4",
         "ext-json": "*",
         "guanguans/notify": "^1.28",
-        "illuminate/contracts": "^7.0 || ^8.0 || ^9.0 || ^10.0",
-        "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0"
+        "illuminate/contracts": "^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
+        "illuminate/support": "^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8",
@@ -73,7 +73,7 @@
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.21",
-        "laravel/lumen-framework": "^7.0 || ^8.0 || ^9.0 || ^10.0",
+        "laravel/lumen-framework": "^7.0 || ^8.0 || ^9.0 || ^10.0 || ^11.0",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^5.0 || ^6.0 || ^7.0 || ^8.0",
         "pestphp/pest": "^1.23 || ^2.0",
