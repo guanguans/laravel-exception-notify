@@ -116,6 +116,8 @@ $status = (new SingleCommandApplication)
 
             /**
              * @noinspection JsonEncodingApiUsageInspection
+             *
+             * @return $this|never-return
              */
             private function updateOutdatedComposerPackages(): self
             {
@@ -130,7 +132,7 @@ $status = (new SingleCommandApplication)
                         $outdatedComposerJsonContents
                     )));
 
-                    return $this;
+                    exit(0);
                 }
 
                 file_put_contents($this->composerJsonPath, $outdatedComposerJsonContents);

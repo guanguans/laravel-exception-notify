@@ -55,7 +55,7 @@ $finder = Finder::create()
 return (new Config)
     ->setFinder($finder)
     ->setRiskyAllowed(true)
-    ->setUsingCache(false)
+    ->setUsingCache(true)
     ->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers)
     ->setRules([
@@ -258,6 +258,7 @@ return (new Config)
         // ],
         'phpdoc_to_comment' => false,
         'phpdoc_param_order' => true,
+        'phpdoc_array_type' => true,
 
         // return_notation
         'simplified_null_return' => true,
@@ -374,7 +375,7 @@ return (new Config)
         PhpCsFixerCustomFixers\Fixer\PhpUnitAssertArgumentsOrderFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpUnitDedicatedAssertFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpUnitNoUselessReturnFixer::name() => true,
-        PhpCsFixerCustomFixers\Fixer\PhpdocArrayStyleFixer::name() => true,
+        // PhpCsFixerCustomFixers\Fixer\PhpdocArrayStyleFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocNoIncorrectVarAnnotationFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocNoSuperfluousParamFixer::name() => true,
         // PhpCsFixerCustomFixers\Fixer\PhpdocOnlyAllowedAnnotationsFixer::name() => [
