@@ -8,6 +8,18 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.6.0"></a>
+## [3.6.0] - 2024-03-13
+### Feat
+- **composer-updater:** add dry-run option
+
+### Refactor
+- **composer-updater:** Improve diff formatting
+
+### Pull Requests
+- Merge pull request [#57](https://github.com/guanguans/laravel-exception-notify/issues/57) from guanguans/dependabot/composer/rector/rector-tw-0.19or-tw-1.0
+
+
 <a name="3.5.3"></a>
 ## [3.5.3] - 2024-02-01
 ### Refactor
@@ -641,7 +653,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.0...HEAD
+[3.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...3.6.0
 [3.5.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.2...3.5.3
 [3.5.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.1...3.5.2
 [3.5.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.0...3.5.1
