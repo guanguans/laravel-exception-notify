@@ -125,7 +125,10 @@ $status = (new SingleCommandApplication)
                 ).PHP_EOL;
 
                 if ($this->dryRun) {
-                    echo $this->differ->diff($this->composerJsonContents, $outdatedComposerJsonContents);
+                    $this->symfonyStyle->writeln($this->formatDiff($this->differ->diff(
+                        $this->composerJsonContents,
+                        $outdatedComposerJsonContents
+                    )));
 
                     return $this;
                 }
@@ -290,6 +293,33 @@ $status = (new SingleCommandApplication)
                 }
 
                 return false;
+            }
+
+            private function formatDiff(string $diff): string
+            {
+                $lines = explode(
+                    "\n",
+                    $diff,
+                );
+
+                $formatted = array_map(static function (string $line): string {
+                    return preg_replace(
+                        [
+                            '/^(\+.*)$/',
+                            '/^(-.*)$/',
+                        ],
+                        [
+                            '<fg=green>$1</>',
+                            '<fg=red>$1</>',
+                        ],
+                        $line,
+                    );
+                }, $lines);
+
+                return implode(
+                    "\n",
+                    $formatted,
+                );
             }
         })();
     })
