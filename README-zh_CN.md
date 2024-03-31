@@ -38,20 +38,10 @@ composer require guanguans/laravel-exception-notify -v
 
 ## 配置
 
-### 注册服务
-
-#### laravel
+### 发布文件(可选的)
 
 ```bash
 php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
-```
-
-#### lumen
-
-将以下代码段添加到 `bootstrap/app.php` 文件中的 `Register Service Providers` 部分下：
-
-```php
-$app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### 申请通道 `token`、`secret` 等信息
@@ -77,17 +67,6 @@ EXCEPTION_NOTIFY_DEFAULTS=dingTalk,log,...
 EXCEPTION_NOTIFY_DINGTALK_KEYWORD=keyword # 可选的
 EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94d
 EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 # 可选的
-```
-
-### laravel7 及以下版本和 lumen 中需在 `app/Exceptions/Handler.php` 的 `report` 方法中添加
-
-```php
-public function report(Throwable $exception)
-{
-    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::reportIf($this->shouldReport($exception), $exception);
-
-    parent::report($exception);
-}
 ```
 
 ## 使用

@@ -38,20 +38,10 @@ composer require guanguans/laravel-exception-notify -v
 
 ## Configuration
 
-### Register service
-
-#### laravel
+### Publish files(optional)
 
 ```bash
 php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
-```
-
-#### lumen
-
-Add the following snippet to the `bootstrap/app.php` file under the `Register Service Providers` section as follows:
-
-```php
-$app->register(\Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider::class);
 ```
 
 ### Apply for channel `token` or `secret` information
@@ -77,17 +67,6 @@ EXCEPTION_NOTIFY_DEFAULTS=dingTalk,log,...
 EXCEPTION_NOTIFY_DINGTALK_KEYWORD=keyword # optional
 EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94d
 EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 # optional
-```
-
-### Laravel7 and below versions and lumen need to be added to the `report` method of `app/Exceptions/Handler.php`
-
-```php
-public function report(Throwable $exception)
-{
-    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::reportIf($this->shouldReport($exception), $exception);
-
-    parent::report($exception);
-}
 ```
 
 ## Usage
