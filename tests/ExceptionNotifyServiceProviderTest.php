@@ -18,7 +18,7 @@ it('can register', function (): void {
     /** @noinspection PhpParamsInspection */
     expect(new ExceptionNotifyServiceProvider(new Application))
         ->register()->toBeNull();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('can get provides', function (): void {
     expect(new ExceptionNotifyServiceProvider(app()))

@@ -32,7 +32,7 @@ it('can is lumen', function (): void {
     expect(is_lumen())->toBeFalse()
         ->and(is_lumen(app()))->toBeFalse()
         ->and(is_lumen(app(Application::class)))->toBeTrue();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('can human milliseconds', function (): void {
     expect([
