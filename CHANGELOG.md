@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.8.0"></a>
+## [3.8.0] - 2024-03-31
+### Docs
+- **readme:** Remove unnecessary Chinese translation and code snippets
+
+### Refactor
+- **src:** Improve extendExceptionHandler method in ExceptionNotifyServiceProvider
+
+
 <a name="3.7.0"></a>
 ## [3.7.0] - 2024-03-31
 ### Refactor
@@ -666,7 +675,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.7.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.0...HEAD
+[3.8.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.7.0...3.8.0
 [3.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.1...3.7.0
 [3.6.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...3.6.0
