@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.6.1"></a>
+## [3.6.1] - 2024-03-31
+### Pull Requests
+- Merge pull request [#61](https://github.com/guanguans/laravel-exception-notify/issues/61) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.0.0
+- Merge pull request [#60](https://github.com/guanguans/laravel-exception-notify/issues/60) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.7.0
+
+
 <a name="3.6.0"></a>
 ## [3.6.0] - 2024-03-13
 ### Feat
@@ -653,7 +660,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.1...HEAD
+[3.6.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...3.6.0
 [3.5.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.2...3.5.3
 [3.5.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.1...3.5.2
