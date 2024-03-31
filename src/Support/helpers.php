@@ -10,10 +10,8 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
-use Laravel\Lumen\Application as LumenApplication;
 
 if (! function_exists('env_explode')) {
     /**
@@ -125,13 +123,6 @@ if (! function_exists('json_pretty_encode')) {
             JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR | $options,
             $depth
         );
-    }
-}
-
-if (! function_exists('is_lumen')) {
-    function is_lumen(?Container $app = null): bool
-    {
-        return ($app ?? app()) instanceof LumenApplication;
     }
 }
 

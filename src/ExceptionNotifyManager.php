@@ -38,7 +38,7 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 
 /**
- * @property \Illuminate\Foundation\Application|\Laravel\Lumen\Application $container
+ * @property \Illuminate\Foundation\Application $container
  *
  * @method \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract driver($driver = null)
  *
@@ -47,7 +47,7 @@ use Illuminate\Support\Traits\Tappable;
 class ExceptionNotifyManager extends Manager
 {
     use Macroable {
-        __call as macroCall;
+        Macroable::__call as macroCall;
     }
     use Tappable;
 

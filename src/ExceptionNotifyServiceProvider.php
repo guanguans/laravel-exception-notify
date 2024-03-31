@@ -21,13 +21,11 @@ use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
-use Laravel\Lumen\Application as LumenApplication;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
@@ -76,10 +74,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         /** @noinspection RealpathInStreamContextInspection */
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
 
-        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+        if ($this->app->runningInConsole()) {
             $this->publishes([$source => config_path('exception-notify.php')], 'laravel-exception-notify');
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('exception-notify');
         }
 
         $this->mergeConfigFrom($source, 'exception-notify');
