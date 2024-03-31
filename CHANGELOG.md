@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.7.0"></a>
+## [3.7.0] - 2024-03-31
+### Refactor
+- **composer:** Remove unnecessary packages and update dependencies
+
+
 <a name="3.6.1"></a>
 ## [3.6.1] - 2024-03-31
 ### Pull Requests
@@ -660,7 +666,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.7.0...HEAD
+[3.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.1...3.7.0
 [3.6.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.0...3.6.1
 [3.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.3...3.6.0
 [3.5.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.5.2...3.5.3
