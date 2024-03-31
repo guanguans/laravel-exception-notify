@@ -21,6 +21,7 @@ use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
@@ -142,10 +143,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function extendExceptionHandler(): self
     {
         $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $exceptionHandler): ExceptionHandler {
-            if (
-                ($reportUsingCreator = config('exception-notify.report_using_creator'))
-                && method_exists($exceptionHandler, 'reportable')
-            ) {
+            if ($reportUsingCreator = config('exception-notify.report_using_creator')) {
                 /** @var callable(ExceptionHandler):callable|class-string $reportUsingCreator */
                 if (\is_string($reportUsingCreator) && class_exists($reportUsingCreator)) {
                     $reportUsingCreator = $this->app->make($reportUsingCreator);
@@ -157,6 +155,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
                     $reportUsing = $reportUsing->bindTo($exceptionHandler, $exceptionHandler);
                 }
 
+                /** @var Handler $exceptionHandler */
                 $exceptionHandler->reportable($reportUsing);
             }
 
