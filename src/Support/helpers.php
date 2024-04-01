@@ -10,9 +10,6 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
-
 if (! function_exists('env_explode')) {
     /**
      * @param mixed $default
@@ -79,34 +76,6 @@ if (! function_exists('array_is_list')) {
         }
 
         return true;
-    }
-}
-
-if (! function_exists('str')) {
-    /**
-     * @param mixed $string
-     *
-     * @return Stringable|\Stringable
-     *
-     * @codeCoverageIgnore
-     */
-    function str($string = null)
-    {
-        if (0 === func_num_args()) {
-            return new class implements \Stringable {
-                public function __call($method, $parameters)
-                {
-                    return Str::$method(...$parameters);
-                }
-
-                public function __toString(): string
-                {
-                    return '';
-                }
-            };
-        }
-
-        return Str::of($string);
     }
 }
 
