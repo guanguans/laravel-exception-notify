@@ -16,17 +16,8 @@ namespace {
 
 namespace Illuminate\Support {
     /**
-     * @method mixed reduceWithKeys(callable $callback, $carry = null)
-     *
-     * @see \Guanguans\LaravelExceptionNotify\Macros\CollectionMacro
-     * @see \Illuminate\Support\Collection
-     */
-    class Collection {}
-
-    /**
      * @method string lcfirst($string)
      * @method string ucwords($string)
-     * @method string squish($string)
      *
      * @see \Guanguans\LaravelExceptionNotify\Macros\StrMacro
      * @see \Illuminate\Support\Str
@@ -36,8 +27,6 @@ namespace Illuminate\Support {
     /**
      * @method \Illuminate\Support\Stringable lcfirst()
      * @method \Illuminate\Support\Stringable ucwords()
-     * @method \Illuminate\Support\Stringable squish()
-     * @method string toString()
      *
      * @see \Guanguans\LaravelExceptionNotify\Macros\StringableMacro
      * @see \Illuminate\Support\Stringable
