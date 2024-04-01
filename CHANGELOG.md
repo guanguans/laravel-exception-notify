@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.8.2"></a>
+## [3.8.2] - 2024-04-01
+### Refactor
+- **CollectionMacro:** Remove unnecessary method and comments
+- **macro:** Remove lcfirst method from StrMacro and StringableMacro classes
+
+
 <a name="3.8.1"></a>
 ## [3.8.1] - 2024-03-31
 ### Refactor
@@ -681,7 +688,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.2...HEAD
+[3.8.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.1...3.8.2
 [3.8.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.0...3.8.1
 [3.8.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.7.0...3.8.0
 [3.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.6.1...3.7.0
