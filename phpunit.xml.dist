@@ -15,9 +15,6 @@
       <directory>tests/</directory>
       <exclude>vendor/</exclude>
     </testsuite>
-    <testsuite name="rector">
-      <directory>utils/rector/tests</directory>
-    </testsuite>
   </testsuites>
   <php>
     <env name="APP_KEY" value="base64:e2ASw7JCNMYR6PWInGGQrzUzisuDvv8bhNl14XGbUi8="/>

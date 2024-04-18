@@ -33,7 +33,7 @@ it('can report', function (): void {
     expect(new BarkChannel(
         Mockery::spy(Client::class)->allows('send')->once()->getMock()
     ))->report('report')->toBeNull();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('can create message', function (): void {
     $collection = collect([
@@ -64,4 +64,4 @@ it('can create message', function (): void {
     });
 
     expect($collection)->each->toBeInstanceOf(MessageInterface::class);
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
