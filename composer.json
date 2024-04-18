@@ -99,7 +99,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Guanguans\\LaravelExceptionNotify\\Tests\\": "tests"
+            "Guanguans\\LaravelExceptionNotify\\Tests\\": "tests",
+            "Utils\\Rector\\": "utils/rector/src",
+            "Utils\\Rector\\Tests\\": "utils/rector/tests"
         }
     },
     "config": {
@@ -196,6 +198,10 @@
         "psalm-baseline": "@psalm --update-baseline",
         "rector": "@php ./vendor/bin/rector --ansi -v",
         "rector-dry-run": "@rector --dry-run",
+        "rector-list-rules": "@rector list-rules",
+        "rector-setup-ci": "@rector setup-ci",
+        "rector-custom-rule": "@rector custom-rule",
+        "rector-detect-node": "@rector detect-node --loop",
         "release": "@php ./vendor/bin/monorepo-builder release --ansi -v",
         "release-major": "@release major",
         "release-major-dry-run": "@release-major --dry-run",
