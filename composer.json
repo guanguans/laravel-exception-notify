@@ -73,9 +73,9 @@
         "ergebnis/rector-rules": "^1.0",
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
-        "icanhazstring/composer-unused": "^0.8.11",
+        "icanhazstring/composer-unused": "^0.8",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.21",
-        "maglnet/composer-require-checker": "^3.8",
+        "maglnet/composer-require-checker": "^3.8 || ^4.0",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^6.43 || ^7.0 || ^8.0 || ^9.0",
         "pestphp/pest": "^1.23 || ^2.0",
@@ -119,11 +119,8 @@
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
-            "forward-command": true,
+            "forward-command": false,
             "target-directory": "vendor-bin"
-        },
-        "branch-alias": {
-            "dev-main": "3.x-dev"
         },
         "hooks": {
             "post-merge": [
@@ -167,11 +164,9 @@
         "composer-bin-all-update": "@composer bin all update --ansi -v",
         "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",
         "composer-normalize": "@composer normalize --dry-run --diff --ansi -v",
-        "composer-parallel": "@composer parallel --ansi -v",
-        "composer-parallel-checks": "@composer-parallel composer-validate md-lint lint style-lint test psalm",
         "composer-require-checker": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v",
+        "composer-require-checker-json": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v --output=json | jq",
         "composer-unused": "@php ./vendor/bin/composer-unused --ansi -v",
-        "composer-unused-checker": "@php ./vendor/bin/composer-unused --ansi -v",
         "composer-updater": "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.3/bin/php --except-packages=guanguans/notify --except-packages=pestphp/pest-plugin-laravel --ansi",
         "composer-updater-dry-run": "@composer-updater --dry-run",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
@@ -197,11 +192,11 @@
         "psalm": "@php ./vendor/bin/psalm",
         "psalm-baseline": "@psalm --update-baseline",
         "rector": "@php ./vendor/bin/rector --ansi -v",
+        "rector-custom-rule": "@rector custom-rule",
+        "rector-detect-node": "@rector detect-node --loop",
         "rector-dry-run": "@rector --dry-run",
         "rector-list-rules": "@rector list-rules",
         "rector-setup-ci": "@rector setup-ci",
-        "rector-custom-rule": "@rector custom-rule",
-        "rector-detect-node": "@rector detect-node --loop",
         "release": "@php ./vendor/bin/monorepo-builder release --ansi -v",
         "release-major": "@release major",
         "release-major-dry-run": "@release-major --dry-run",
