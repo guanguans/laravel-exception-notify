@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
@@ -118,7 +119,7 @@ return [
      */
     'channels' => [
         /**
-         * Bark
+         * Bark.
          *
          * @see https://github.com/Finb/Bark
          */
@@ -134,7 +135,7 @@ return [
         ],
 
         /**
-         * Chanify
+         * Chanify.
          *
          * @see https://github.com/chanify/chanify-ios
          */
@@ -149,7 +150,7 @@ return [
         ],
 
         /**
-         * 钉钉群机器人
+         * 钉钉群机器人.
          *
          * @see https://developers.dingtalk.com/document/app/custom-robot-access
          */
@@ -166,7 +167,7 @@ return [
         ],
 
         /**
-         * Discord
+         * Discord.
          *
          * @see https://discord.com/developers/docs/resources/webhook#edit-webhook-message
          */
@@ -180,7 +181,7 @@ return [
         ],
 
         /**
-         * 飞书群机器人
+         * 飞书群机器人.
          *
          * @see https://www.feishu.cn/hc/zh-CN/articles/360024984973
          */
@@ -197,7 +198,7 @@ return [
         ],
 
         /**
-         * Log
+         * Log.
          *
          * @see Illuminate\Log\LogManager
          */
@@ -209,7 +210,7 @@ return [
         ],
 
         /**
-         * 邮件
+         * 邮件.
          *
          * 安装依赖 composer require symfony/mailer -v
          *
@@ -227,7 +228,7 @@ return [
         ],
 
         /**
-         * Push Deer
+         * Push Deer.
          *
          * @see http://pushdeer.com
          */
@@ -241,7 +242,7 @@ return [
         ],
 
         /**
-         * QQ Channel Bot
+         * QQ Channel Bot.
          *
          * 安装依赖 composer require textalk/websocket -v
          *
@@ -260,7 +261,7 @@ return [
         ],
 
         /**
-         * Server 酱
+         * Server 酱.
          *
          * @see https://sct.ftqq.com
          */
@@ -271,7 +272,7 @@ return [
         ],
 
         /**
-         * Slack
+         * Slack.
          *
          * @see https://api.slack.com/messaging/webhooks
          */
@@ -285,7 +286,7 @@ return [
         ],
 
         /**
-         * Telegram
+         * Telegram.
          *
          * @see https://core.telegram.org/bots/api#sendmessage
          */
@@ -300,7 +301,7 @@ return [
         ],
 
         /**
-         * 企业微信群机器人
+         * 企业微信群机器人.
          *
          * @see https://open.work.weixin.qq.com/api/doc/90000/90136/91770
          */
@@ -314,7 +315,7 @@ return [
         ],
 
         /**
-         * 息知
+         * 息知.
          *
          * @see https://xz.qqoq.net/#/index
          */

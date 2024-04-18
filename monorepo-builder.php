@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseReleaseWorker;
@@ -28,7 +29,7 @@ return static function (MBConfig $mbConfig): void {
     $mbConfig->defaultBranch('main');
 
     /**
-     * release workers - in order to execute
+     * release workers - in order to execute.
      *
      * @see https://github.com/symplify/monorepo-builder#6-release-flow
      */

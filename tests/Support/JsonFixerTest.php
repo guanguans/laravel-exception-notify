@@ -5,11 +5,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
@@ -20,14 +21,14 @@ it('can fix invalid json', function (string $json, string $expect): void {
 
 it('can fix invalid json with missing value', function (): void {
     expect(new JsonFixer)->missingValue('')
-        ->fix(substr(json_encode([1, 2, 3], JSON_THROW_ON_ERROR), 0, 5))->toBeJson()
+        ->fix(substr(json_encode([1, 2, 3], \JSON_THROW_ON_ERROR), 0, 5))->toBeJson()
         ->and(new JsonFixer)
-        ->silent()->fix($json = substr(json_encode([1, 2, 3], JSON_THROW_ON_ERROR), 3))->toBe($json)
+        ->silent()->fix($json = substr(json_encode([1, 2, 3], \JSON_THROW_ON_ERROR), 3))->toBe($json)
         ->not->toBeJson();
 })->group(__DIR__, __FILE__);
 
 it('will throw RuntimeException', function (): void {
     (new JsonFixer)
         ->silent(false)
-        ->fix(substr(json_encode([1, 2, 3], JSON_THROW_ON_ERROR), 3));
+        ->fix(substr(json_encode([1, 2, 3], \JSON_THROW_ON_ERROR), 3));
 })->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Could not fix JSON (tried padding ``)');

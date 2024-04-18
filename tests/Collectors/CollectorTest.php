@@ -3,18 +3,19 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 
 it('can collect request basic', function (): void {
-    define('LARAVEL_START', microtime(true));
+    \define('LARAVEL_START', microtime(true));
 
     expect(app(RequestBasicCollector::class))
         ->collect()->toBeArray();
-})->group(__DIR__, __FILE__)->skip(defined('LARAVEL_START'));
+})->group(__DIR__, __FILE__)->skip(\defined('LARAVEL_START'));

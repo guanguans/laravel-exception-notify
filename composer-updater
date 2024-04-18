@@ -4,11 +4,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 use Composer\InstalledVersions;
@@ -36,11 +37,11 @@ $status = (new SingleCommandApplication)
     ->addOption('except-dependency-versions', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL)
     ->addOption('dry-run', null, InputOption::VALUE_NONE)
     ->setCode(function (InputInterface $input, OutputInterface $output): void {
-        assert_options(ASSERT_BAIL, 1);
-        assert($this instanceof SingleCommandApplication);
-        assert((bool) $input->getOption('highest-php-binary'));
+        assert_options(\ASSERT_BAIL, 1);
+        \assert($this instanceof SingleCommandApplication);
+        \assert((bool) $input->getOption('highest-php-binary'));
 
-        (new class (
+        (new class(
             $input->getOption('composer-json-path') ?: __DIR__.'/composer.json',
             $input->getOption('highest-php-binary'),
             $input->getOption('composer-binary'),
@@ -73,8 +74,8 @@ $status = (new SingleCommandApplication)
                 ?SymfonyStyle $symfonyStyle = null,
                 ?Differ $differ = null
             ) {
-                assert_options(ASSERT_BAIL, 1);
-                assert((bool) $composerJsonPath);
+                assert_options(\ASSERT_BAIL, 1);
+                \assert((bool) $composerJsonPath);
 
                 $this->composerJsonPath = $composerJsonPath;
                 $this->composerJsonContents = file_get_contents($composerJsonPath);
@@ -123,8 +124,8 @@ $status = (new SingleCommandApplication)
             {
                 $outdatedComposerJsonContents = json_encode(
                     $this->getOutdatedDecodedComposerJson(),
-                    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-                ).PHP_EOL;
+                    \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES
+                ).\PHP_EOL;
 
                 if ($this->dryRun) {
                     $this->symfonyStyle->writeln($this->formatDiff($this->differ->diff(
@@ -162,7 +163,7 @@ $status = (new SingleCommandApplication)
                 (fn () => self::reload(null))->call(new InstalledVersions);
 
                 foreach ($decodedComposerJson as $name => &$value) {
-                    if (! in_array($name, ['require', 'require-dev'], true)) {
+                    if (!\in_array($name, ['require', 'require-dev'], true)) {
                         continue;
                     }
 
@@ -230,11 +231,11 @@ $status = (new SingleCommandApplication)
             }
 
             /**
-             * @param array|string $command
-             * @param mixed $input The input as stream resource, scalar or \Traversable, or null for no input
-             *
              * @noinspection MissingParameterTypeDeclarationInspection
              * @noinspection PhpSameParameterValueInspection
+             *
+             * @param array|string $command
+             * @param mixed $input The input as stream resource, scalar or \Traversable, or null for no input
              */
             private function mustRunCommand(
                 $command,
@@ -243,14 +244,14 @@ $status = (new SingleCommandApplication)
                 $input = null,
                 ?float $timeout = 300
             ): Process {
-                $process = is_string($command)
+                $process = \is_string($command)
                     ? Process::fromShellCommandline($command, $cwd, $env, $input, $timeout)
                     : new Process($command, $cwd, $env, $input, $timeout);
 
                 $this->symfonyStyle->warning($process->getCommandLine());
 
                 return $process
-                    ->setWorkingDirectory(dirname($this->composerJsonPath))
+                    ->setWorkingDirectory(\dirname($this->composerJsonPath))
                     ->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])
                     ->mustRun(function (string $type, string $buffer): void {
                         $this->symfonyStyle->isVerbose() and $this->symfonyStyle->write($buffer);
@@ -259,7 +260,7 @@ $status = (new SingleCommandApplication)
 
             private function toDependencyVersion(string $version): string
             {
-                return '^'.implode('.', array_slice($this->toArrayVersion($version), 0, 2));
+                return '^'.implode('.', \array_slice($this->toArrayVersion($version), 0, 2));
             }
 
             private function toArrayVersion(string $version): array
@@ -268,27 +269,30 @@ $status = (new SingleCommandApplication)
             }
 
             /**
-             * @param array|string $pattern
-             *
              * @noinspection SuspiciousLoopInspection
              * @noinspection ComparisonScalarOrderInspection
              * @noinspection MissingParameterTypeDeclarationInspection
+             *
+             * @param array|string $pattern
              */
             private function strIs($pattern, string $value): bool
             {
                 $patterns = (array) $pattern;
+
                 if (empty($patterns)) {
                     return false;
                 }
 
                 foreach ($patterns as $pattern) {
                     $pattern = (string) $pattern;
+
                     if ($pattern === $value) {
                         return true;
                     }
 
                     $pattern = preg_quote($pattern, '#');
                     $pattern = str_replace('\*', '.*', $pattern);
+
                     if (1 === preg_match('#^'.$pattern.'\z#u', $value)) {
                         return true;
                     }

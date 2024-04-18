@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 namespace Guanguans\LaravelExceptionNotify\Support;
@@ -71,7 +72,7 @@ class ExceptionContext
 
     protected static function getFile(\Throwable $throwable): array
     {
-        return collect(explode(PHP_EOL, file_get_contents($throwable->getFile())))
+        return collect(explode(\PHP_EOL, file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
             ->mapWithKeys(static fn (string $code, int $line): array => [$line + 1 => $code])
             ->all();

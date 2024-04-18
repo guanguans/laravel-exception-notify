@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 namespace Guanguans\LaravelExceptionNotify;
@@ -68,7 +69,7 @@ class ExceptionNotifyManager extends Manager
 
     /**
      * @param mixed $condition
-     * @param array<string>|string $channels
+     * @param list<string>|string $channels
      */
     public function reportIf($condition, \Throwable $throwable, $channels = null): void
     {
@@ -76,7 +77,7 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @param array<string>|string $channels
+     * @param list<string>|string $channels
      */
     public function report(\Throwable $throwable, $channels = null): void
     {
@@ -93,7 +94,7 @@ class ExceptionNotifyManager extends Manager
             ));
 
             if (
-                ! $this->container->runningInConsole()
+                !$this->container->runningInConsole()
                 && 'sync' === config('exception-notify.job.connection')
                 && method_exists($dispatch, 'afterResponse')
             ) {
@@ -113,16 +114,16 @@ class ExceptionNotifyManager extends Manager
 
     public function shouldReport(\Throwable $throwable): bool
     {
-        return ! $this->shouldntReport($throwable);
+        return !$this->shouldntReport($throwable);
     }
 
     protected function shouldntReport(\Throwable $throwable): bool
     {
-        if (! config('exception-notify.enabled')) {
+        if (!config('exception-notify.enabled')) {
             return true;
         }
 
-        if (! Str::is(config('exception-notify.env'), (string) $this->container->environment())) {
+        if (!Str::is(config('exception-notify.env'), (string) $this->container->environment())) {
             return true;
         }
 
@@ -130,7 +131,7 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        return ! $this->attempt(
+        return !$this->attempt(
             $this->toFingerprint($throwable),
             config('exception-notify.rate_limit.max_attempts'),
             config('exception-notify.rate_limit.decay_seconds')

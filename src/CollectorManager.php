@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 namespace Guanguans\LaravelExceptionNotify;
@@ -23,13 +24,13 @@ use Illuminate\Support\Stringable;
 class CollectorManager extends Fluent
 {
     /**
-     * @param array<CollectorContract> $collectors
-     *
-     * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
-     *
      * @noinspection MagicMethodsValidityInspection
      * @noinspection PhpMissingParentConstructorInspection
      * @noinspection MissingParentCallInspection
+     *
+     * @param list<CollectorContract> $collectors
+     *
+     * @throws \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException
      */
     public function __construct(array $collectors = [])
     {
@@ -44,7 +45,7 @@ class CollectorManager extends Fluent
      */
     public function offsetSet($offset, $value): void
     {
-        if (! $value instanceof CollectorContract) {
+        if (!$value instanceof CollectorContract) {
             throw new InvalidArgumentException(sprintf('The value must be an instance of %s', CollectorContract::class));
         }
 

@@ -3,25 +3,27 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-if (! function_exists('env_explode')) {
+if (!\function_exists('env_explode')) {
     /**
+     * @noinspection LaravelFunctionsInspection
+     *
      * @param mixed $default
      *
      * @return mixed
-     *
-     * @noinspection LaravelFunctionsInspection
      */
-    function env_explode(string $key, $default = null, string $delimiter = ',', int $limit = PHP_INT_MAX)
+    function env_explode(string $key, $default = null, string $delimiter = ',', int $limit = \PHP_INT_MAX)
     {
         $env = env($key, $default);
-        if (is_string($env)) {
+
+        if (\is_string($env)) {
             return explode($delimiter, $env, $limit);
         }
 
@@ -29,14 +31,14 @@ if (! function_exists('env_explode')) {
     }
 }
 
-if (! function_exists('array_filter_filled')) {
+if (!\function_exists('array_filter_filled')) {
     function array_filter_filled(array $array): array
     {
         return array_filter($array, static fn ($item): bool => filled($item));
     }
 }
 
-if (! function_exists('array_reduce_with_keys')) {
+if (!\function_exists('array_reduce_with_keys')) {
     /**
      * @param null|mixed $carry
      *
@@ -54,7 +56,7 @@ if (! function_exists('array_reduce_with_keys')) {
     }
 }
 
-if (! function_exists('array_is_list')) {
+if (!\function_exists('array_is_list')) {
     /**
      * @codeCoverageIgnore
      *
@@ -62,13 +64,14 @@ if (! function_exists('array_is_list')) {
      */
     function array_is_list(array $array): bool
     {
-        if ([] === $array || $array === array_values($array)) {
+        if ([] === $array || array_values($array) === $array) {
             return true;
         }
 
         $nextKey = -1;
 
         $keys = array_keys($array);
+
         foreach ($keys as $key) {
             if ($key !== ++$nextKey) {
                 return false;
@@ -79,7 +82,7 @@ if (! function_exists('array_is_list')) {
     }
 }
 
-if (! function_exists('json_pretty_encode')) {
+if (!\function_exists('json_pretty_encode')) {
     /**
      * @param mixed $value
      *
@@ -89,13 +92,13 @@ if (! function_exists('json_pretty_encode')) {
     {
         return json_encode(
             $value,
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR | $options,
+            \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR | $options,
             $depth
         );
     }
 }
 
-if (! function_exists('hydrate_pipe')) {
+if (!\function_exists('hydrate_pipe')) {
     /**
      * @param class-string $pipe
      */
@@ -105,7 +108,7 @@ if (! function_exists('hydrate_pipe')) {
     }
 }
 
-if (! function_exists('human_bytes')) {
+if (!\function_exists('human_bytes')) {
     /**
      * Convert bytes to human readable format.
      *
@@ -117,7 +120,7 @@ if (! function_exists('human_bytes')) {
     function human_bytes(int $bytes, int $decimals = 2): string
     {
         $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        $factor = (int) floor((strlen((string) $bytes) - 1) / 3);
+        $factor = (int) floor((\strlen((string) $bytes) - 1) / 3);
 
         if (0 === $factor) {
             $decimals = 0;
@@ -127,14 +130,14 @@ if (! function_exists('human_bytes')) {
     }
 }
 
-if (! function_exists('human_milliseconds')) {
+if (!\function_exists('human_milliseconds')) {
     function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
-        if ($milliseconds < 1) {
+        if (1 > $milliseconds) {
             return sprintf('%sμs', round($milliseconds * 1000, $precision));
         }
 
-        if ($milliseconds < 1000) {
+        if (1000 > $milliseconds) {
             return sprintf('%sms', round($milliseconds, $precision));
         }
 

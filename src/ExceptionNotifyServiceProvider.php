@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/laravel-exception-notify.
+ * Copyright (c) 2021-2024 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/laravel-exception-notify
  */
 
 namespace Guanguans\LaravelExceptionNotify;
@@ -33,7 +34,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         StringableMacro::class => StringableMacro::class,
         StrMacro::class => StrMacro::class,
     ];
-
     protected bool $defer = false;
 
     /**
@@ -82,8 +82,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws BindingResolutionException
      * @throws \ReflectionException
+     * @throws BindingResolutionException
      */
     protected function registerMacros(): self
     {
@@ -113,7 +113,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             static fn (Container $container): CollectorManager => new CollectorManager(
                 collect(config('exception-notify.collectors', []))
                     ->map(static function ($parameters, $class) use ($container) {
-                        if (! \is_array($parameters)) {
+                        if (!\is_array($parameters)) {
                             [$parameters, $class] = [(array) $class, $parameters];
                         }
 
@@ -147,6 +147,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
                 /** @var callable(\Throwable):mixed|void $reportUsing */
                 $reportUsing = $reportUsingCreator($exceptionHandler);
+
                 if ($reportUsing instanceof \Closure) {
                     $reportUsing = $reportUsing->bindTo($exceptionHandler, $exceptionHandler);
                 }
