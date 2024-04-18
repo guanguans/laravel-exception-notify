@@ -162,6 +162,27 @@ class ExceptionNotifyManager extends Manager
         });
     }
 
+    protected function createDriver($driver)
+    {
+        if (isset($this->customCreators[$driver])) {
+            return $this->callCustomCreator($driver);
+        }
+
+        $config = $this->config->get("exception-notify.channels.$driver");
+
+        $studlyName = Str::studly($config['driver'] ?? $driver);
+
+        if (method_exists($this, $method = "create{$studlyName}Driver")) {
+            return $this->{$method}($config);
+        }
+
+        if (class_exists($class = "Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
+            return new $class($config);
+        }
+
+        throw new \InvalidArgumentException("Driver [$driver] not supported.");
+    }
+
     protected function createBarkDriver(): BarkChannel
     {
         return new BarkChannel(
