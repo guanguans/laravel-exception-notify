@@ -128,7 +128,7 @@ return [
             'client' => [
                 'class' => \Guanguans\Notify\Lark\Client::class,
                 'http_options' => [],
-                'tapper' => static function (\Guanguans\Notify\Lark\Client $client): void {},
+                'tapper' => \Guanguans\LaravelExceptionNotify\WithLogMiddlewareClientTapper::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Lark\Messages\TextMessage::class,
