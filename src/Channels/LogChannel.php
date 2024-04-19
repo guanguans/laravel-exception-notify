@@ -14,20 +14,24 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\Log;
 
 class LogChannel implements ChannelContract
 {
-    protected string $level;
-    protected string $channel;
+    private Repository $config;
 
-    public function __construct(string $channel = 'daily', string $level = 'error')
+    public function __construct(Repository $config)
     {
-        $this->channel = $channel;
-        $this->level = $level;
+        $this->config = $config;
     }
 
     public function report(string $report): void
     {
-        app('log')->channel($this->channel)->log($this->level, $report);
+        Log::channel($this->config->get('channel', 'daily'))->log(
+            $this->config->get('level', 'error'),
+            $report,
+            $this->config->get('context', []),
+        );
     }
 }

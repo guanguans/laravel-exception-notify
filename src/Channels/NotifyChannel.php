@@ -30,11 +30,11 @@ class NotifyChannel implements ChannelContract
         'title' => '{title}',
         'report' => '{report}',
     ];
-    private Repository $configRepository;
+    private Repository $config;
 
-    public function __construct(array $config)
+    public function __construct(Repository $config)
     {
-        $validator = validator($config, [
+        $validator = validator($config->all(), [
             'authenticator' => 'required|array',
             'authenticator.class' => 'required|string',
 
@@ -51,7 +51,7 @@ class NotifyChannel implements ChannelContract
             throw new \InvalidArgumentException($validator->errors()->first());
         }
 
-        $this->configRepository = new Repository($config);
+        $this->config = $config;
     }
 
     /**
@@ -71,16 +71,16 @@ class NotifyChannel implements ChannelContract
     private function createClient(): Client
     {
         /** @var Client $client */
-        $client = make($this->configRepository->get('client.class'), [
-            'authenticator' => make($this->configRepository->get('authenticator')),
+        $client = make($this->config->get('client.class'), [
+            'authenticator' => make($this->config->get('authenticator')),
         ]);
 
-        if ($this->configRepository->has('client.http_options')) {
-            $client->setHttpOptions($this->configRepository->get('client.http_options'));
+        if ($this->config->has('client.http_options')) {
+            $client->setHttpOptions($this->config->get('client.http_options'));
         }
 
-        if ($this->configRepository->has('client.tapper')) {
-            app()->call($this->configRepository->get('client.tapper'), ['client' => $client]);
+        if ($this->config->has('client.tapper')) {
+            app()->call($this->config->get('client.tapper'), ['client' => $client]);
         }
 
         return $client;
@@ -93,12 +93,12 @@ class NotifyChannel implements ChannelContract
     {
         $replace = [config('exception-notify.title'), $report];
 
-        $options = Arr::except($this->configRepository->get('message'), 'class');
+        $options = Arr::except($this->config->get('message'), 'class');
 
         array_walk_recursive($options, static function (&$value) use ($replace): void {
             \is_string($value) and $value = Str::replace(self::TAGS, $replace, $value);
         });
 
-        return make($this->configRepository->get('message.class'), ['options' => $options]);
+        return make($this->config->get('message.class'), ['options' => $options]);
     }
 }

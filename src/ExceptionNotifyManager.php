@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
-use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Config\Repository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
@@ -153,9 +153,9 @@ class ExceptionNotifyManager extends Manager
             return $this->callCustomCreator($driver);
         }
 
-        $config = $this->config->get("exception-notify.channels.$driver");
+        $config = new Repository($this->config->get("exception-notify.channels.$driver", []));
 
-        $studlyName = Str::studly($config['driver'] ?? $driver);
+        $studlyName = Str::studly($config->get('driver', $driver));
 
         if (method_exists($this, $method = "create{$studlyName}Driver")) {
             return $this->{$method}($config);
@@ -168,16 +168,20 @@ class ExceptionNotifyManager extends Manager
         throw new \InvalidArgumentException("Driver [$driver] not supported.");
     }
 
-    protected function createDumpDriver(): DumpChannel
+    /**
+     * @noinspection PhpUnusedParameterInspection
+     */
+    private function createDumpDriver(Repository $config): ChannelContract
     {
-        return new DumpChannel;
-    }
-
-    protected function createLogDriver(): LogChannel
-    {
-        return new LogChannel(
-            config('exception-notify.channels.log.channel'),
-            config('exception-notify.channels.log.level')
-        );
+        return new class implements ChannelContract {
+            /**
+             * @noinspection ForgottenDebugOutputInspection
+             * @noinspection DebugFunctionUsageInspection
+             */
+            public function report(string $report): string
+            {
+                return dump($report);
+            }
+        };
     }
 }

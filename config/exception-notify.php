@@ -148,8 +148,7 @@ return [
          */
         'log' => [
             'driver' => 'log',
-            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL', 'daily'),
-            'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
+            'channel' => 'daily',
             'pipes' => [],
         ],
 
