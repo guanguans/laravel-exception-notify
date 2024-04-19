@@ -14,9 +14,6 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
 return [
@@ -119,74 +116,10 @@ return [
      */
     'channels' => [
         /**
-         * Bark.
-         *
-         * @see https://github.com/Finb/Bark
-         */
-        'bark' => [
-            'driver' => 'bark',
-            'base_uri' => env('EXCEPTION_NOTIFY_BARK_BASE_URI'),
-            'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
-            'group' => env('EXCEPTION_NOTIFY_BARK_GROUP', config('app.name')),
-            'pipes' => [
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 1024),
-            ],
-        ],
-
-        /**
-         * Chanify.
-         *
-         * @see https://github.com/chanify/chanify-ios
-         */
-        'chanify' => [
-            'driver' => 'chanify',
-            'base_uri' => env('EXCEPTION_NOTIFY_CHANIFY_BASE_URI'),
-            'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
-            'pipes' => [
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 1024),
-            ],
-        ],
-
-        /**
-         * 钉钉群机器人.
-         *
-         * @see https://developers.dingtalk.com/document/app/custom-robot-access
-         */
-        'dingTalk' => [
-            'driver' => 'dingTalk',
-            'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
-            'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
-            'keyword' => env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD'),
-            'pipes' => [
-                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 20000),
-            ],
-        ],
-
-        /**
-         * Discord.
-         *
-         * @see https://discord.com/developers/docs/resources/webhook#edit-webhook-message
-         */
-        'discord' => [
-            'driver' => 'discord',
-            'webhook_url' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK_URL'),
-            'pipes' => [
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 2000),
-            ],
-        ],
-
-        /**
          * 飞书群机器人.
-         *
-         * @see https://www.feishu.cn/hc/zh-CN/articles/360024984973
          */
-        'feiShu' => [
-            'driver' => 'feiShu',
+        'lark' => [
+            'driver' => 'notify',
             'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
             'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
             'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
@@ -210,100 +143,7 @@ return [
         ],
 
         /**
-         * 邮件.
-         *
-         * 安装依赖 composer require symfony/mailer -v
-         *
-         * @see https://symfony.com/doc/current/mailer.html
-         */
-        'mail' => [
-            'driver' => 'mail',
-            // smtp://53***11@qq.com:***password***@smtp.qq.com:465?verify_peer=0
-            'dsn' => env('EXCEPTION_NOTIFY_MAIL_DSN'),
-            'from' => env('EXCEPTION_NOTIFY_MAIL_FROM'),
-            'to' => env('EXCEPTION_NOTIFY_MAIL_TO'),
-            'pipes' => [
-                SprintfHtmlPipe::class,
-            ],
-        ],
-
-        /**
-         * Push Deer.
-         *
-         * @see http://pushdeer.com
-         */
-        'pushDeer' => [
-            'driver' => 'pushDeer',
-            'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
-            'base_uri' => env('EXCEPTION_NOTIFY_PUSHDEER_BASE_URI'),
-            'pipes' => [
-                SprintfMarkdownPipe::class,
-            ],
-        ],
-
-        /**
-         * QQ Channel Bot.
-         *
-         * 安装依赖 composer require textalk/websocket -v
-         *
-         * @see https://bot.q.qq.com/wiki/develop/api/openapi/message/post_messages.html
-         */
-        'qqChannelBot' => [
-            'driver' => 'qqChannelBot',
-            'appid' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_APPID'),
-            'token' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_TOKEN'),
-            'channel_id' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_CHANNEL_ID'),
-            'environment' => env('EXCEPTION_NOTIFY_QQCHANNELBOT_ENVIRONMENT', 'production'),
-            'pipes' => [
-                // 错误码(304003) https://bot.q.qq.com/wiki/develop/api/openapi/error/error.html
-                sprintf('%s:%s,%s', ReplaceStrPipe::class, '.php', '.PHP'),
-            ],
-        ],
-
-        /**
-         * Server 酱.
-         *
-         * @see https://sct.ftqq.com
-         */
-        'serverChan' => [
-            'driver' => 'serverChan',
-            'token' => env('EXCEPTION_NOTIFY_SERVERCHAN_TOKEN'),
-            'pipes' => [],
-        ],
-
-        /**
-         * Slack.
-         *
-         * @see https://api.slack.com/messaging/webhooks
-         */
-        'slack' => [
-            'driver' => 'slack',
-            'webhook_url' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK_URL'),
-            'channel' => env('EXCEPTION_NOTIFY_SLACK_CHANNEL'),
-            'pipes' => [
-                SprintfMarkdownPipe::class,
-            ],
-        ],
-
-        /**
-         * Telegram.
-         *
-         * @see https://core.telegram.org/bots/api#sendmessage
-         */
-        'telegram' => [
-            'driver' => 'telegram',
-            'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
-            'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
-            'pipes' => [
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 4096),
-            ],
-        ],
-
-        /**
          * 企业微信群机器人.
-         *
-         * @see https://open.work.weixin.qq.com/api/doc/90000/90136/91770
          */
         'weWork' => [
             'driver' => 'weWork',
@@ -311,20 +151,6 @@ return [
             'pipes' => [
                 FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 5120),
-            ],
-        ],
-
-        /**
-         * 息知.
-         *
-         * @see https://xz.qqoq.net/#/index
-         */
-        'xiZhi' => [
-            'driver' => 'xiZhi',
-            'type' => env('EXCEPTION_NOTIFY_XIZHI_TYPE', 'single'), // [single, channel]
-            'token' => env('EXCEPTION_NOTIFY_XIZHI_TOKEN'),
-            'pipes' => [
-                SprintfMarkdownPipe::class,
             ],
         ],
     ],

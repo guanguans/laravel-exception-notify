@@ -13,24 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Channels\BarkChannel;
-use Guanguans\LaravelExceptionNotify\Channels\ChanifyChannel;
-use Guanguans\LaravelExceptionNotify\Channels\DingTalkChannel;
-use Guanguans\LaravelExceptionNotify\Channels\DiscordChannel;
 use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
-use Guanguans\LaravelExceptionNotify\Channels\FeiShuChannel;
 use Guanguans\LaravelExceptionNotify\Channels\LogChannel;
-use Guanguans\LaravelExceptionNotify\Channels\MailChannel;
-use Guanguans\LaravelExceptionNotify\Channels\NullChannel;
-use Guanguans\LaravelExceptionNotify\Channels\PushDeerChannel;
-use Guanguans\LaravelExceptionNotify\Channels\QqChannelBotChannel;
-use Guanguans\LaravelExceptionNotify\Channels\ServerChanChannel;
-use Guanguans\LaravelExceptionNotify\Channels\SlackChannel;
-use Guanguans\LaravelExceptionNotify\Channels\TelegramChannel;
-use Guanguans\LaravelExceptionNotify\Channels\WeWorkChannel;
-use Guanguans\LaravelExceptionNotify\Channels\XiZhiChannel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
-use Guanguans\Notify\Factory;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Manager;
@@ -183,56 +168,9 @@ class ExceptionNotifyManager extends Manager
         throw new \InvalidArgumentException("Driver [$driver] not supported.");
     }
 
-    protected function createBarkDriver(): BarkChannel
-    {
-        return new BarkChannel(
-            Factory::bark(array_filter_filled([
-                'token' => config('exception-notify.channels.bark.token'),
-                'base_uri' => config('exception-notify.channels.bark.base_uri'),
-            ]))
-        );
-    }
-
-    protected function createChanifyDriver(): ChanifyChannel
-    {
-        return new ChanifyChannel(
-            Factory::chanify(array_filter_filled([
-                'token' => config('exception-notify.channels.chanify.token'),
-                'base_uri' => config('exception-notify.channels.chanify.base_uri'),
-            ]))
-        );
-    }
-
-    protected function createDingTalkDriver(): DingTalkChannel
-    {
-        return new DingTalkChannel(
-            Factory::dingTalk(array_filter_filled([
-                'token' => config('exception-notify.channels.dingTalk.token'),
-                'secret' => config('exception-notify.channels.dingTalk.secret'),
-            ]))
-        );
-    }
-
-    protected function createDiscordDriver(): DiscordChannel
-    {
-        return new DiscordChannel(
-            Factory::discord(['webhook_url' => config('exception-notify.channels.discord.webhook_url')])
-        );
-    }
-
     protected function createDumpDriver(): DumpChannel
     {
         return new DumpChannel;
-    }
-
-    protected function createFeiShuDriver(): FeiShuChannel
-    {
-        return new FeiShuChannel(
-            Factory::feiShu(array_filter_filled([
-                'token' => config('exception-notify.channels.feiShu.token'),
-                'secret' => config('exception-notify.channels.feiShu.secret'),
-            ]))
-        );
     }
 
     protected function createLogDriver(): LogChannel
@@ -240,82 +178,6 @@ class ExceptionNotifyManager extends Manager
         return new LogChannel(
             config('exception-notify.channels.log.channel'),
             config('exception-notify.channels.log.level')
-        );
-    }
-
-    protected function createMailDriver(): MailChannel
-    {
-        return new MailChannel(
-            Factory::mailer(array_filter_filled([
-                'dsn' => config('exception-notify.channels.mail.dsn'),
-                'envelope' => config('exception-notify.channels.mail.envelope'),
-            ]))
-        );
-    }
-
-    protected function createNullDriver(): NullChannel
-    {
-        return new NullChannel;
-    }
-
-    protected function createPushDeerDriver(): PushDeerChannel
-    {
-        return new PushDeerChannel(
-            Factory::pushDeer(array_filter_filled([
-                'token' => config('exception-notify.channels.pushDeer.token'),
-                'base_uri' => config('exception-notify.channels.pushDeer.base_uri'),
-            ]))
-        );
-    }
-
-    protected function createQqChannelBotDriver(): QqChannelBotChannel
-    {
-        return new QqChannelBotChannel(
-            Factory::qqChannelBot(array_filter_filled([
-                'appid' => config('exception-notify.channels.qqChannelBot.appid'),
-                'token' => config('exception-notify.channels.qqChannelBot.token'),
-                'secret' => config('exception-notify.channels.qqChannelBot.secret'),
-                'environment' => config('exception-notify.channels.qqChannelBot.environment'),
-                'channel_id' => config('exception-notify.channels.qqChannelBot.channel_id'),
-            ]))
-        );
-    }
-
-    protected function createServerChanDriver(): ServerChanChannel
-    {
-        return new ServerChanChannel(
-            Factory::serverChan(['token' => config('exception-notify.channels.serverChan.token')])
-        );
-    }
-
-    protected function createSlackDriver(): SlackChannel
-    {
-        return new SlackChannel(
-            Factory::slack(['webhook_url' => config('exception-notify.channels.slack.webhook_url')])
-        );
-    }
-
-    protected function createTelegramDriver(): TelegramChannel
-    {
-        return new TelegramChannel(
-            Factory::telegram(['token' => config('exception-notify.channels.telegram.token')])
-        );
-    }
-
-    protected function createWeWorkDriver(): WeWorkChannel
-    {
-        return new WeWorkChannel(
-            Factory::weWork(['token' => config('exception-notify.channels.weWork.token')])
-        );
-    }
-
-    protected function createXiZhiDriver(): XiZhiChannel
-    {
-        return new XiZhiChannel(
-            Factory::xiZhi([
-                'token' => config('exception-notify.channels.xiZhi.token'),
-                'type' => config('exception-notify.channels.xiZhi.type'),
-            ])
         );
     }
 }
