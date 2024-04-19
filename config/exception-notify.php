@@ -120,11 +120,22 @@ return [
          */
         'lark' => [
             'driver' => 'notify',
-            'token' => env('EXCEPTION_NOTIFY_FEISHU_TOKEN'),
-            'secret' => env('EXCEPTION_NOTIFY_FEISHU_SECRET'),
-            'keyword' => env('EXCEPTION_NOTIFY_FEISHU_KEYWORD'),
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Lark\Authenticator::class,
+                'token' => '...',
+                'secret' => '...',
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Lark\Client::class,
+                'http_options' => [],
+                'tapper' => static function (\Guanguans\Notify\Lark\Client $client): void {},
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Lark\Messages\TextMessage::class,
+                'text' => '{report}',
+            ],
             'pipes' => [
-                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_FEISHU_KEYWORD')),
+                hydrate_pipe(AddKeywordPipe::class, 'keyword'),
                 FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 30720),
             ],

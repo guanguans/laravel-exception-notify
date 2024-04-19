@@ -14,52 +14,91 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Guanguans\Notify\Foundation\Contracts\Client;
-use Guanguans\Notify\Foundation\Contracts\Message;
-use GuzzleHttp\UriTemplate\UriTemplate;
+use Guanguans\Notify\Foundation\Client;
+use Guanguans\Notify\Foundation\Message;
+use Guanguans\Notify\Foundation\Response;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 
 class NotifyChannel implements ChannelContract
 {
+    public const TAGS = [
+        'title' => '{title}',
+        'report' => '{report}',
+    ];
     private Repository $configRepository;
 
     public function __construct(array $config)
     {
+        $validator = validator($config, [
+            'authenticator' => 'required|array',
+            'authenticator.class' => 'required|string',
+
+            'client' => 'required|array',
+            'client.class' => 'required|string',
+            'client.http_options' => 'array',
+            // 'client.tapper' => 'string|callable',
+
+            'message' => 'required|array',
+            'message.class' => 'required|string',
+        ]);
+
+        if ($validator->errors()->isNotEmpty()) {
+            throw new \InvalidArgumentException($validator->errors()->first());
+        }
+
         $this->configRepository = new Repository($config);
     }
 
-    final public function report(string $report)
+    /**
+     * @throws BindingResolutionException
+     * @throws GuzzleException
+     *
+     * @return Response|ResponseInterface
+     */
+    public function report(string $report)
     {
         return $this->createClient()->send($this->createMessage($report));
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     private function createClient(): Client
     {
-        /** @var \Guanguans\Notify\Foundation\Contracts\Authenticator $authenticator */
-        $authenticator = make($this->configRepository->get('authenticator'));
-
         /** @var Client $client */
-        // $client = new ($this->configRepository->get('client'))($authenticator);
-        if ($this->configRepository->has('client_options')) {
-            $client->setHttpOptions($this->configRepository->get('client_options'));
+        $client = make($this->configRepository->get('client.class'), [
+            'authenticator' => make($this->configRepository->get('authenticator')),
+        ]);
+
+        if ($this->configRepository->has('client.http_options')) {
+            $client->setHttpOptions($this->configRepository->get('client.http_options'));
+        }
+
+        if ($this->configRepository->has('client.tapper')) {
+            app()->call($this->configRepository->get('client.tapper'), ['client' => $client]);
         }
 
         return $client;
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     private function createMessage(string $report): Message
     {
-        $options = array_map(static function ($value) use ($report) {
-            if (\is_string($value)) {
-                return UriTemplate::expand($value, [
-                    'title' => config('exception-notify.title'),
-                    'report' => $report,
-                ]);
-            }
+        $replace = [config('exception-notify.title'), $report];
 
-            return $value;
-        }, $this->configRepository->get('message.options'));
+        $options = Arr::except($this->configRepository->get('message'), 'class');
 
-        // return new ($this->configRepository->get('message.class'))($options);
+        array_walk_recursive($options, static function (&$value) use ($replace): void {
+            \is_string($value) and $value = Str::replace(self::TAGS, $replace, $value);
+        });
+
+        return make($this->configRepository->get('message.class'), ['options' => $options]);
     }
 }

@@ -35,7 +35,7 @@ final class JsonFixer
         '"' => '"',
     ];
 
-    /** @var int The last seen object `{` type position */
+    /** @var int The last seen object `left brace` type position */
     private int $objectPos = -1;
 
     /** @var int The last seen array `[` type position */
