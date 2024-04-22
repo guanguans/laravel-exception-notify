@@ -18,6 +18,7 @@ use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -88,7 +89,7 @@ class ExceptionNotifyManager extends Manager
 
             unset($dispatch);
         } catch (\Throwable $throwable) {
-            app('log')->error($throwable->getMessage(), ['exception' => $throwable]);
+            Log::error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
 

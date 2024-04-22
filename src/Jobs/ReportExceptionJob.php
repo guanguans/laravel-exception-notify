@@ -19,6 +19,7 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class ReportExceptionJob implements ShouldQueue
 {
@@ -51,7 +52,7 @@ class ReportExceptionJob implements ShouldQueue
                 $result = $channel->report($report);
                 event(new ExceptionReportedEvent($channel, $result));
             } catch (\Throwable $throwable) {
-                app('log')->error($throwable->getMessage(), ['exception' => $throwable]);
+                Log::error($throwable->getMessage(), ['exception' => $throwable]);
             }
         }
     }

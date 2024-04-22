@@ -23,7 +23,6 @@ trait ExceptionAware
     public function setException(\Throwable $throwable): void
     {
         $this->exception = $throwable;
-
         $this->flattenException = FlattenException::createFromThrowable($throwable);
     }
 }

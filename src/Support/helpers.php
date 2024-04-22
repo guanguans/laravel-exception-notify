@@ -74,31 +74,6 @@ if (!\function_exists('env_explode')) {
     }
 }
 
-if (!\function_exists('array_filter_filled')) {
-    function array_filter_filled(array $array): array
-    {
-        return array_filter($array, static fn ($item): bool => filled($item));
-    }
-}
-
-if (!\function_exists('array_reduce_with_keys')) {
-    /**
-     * @param null|mixed $carry
-     *
-     * @return null|mixed
-     *
-     * @codeCoverageIgnore
-     */
-    function array_reduce_with_keys(array $array, callable $callback, $carry = null)
-    {
-        foreach ($array as $key => $value) {
-            $carry = $callback($carry, $value, $key);
-        }
-
-        return $carry;
-    }
-}
-
 if (!\function_exists('array_is_list')) {
     /**
      * @codeCoverageIgnore
