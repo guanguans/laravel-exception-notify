@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Guanguans\LaravelExceptionNotify\Mail\ReportMail;
+use Guanguans\LaravelExceptionNotify\Mail\ExceptionReportMail;
 use Illuminate\Config\Repository;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailer;
@@ -43,6 +43,6 @@ class MailChannel implements ChannelContract
 
     private function createMail(string $report): Mailable
     {
-        return new ReportMail($report);
+        return new ExceptionReportMail($report);
     }
 }

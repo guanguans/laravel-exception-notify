@@ -15,14 +15,16 @@ namespace Guanguans\LaravelExceptionNotify\Events;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 
-class ReportingEvent
+class ExceptionReportedEvent
 {
     public ChannelContract $channel;
-    public string $report;
 
-    public function __construct(ChannelContract $channel, string $report)
+    /** @var mixed */
+    public $result;
+
+    public function __construct(ChannelContract $channel, $result)
     {
         $this->channel = $channel;
-        $this->report = $report;
+        $this->result = $result;
     }
 }

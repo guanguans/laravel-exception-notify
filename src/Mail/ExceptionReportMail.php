@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Mail;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 
-class ReportMail extends Mailable implements ShouldQueue
+class ExceptionReportMail extends Mailable
 {
     private string $report;
 
