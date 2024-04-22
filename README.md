@@ -2,6 +2,9 @@
 
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
+> [!CAUTION]
+> 4.x is developed, but not stable yet. but not recommended for production use. please use 3.x version.
+
 > Exception monitoring alarm notification in Laravel(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、PushDeer、QQ Channel Bot、ServerChan、Slack、Telegram、WeWork、XiZhi).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
