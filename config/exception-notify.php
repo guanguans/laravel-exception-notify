@@ -115,6 +115,14 @@ return [
      * The list of channels.
      */
     'channels' => [
+        'aggregate' => [
+            'channels' => [
+                'log',
+                'lark',
+                'weWork',
+            ],
+        ],
+
         /**
          * 飞书群机器人.
          */
