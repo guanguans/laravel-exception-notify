@@ -142,6 +142,16 @@ return [
         ],
 
         /**
+         * Mail.
+         *
+         * @see Illuminate\Mail\MailManager
+         */
+        'mail' => [
+            'mailer' => null,
+            'to' => 'your@example.com',
+        ],
+
+        /**
          * Log.
          *
          * @see Illuminate\Log\LogManager
@@ -156,8 +166,20 @@ return [
          * 企业微信群机器人.
          */
         'weWork' => [
-            'driver' => 'weWork',
-            'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\WeWork\Authenticator::class,
+                'token' => '...',
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\WeWork\Client::class,
+                'http_options' => [],
+                'tapper' => \Guanguans\LaravelExceptionNotify\WithLogMiddlewareClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\WeWork\Messages\TextMessage::class,
+                'content' => '{report}',
+            ],
             'pipes' => [
                 FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 5120),
