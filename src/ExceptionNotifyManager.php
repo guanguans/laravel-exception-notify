@@ -89,6 +89,7 @@ class ExceptionNotifyManager extends Manager
 
             unset($dispatch);
         } catch (\Throwable $throwable) {
+            // report($throwable);
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }

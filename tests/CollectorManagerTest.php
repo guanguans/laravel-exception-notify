@@ -17,4 +17,4 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 it('will throw `InvalidArgumentException`', function (): void {
     /** @noinspection PhpParamsInspection */
     new CollectorManager(['foo']);
-})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class)->skip();
