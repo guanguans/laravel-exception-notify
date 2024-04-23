@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface ExceptionAwareContract
+interface Collector
 {
-    public function setException(\Throwable $throwable): void;
+    public static function name(): string;
+
+    public function collect(): array;
 }

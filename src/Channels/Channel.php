@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Illuminate\Config\Repository;
 
-abstract class Channel implements ChannelContract
+abstract class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
 {
     protected Repository $config;
 

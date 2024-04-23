@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface ChannelContract
+interface ExceptionAware
 {
-    /**
-     * @return mixed|never-return|void
-     */
-    public function report(string $report);
+    public function setException(\Throwable $throwable): void;
 }

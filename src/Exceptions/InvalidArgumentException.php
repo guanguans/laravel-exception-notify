@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Exceptions;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract;
+use Guanguans\LaravelExceptionNotify\Contracts\Throwable;
 
-class InvalidArgumentException extends \InvalidArgumentException implements ThrowableContract {}
+class InvalidArgumentException extends \InvalidArgumentException implements Throwable {}

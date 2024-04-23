@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
-use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
+use Guanguans\LaravelExceptionNotify\Contracts\Collector;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
@@ -25,8 +25,8 @@ class CollectorManager extends Fluent
     public function mapToReports(array $channels, \Throwable $throwable): array
     {
         $collectors = collect($this)->mapWithKeys(
-            static function (CollectorContract $collector) use ($throwable): array {
-                $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
+            static function (Collector $collector) use ($throwable): array {
+                $collector instanceof ExceptionAware and $collector->setException($throwable);
 
                 return [$collector::name() => $collector->collect()];
             }

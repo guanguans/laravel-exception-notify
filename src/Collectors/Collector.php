@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Guanguans\LaravelExceptionNotify\Collectors\Concerns\Naming;
-use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 
-abstract class Collector implements CollectorContract
+abstract class Collector implements \Guanguans\LaravelExceptionNotify\Contracts\Collector
 {
     use Naming;
 }

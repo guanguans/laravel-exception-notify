@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface CollectorContract
+interface Channel
 {
-    public static function name(): string;
-
-    public function collect(): array;
+    /**
+     * @return mixed|never-return|void
+     */
+    public function report(string $report);
 }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
@@ -27,9 +27,9 @@ use Illuminate\Support\Traits\Tappable;
 /**
  * @property \Illuminate\Foundation\Application $container
  *
- * @method \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract driver($driver = null)
+ * @method \Guanguans\LaravelExceptionNotify\Contracts\Channel driver($driver = null)
  *
- * @mixin \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract
+ * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
  */
 class ExceptionNotifyManager extends Manager
 {
@@ -173,9 +173,9 @@ class ExceptionNotifyManager extends Manager
     /**
      * @noinspection PhpUnusedParameterInspection
      */
-    private function createDumpDriver(): ChannelContract
+    private function createDumpDriver(): Channel
     {
-        return new class implements ChannelContract {
+        return new class implements Channel {
             /**
              * @noinspection ForgottenDebugOutputInspection
              * @noinspection DebugFunctionUsageInspection
