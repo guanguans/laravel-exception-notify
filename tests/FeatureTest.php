@@ -15,7 +15,7 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Http\UploadedFile;
 
 it('can report exception', function (): void {
-    ExceptionNotify::report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception('What happened?'), ['lark']);
+    ExceptionNotify::report(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException('What happened?'), ['lark']);
     $this
         ->post('report-exception?foo=bar', [
             'bar' => 'baz',

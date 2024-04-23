@@ -11,8 +11,10 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Exceptions;
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Throwable;
-
-class Exception extends \Exception implements Throwable {}
+it('can report', function (): void {
+    expect($this->app->make(ExceptionNotifyManager::class)->driver('mail'))
+        ->report('report')
+        ->toBeNull();
+})->group(__DIR__, __FILE__);

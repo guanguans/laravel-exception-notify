@@ -24,10 +24,10 @@ class MailChannel extends Channel
     public function report(string $report): void
     {
         tap(Mail::driver($this->config->get('mailer')), function (Mailer $mailer): void {
-            collect($this->config)
+            collect($this->config->all())
                 ->except(['mailer'])
                 ->each(static function ($value, string $key) use ($mailer): void {
-                    $mailer->{Str::studly($key)}($value);
+                    $mailer->{Str::camel($key)}($value);
                 });
         })->send($this->createMail($report));
     }

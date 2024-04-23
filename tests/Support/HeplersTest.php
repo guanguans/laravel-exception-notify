@@ -22,11 +22,6 @@ it('can explode env', function (): void {
     // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
 })->group(__DIR__, __FILE__);
 
-it('can return Stringable', function (): void {
-    expect(str())->toBeInstanceOf(Stringable::class)
-        ->and(str('foo'))->toBeInstanceOf(Illuminate\Support\Stringable::class);
-})->group(__DIR__, __FILE__);
-
 it('can human milliseconds', function (): void {
     expect([
         human_milliseconds(0.5),

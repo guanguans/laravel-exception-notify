@@ -30,6 +30,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
@@ -67,8 +68,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineEnvironment($app): void
     {
         config()->set('exception-notify.job.queue', 'exception-notify');
-        config()->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
-        config()->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
+        // config()->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
+        // config()->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
         config()->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
         config()->set('exception-notify.collectors', [
             ApplicationCollector::class,
@@ -88,7 +89,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestServerCollector::class,
             RequestSessionCollector::class,
         ]);
-        config()->set('exception-notify.channels.null.pipes', [
+        config()->set('exception-notify.channels.log.pipes', [
             hydrate_pipe(AddKeywordPipe::class, 'keyword'),
             SprintfHtmlPipe::class,
             SprintfMarkdownPipe::class,
@@ -101,11 +102,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineRoutes($router): void
     {
         $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
-            ExceptionNotify::report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception('What happened?'), ['lark', 'dump']);
+            ExceptionNotify::report(new RuntimeException('What happened?'), ['lark', 'dump']);
         }));
 
         $router->any('exception', static fn () => tap(response('exception'), static function (): void {
-            throw new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException('What happened?');
+            throw new RuntimeException('What happened?');
         }));
     }
 }

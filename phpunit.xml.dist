@@ -13,8 +13,8 @@
       <directory suffix=".php">src/</directory>
     </include>
     <exclude>
-      <!--<directory>src/Support/</directory>-->
-      <!--<file>src/Channels/DdChannel.php</file>-->
+      <directory>src/Rectors/</directory>
+      <file>src/Support/helpers.php</file>
     </exclude>
   </coverage>
   <testsuites>

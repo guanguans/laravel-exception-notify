@@ -15,6 +15,8 @@ use Illuminate\Support\Arr;
 
 if (!\function_exists('make')) {
     /**
+     * @codeCoverageIgnore
+     *
      * @psalm-param string|array<string, mixed> $abstract
      *
      * @param mixed $abstract

@@ -151,7 +151,7 @@ class ExceptionNotifyManager extends Manager
         });
     }
 
-    protected function createDriver($driver)
+    protected function createDriver($driver): Channel
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);

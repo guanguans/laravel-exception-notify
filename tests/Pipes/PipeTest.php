@@ -25,7 +25,7 @@ it('can collect', function (): void {
             collect(app(CollectorManager::class))
                 ->transform(static function (Collector $collector): Collector {
                     if ($collector instanceof ExceptionAware) {
-                        $collector->setException(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception);
+                        $collector->setException(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException);
                     }
 
                     return $collector;
