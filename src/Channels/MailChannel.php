@@ -13,23 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Mail\ExceptionReportMail;
-use Illuminate\Config\Repository;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-class MailChannel implements ChannelContract
+class MailChannel extends Channel
 {
-    private Repository $config;
-
-    public function __construct(Repository $config)
-    {
-        $this->config = $config;
-    }
-
     public function report(string $report): void
     {
         tap(Mail::driver($this->config->get('mailer')), function (Mailer $mailer): void {

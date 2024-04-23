@@ -13,16 +13,15 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Illuminate\Support\Facades\Log;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+use Illuminate\Config\Repository;
 
-class LogChannel extends Channel
+abstract class Channel implements ChannelContract
 {
-    public function report(string $report): void
+    protected Repository $config;
+
+    public function __construct(Repository $config)
     {
-        Log::channel($this->config->get('channel', 'daily'))->log(
-            $this->config->get('level', 'error'),
-            $report,
-            $this->config->get('context', []),
-        );
+        $this->config = $config;
     }
 }

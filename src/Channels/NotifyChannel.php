@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Message;
 use Guanguans\Notify\Foundation\Response;
@@ -24,13 +23,12 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 
-class NotifyChannel implements ChannelContract
+class NotifyChannel extends Channel
 {
-    public const TAGS = [
+    public const TEMPLATES = [
         'title' => '{title}',
         'report' => '{report}',
     ];
-    private Repository $config;
 
     public function __construct(Repository $config)
     {
@@ -51,7 +49,7 @@ class NotifyChannel implements ChannelContract
             throw new \InvalidArgumentException($validator->errors()->first());
         }
 
-        $this->config = $config;
+        parent::__construct($config);
     }
 
     /**
@@ -96,7 +94,7 @@ class NotifyChannel implements ChannelContract
         $options = Arr::except($this->config->get('message'), 'class');
 
         array_walk_recursive($options, static function (&$value) use ($replace): void {
-            \is_string($value) and $value = Str::replace(self::TAGS, $replace, $value);
+            \is_string($value) and $value = Str::replace(self::TEMPLATES, $replace, $value);
         });
 
         return make($this->config->get('message.class'), ['options' => $options]);
