@@ -32,13 +32,13 @@ it('will throw error', function (): void {
 
 it('can report if', function (): void {
     expect(app(ExceptionNotifyManager::class))
-        ->reportIf(true, new Exception)->toBeNull();
+        ->reportIf(true, new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can report', function (): void {
     config()->set('exception-notify.enabled', false);
     expect(app(ExceptionNotifyManager::class))
-        ->report(new Exception)->toBeNull();
+        ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
     $mockApplication = Mockery::spy(Illuminate\Foundation\Application::class);
@@ -47,7 +47,7 @@ it('can report', function (): void {
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
-        ->report(new Exception)->toBeNull();
+        ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
     $mockApplication = Mockery::mock(Application::class);
@@ -56,26 +56,26 @@ it('can report', function (): void {
 
     /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
-        ->report(new Exception)->toBeNull();
+        ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('should not report', function (): void {
     config()->set('exception-notify.enabled', false);
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new Exception)->toBeFalse();
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
     config()->set('exception-notify.env', ['production', 'local']);
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new Exception)->toBeFalse();
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
     config()->set('exception-notify.env', '*');
     config()->set('exception-notify.except', [Exception::class]);
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new Exception)->toBeFalse();
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
     config()->set('exception-notify.env', '*');
     config()->set('exception-notify.except', []);
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new Exception)->toBeTrue();
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception)->toBeTrue();
 })->group(__DIR__, __FILE__);
 
 it('can get default driver', function (): void {

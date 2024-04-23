@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Message;
 use Guanguans\Notify\Foundation\Response;
@@ -45,7 +46,7 @@ class NotifyChannel extends Channel
         ]);
 
         if ($validator->errors()->isNotEmpty()) {
-            throw new \InvalidArgumentException($validator->errors()->first());
+            throw new InvalidArgumentException($validator->errors()->first());
         }
 
         parent::__construct($config);

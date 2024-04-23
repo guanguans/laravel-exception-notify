@@ -101,11 +101,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineRoutes($router): void
     {
         $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
-            ExceptionNotify::report(new \Exception('What happened?'), ['lark', 'dump']);
+            ExceptionNotify::report(new \Guanguans\LaravelExceptionNotify\Exceptions\Exception('What happened?'), ['lark', 'dump']);
         }));
 
         $router->any('exception', static fn () => tap(response('exception'), static function (): void {
-            throw new \RuntimeException('What happened?');
+            throw new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException('What happened?');
         }));
     }
 }

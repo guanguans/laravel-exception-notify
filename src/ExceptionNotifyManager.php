@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Manager;
@@ -25,11 +27,11 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 
 /**
- * @property \Illuminate\Foundation\Application $container
+ * @property Application $container
  *
- * @method \Guanguans\LaravelExceptionNotify\Contracts\Channel driver($driver = null)
+ * @method Channel driver($driver = null)
  *
- * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
+ * @mixin Channel
  */
 class ExceptionNotifyManager extends Manager
 {
@@ -167,7 +169,7 @@ class ExceptionNotifyManager extends Manager
             return new $class($configRepository);
         }
 
-        throw new \InvalidArgumentException("Driver [$driver] not supported.");
+        throw new InvalidArgumentException("Driver [$driver] not supported.");
     }
 
     /**

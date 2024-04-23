@@ -41,6 +41,11 @@ parameters:
 			path: src/Macros/StringableMacro.php
 
 		-
+			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
 			message: "#^Result of && is always false\\.$#"
 			count: 1
 			path: src/Support/helpers.php

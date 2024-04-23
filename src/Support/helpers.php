@@ -27,7 +27,7 @@ if (!\function_exists('make')) {
     function make($abstract, array $parameters = [])
     {
         if (!\is_string($abstract) && !\is_array($abstract)) {
-            throw new InvalidArgumentException(sprintf('Invalid argument type(string/array): %s.', \gettype($abstract)));
+            throw new \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException(sprintf('Invalid argument type(string/array): %s.', \gettype($abstract)));
         }
 
         if (\is_string($abstract)) {
@@ -47,7 +47,7 @@ if (!\function_exists('make')) {
             return make($abstract, $parameters);
         }
 
-        throw new InvalidArgumentException(sprintf(
+        throw new \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException(sprintf(
             'The argument of abstract must be an array containing a `%s` element.',
             implode('` or `', $classes)
         ));
