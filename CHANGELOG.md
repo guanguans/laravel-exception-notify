@@ -8,6 +8,36 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.0.0-beta1"></a>
+## [4.0.0-beta1] - 2024-04-23
+### Docs
+- **README:** Add caution for 4.x version
+
+### Feat
+- **Channel:** add Channel base class and extend other channel classes
+- **ToInternalExceptionRector:** Add ToInternalExceptionRector for internal exceptions
+- **composer-require-checker:** Add configuration file for composer-require-checker
+- **config:** add aggregate channel configuration
+- **config:** add mail configuration
+- **config:** Add WithLogMiddlewareClientTapper class for exception-notify config
+
+### Refactor
+- Fix exception handling and enhance type safety
+- Fix exception handling and enhance type safety
+- update contract names in classes
+- modify ExceptionNotifyManager to use configRepository
+- **ExceptionNotifyManager:** Improve createDriver method
+- **NotifyChannel:** Refactor NotifyChannel class for better readability and maintainability
+- **collector:** remove unused code and fix access level of method
+- **config:** refactor RectorConfig
+- **exception-notify:** update lark configuration
+- **log:** Simplify LogChannel constructor and report method
+- **mail:** update mail classes names
+
+### Test
+- **skip:** skip test that throws InvalidArgumentException
+
+
 <a name="3.8.3"></a>
 ## [3.8.3] - 2024-04-18
 ### Refactor
@@ -694,7 +724,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.3...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta1...HEAD
+[4.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.3...4.0.0-beta1
 [3.8.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.2...3.8.3
 [3.8.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.1...3.8.2
 [3.8.1]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.0...3.8.1
