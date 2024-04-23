@@ -74,7 +74,6 @@
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
         "icanhazstring/composer-unused": "^0.8",
-        "larastan/larastan": "^1.0 || ^2.0",
         "maglnet/composer-require-checker": "^3.8 || ^4.0",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^6.43 || ^7.0 || ^8.0 || ^9.0",

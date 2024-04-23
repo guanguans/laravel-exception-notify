@@ -155,16 +155,16 @@ class ExceptionNotifyManager extends Manager
             return $this->callCustomCreator($driver);
         }
 
-        $config = new Repository($this->config->get("exception-notify.channels.$driver", []));
+        $configRepository = new Repository($this->config->get("exception-notify.channels.$driver", []));
 
-        $studlyName = Str::studly($config->get('driver', $driver));
+        $studlyName = Str::studly($configRepository->get('driver', $driver));
 
         if (method_exists($this, $method = "create{$studlyName}Driver")) {
-            return $this->{$method}($config);
+            return $this->{$method}($configRepository);
         }
 
         if (class_exists($class = "Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
-            return new $class($config);
+            return new $class($configRepository);
         }
 
         throw new \InvalidArgumentException("Driver [$driver] not supported.");
@@ -173,7 +173,7 @@ class ExceptionNotifyManager extends Manager
     /**
      * @noinspection PhpUnusedParameterInspection
      */
-    private function createDumpDriver(Repository $config): ChannelContract
+    private function createDumpDriver(): ChannelContract
     {
         return new class implements ChannelContract {
             /**
