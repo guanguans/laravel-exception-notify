@@ -6,6 +6,11 @@ parameters:
 			path: src/Channels/MailChannel.php
 
 		-
+			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Channels\\\\NotifyChannel\\:\\:report\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Response but returns Psr\\\\Http\\\\Message\\\\ResponseInterface\\.$#"
+			count: 1
+			path: src/Channels/NotifyChannel.php
+
+		-
 			message: "#^Property Guanguans\\\\LaravelExceptionNotify\\\\Collectors\\\\ApplicationCollector\\:\\:\\$container \\(Illuminate\\\\Foundation\\\\Application\\) does not accept Illuminate\\\\Container\\\\Container\\.$#"
 			count: 1
 			path: src/Collectors/ApplicationCollector.php
