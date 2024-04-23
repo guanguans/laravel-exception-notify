@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.0.0-beta2"></a>
+## [4.0.0-beta2] - 2024-04-23
+### Fix
+- Optimized the email sending logic and added pipeline handling in the exception notification feature
+
+### Test
+- Remove useless files, change exception class names, adjust configuration settings, and refactor notification methods.
+
+
 <a name="4.0.0-beta1"></a>
 ## [4.0.0-beta1] - 2024-04-23
 ### Docs
@@ -724,7 +733,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta2...HEAD
+[4.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta1...4.0.0-beta2
 [4.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.3...4.0.0-beta1
 [3.8.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.2...3.8.3
 [3.8.2]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.1...3.8.2
