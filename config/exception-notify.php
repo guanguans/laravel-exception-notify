@@ -14,6 +14,7 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
 return [
@@ -93,36 +94,13 @@ return [
      * The default reported channels.
      */
     'defaults' => env_explode('EXCEPTION_NOTIFY_DEFAULTS', [
-        // 'bark',
-        // 'chanify',
-        // 'dingTalk',
-        // 'discord',
-        // 'dump',
-        // 'feiShu',
         'log',
-        // 'mail',
-        // 'null',
-        // 'pushDeer',
-        // 'qqChannelBot',
-        // 'serverChan',
-        // 'slack',
-        // 'telegram',
-        // 'weWork',
-        // 'xiZhi',
     ]),
 
     /**
      * The list of channels.
      */
     'channels' => [
-        'aggregate' => [
-            'channels' => [
-                'log',
-                'lark',
-                'weWork',
-            ],
-        ],
-
         /**
          * 飞书群机器人.
          */
@@ -157,6 +135,9 @@ return [
         'mail' => [
             'mailer' => null,
             'to' => 'your@example.com',
+            'pipes' => [
+                SprintfHtmlPipe::class,
+            ],
         ],
 
         /**

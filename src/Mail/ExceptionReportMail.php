@@ -27,6 +27,7 @@ class ExceptionReportMail extends Mailable
     public function build(): self
     {
         return $this
+            ->subject(config('exception-notify.title'))
             ->html($this->report);
     }
 }
