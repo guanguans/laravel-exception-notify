@@ -211,4 +211,4 @@ return Config\Factory::fromRuleSet($ruleSet)
     )
     ->setRiskyAllowed(true)
     ->setUsingCache(true)
-    ->setCacheFile(__DIR__.'/build/php-cs-fixer/.php-cs-fixer.cache');
+    ->setCacheFile(__DIR__.'/.build/php-cs-fixer/.php-cs-fixer.cache');

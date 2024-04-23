@@ -4,14 +4,14 @@
 .php_cs.cache
 .php-cs-fixer.cache
 .phpunit.result.cache
-build/
+.build/
 composer.lock
 coverage/
 clover.xml
 phpunit.xml
 psalm.xml
 vendor/
-tests.php
+tests.*
 .DS_Store
 .history/
 composer.phar

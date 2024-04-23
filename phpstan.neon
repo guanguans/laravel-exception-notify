@@ -11,7 +11,7 @@ parameters:
     paths:
         - config
         - src
-    tmpDir: build/phpstan
+    tmpDir: .build/phpstan
 #    checkOctaneCompatibility: true
 #    checkModelProperties: true
     checkMissingIterableValueType: true
