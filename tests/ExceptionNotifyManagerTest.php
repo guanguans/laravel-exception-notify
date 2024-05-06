@@ -99,10 +99,8 @@ it('will throw `InvalidArgumentException`', function (): void {
 })->group(__DIR__, __FILE__)->throws(\Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException::class);
 
 it('can create custom driver', function (): void {
-    app(ExceptionNotifyManager::class)->extend('foo', function () {
-        return new class implements Channel {
-            public function report(string $report): void {}
-        };
+    app(ExceptionNotifyManager::class)->extend('foo', static fn (): Channel => new class implements Channel {
+        public function report(string $report): void {}
     });
 
     expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(Channel::class);
