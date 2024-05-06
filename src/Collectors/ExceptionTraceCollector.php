@@ -21,6 +21,7 @@ class ExceptionTraceCollector extends ExceptionCollector
     {
         return collect(explode(\PHP_EOL, $this->exception->getTraceAsString()))
             ->filter(static fn ($trace): bool => !Str::contains($trace, 'vendor'))
+            ->map(static fn ($trace): string => (string) str($trace)->replaceFirst(base_path(), ''))
             ->all();
     }
 }
