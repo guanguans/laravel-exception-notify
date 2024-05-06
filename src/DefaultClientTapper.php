@@ -18,7 +18,7 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Log;
 
-class WithLogMiddlewareClientTapper
+class DefaultClientTapper
 {
     private string $channel;
     private string $template;

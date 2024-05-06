@@ -102,7 +102,7 @@ return [
      */
     'channels' => [
         /**
-         * 飞书群机器人.
+         * Lark.
          */
         'lark' => [
             'driver' => 'notify',
@@ -114,7 +114,7 @@ return [
             'client' => [
                 'class' => \Guanguans\Notify\Lark\Client::class,
                 'http_options' => [],
-                'tapper' => \Guanguans\LaravelExceptionNotify\WithLogMiddlewareClientTapper::class,
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Lark\Messages\TextMessage::class,
@@ -149,30 +149,6 @@ return [
             'driver' => 'log',
             'channel' => 'daily',
             'pipes' => [],
-        ],
-
-        /**
-         * 企业微信群机器人.
-         */
-        'weWork' => [
-            'driver' => 'notify',
-            'authenticator' => [
-                'class' => \Guanguans\Notify\WeWork\Authenticator::class,
-                'token' => '...',
-            ],
-            'client' => [
-                'class' => \Guanguans\Notify\WeWork\Client::class,
-                'http_options' => [],
-                'tapper' => \Guanguans\LaravelExceptionNotify\WithLogMiddlewareClientTapper::class,
-            ],
-            'message' => [
-                'class' => \Guanguans\Notify\WeWork\Messages\TextMessage::class,
-                'content' => '{report}',
-            ],
-            'pipes' => [
-                FixPrettyJsonPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 5120),
-            ],
         ],
     ],
 ];
