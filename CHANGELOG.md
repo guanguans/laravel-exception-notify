@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.0.0-beta3"></a>
+## [4.0.0-beta3] - 2024-05-06
+### Docs
+- **readme:** update supported notification channels
+
+### Refactor
+- **config:** update Lark configuration and rename client tapper
+
+### Test
+- **MailChannelTest:** add throws method in test
+
+### Pull Requests
+- Merge pull request [#62](https://github.com/guanguans/laravel-exception-notify/issues/62) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.1.0
+
+
 <a name="4.0.0-beta2"></a>
 ## [4.0.0-beta2] - 2024-04-23
 ### Fix
@@ -733,7 +748,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta3...HEAD
+[4.0.0-beta3]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta2...4.0.0-beta3
 [4.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta1...4.0.0-beta2
 [4.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.3...4.0.0-beta1
 [3.8.3]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.2...3.8.3
