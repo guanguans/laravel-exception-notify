@@ -1,11 +1,9 @@
 # laravel-exception-notify
 
-[简体中文](README-zh_CN.md) | [ENGLISH](README.md)
-
 > [!CAUTION]
 > 4.x is developed, but not stable yet. but not recommended for production use. please use 3.x version.
 
-> Exception monitoring alarm notification in Laravel(Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、Slack、Telegram、WeWork、XiZhi、YiFengChuanHua、Zulip).
+> Exception monitoring alarm notification in Laravel(Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、XiZhi、YiFengChuanHua、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -15,7 +13,7 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/laravel-exception-notify/downloads)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 [![License](https://poser.pugx.org/guanguans/laravel-exception-notify/license)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 
-## Feature
+## Features
 
 * Monitor and send laravel application exception
 * Support for multi-channel notification
@@ -47,7 +45,7 @@ composer require guanguans/laravel-exception-notify -v
 php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider"
 ```
 
-### Apply for channel `token` or `secret` information
+### Apply for channel `auth' and other information
 
 * [Notify](https://github.com/guanguans/notify#platform-support)
 * Dump
@@ -57,11 +55,7 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 ### Configure channels in the `config/exception-notify.php` or `.env` file
 
 ```dotenv
-EXCEPTION_NOTIFY_DEFAULTS=dingTalk,log,...
-
-EXCEPTION_NOTIFY_DINGTALK_KEYWORD=keyword # optional
-EXCEPTION_NOTIFY_DINGTALK_TOKEN=c44fec1ddaa8a833156efb77b7865d62ae13775418030d94d
-EXCEPTION_NOTIFY_DINGTALK_SECRET=SECc32bb7345c0f73da2b9786f0f7dd5083bd768a29b82 # optional
+EXCEPTION_NOTIFY_DEFAULTS=lark,log,mail,slack,...
 ```
 
 ## Usage
