@@ -2,7 +2,7 @@
 
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
-> Laravel 中异常监控报警通知(Bark、Chanify、钉钉群机器人、Discord、飞书群机器人、邮件、PushDeer、QQ 频道机器人、Server 酱、Slack、Telegram、企业微信群机器人、息知)。
+> Laravel 中异常监控报警通知(Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、Slack、Telegram、WeWork、XiZhi、YiFengChuanHua、Zulip)。
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -46,18 +46,10 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 
 ### 申请通道 `token`、`secret` 等信息
 
-* [Bark](https://github.com/Finb/Bark)
-* [Chanify](https://github.com/chanify?type=source)
-* [钉钉群机器人](https://developers.dingtalk.com/document/app/custom-robot-access)
-* [Discord](https://discord.com/developers/docs/resources/webhook#edit-webhook-message)
-* [飞书群机器人](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
-* [PushDeer](http://pushdeer.com)
-* [QQ 频道机器人](https://bot.q.qq.com/wiki/develop/api/openapi/message/post_messages.html)
-* [Server 酱](https://sct.ftqq.com)
-* [Slack](https://api.slack.com/messaging/webhooks)
-* [Telegram](https://core.telegram.org/bots/api#sendmessage)
-* [企业微信群机器人](https://work.weixin.qq.com/help?doc_id=13376)
-* [息知](https://xz.qqoq.net/#/index)
+* [Notify](https://github.com/guanguans/notify#platform-support)
+* Dump
+* Log
+* Mail
 
 ### 在 `config/exception-notify.php` 或 `.env` 文件中配置通道
 

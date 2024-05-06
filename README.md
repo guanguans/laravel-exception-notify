@@ -5,7 +5,7 @@
 > [!CAUTION]
 > 4.x is developed, but not stable yet. but not recommended for production use. please use 3.x version.
 
-> Exception monitoring alarm notification in Laravel(Bark、Chanify、DingTalk、Discord、FeiShu、Mail、PushDeer、QQ Channel Bot、ServerChan、Slack、Telegram、WeWork、XiZhi).
+> Exception monitoring alarm notification in Laravel(Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、Slack、Telegram、WeWork、XiZhi、YiFengChuanHua、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -49,18 +49,10 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 
 ### Apply for channel `token` or `secret` information
 
-* [Bark](https://github.com/Finb/Bark)
-* [Chanify](https://github.com/chanify?type=source)
-* [Dingtalk](https://developers.dingtalk.com/document/app/custom-robot-access)
-* [Discord](https://discord.com/developers/docs/resources/webhook#edit-webhook-message)
-* [Feishu](https://www.feishu.cn/hc/zh-CN/articles/360024984973)
-* [PushDeer](http://pushdeer.com)
-* [QQ Channel Bot](https://bot.q.qq.com/wiki/develop/api/openapi/message/post_messages.html)
-* [ServerChan](https://sct.ftqq.com)
-* [Slack](https://api.slack.com/messaging/webhooks)
-* [Telegram](https://core.telegram.org/bots/api#sendmessage)
-* [WeWork](https://work.weixin.qq.com/help?doc_id=13376)
-* [XiZhi](https://xz.qqoq.net/#/index)
+* [Notify](https://github.com/guanguans/notify#platform-support)
+* Dump
+* Log
+* Mail
 
 ### Configure channels in the `config/exception-notify.php` or `.env` file
 
