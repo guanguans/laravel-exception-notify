@@ -15,6 +15,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
 return [
@@ -79,11 +80,11 @@ return [
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
         // \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
@@ -102,14 +103,150 @@ return [
      */
     'channels' => [
         /**
+         * Log.
+         *
+         * @see \Illuminate\Support\Facades\Log
+         * @see \Illuminate\Log\LogManager
+         */
+        'log' => [
+            'driver' => 'log',
+            'channel' => 'daily',
+        ],
+
+        /**
+         * Mail.
+         *
+         * @see \Illuminate\Support\Facades\Mail
+         * @see \Illuminate\Mail\MailManager
+         */
+        'mail' => [
+            'mailer' => null,
+            'to' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.com'),
+            'pipes' => [
+                SprintfHtmlPipe::class,
+            ],
+        ],
+
+        /**
+         * Bark.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'bark' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Bark\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Bark\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Bark\Messages\Message::class,
+                'title' => '{title}',
+                'body' => '{report}',
+            ],
+            'pipes' => [
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 1024),
+            ],
+        ],
+
+        /**
+         * Chanify.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'chanify' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Chanify\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Chanify\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Chanify\Messages\TextMessage::class,
+                'title' => '{title}',
+                'text' => '{report}',
+            ],
+            'pipes' => [
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 1024),
+            ],
+        ],
+
+        /**
+         * DingTalk.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'dingTalk' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\DingTalk\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
+                'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\DingTalk\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
+                'title' => '{title}',
+                'text' => '{report}',
+            ],
+            'pipes' => [
+                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 20000),
+            ],
+        ],
+
+        /**
+         * Discord.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'discord' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Discord\Authenticator::class,
+                'webHook' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Discord\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Discord\Messages\Message::class,
+                'content' => '{report}',
+            ],
+            'pipes' => [
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 2000),
+            ],
+        ],
+
+        /**
          * Lark.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
          */
         'lark' => [
             'driver' => 'notify',
             'authenticator' => [
                 'class' => \Guanguans\Notify\Lark\Authenticator::class,
-                'token' => '...',
-                'secret' => '...',
+                'token' => env('EXCEPTION_NOTIFY_LARK_TOKEN'),
+                'secret' => env('EXCEPTION_NOTIFY_LARK_SECRET'),
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Lark\Client::class,
@@ -121,34 +258,119 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(AddKeywordPipe::class, 'keyword'),
+                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
                 FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
 
         /**
-         * Mail.
+         * Ntfy.
          *
-         * @see Illuminate\Mail\MailManager
+         * @see https://github.com/guanguans/notify#platform-support
          */
-        'mail' => [
-            'mailer' => null,
-            'to' => 'your@example.com',
+        'ntfy' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Ntfy\Authenticator::class,
+                'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN'),
+                'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Ntfy\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Ntfy\Messages\Message::class,
+                'topic' => env('EXCEPTION_NOTIFY_NTFY_TOPIC', 'laravel-exception-notify'),
+                'title' => '{title}',
+                'message' => '{report}',
+            ],
             'pipes' => [
-                SprintfHtmlPipe::class,
+                // FixPrettyJsonPipe::class,
+                // hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
 
         /**
-         * Log.
+         * Slack.
          *
-         * @see Illuminate\Log\LogManager
+         * @see https://github.com/guanguans/notify#platform-support
          */
-        'log' => [
-            'driver' => 'log',
-            'channel' => 'daily',
-            'pipes' => [],
+        'slack' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Slack\Authenticator::class,
+                'webHook' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Slack\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Slack\Messages\Message::class,
+                'text' => '{report}',
+            ],
+            'pipes' => [
+                SprintfMarkdownPipe::class,
+                // FixPrettyJsonPipe::class,
+                // hydrate_pipe(LimitLengthPipe::class, 30720),
+            ],
+        ],
+
+        /**
+         * Telegram.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'telegram' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\Telegram\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\Telegram\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\Telegram\Messages\TextMessage::class,
+                'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
+                'text' => '{report}',
+            ],
+            'pipes' => [
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 4096),
+            ],
+        ],
+
+        /**
+         * WeWork.
+         *
+         * @see https://github.com/guanguans/notify#platform-support
+         */
+        'weWork' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\WeWork\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\WeWork\Client::class,
+                'http_options' => [],
+                // 'tapper' => \Guanguans\LaravelExceptionNotify\DefaultClientTapper::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
+                'content' => '{report}',
+            ],
+            'pipes' => [
+                FixPrettyJsonPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 5120),
+            ],
         ],
     ],
 ];
