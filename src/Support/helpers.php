@@ -76,32 +76,6 @@ if (!\function_exists('env_explode')) {
     }
 }
 
-if (!\function_exists('array_is_list')) {
-    /**
-     * @codeCoverageIgnore
-     *
-     * @see \Symfony\Polyfill\Php81\Php81::array_is_list
-     */
-    function array_is_list(array $array): bool
-    {
-        if ([] === $array || array_values($array) === $array) {
-            return true;
-        }
-
-        $nextKey = -1;
-
-        $keys = array_keys($array);
-
-        foreach ($keys as $key) {
-            if ($key !== ++$nextKey) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-
 if (!\function_exists('json_pretty_encode')) {
     /**
      * @param mixed $value

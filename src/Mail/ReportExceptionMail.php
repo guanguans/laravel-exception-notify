@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Mail;
 
 use Illuminate\Mail\Mailable;
 
-class ExceptionReportMail extends Mailable
+class ReportExceptionMail extends Mailable
 {
     private string $report;
 

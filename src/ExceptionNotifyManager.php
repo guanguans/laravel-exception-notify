@@ -74,12 +74,10 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $dispatch = dispatch(new ReportExceptionJob(
-                app(CollectorManager::class)->mapToReports(
-                    (array) ($channels ?? config('exception-notify.defaults')),
-                    $throwable
-                )
-            ));
+            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->mapToReports(
+                (array) ($channels ?? config('exception-notify.defaults')),
+                $throwable
+            )));
 
             if (
                 !$this->container->runningInConsole()
@@ -91,7 +89,6 @@ class ExceptionNotifyManager extends Manager
 
             unset($dispatch);
         } catch (\Throwable $throwable) {
-            // report($throwable);
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
         }
     }
@@ -172,9 +169,6 @@ class ExceptionNotifyManager extends Manager
         throw new InvalidArgumentException("Driver [$driver] not supported.");
     }
 
-    /**
-     * @noinspection PhpUnusedParameterInspection
-     */
     private function createDumpDriver(): Channel
     {
         return new class implements Channel {
