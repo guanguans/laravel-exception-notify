@@ -18,7 +18,7 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Log;
 
-class DefaultClientTapper
+class DefaultClientExtender
 {
     private string $channel;
     private string $template;
@@ -34,9 +34,9 @@ class DefaultClientTapper
         $this->logLevel = $logLevel;
     }
 
-    public function __invoke(Client $client): void
+    public function __invoke(Client $client): Client
     {
-        $client->push(
+        return $client->push(
             Middleware::log(
                 Log::channel($this->channel),
                 new MessageFormatter($this->template),

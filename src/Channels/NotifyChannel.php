@@ -39,7 +39,7 @@ class NotifyChannel extends Channel
             'client' => 'required|array',
             'client.class' => 'required|string',
             'client.http_options' => 'array',
-            // 'client.tapper' => 'string|callable',
+            // 'client.extender' => 'string|callable',
 
             'message' => 'required|array',
             'message.class' => 'required|string',
@@ -75,8 +75,8 @@ class NotifyChannel extends Channel
             $client->setHttpOptions($this->config->get('client.http_options'));
         }
 
-        if ($this->config->has('client.tapper')) {
-            app()->call($this->config->get('client.tapper'), ['client' => $client]);
+        if ($this->config->has('client.extender')) {
+            $client = app()->call($this->config->get('client.extender'), ['client' => $client]);
         }
 
         return $client;
