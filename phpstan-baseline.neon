@@ -6,11 +6,6 @@ parameters:
 			path: src/Channels/MailChannel.php
 
 		-
-			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Channels\\\\NotifyChannel\\:\\:report\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Response but returns Psr\\\\Http\\\\Message\\\\ResponseInterface\\.$#"
-			count: 1
-			path: src/Channels/NotifyChannel.php
-
-		-
 			message: "#^Property Guanguans\\\\LaravelExceptionNotify\\\\Collectors\\\\ApplicationCollector\\:\\:\\$container \\(Illuminate\\\\Foundation\\\\Application\\) does not accept Illuminate\\\\Container\\\\Container\\.$#"
 			count: 1
 			path: src/Collectors/ApplicationCollector.php
@@ -26,9 +21,9 @@ parameters:
 			path: src/Collectors/RequestHeaderCollector.php
 
 		-
-			message: "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Macros\\\\StringableMacro\\:\\:\\$value\\.$#"
-			count: 2
-			path: src/Macros/StringableMacro.php
+			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\DefaultClientExtender\\:\\:__invoke\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
+			count: 1
+			path: src/DefaultClientExtender.php
 
 		-
 			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Str\\:\\:lcfirst\\(\\)\\.$#"
@@ -44,6 +39,11 @@ parameters:
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"
 			count: 1
 			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Support\\\\ExceptionContext\\:\\:getEval\\(\\) never returns void so it can be removed from the return type\\.$#"
+			count: 1
+			path: src/Support/ExceptionContext.php
 
 		-
 			message: "#^Result of && is always false\\.$#"

@@ -22,6 +22,8 @@ use Illuminate\Support\Stringable;
 class AddChorePipe
 {
     /**
+     * @noinspection MissingParameterTypeDeclarationInspection
+     *
      * @param mixed $value
      * @param array-key $key
      */

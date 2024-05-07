@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class RequestBasicCollector extends Collector
 {
-    protected Request $request;
+    private Request $request;
 
     public function __construct(Request $request)
     {

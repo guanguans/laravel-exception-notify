@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpMethodParametersCountMismatchInspection */
+
 declare(strict_types=1);
 
 /**

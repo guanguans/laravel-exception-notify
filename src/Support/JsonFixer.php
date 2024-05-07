@@ -77,7 +77,7 @@ final class JsonFixer
             return $json;
         }
 
-        if (null !== $tmpJson = $this->quickFix($json)) {
+        if (null !== ($tmpJson = $this->quickFix($json))) {
             return $tmpJson;
         }
 
@@ -127,7 +127,7 @@ final class JsonFixer
 
     private function quickFix(string $json): ?string
     {
-        if (1 === \strlen($json) && isset($this->pairs[$json])) {
+        if (isset($this->pairs[$json]) && 1 === \strlen($json)) {
             return $json.$this->pairs[$json];
         }
 
@@ -275,7 +275,7 @@ final class JsonFixer
 
         $match = preg_match('/(tr?u?e?|fa?l?s?e?|nu?l?l?)$/', $tmpJson, $matches);
 
-        if (!$match || null === $literal = $this->maybeLiteral($matches[1])) {
+        if (!$match || null === ($literal = $this->maybeLiteral($matches[1]))) {
             return $tmpJson;
         }
 
@@ -301,7 +301,7 @@ final class JsonFixer
 
         $part = substr($tmpJson, $this->objectPos + 1);
 
-        if (preg_match('/(\s*\"[^"]+\"\s*:\s*[^,]+,?)+$/', $part, $matches)) {
+        if (preg_match('/(\s*\"[^"]+\"\s*:\s*[^,]+,?)+$/', $part)) {
             return $tmpJson;
         }
 

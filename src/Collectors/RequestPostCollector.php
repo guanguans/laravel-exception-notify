@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 
 class RequestPostCollector extends Collector
 {
-    protected Request $request;
+    private Request $request;
 
     public function __construct(Request $request)
     {
@@ -28,7 +28,7 @@ class RequestPostCollector extends Collector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->transform(static function ($value, $key) {
+            ->transform(static function ($value, string $key) {
                 if (Str::of($key)->is(['password', '*password', 'password*', '*password*'])) {
                     return '******';
                 }

@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpUnused */
+/** @noinspection PhpUnusedPrivateMethodInspection */
+
 declare(strict_types=1);
 
 /**
@@ -18,7 +21,6 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Manager;
@@ -27,11 +29,11 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 
 /**
- * @property Application $container
+ * @property \Illuminate\Foundation\Application $container
  *
  * @method Channel driver($driver = null)
  *
- * @mixin Channel
+ * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
  */
 class ExceptionNotifyManager extends Manager
 {
@@ -42,6 +44,8 @@ class ExceptionNotifyManager extends Manager
 
     /**
      * Handle dynamic method calls into the method.
+     *
+     * @noinspection MissingReturnTypeInspection
      *
      * @param mixed $method
      * @param mixed $parameters
@@ -56,6 +60,8 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
+     * @noinspection MissingParameterTypeDeclarationInspection
+     *
      * @param mixed $condition
      * @param list<string>|string $channels
      */
@@ -65,6 +71,8 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
+     * @noinspection MissingParameterTypeDeclarationInspection
+     *
      * @param list<string>|string $channels
      */
     public function report(\Throwable $throwable, $channels = null): void
@@ -74,10 +82,12 @@ class ExceptionNotifyManager extends Manager
                 return;
             }
 
-            $dispatch = dispatch(new ReportExceptionJob(app(CollectorManager::class)->mapToReports(
-                (array) ($channels ?? config('exception-notify.defaults')),
-                $throwable
-            )));
+            $dispatch = dispatch(new ReportExceptionJob(
+                app(CollectorManager::class)->mapToReports(
+                    (array) ($channels ?? config('exception-notify.defaults')),
+                    $throwable
+                )
+            ));
 
             if (
                 !$this->container->runningInConsole()
@@ -102,6 +112,12 @@ class ExceptionNotifyManager extends Manager
         return !$this->shouldntReport($throwable);
     }
 
+    /**
+     * @noinspection MissingParentCallInspection
+     * @noinspection MethodVisibilityInspection
+     *
+     * @param mixed $driver
+     */
     protected function createDriver($driver): Channel
     {
         if (isset($this->customCreators[$driver])) {
@@ -123,6 +139,9 @@ class ExceptionNotifyManager extends Manager
         throw new InvalidArgumentException("Driver [$driver] not supported.");
     }
 
+    /**
+     * @noinspection IfSimplificationOrInspection
+     */
     private function shouldntReport(\Throwable $throwable): bool
     {
         if (!config('exception-notify.enabled')) {

@@ -22,6 +22,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Psr\Http\Message\ResponseInterface;
 
 class NotifyChannel extends Channel
 {
@@ -61,8 +62,10 @@ class NotifyChannel extends Channel
     /**
      * @throws BindingResolutionException
      * @throws GuzzleException
+     *
+     * @return Response|ResponseInterface
      */
-    public function report(string $report): Response
+    public function report(string $report): ResponseInterface
     {
         return $this->createClient()->send($this->createMessage($report));
     }
