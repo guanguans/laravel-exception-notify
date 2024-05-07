@@ -103,8 +103,6 @@ return [
      */
     'channels' => [
         /**
-         * Log.
-         *
          * @see \Illuminate\Support\Facades\Log
          * @see \Illuminate\Log\LogManager
          */
@@ -114,22 +112,19 @@ return [
         ],
 
         /**
-         * Mail.
-         *
          * @see \Illuminate\Support\Facades\Mail
          * @see \Illuminate\Mail\MailManager
          */
         'mail' => [
+            'driver' => 'mail',
             'mailer' => null,
-            'to' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.com'),
+            'to' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.mail'),
             'pipes' => [
                 SprintfHtmlPipe::class,
             ],
         ],
 
         /**
-         * Bark.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'bark' => [
@@ -155,8 +150,6 @@ return [
         ],
 
         /**
-         * Chanify.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'chanify' => [
@@ -182,8 +175,6 @@ return [
         ],
 
         /**
-         * DingTalk.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'dingTalk' => [
@@ -211,8 +202,6 @@ return [
         ],
 
         /**
-         * Discord.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'discord' => [
@@ -237,8 +226,6 @@ return [
         ],
 
         /**
-         * Lark.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'lark' => [
@@ -265,8 +252,6 @@ return [
         ],
 
         /**
-         * Ntfy.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'ntfy' => [
@@ -294,8 +279,6 @@ return [
         ],
 
         /**
-         * Slack.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'slack' => [
@@ -321,8 +304,6 @@ return [
         ],
 
         /**
-         * Telegram.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'telegram' => [
@@ -348,8 +329,6 @@ return [
         ],
 
         /**
-         * WeWork.
-         *
          * @see https://github.com/guanguans/notify#platform-support
          */
         'weWork' => [
