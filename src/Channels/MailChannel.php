@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Mail\ExceptionReportMail;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -22,13 +23,28 @@ class MailChannel extends Channel
 {
     public function report(string $report): void
     {
-        collect($this->config->all())
-            ->except(['mailer', 'pipes'])
+        $mailer = Mail::driver($this->config->get('mailer'));
+
+        $reflectionObjectOfMailer = new \ReflectionObject($mailer);
+
+        $mailer = collect($this->config->all())
+            ->except(['mailer', 'extender', 'pipes'])
             ->reduce(
-                static fn ($carry, $value, string $key) => $carry->{Str::camel($key)}($value),
-                Mail::driver($this->config->get('mailer'))
-            )
-            ->send($this->createMail($report));
+                static function (Mailer $mailer, $parameters, string $method) use ($reflectionObjectOfMailer): Mailer {
+                    $method = Str::camel($method);
+
+                    return $reflectionObjectOfMailer->getMethod($method)->getNumberOfParameters() > 1
+                        ? $mailer->{$method}(...$parameters)
+                        : $mailer->{$method}($parameters);
+                },
+                $mailer
+            );
+
+        if ($this->config->has('extender')) {
+            $mailer = app()->call($this->config->get('extender'), ['mailer' => $mailer]);
+        }
+
+        $mailer->send($this->createMail($report));
     }
 
     private function createMail(string $report): Mailable
