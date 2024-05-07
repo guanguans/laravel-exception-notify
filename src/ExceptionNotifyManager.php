@@ -82,7 +82,6 @@ class ExceptionNotifyManager extends Manager
             if (
                 !$this->container->runningInConsole()
                 && 'sync' === config('exception-notify.job.connection')
-                && method_exists($dispatch, 'afterResponse')
             ) {
                 $dispatch->afterResponse();
             }
@@ -101,51 +100,6 @@ class ExceptionNotifyManager extends Manager
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);
-    }
-
-    protected function shouldntReport(\Throwable $throwable): bool
-    {
-        if (!config('exception-notify.enabled')) {
-            return true;
-        }
-
-        if (!Str::is(config('exception-notify.env'), (string) $this->container->environment())) {
-            return true;
-        }
-
-        if (Arr::first(config('exception-notify.except'), static fn (string $type): bool => $throwable instanceof $type)) {
-            return true;
-        }
-
-        return !$this->attempt(
-            $this->toFingerprint($throwable),
-            config('exception-notify.rate_limit.max_attempts'),
-            config('exception-notify.rate_limit.decay_seconds')
-        );
-    }
-
-    protected function toFingerprint(\Throwable $throwable): string
-    {
-        return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
-            $throwable->getFile(),
-            $throwable->getLine(),
-            $throwable->getCode(),
-            $throwable->getTraceAsString(),
-        ]));
-    }
-
-    /**
-     * @see RateLimiter::attempt
-     */
-    protected function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
-    {
-        if (app(RateLimiter::class)->tooManyAttempts($key, $maxAttempts)) {
-            return false;
-        }
-
-        return tap(true, static function () use ($key, $decaySeconds): void {
-            app(RateLimiter::class)->hit($key, $decaySeconds);
-        });
     }
 
     protected function createDriver($driver): Channel
@@ -167,6 +121,51 @@ class ExceptionNotifyManager extends Manager
         }
 
         throw new InvalidArgumentException("Driver [$driver] not supported.");
+    }
+
+    private function shouldntReport(\Throwable $throwable): bool
+    {
+        if (!config('exception-notify.enabled')) {
+            return true;
+        }
+
+        if (!$this->container->environment(config('exception-notify.env'))) {
+            return true;
+        }
+
+        if (Arr::first(config('exception-notify.except'), static fn (string $type): bool => $throwable instanceof $type)) {
+            return true;
+        }
+
+        return !$this->attempt(
+            $this->toFingerprint($throwable),
+            config('exception-notify.rate_limit.max_attempts'),
+            config('exception-notify.rate_limit.decay_seconds')
+        );
+    }
+
+    private function toFingerprint(\Throwable $throwable): string
+    {
+        return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
+            $throwable->getFile(),
+            $throwable->getLine(),
+            $throwable->getCode(),
+            $throwable->getTraceAsString(),
+        ]));
+    }
+
+    /**
+     * @see RateLimiter::attempt
+     */
+    private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
+    {
+        if (app(RateLimiter::class)->tooManyAttempts($key, $maxAttempts)) {
+            return false;
+        }
+
+        return tap(true, static function () use ($key, $decaySeconds): void {
+            app(RateLimiter::class)->hit($key, $decaySeconds);
+        });
     }
 
     private function createDumpDriver(): Channel

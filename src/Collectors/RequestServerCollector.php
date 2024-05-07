@@ -24,12 +24,6 @@ class RequestServerCollector extends Collector
         $this->request = $request;
     }
 
-    /**
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress NullableReturnStatement
-     * @psalm-suppress InvalidNullableReturnType
-     */
     public function collect(): array
     {
         return $this->request->server();

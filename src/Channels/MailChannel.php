@@ -27,6 +27,11 @@ class MailChannel extends Channel
         $mailerOrPendingMail = collect($this->config->all())
             ->except(['driver', 'mailer', 'extender', 'pipes'])
             ->reduce(
+                /**
+                 * @param array|mixed $parameters
+                 *
+                 * @throws \ReflectionException
+                 */
                 static function (object $mailerOrPendingMail, $parameters, string $method): object {
                     $method = Str::camel($method);
 

@@ -120,7 +120,6 @@ final class JsonFixer
      */
     private function isValid(string $json): bool
     {
-        /** @psalm-suppress UnusedFunctionCall */
         json_decode($json);
 
         return \JSON_ERROR_NONE === json_last_error();
@@ -179,9 +178,6 @@ final class JsonFixer
         return $this->fixOrFail($json);
     }
 
-    /**
-     * @psalm-suppress UnusedParam
-     */
     private function stack(string $prev, string $char, int $index): void
     {
         if ($this->maybeStr($prev, $char, $index)) {

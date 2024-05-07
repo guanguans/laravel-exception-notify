@@ -11,6 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
 
 if (!\function_exists('make')) {
@@ -29,7 +30,9 @@ if (!\function_exists('make')) {
     function make($abstract, array $parameters = [])
     {
         if (!\is_string($abstract) && !\is_array($abstract)) {
-            throw new \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException(sprintf('Invalid argument type(string/array): %s.', \gettype($abstract)));
+            throw new InvalidArgumentException(
+                sprintf('Invalid argument type(string/array): %s.', \gettype($abstract))
+            );
         }
 
         if (\is_string($abstract)) {
@@ -49,7 +52,7 @@ if (!\function_exists('make')) {
             return make($abstract, $parameters);
         }
 
-        throw new \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'The argument of abstract must be an array containing a `%s` element.',
             implode('` or `', $classes)
         ));

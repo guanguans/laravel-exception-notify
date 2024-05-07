@@ -21,9 +21,6 @@ use Illuminate\Support\Str;
  */
 class ExceptionContext
 {
-    /**
-     * @psalm-suppress InvalidArrayOffset
-     */
     public static function getMarked(\Throwable $throwable, string $mark = '➤'): array
     {
         return collect(static::get($throwable))
@@ -63,14 +60,14 @@ class ExceptionContext
     /**
      * @return null|array<int, string>|void
      */
-    protected static function getEval(\Throwable $throwable)
+    private static function getEval(\Throwable $throwable)
     {
         if (Str::contains($throwable->getFile(), "eval()'d code")) {
             return [$throwable->getLine() => "eval()'d code"];
         }
     }
 
-    protected static function getFile(\Throwable $throwable): array
+    private static function getFile(\Throwable $throwable): array
     {
         return collect(explode(\PHP_EOL, file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)

@@ -41,10 +41,6 @@ class CollectorManager extends Fluent
             ->all();
     }
 
-    /**
-     * @psalm-suppress InvalidReturnType
-     * @psalm-suppress InvalidReturnStatement
-     */
     private function mapToReport(string $channel, Collection $collectors): string
     {
         return (string) (new Pipeline(app()))

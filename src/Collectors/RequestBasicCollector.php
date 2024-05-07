@@ -24,10 +24,6 @@ class RequestBasicCollector extends Collector
         $this->request = $request;
     }
 
-    /**
-     * @psalm-suppress InvalidScalarArgument
-     * @psalm-suppress InvalidArgument
-     */
     public function collect(): array
     {
         return [

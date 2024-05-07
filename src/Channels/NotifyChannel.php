@@ -40,11 +40,7 @@ class NotifyChannel extends Channel
             'client.class' => 'required|string',
             'client.http_options' => 'array',
             'client.extender' => static function (string $attribute, $value, \Closure $fail): void {
-                if (\is_string($value)) {
-                    return;
-                }
-
-                if (\is_callable($value)) {
+                if (\is_string($value) || \is_callable($value)) {
                     return;
                 }
 
@@ -85,11 +81,9 @@ class NotifyChannel extends Channel
             $client->setHttpOptions($this->config->get('client.http_options'));
         }
 
-        if ($this->config->has('client.extender')) {
-            return app()->call($this->config->get('client.extender'), ['client' => $client]);
-        }
-
-        return $client;
+        return $this->config->has('client.extender')
+            ? app()->call($this->config->get('client.extender'), ['client' => $client])
+            : $client;
     }
 
     /**
@@ -98,7 +92,6 @@ class NotifyChannel extends Channel
     private function createMessage(string $report): Message
     {
         $replace = [config('exception-notify.title'), $report];
-
         $options = Arr::except($this->config->get('message'), 'class');
 
         array_walk_recursive($options, static function (&$value) use ($replace): void {

@@ -26,9 +26,6 @@ class ReportUsingCreator
     /**
      * @noinspection StaticClosureCanBeUsedInspection
      * @noinspection AnonymousFunctionStaticInspection
-     *
-     * @psalm-suppress UndefinedThisPropertyFetch
-     * @psalm-suppress InaccessibleProperty
      */
     public function __invoke(ExceptionHandler $exceptionHandler): \Closure
     {

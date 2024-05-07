@@ -17,7 +17,8 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends Collector
 {
-    protected Request $request;
+    private const REJECTED_HEADERS = ['Cookie'];
+    private Request $request;
 
     public function __construct(Request $request)
     {
@@ -29,6 +30,8 @@ class RequestHeaderCollector extends Collector
      */
     public function collect(): array
     {
-        return $this->request->headers();
+        return collect($this->request->headers())
+            ->reject(static fn (string $value, string $key): bool => \in_array($key, self::REJECTED_HEADERS, true))
+            ->all();
     }
 }

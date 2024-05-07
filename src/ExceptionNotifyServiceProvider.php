@@ -21,20 +21,20 @@ use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
-class ExceptionNotifyServiceProvider extends ServiceProvider
+class ExceptionNotifyServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $singletons = [
         RequestMacro::class => RequestMacro::class,
         StringableMacro::class => StringableMacro::class,
         StrMacro::class => StrMacro::class,
     ];
-    protected bool $defer = false;
 
     /**
      * @throws \ReflectionException
@@ -67,7 +67,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         ];
     }
 
-    protected function setupConfig(): self
+    private function setupConfig(): self
     {
         /** @noinspection RealpathInStreamContextInspection */
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
@@ -85,7 +85,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      * @throws \ReflectionException
      * @throws BindingResolutionException
      */
-    protected function registerMacros(): self
+    private function registerMacros(): self
     {
         Request::mixin($this->app->make(RequestMacro::class));
         Str::mixin($this->app->make(StrMacro::class));
@@ -94,7 +94,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function registerExceptionNotifyManager(): self
+    private function registerExceptionNotifyManager(): self
     {
         $this->app->singleton(
             ExceptionNotifyManager::class,
@@ -106,7 +106,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function registerCollectorManager(): self
+    private function registerCollectorManager(): self
     {
         $this->app->singleton(
             CollectorManager::class,
@@ -128,7 +128,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function registerTestCommand(): self
+    private function registerTestCommand(): self
     {
         $this->app->singleton(TestCommand::class);
         $this->alias(TestCommand::class);
@@ -136,7 +136,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function extendExceptionHandler(): self
+    private function extendExceptionHandler(): self
     {
         $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $exceptionHandler): ExceptionHandler {
             if ($reportUsingCreator = config('exception-notify.report_using_creator')) {
@@ -162,7 +162,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function registerCommands(): self
+    private function registerCommands(): self
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -176,7 +176,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     /**
      * @param class-string $class
      */
-    protected function alias(string $class): self
+    private function alias(string $class): self
     {
         $this->app->alias($class, $this->toAlias($class));
 
@@ -186,7 +186,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     /**
      * @param class-string $class
      */
-    protected function toAlias(string $class): string
+    private function toAlias(string $class): string
     {
         return str($class)
             ->replaceFirst(__NAMESPACE__, '')
