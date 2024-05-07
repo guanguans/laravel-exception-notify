@@ -28,6 +28,7 @@ class ApplicationCollector extends Collector
     public function collect(): array
     {
         return [
+            'time' => date('Y-m-d H:i:s'),
             'name' => config('app.name'),
             'version' => $this->container->version(),
             'environment' => $this->container->environment(),

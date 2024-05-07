@@ -73,8 +73,8 @@ return [
      */
     'collectors' => [
         Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
@@ -195,7 +195,6 @@ return [
             ],
             'pipes' => [
                 hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
-
                 hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
         ],
@@ -244,7 +243,6 @@ return [
             ],
             'pipes' => [
                 hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
-
                 hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
@@ -271,7 +269,7 @@ return [
                 'message' => '{report}',
             ],
             'pipes' => [
-                // hydrate_pipe(LimitLengthPipe::class, 30720),
+                hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
 
@@ -295,8 +293,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-
-                // hydrate_pipe(LimitLengthPipe::class, 30720),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 

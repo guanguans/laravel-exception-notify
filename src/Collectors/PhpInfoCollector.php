@@ -20,6 +20,7 @@ class PhpInfoCollector extends Collector
         return [
             'version' => \PHP_VERSION,
             'interface' => \PHP_SAPI,
+            'memory' => human_bytes(memory_get_peak_usage(true)),
         ];
     }
 }
