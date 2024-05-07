@@ -39,13 +39,17 @@ class NotifyChannel extends Channel
             'client' => 'required|array',
             'client.class' => 'required|string',
             'client.http_options' => 'array',
-            // 'client.extender' => 'string|callable',
+            'client.extender' => static function (string $attribute, $value, \Closure $fail): void {
+                if (!\is_string($value) && !\is_callable($value)) {
+                    $fail("The $attribute must be a callable or string.");
+                }
+            },
 
             'message' => 'required|array',
             'message.class' => 'required|string',
         ]);
 
-        if ($validator->errors()->isNotEmpty()) {
+        if ($validator->fails()) {
             throw new InvalidArgumentException($validator->errors()->first());
         }
 

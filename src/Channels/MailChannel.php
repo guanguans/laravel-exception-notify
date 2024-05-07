@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Mail\ExceptionReportMail;
-use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\PendingMail;
 use Illuminate\Support\Facades\Mail;
@@ -44,11 +43,6 @@ class MailChannel extends Channel
             $mailerOrPendingMail = app()->call($this->config->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
         }
 
-        $mailerOrPendingMail->send($this->createMail($report));
-    }
-
-    private function createMail(string $report): Mailable
-    {
-        return new ExceptionReportMail($report);
+        $mailerOrPendingMail->send(new ExceptionReportMail($report));
     }
 }
