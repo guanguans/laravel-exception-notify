@@ -16,7 +16,6 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Message;
-use Guanguans\Notify\Foundation\Response;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -62,8 +61,6 @@ class NotifyChannel extends Channel
     /**
      * @throws BindingResolutionException
      * @throws GuzzleException
-     *
-     * @return Response|ResponseInterface
      */
     public function report(string $report): ResponseInterface
     {
