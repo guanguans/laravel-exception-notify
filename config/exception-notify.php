@@ -125,9 +125,31 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
+        // /**
+        //  * @see https://github.com/guanguans/notify#platform-support
+        //  */
+        // 'foo' => [
+        //     'driver' => 'notify',
+        //     'authenticator' => [
+        //         'class' => \Guanguans\Notify\Foo\Authenticator::class,
+        //         'parameter1' => '...',
+        //         // ...
+        //     ],
+        //     'client' => [
+        //         'class' => \Guanguans\Notify\Foo\Client::class,
+        //         'http_options' => [],
+        //         // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
+        //     ],
+        //     'message' => [
+        //         'class' => \Guanguans\Notify\Foo\Messages\Message::class,
+        //         'title' => '{report}',
+        //         'content' => '{report}',
+        //     ],
+        //     'pipes' => [
+        //         hydrate_pipe(LimitLengthPipe::class, 1024),
+        //     ],
+        // ],
+
         'bark' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -149,9 +171,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'chanify' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -173,9 +192,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'dingTalk' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -199,9 +215,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'discord' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -222,9 +235,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'lark' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -247,9 +257,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'ntfy' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -273,9 +280,29 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
+        'pushDeer' => [
+            'driver' => 'notify',
+            'authenticator' => [
+                'class' => \Guanguans\Notify\PushDeer\Authenticator::class,
+                'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
+            ],
+            'client' => [
+                'class' => \Guanguans\Notify\PushDeer\Client::class,
+                'http_options' => [],
+                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
+            ],
+            'message' => [
+                'class' => \Guanguans\Notify\PushDeer\Messages\Message::class,
+                'type' => 'markdown',
+                'text' => '{title}',
+                'desp' => '{report}',
+            ],
+            'pipes' => [
+                SprintfMarkdownPipe::class,
+                hydrate_pipe(LimitLengthPipe::class, 1024),
+            ],
+        ],
+
         'slack' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -297,9 +324,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'telegram' => [
             'driver' => 'notify',
             'authenticator' => [
@@ -321,9 +345,6 @@ return [
             ],
         ],
 
-        /**
-         * @see https://github.com/guanguans/notify#platform-support
-         */
         'weWork' => [
             'driver' => 'notify',
             'authenticator' => [
