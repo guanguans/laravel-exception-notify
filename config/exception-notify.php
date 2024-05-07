@@ -73,21 +73,23 @@ return [
      */
     'collectors' => [
         Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
+        Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
+
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
+
         // Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
-        // \Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
-        // \Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
-        // \Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
-        // \Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
     ],
 
     /**
@@ -117,7 +119,7 @@ return [
         'mail' => [
             'driver' => 'mail',
             'mailer' => null,
-            'to' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.mail'),
+            'to' => ['users' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.mail')],
             'pipes' => [
                 SprintfHtmlPipe::class,
             ],
