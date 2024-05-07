@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
+
 declare(strict_types=1);
 
 /**

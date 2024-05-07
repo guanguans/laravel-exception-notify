@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
+
 declare(strict_types=1);
 
 /**
@@ -13,8 +16,17 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
-it('can report', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('mail'))
-        ->report('report')
-        ->toBeNull();
-})->group(__DIR__, __FILE__)->throws(Swift_TransportException::class)->skip();
+it('will throw `InvalidArgumentException`', function (): void {
+    config()->set('exception-notify.channels.mail.extender', null);
+
+    $this->app->make(ExceptionNotifyManager::class)->driver('mail');
+})->group(__DIR__, __FILE__)->throws(\Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException::class);
+
+it('will throw `TransportException`', function (): void {
+    config()->set(
+        'exception-notify.channels.mail.extender',
+        static fn (object $mailerOrPendingMail): object => $mailerOrPendingMail
+    );
+
+    $this->app->make(ExceptionNotifyManager::class)->driver('mail')->report('report');
+})->group(__DIR__, __FILE__)->throws(Swift_TransportException::class);
