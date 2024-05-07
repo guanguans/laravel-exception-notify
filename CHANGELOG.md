@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.1.0"></a>
+## [4.1.0] - 2024-05-07
+### Feat
+- **collectors:** Add time field to ApplicationCollector
+- **laravel:** Add Laravel 8.0 set list and related rules
+
+### Refactor
+- change visibility of Request properties to private
+- **Channels:** Improve readability of MailChannel and NotifyChannel
+- **MailChannel:** simplify createMail method
+- **config:** remove FixPrettyJsonPipe from exception-notify.php
+- **config:** Remove unnecessary comment lines
+- **config:** update client extender references
+- **mail:** Improve method call in MailChannel
+- **mail:** rename ExceptionReportMail to ReportExceptionMail
+- **mail:** Improve mail channel configuration and method handling
+- **mail:** Improve mail channel configuration handling
+
+
 <a name="4.0.0"></a>
 ## [4.0.0] - 2024-05-06
 ### Docs
@@ -760,7 +779,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...HEAD
+[4.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta3...4.0.0
 [4.0.0-beta3]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta2...4.0.0-beta3
 [4.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta1...4.0.0-beta2
