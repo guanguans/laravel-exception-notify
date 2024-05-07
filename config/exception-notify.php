@@ -12,7 +12,6 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
@@ -144,7 +143,6 @@ return [
                 'body' => '{report}',
             ],
             'pipes' => [
-                FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
@@ -169,7 +167,6 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
@@ -196,7 +193,7 @@ return [
             ],
             'pipes' => [
                 hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
-                FixPrettyJsonPipe::class,
+
                 hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
         ],
@@ -220,7 +217,6 @@ return [
                 'content' => '{report}',
             ],
             'pipes' => [
-                FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 2000),
             ],
         ],
@@ -246,7 +242,7 @@ return [
             ],
             'pipes' => [
                 hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
-                FixPrettyJsonPipe::class,
+
                 hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
@@ -273,7 +269,6 @@ return [
                 'message' => '{report}',
             ],
             'pipes' => [
-                // FixPrettyJsonPipe::class,
                 // hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
@@ -298,7 +293,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                // FixPrettyJsonPipe::class,
+
                 // hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
@@ -323,7 +318,6 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
@@ -347,7 +341,6 @@ return [
                 'content' => '{report}',
             ],
             'pipes' => [
-                FixPrettyJsonPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 5120),
             ],
         ],

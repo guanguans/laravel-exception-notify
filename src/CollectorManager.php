@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
+use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
@@ -48,7 +49,7 @@ class CollectorManager extends Fluent
     {
         return (string) (new Pipeline(app()))
             ->send($collectors)
-            ->through(config("exception-notify.channels.$channel.pipes", []))
+            ->through(FixPrettyJsonPipe::class, ...config("exception-notify.channels.$channel.pipes", []))
             ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode(
                 $collectors->jsonSerialize()
             )));
