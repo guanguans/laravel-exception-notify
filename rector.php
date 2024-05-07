@@ -31,6 +31,7 @@ use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -71,8 +72,87 @@ return RectorConfig::configure()
         PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         PHPUnitSetList::ANNOTATIONS_TO_ATTRIBUTES,
     ])
+    ->withSets([
+        LaravelSetList::LARAVEL_80,
+        // LaravelSetList::LARAVEL_STATIC_TO_INJECTION,
+        LaravelSetList::LARAVEL_CODE_QUALITY,
+        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
+        LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
+        LaravelSetList::LARAVEL_FACADE_ALIASES_TO_FULL_NAMES,
+        LaravelSetList::LARAVEL_ELOQUENT_MAGIC_METHOD_TO_QUERY_BUILDER,
+    ])
+    ->withRules([
+        // // RectorLaravel\Rector\Assign\CallOnAppArrayAccessToStandaloneAssignRector::class,
+        // // RectorLaravel\Rector\Cast\DatabaseExpressionCastsToMethodCallRector::class,
+        RectorLaravel\Rector\ClassMethod\AddParentBootToModelClassMethodRector::class,
+        RectorLaravel\Rector\ClassMethod\AddParentRegisterToEventServiceProviderRector::class,
+        RectorLaravel\Rector\ClassMethod\MigrateToSimplifiedAttributeRector::class,
+        RectorLaravel\Rector\Class_\AddExtendsAnnotationToModelFactoriesRector::class,
+        RectorLaravel\Rector\Class_\AddMockConsoleOutputFalseToConsoleTestsRector::class,
+        RectorLaravel\Rector\Class_\AnonymousMigrationsRector::class,
+        // RectorLaravel\Rector\Class_\ModelCastsPropertyToCastsMethodRector::class,
+        RectorLaravel\Rector\Class_\PropertyDeferToDeferrableProviderToRector::class,
+        RectorLaravel\Rector\Class_\RemoveModelPropertyFromFactoriesRector::class,
+        // // RectorLaravel\Rector\Class_\ReplaceExpectsMethodsInTestsRector::class,
+        // // RectorLaravel\Rector\Class_\UnifyModelDatesWithCastsRector::class,
+        // RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector::class,
+        RectorLaravel\Rector\Expr\AppEnvironmentComparisonToParameterRector::class,
+        RectorLaravel\Rector\Expr\SubStrToStartsWithOrEndsWithStaticMethodCallRector\SubStrToStartsWithOrEndsWithStaticMethodCallRector::class,
+        // // RectorLaravel\Rector\FuncCall\DispatchNonShouldQueueToDispatchSyncRector::class,
+        // // RectorLaravel\Rector\FuncCall\FactoryFuncCallToStaticCallRector::class,
+        // RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector::class,
+        RectorLaravel\Rector\FuncCall\NotFilledBlankFuncCallToBlankFilledFuncCallRector::class,
+        RectorLaravel\Rector\FuncCall\NowFuncWithStartOfDayMethodCallToTodayFuncRector::class,
+        RectorLaravel\Rector\FuncCall\RemoveDumpDataDeadCodeRector::class,
+        RectorLaravel\Rector\FuncCall\RemoveRedundantValueCallsRector::class,
+        RectorLaravel\Rector\FuncCall\RemoveRedundantWithCallsRector::class,
+        RectorLaravel\Rector\FuncCall\SleepFuncToSleepStaticCallRector::class,
+        RectorLaravel\Rector\FuncCall\ThrowIfAndThrowUnlessExceptionsToUseClassStringRector::class,
+        RectorLaravel\Rector\If_\AbortIfRector::class,
+        RectorLaravel\Rector\If_\ReportIfRector::class,
+        // RectorLaravel\Rector\If_\ThrowIfRector::class,
+        RectorLaravel\Rector\MethodCall\AssertStatusToAssertMethodRector::class,
+        RectorLaravel\Rector\MethodCall\ChangeQueryWhereDateValueWithCarbonRector::class,
+        // // RectorLaravel\Rector\MethodCall\DatabaseExpressionToStringToMethodCallRector::class,
+        RectorLaravel\Rector\MethodCall\EloquentWhereRelationTypeHintingParameterRector::class,
+        RectorLaravel\Rector\MethodCall\EloquentWhereTypeHintClosureParameterRector::class,
+        // // RectorLaravel\Rector\MethodCall\FactoryApplyingStatesRector::class,
+        RectorLaravel\Rector\MethodCall\JsonCallToExplicitJsonCallRector::class,
+        // RectorLaravel\Rector\MethodCall\LumenRoutesStringActionToUsesArrayRector::class,
+        // RectorLaravel\Rector\MethodCall\LumenRoutesStringMiddlewareToArrayRector::class,
+        RectorLaravel\Rector\MethodCall\RedirectBackToBackHelperRector::class,
+        RectorLaravel\Rector\MethodCall\RedirectRouteToToRouteHelperRector::class,
+        RectorLaravel\Rector\MethodCall\RefactorBlueprintGeometryColumnsRector::class,
+        // // RectorLaravel\Rector\MethodCall\ReplaceWithoutJobsEventsAndNotificationsWithFacadeFakeRector::class,
+        RectorLaravel\Rector\MethodCall\UseComponentPropertyWithinCommandsRector::class,
+        RectorLaravel\Rector\MethodCall\ValidationRuleArrayStringValueToArrayRector::class,
+        // // RectorLaravel\Rector\Namespace_\FactoryDefinitionRector::class,
+        RectorLaravel\Rector\New_\AddGuardToLoginEventRector::class,
+        RectorLaravel\Rector\PropertyFetch\ReplaceFakerInstanceWithHelperRector::class,
+        RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector::class,
+        // RectorLaravel\Rector\StaticCall\MinutesToSecondsInCacheRector::class,
+        RectorLaravel\Rector\StaticCall\Redirect301ToPermanentRedirectRector::class,
+        // // RectorLaravel\Rector\StaticCall\ReplaceAssertTimesSendWithAssertSentTimesRector::class,
+    ])
+    ->withRules([
+        // // RectorLaravel\Rector\ClassMethod\AddArgumentDefaultValueRector::class,
+        // // RectorLaravel\Rector\FuncCall\ArgumentFuncCallToMethodCallRector::class,
+        // RectorLaravel\Rector\MethodCall\EloquentOrderByToLatestOrOldestRector::class,
+        // RectorLaravel\Rector\MethodCall\ReplaceServiceContainerCallArgRector::class,
+        // RectorLaravel\Rector\PropertyFetch\OptionalToNullsafeOperatorRector::class,
+        // // RectorLaravel\Rector\StaticCall\EloquentMagicMethodToQueryBuilderRector::class,
+        // RectorLaravel\Rector\StaticCall\RouteActionCallableRector::class,
+    ])
     ->withRules([
         ToInternalExceptionRector::class,
+    ])
+    ->withConfiguredRule(RectorLaravel\Rector\MethodCall\EloquentOrderByToLatestOrOldestRector::class, [
+    ])
+    ->withConfiguredRule(RectorLaravel\Rector\MethodCall\ReplaceServiceContainerCallArgRector::class, [
+    ])
+    ->withConfiguredRule(RectorLaravel\Rector\PropertyFetch\OptionalToNullsafeOperatorRector::class, [
+    ])
+    ->withConfiguredRule(RectorLaravel\Rector\StaticCall\RouteActionCallableRector::class, [
     ])
     ->withConfiguredRule(RenameFunctionRector::class, [
         'test' => 'it',

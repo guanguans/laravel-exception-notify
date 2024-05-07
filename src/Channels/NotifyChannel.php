@@ -40,9 +40,15 @@ class NotifyChannel extends Channel
             'client.class' => 'required|string',
             'client.http_options' => 'array',
             'client.extender' => static function (string $attribute, $value, \Closure $fail): void {
-                if (!\is_string($value) && !\is_callable($value)) {
-                    $fail("The $attribute must be a callable or string.");
+                if (\is_string($value)) {
+                    return;
                 }
+
+                if (\is_callable($value)) {
+                    return;
+                }
+
+                $fail("The $attribute must be a callable or string.");
             },
 
             'message' => 'required|array',
@@ -80,7 +86,7 @@ class NotifyChannel extends Channel
         }
 
         if ($this->config->has('client.extender')) {
-            $client = app()->call($this->config->get('client.extender'), ['client' => $client]);
+            return app()->call($this->config->get('client.extender'), ['client' => $client]);
         }
 
         return $client;
