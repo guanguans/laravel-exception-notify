@@ -84,7 +84,7 @@
         "php": ">=7.4",
         "ext-json": "*",
         "guanguans/notify": "^2.6",
-        "illuminate/support": "^8.0 || ^9.0 || ^10.0 || ^11.0"
+        "illuminate/support": "^8.23 || ^9.0 || ^10.0 || ^11.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.8",
@@ -172,6 +172,7 @@
         "checks": [
             "@composer-normalize",
             "@composer-validate",
+            "@composer-unused",
             "@md-lint",
             "@style-lint",
             "@test",
