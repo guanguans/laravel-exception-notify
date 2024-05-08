@@ -42,8 +42,9 @@ it('can collect', function (): void {
             /**
              * @throws JsonException
              */
-            static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))
-                ->substr(-256)
+            static fn (
+                Collection $collectors
+            ): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
         );
 
     expect($report)->toBeInstanceOf(Stringable::class);

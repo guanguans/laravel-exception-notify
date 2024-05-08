@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-dataset('InvalidJsons', [
+dataset('invalid jsons', [
     [
         'json' => '',
         'expect' => '',

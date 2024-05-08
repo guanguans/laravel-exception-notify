@@ -19,7 +19,7 @@ use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
 
 it('can fix invalid json', function (string $json, string $expect): void {
     expect(new JsonFixer)->fix($json)->toBe($expect);
-})->group(__DIR__, __FILE__)->with('InvalidJsons');
+})->group(__DIR__, __FILE__)->with('invalid jsons');
 
 it('can fix invalid json with missing value', function (): void {
     expect(new JsonFixer)->missingValue('')

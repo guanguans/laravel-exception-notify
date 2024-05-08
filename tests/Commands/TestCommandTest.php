@@ -15,12 +15,11 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
-use Symfony\Component\Console\Command\Command;
 use function Pest\Laravel\artisan;
 
 it('can test for exception-notify', function (): void {
     config()->set('exception-notify.enabled', false);
-    artisan(TestCommand::class)->assertExitCode(Command::SUCCESS);
+    artisan(TestCommand::class)->assertSuccessful();
 })->group(__DIR__, __FILE__);
 
 it('will throws RuntimeException', function (): void {

@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection NullPointerExceptionInspection */
@@ -15,6 +16,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
+
+it('can make object', function (): void {
+    expect(make(ReportUsingCreator::class))->toBeInstanceOf(ReportUsingCreator::class);
+})->group(__DIR__, __FILE__);
+
 it('can explode env', function (): void {
     expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy()
         ->and(env_explode('ENV_EXPLODE_EMPTY'))->toBe([''])
@@ -24,12 +31,28 @@ it('can explode env', function (): void {
     // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
 })->group(__DIR__, __FILE__);
 
+it('can human bytes', function (): void {
+    expect([
+        human_bytes(0),
+        human_bytes(10),
+        human_bytes(10000),
+        human_bytes(10000000),
+    ])->sequence(
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('0B'),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('10B'),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('9.77kB'),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('9.54MB')
+    );
+})->group(__DIR__, __FILE__);
+
 it('can human milliseconds', function (): void {
     expect([
+        human_milliseconds(0),
         human_milliseconds(0.5),
         human_milliseconds(500),
         human_milliseconds(500000),
     ])->sequence(
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('0μs'),
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500μs'),
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500ms'),
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500s')
