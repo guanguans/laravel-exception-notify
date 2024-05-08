@@ -17,30 +17,12 @@ namespace {
 
 namespace Illuminate\Support {
     /**
-     * @method string lcfirst($string)
-     * @method string ucwords($string)
-     *
-     * @see \Guanguans\LaravelExceptionNotify\Macros\StrMacro
-     * @see \Illuminate\Support\Str
+     * @mixin  \Illuminate\Support\Str
      */
     class Str {}
 
     /**
-     * @method \Illuminate\Support\Stringable lcfirst()
-     * @method \Illuminate\Support\Stringable ucwords()
-     *
-     * @see \Guanguans\LaravelExceptionNotify\Macros\StringableMacro
-     * @see \Illuminate\Support\Stringable
+     * @mixin \Illuminate\Support\Stringable
      */
     class Stringable {}
-}
-
-namespace Illuminate\Http {
-    /**
-     * @method array headers($key = null, $default = null)
-     *
-     * @see \Guanguans\LaravelExceptionNotify\Macros\RequestMacro
-     * @see \Illuminate\Http\Request
-     */
-    class Collection {}
 }

@@ -31,6 +31,5 @@ parameters:
 #        switchConditionsMatchingType: false
 #        noVariableVariables: false
     ignoreErrors:
-        - "#^Access to protected property Guanguans\\\\LaravelExceptionNotify\\\\Macros\\\\StringableMacro\\:\\:\\$value\\.$#"
-        - "#^Unsafe usage of new static\\(\\)\\.$#"
+#        - "#^Unsafe usage of new static\\(\\)\\.$#"
         - "#^Unsafe call to private method Guanguans\\\\LaravelExceptionNotify\\\\.*\\:\\:.*\\(\\) through static\\:\\:\\.$#"

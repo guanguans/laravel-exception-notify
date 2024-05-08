@@ -30,8 +30,9 @@ class RequestHeaderCollector extends Collector
      */
     public function collect(): array
     {
-        return collect($this->request->headers())
-            ->reject(static fn (string $value, string $key): bool => \in_array($key, self::REJECTED_HEADERS, true))
+        return collect($this->request->header())
+            ->reject(static fn (array $header, string $key): bool => \in_array($key, self::REJECTED_HEADERS, true))
+            ->map(static fn (array $header): string => $header[0])
             ->all();
     }
 }

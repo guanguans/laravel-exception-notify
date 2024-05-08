@@ -6,29 +6,9 @@ parameters:
 			path: src/Collectors/ApplicationCollector.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Support\\\\Stringable\\:\\:ucwords\\(\\)\\.$#"
-			count: 1
-			path: src/Collectors/Collector.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Http\\\\Request\\:\\:headers\\(\\)\\.$#"
-			count: 1
-			path: src/Collectors/RequestHeaderCollector.php
-
-		-
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\DefaultNotifyClientExtender\\:\\:__invoke\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
 			count: 1
 			path: src/DefaultNotifyClientExtender.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Str\\:\\:lcfirst\\(\\)\\.$#"
-			count: 1
-			path: src/Macros/StringableMacro.php
-
-		-
-			message: "#^Call to an undefined static method Illuminate\\\\Support\\\\Str\\:\\:ucwords\\(\\)\\.$#"
-			count: 1
-			path: src/Macros/StringableMacro.php
 
 		-
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"
