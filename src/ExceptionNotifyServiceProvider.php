@@ -16,8 +16,6 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Macros\RequestMacro;
-use Guanguans\LaravelExceptionNotify\Macros\StringableMacro;
-use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -25,14 +23,11 @@ use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
     public array $singletons = [
         RequestMacro::class => RequestMacro::class,
-        StringableMacro::class => StringableMacro::class,
-        StrMacro::class => StrMacro::class,
     ];
 
     /**
@@ -87,8 +82,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     private function registerMacros(): self
     {
         Request::mixin($this->app->make(RequestMacro::class));
-        Str::mixin($this->app->make(StrMacro::class));
-        Stringable::mixin($this->app->make(StringableMacro::class));
 
         return $this;
     }

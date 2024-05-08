@@ -22,9 +22,10 @@ trait Naming
 {
     public static function name(): string
     {
-        return (string) Str::of(class_basename(static::class))
-            ->beforeLast(class_basename(self::class))
-            ->snake(' ')
-            ->ucwords();
+        return ucwords(
+            (string) Str::of(class_basename(static::class))
+                ->beforeLast(class_basename(self::class))
+                ->snake(' ')
+        );
     }
 }
