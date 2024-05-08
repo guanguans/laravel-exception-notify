@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.2.0"></a>
+## [4.2.0] - 2024-05-08
+### Refactor
+- **Channel:** refactor string replacement method
+- **Naming:** improve name generation logic
+- **collect:** Improve RequestHeaderCollector to handle header array
+- **config:** update exception-notify.php configuration
+- **config:** update notify client extenders
+- **mail:** Improve reduce method in MailChannel.php
+- **mixins:** Update mixins for Str and Stringable classes
+- **service provider:** remove DeferrableProvider interface implementation
+- **serviceprovider:** comment out unnecessary mixin calls
+
+### Test
+- Update tests and refactor code
+- **Channels:** add tests for mail and notify channels
+- **Commands:** update TestCommandTest.php and PipeTest.php
+- **MailChannelTest:** Add test case for sending report email
+- **ReportExceptionMailTest:** add test for building self
+
+
 <a name="4.1.0"></a>
 ## [4.1.0] - 2024-05-07
 ### Feat
@@ -779,7 +800,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.2.0...HEAD
+[4.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta3...4.0.0
 [4.0.0-beta3]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta2...4.0.0-beta3
