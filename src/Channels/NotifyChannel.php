@@ -20,7 +20,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 
 class NotifyChannel extends Channel
@@ -95,7 +94,7 @@ class NotifyChannel extends Channel
         $options = Arr::except($this->config->get('message'), 'class');
 
         array_walk_recursive($options, static function (&$value) use ($replace): void {
-            \is_string($value) and $value = Str::replace(self::TEMPLATES, $replace, $value);
+            \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
         });
 
         return make($this->config->get('message.class'), ['options' => $options]);
