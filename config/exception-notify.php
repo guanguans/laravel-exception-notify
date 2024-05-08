@@ -104,7 +104,13 @@ return [
      */
     'channels' => [
         /**
-         * @see \Illuminate\Support\Facades\Log
+         * @see \Symfony\Component\VarDumper\VarDumper::dump()
+         */
+        'dump' => [
+            'driver' => 'dump',
+        ],
+
+        /**
          * @see \Illuminate\Log\LogManager
          */
         'log' => [
@@ -113,7 +119,6 @@ return [
         ],
 
         /**
-         * @see \Illuminate\Support\Facades\Mail
          * @see \Illuminate\Mail\MailManager
          */
         'mail' => [
