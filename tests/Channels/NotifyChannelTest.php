@@ -28,7 +28,6 @@ it('will throw `InvalidArgumentException`', function (): void {
 })->group(__DIR__, __FILE__)->throws(\Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException::class);
 
 it('can report', function (): void {
-    dump(config('exception-notify.channels.bark'));
     expect(app(ExceptionNotifyManager::class)->driver('bark'))
         ->report('report')
         ->toBeInstanceOf(ResponseInterface::class);

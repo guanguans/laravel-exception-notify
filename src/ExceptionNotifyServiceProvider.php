@@ -21,14 +21,13 @@ use Guanguans\LaravelExceptionNotify\Macros\StrMacro;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
-class ExceptionNotifyServiceProvider extends ServiceProvider implements DeferrableProvider
+class ExceptionNotifyServiceProvider extends ServiceProvider
 {
     public array $singletons = [
         RequestMacro::class => RequestMacro::class,
