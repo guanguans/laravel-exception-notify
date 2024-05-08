@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
+use Illuminate\Support\Facades\Mail;
 
 it('will throw `InvalidArgumentException`', function (): void {
     config()->set('exception-notify.channels.mail.extender', null);
@@ -28,5 +30,7 @@ it('will throw `TransportException`', function (): void {
         static fn (object $mailerOrPendingMail): object => $mailerOrPendingMail
     );
 
+    Mail::fake();
     $this->app->make(ExceptionNotifyManager::class)->driver('mail')->report('report');
-})->group(__DIR__, __FILE__)->throws(Swift_TransportException::class);
+    Mail::assertSent(ReportExceptionMail::class);
+})->group(__DIR__, __FILE__);

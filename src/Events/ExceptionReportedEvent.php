@@ -24,6 +24,8 @@ class ExceptionReportedEvent
 
     /**
      * @noinspection MissingParameterTypeDeclarationInspection
+     *
+     * @param mixed $result
      */
     public function __construct(Channel $channel, $result)
     {

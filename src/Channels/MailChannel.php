@@ -55,7 +55,7 @@ class MailChannel extends Channel
 
                     return \is_object($object) ? $object : $mailerOrPendingMail;
                 },
-                Mail::driver($this->config->get('mailer'))
+                Mail::mailer($this->config->get('mailer'))
             );
 
         if ($this->config->has('extender')) {
