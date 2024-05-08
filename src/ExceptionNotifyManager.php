@@ -132,7 +132,7 @@ class ExceptionNotifyManager extends Manager
             return $this->{$method}($configRepository);
         }
 
-        if (class_exists($class = "Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
+        if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);
         }
 

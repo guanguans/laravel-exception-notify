@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 
@@ -18,7 +20,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Str;
-use function Pest\Faker\faker;
 
 it('can call', function (): void {
     ExceptionNotifyManager::macro('foo', fn ($param) => $param);
@@ -45,20 +46,19 @@ it('can report', function (): void {
         ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
-    $mockApplication = Mockery::spy(Illuminate\Foundation\Application::class);
+    // $mockApplication = Mockery::spy(Illuminate\Foundation\Application::class);
     // $mockApplication->allows()->make('config')->atLeast()->once()->andReturn(config());
     // $mockApplication->allows()->runningInConsole()->atLeast()->once()->andReturnFalse();
-
-    /** @noinspection PhpVoidFunctionResultUsedInspection */
-    expect(new ExceptionNotifyManager($mockApplication))
+    (function (): void {
+        $this->isRunningInConsole = false;
+    })->call(app());
+    expect(new ExceptionNotifyManager(app()))
         ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException)->toBeNull();
 
     config()->set('exception-notify.enabled', true);
     $mockApplication = Mockery::mock(Application::class);
     $mockApplication->allows('make')->with('config')->andReturn(config());
     // $mockApplication->allows('runningInConsole')->andReturnFalse();
-
-    /** @noinspection PhpVoidFunctionResultUsedInspection */
     expect(new ExceptionNotifyManager($mockApplication))
         ->report(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException)->toBeNull();
 })->group(__DIR__, __FILE__);
@@ -88,7 +88,6 @@ it('can get default driver', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can attempt key', function (): void {
-    // $uuid = faker()->uuid();
     $uuid = Str::uuid()->toString();
     expect(fn () => $this->attempt($uuid, 3))
         ->call(app(ExceptionNotifyManager::class))->toBeTrue()

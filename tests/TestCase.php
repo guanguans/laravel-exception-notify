@@ -38,6 +38,8 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
+use Guanguans\Notify\Foundation\Client;
+use GuzzleHttp\Psr7\HttpFactory;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
@@ -45,6 +47,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 {
     use MockeryPHPUnitIntegration;
     use VarDumperTestTrait;
+    use Faker;
 
     protected function setUp(): void
     {
@@ -68,9 +71,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineEnvironment($app): void
     {
         config()->set('exception-notify.job.queue', 'exception-notify');
-        // config()->set('exception-notify.channels.mail.dsn', 'smtp://53xxx11@qq.com:kixxxxxxxxgg@smtp.qq.com:465?verify_peer=0');
-        // config()->set('exception-notify.channels.mail.from', '53xxx11@qq.com');
-        // config()->set('exception-notify.channels.mail.to', '53xxx11@qq.com');
+        config()->set('exception-notify.channels.bark.authenticator.token', $this->faker()->uuid());
+        config()->set('exception-notify.channels.bark.client.extender', static fn (Client $client): Client => $client->mock([
+            (new HttpFactory)->createResponse(200, '{"code":200,"message":"success","timestamp":1708331409}'),
+        ]));
         config()->set('exception-notify.collectors', [
             ApplicationCollector::class,
             ChoreCollector::class,
@@ -80,12 +84,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             PhpInfoCollector::class,
             RequestBasicCollector::class,
             RequestCookieCollector::class,
-            RequestRawFileCollector::class,
             RequestFileCollector::class,
             RequestHeaderCollector::class,
             RequestMiddlewareCollector::class,
             RequestPostCollector::class,
             RequestQueryCollector::class,
+            RequestRawFileCollector::class,
             RequestServerCollector::class,
             RequestSessionCollector::class,
         ]);
@@ -102,7 +106,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineRoutes($router): void
     {
         $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
-            ExceptionNotify::report(new RuntimeException('What happened?'), ['lark', 'dump']);
+            ExceptionNotify::report(new RuntimeException('What happened?'), ['dump', 'log', 'bark', 'lark']);
         }));
 
         $router->any('exception', static fn () => tap(response('exception'), static function (): void {
