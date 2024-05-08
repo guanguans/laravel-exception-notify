@@ -49,7 +49,7 @@ class MailChannel extends Channel
         /** @var Mailer|PendingMail $mailerOrPendingMail */
         $mailerOrPendingMail = collect($this->config->all())
             ->except(['driver', 'mailer', 'extender', 'pipes'])
-            ->reduceWithKeys(
+            ->reduce(
                 static function (object $mailerOrPendingMail, array $parameters, string $method): object {
                     $object = app()->call([$mailerOrPendingMail, Str::camel($method)], $parameters);
 
