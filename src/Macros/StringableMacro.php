@@ -22,11 +22,6 @@ use Illuminate\Support\Str;
  */
 class StringableMacro
 {
-    public function lcfirst(): callable
-    {
-        return fn (): self => new static(Str::lcfirst($this->value));
-    }
-
     public function ucwords(): callable
     {
         return fn (): self => new static(Str::ucwords($this->value));

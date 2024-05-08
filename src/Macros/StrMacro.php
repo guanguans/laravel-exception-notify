@@ -18,11 +18,6 @@ namespace Guanguans\LaravelExceptionNotify\Macros;
  */
 class StrMacro
 {
-    public static function lcfirst(): callable
-    {
-        return static fn ($string): string => lcfirst($string);
-    }
-
     public static function ucwords(): callable
     {
         return static fn ($string): string => ucwords($string);

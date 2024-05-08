@@ -87,8 +87,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     private function registerMacros(): self
     {
         Request::mixin($this->app->make(RequestMacro::class));
-        // Str::mixin($this->app->make(StrMacro::class));
-        // Stringable::mixin($this->app->make(StringableMacro::class));
+        Str::mixin($this->app->make(StrMacro::class));
+        Stringable::mixin($this->app->make(StringableMacro::class));
 
         return $this;
     }
