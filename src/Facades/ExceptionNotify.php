@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void reportIf(mixed $condition, \Throwable $throwable, array|string $channels = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager setContainer(\Illuminate\Contracts\Container\Container $container)
  * @method static bool shouldReport(\Throwable $throwable)
+ * @method static void skipWhen(\Closure $callback)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(callable|null $callback = null)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
