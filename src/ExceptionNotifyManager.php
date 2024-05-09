@@ -62,7 +62,7 @@ class ExceptionNotifyManager extends Manager
 
     public static function skipWhen(\Closure $callback): void
     {
-        static::$skipCallbacks[] = $callback;
+        self::$skipCallbacks[] = $callback;
     }
 
     /**
@@ -167,7 +167,7 @@ class ExceptionNotifyManager extends Manager
 
     private function shouldSkip(\Throwable $throwable): bool
     {
-        foreach (static::$skipCallbacks as $skipCallback) {
+        foreach (self::$skipCallbacks as $skipCallback) {
             if ($skipCallback($throwable)) {
                 return true;
             }
