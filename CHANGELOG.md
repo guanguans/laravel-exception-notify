@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.3.1"></a>
+## [4.3.1] - 2024-05-09
+### Refactor
+- **DefaultNotifyClientExtender:** Improve channel parameter handling
+- **config:** update exception-notify configuration
+
+
 <a name="4.3.0"></a>
 ## [4.3.0] - 2024-05-09
 ### Docs
@@ -818,7 +825,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.1...HEAD
+[4.3.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.0...4.3.1
 [4.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0...4.1.0
