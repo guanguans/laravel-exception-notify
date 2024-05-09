@@ -41,6 +41,7 @@ class ExceptionNotifyManager extends Manager
         Macroable::__call as macroCall;
     }
     use Tappable;
+    private static array $skipCallbacks = [];
 
     /**
      * Handle dynamic method calls into the method.
@@ -57,6 +58,11 @@ class ExceptionNotifyManager extends Manager
         }
 
         return parent::__call($method, $parameters);
+    }
+
+    public static function skipWhen(\Closure $callback): void
+    {
+        static::$skipCallbacks[] = $callback;
     }
 
     /**
@@ -156,11 +162,26 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
+        if ($this->shouldSkip($throwable)) {
+            return true;
+        }
+
         return !$this->attempt(
             $this->toFingerprint($throwable),
             config('exception-notify.rate_limit.max_attempts'),
             config('exception-notify.rate_limit.decay_seconds')
         );
+    }
+
+    private function shouldSkip(\Throwable $throwable): bool
+    {
+        foreach (static::$skipCallbacks as $skipCallback) {
+            if ($skipCallback($throwable)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function toFingerprint(\Throwable $throwable): string
