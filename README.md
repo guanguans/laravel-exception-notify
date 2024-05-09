@@ -51,7 +51,7 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 ### Configure channels in the `config/exception-notify.php` and `.env` file
 
 ```dotenv
-#EXCEPTION_NOTIFY_DEFAULTS=dingTalk,lark,mail,slack,telegram,...
+# EXCEPTION_NOTIFY_DEFAULTS=dingTalk,lark,mail,slack,telegram,...
 EXCEPTION_NOTIFY_DEFAULTS=log,slack,weWork
 EXCEPTION_NOTIFY_SLACK_WEBHOOK=https://hooks.slack.com/services/TPU9A9/B038KNUC0GY/6pKH3vfa3mjlUPcgLSjzR
 EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
@@ -99,7 +99,7 @@ public function boot(): void
 }
 ```
 
-### Extend custom channel
+### Custom channel
 
 Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
 
