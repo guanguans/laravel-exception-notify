@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.3.2"></a>
+## [4.3.2] - 2024-05-09
+### Refactor
+- **commands:** improve readability of TestCommand.php
+
+### Pull Requests
+- Merge pull request [#64](https://github.com/guanguans/laravel-exception-notify/issues/64) from guanguans/imgbot
+- Merge pull request [#63](https://github.com/guanguans/laravel-exception-notify/issues/63) from guanguans/imgbot
+
+
 <a name="4.3.1"></a>
 ## [4.3.1] - 2024-05-09
 ### Refactor
@@ -825,7 +835,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.2...HEAD
+[4.3.2]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.1...4.3.2
 [4.3.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.0...4.3.1
 [4.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...4.2.0
