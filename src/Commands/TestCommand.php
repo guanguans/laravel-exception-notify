@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Commands;
 
+use Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Illuminate\Console\Command;
@@ -25,6 +26,12 @@ class TestCommand extends Command
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
+        collect(config('exception-notify.channels'))->each(function (array $config, string $name): void {
+            if ('notify' === $config['driver']) {
+                config()->set("exception-notify.channels.$name.client.extender", DefaultNotifyClientExtender::class);
+            }
+        });
+
         $this->output->note('Test for exception-notify start.');
         $this->output->section('The main configuration is as follows.');
         $this->output->listing($this->getMainConfigurations());

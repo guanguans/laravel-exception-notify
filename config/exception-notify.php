@@ -241,9 +241,10 @@ return [
         'ntfy' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Ntfy\Authenticator::class,
-                'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN'),
-                'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD'),
+                'class' => \Guanguans\Notify\Foundation\Authenticators\NullAuthenticator::class,
+                // 'class' => \Guanguans\Notify\Ntfy\Authenticator::class,
+                // 'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN', ''),
+                // 'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD', ''),
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Ntfy\Client::class,
@@ -280,7 +281,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 2048),
             ],
         ],
 
@@ -342,6 +343,7 @@ return [
                 'content' => '{report}',
             ],
             'pipes' => [
+                SprintfMarkdownPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 5120),
             ],
         ],
