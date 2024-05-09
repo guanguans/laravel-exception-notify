@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -124,23 +123,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     private function extendExceptionHandler(): self
     {
-        $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $exceptionHandler): ExceptionHandler {
-            if ($reportUsingCreator = config('exception-notify.report_using_creator')) {
-                /** @var callable(ExceptionHandler):callable|class-string $reportUsingCreator */
-                if (\is_string($reportUsingCreator) && class_exists($reportUsingCreator)) {
-                    $reportUsingCreator = $this->app->make($reportUsingCreator);
-                }
-
-                /** @var callable(\Throwable):mixed|void $reportUsing */
-                $reportUsing = $reportUsingCreator($exceptionHandler);
-
-                if ($reportUsing instanceof \Closure) {
-                    $reportUsing = $reportUsing->bindTo($exceptionHandler, $exceptionHandler);
-                }
-
-                /** @var Handler $exceptionHandler */
-                $exceptionHandler->reportable($reportUsing);
-            }
+        $this->app->extend(ExceptionHandler::class, static function (ExceptionHandler $exceptionHandler): ExceptionHandler {
+            /** @var \Illuminate\Foundation\Exceptions\Handler $exceptionHandler */
+            $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
+                ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
+            });
 
             return $exceptionHandler;
         });
