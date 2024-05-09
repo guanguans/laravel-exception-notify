@@ -99,7 +99,7 @@ public function boot(): void
 }
 ```
 
-## Extend custom channel
+### Extend custom channel
 
 Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
 

@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
@@ -16,10 +17,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
+use Guanguans\LaravelExceptionNotify\CollectorManager;
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
 it('can make object', function (): void {
-    expect(make(ReportUsingCreator::class))->toBeInstanceOf(ReportUsingCreator::class);
+    expect(make(ExceptionNotifyManager::class))->toBeInstanceOf(ExceptionNotifyManager::class)
+        ->and(make(CollectorManager::class))->toBeInstanceOf(CollectorManager::class);
 })->group(__DIR__, __FILE__);
 
 it('can explode env', function (): void {
