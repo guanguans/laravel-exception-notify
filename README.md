@@ -67,9 +67,9 @@ php artisan exception-notify:test --ansi -v
 
 ### Notification examples
 
-| 1                            | 2                            | 3                            |
-|------------------------------|------------------------------|------------------------------|
-| ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) |
+|           discord            |          lark          |            mail            |            slack             |              telegram              |             weWork             |
+|:----------------------------:|:----------------------:|:--------------------------:|:----------------------------:|:----------------------------------:|:------------------------------:|
+| ![discord](docs/discord.jpg) | ![lark](docs/lark.jpg) | ![mail.jpg](docs/mail.jpg) | ![slack.jpg](docs/slack.jpg) | ![telegram.jpg](docs/telegram.jpg) | ![weWork.jpg](docs/weWork.jpg) |
 
 ### Skip report
 
@@ -113,7 +113,7 @@ use Illuminate\Container\Container;
 public function boot(): void
 {
     ExceptionNotify::extend('YourChannelName', function (Container $container): Channel {
-        return 'instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.';
+        return 'Instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.';
     });
 }
 ```
