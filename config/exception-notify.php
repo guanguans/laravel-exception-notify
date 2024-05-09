@@ -91,7 +91,7 @@ return [
          */
         'log' => [
             'driver' => 'log',
-            'channel' => 'daily',
+            'channel' => null,
         ],
 
         /**
@@ -100,7 +100,11 @@ return [
         'mail' => [
             'driver' => 'mail',
             'mailer' => null,
-            'to' => ['users' => env('EXCEPTION_NOTIFY_MAIL_TO', 'your@example.mail')],
+            'to' => [
+                'users' => env_explode('EXCEPTION_NOTIFY_MAIL_TO', [
+                    'your@example.mail',
+                ]),
+            ],
             'pipes' => [
                 SprintfHtmlPipe::class,
             ],
@@ -148,7 +152,7 @@ return [
                 'body' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -192,6 +196,7 @@ return [
             ],
             'pipes' => [
                 hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                SprintfMarkdownPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
         ],
@@ -258,7 +263,7 @@ return [
                 'message' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -281,7 +286,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 2048),
+                // hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -298,11 +303,12 @@ return [
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Slack\Messages\Message::class,
+                'mrkdwn' => true,
                 'text' => '{report}',
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 4096),
+                // hydrate_pipe(LimitLengthPipe::class, 10240),
             ],
         ],
 
@@ -344,7 +350,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 5120),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
     ],

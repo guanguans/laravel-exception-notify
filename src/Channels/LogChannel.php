@@ -19,7 +19,7 @@ class LogChannel extends Channel
 {
     public function report(string $report): void
     {
-        Log::channel($this->config->get('channel', 'daily'))->log(
+        Log::channel($this->config->get('channel'))->log(
             $this->config->get('level', 'error'),
             $report,
             $this->config->get('context', []),
