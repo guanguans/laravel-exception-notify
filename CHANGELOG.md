@@ -8,6 +8,24 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.3.0"></a>
+## [4.3.0] - 2024-05-09
+### Docs
+- **readme:** Update README.md with more descriptive content
+
+### Feat
+- **ExceptionNotify:** Add skipWhen method
+- **ExceptionNotifyManager:** Add skipWhen method
+
+### Refactor
+- **app:** Modify boot method in AppServiceProvider.php
+- **collector:** update rejected headers list
+- **config:** remove 'report_using_creator' from exception-notify.php
+- **service provider:** improve extendExceptionHandler method
+- **src:** Update static variable references to use self
+- **tests:** refactor ExceptionNotifyManagerTest.php and Support/HeplersTest.php
+
+
 <a name="4.2.0"></a>
 ## [4.2.0] - 2024-05-08
 ### Refactor
@@ -800,7 +818,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.0...HEAD
+[4.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.0.0-beta3...4.0.0
