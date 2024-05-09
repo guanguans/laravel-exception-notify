@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Log;
 
 class DefaultNotifyClientExtender
 {
-    private string $channel;
+    private ?string $channel;
     private string $template;
     private string $logLevel;
 
     public function __construct(
-        string $channel = 'daily',
+        ?string $channel = null,
         string $template = MessageFormatter::DEBUG,
         string $logLevel = 'debug'
     ) {
