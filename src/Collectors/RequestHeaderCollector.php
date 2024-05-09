@@ -17,7 +17,10 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends Collector
 {
-    private const REJECTED_HEADERS = ['Cookie'];
+    private const REJECTED_HEADERS = [
+        'Authorization',
+        'Cookie',
+    ];
     private Request $request;
 
     public function __construct(Request $request)
