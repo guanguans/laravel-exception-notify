@@ -23,24 +23,6 @@ return [
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
     /**
-     * The list of environments that should be reported.
-     */
-    'env' => env_explode('EXCEPTION_NOTIFY_ENV', [
-        // 'production',
-        // 'local',
-        // 'testing',
-        '*',
-    ]),
-
-    /**
-     * The list of exception that should not be reported.
-     */
-    'except' => [
-        // Symfony\Component\HttpKernel\Exception\HttpException::class,
-        // Illuminate\Http\Exceptions\HttpResponseException::class,
-    ],
-
-    /**
      * The rate limit of same exception.
      */
     'rate_limit' => [

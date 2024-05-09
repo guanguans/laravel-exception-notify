@@ -71,6 +71,34 @@ php artisan exception-notify:test --ansi -v
 |------------------------------|------------------------------|------------------------------|
 | ![xiZhi-1](docs/xiZhi-1.jpg) | ![xiZhi-2](docs/xiZhi-2.jpg) | ![xiZhi-3](docs/xiZhi-3.jpg) |
 
+### Skip report
+
+Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
+
+```php
+<?php
+
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Illuminate\Support\Arr;
+
+public function boot(): void
+{
+    ExceptionNotifyManager::skipWhen(static function (\Throwable $throwable) {
+        if (app()->environment(['local', 'testing'])) {
+            return true;
+        }
+
+        return Arr::first(
+            [
+                Symfony\Component\HttpKernel\Exception\HttpException::class,
+                Illuminate\Http\Exceptions\HttpResponseException::class,
+            ],
+            static fn (string $type): bool => $throwable instanceof $type
+        );
+    });
+}
+```
+
 ## Extend custom channel
 
 Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
