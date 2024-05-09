@@ -15,7 +15,6 @@ use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
-use Guanguans\LaravelExceptionNotify\ReportUsingCreator;
 
 return [
     /**
@@ -57,11 +56,6 @@ return [
         'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
         'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
-
-    /**
-     * The creator of report using.
-     */
-    'report_using_creator' => env('EXCEPTION_NOTIFY_REPORT_USING_CREATOR', ReportUsingCreator::class),
 
     /**
      * The title of exception notification report.
