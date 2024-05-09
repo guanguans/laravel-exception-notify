@@ -26,7 +26,7 @@ class TestCommand extends Command
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
-        collect(config('exception-notify.channels'))->each(function (array $config, string $name): void {
+        collect(config('exception-notify.channels'))->each(static function (array $config, string $name): void {
             if ('notify' === $config['driver']) {
                 config()->set("exception-notify.channels.$name.client.extender", DefaultNotifyClientExtender::class);
             }
