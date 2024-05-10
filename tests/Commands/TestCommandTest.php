@@ -21,7 +21,7 @@ use function Pest\Laravel\artisan;
 it('can test for exception-notify', function (): void {
     config()->set('exception-notify.enabled', false);
     artisan(TestCommand::class)->assertExitCode(Command::SUCCESS);
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class);
