@@ -72,7 +72,7 @@ if (!\function_exists('env_explode')) {
         $env = env($key, $default);
 
         if (\is_string($env)) {
-            return explode($delimiter, $env, $limit);
+            return $env ? explode($delimiter, $env, $limit) : [];
         }
 
         return $env;

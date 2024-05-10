@@ -66,10 +66,6 @@ it('can report', function (): void {
         ->report(new RuntimeException)->toBeNull();
 })->group(__DIR__, __FILE__);
 
-it('should report', function (): void {
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeTrue();
-})->group(__DIR__, __FILE__);
-
 it('should not report', function (): void {
     config()->set('exception-notify.enabled', false);
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
@@ -88,7 +84,11 @@ it('should not report', function (): void {
         );
     });
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
-})->group(__DIR__, __FILE__)->depends('it should report');
+})->group(__DIR__, __FILE__);
+
+it('should report', function (): void {
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeTrue();
+})->group(__DIR__, __FILE__);
 
 it('can get default driver', function (): void {
     expect(app(ExceptionNotifyManager::class))

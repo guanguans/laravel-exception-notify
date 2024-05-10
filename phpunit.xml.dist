@@ -25,11 +25,11 @@
   </testsuites>
   <php>
     <env name="APP_KEY" value="base64:e2ASw7JCNMYR6PWInGGQrzUzisuDvv8bhNl14XGbUi8="/>
+    <env name="ENV_EXPLODE_EMPTY" value="empty"/>
+    <env name="ENV_EXPLODE_FALSE" value="false"/>
+    <env name="ENV_EXPLODE_NULL" value="null"/>
     <env name="ENV_EXPLODE_STRING" value="log,null"/>
     <env name="ENV_EXPLODE_TRUE" value="true"/>
-    <env name="ENV_EXPLODE_FALSE" value="false"/>
-    <env name="ENV_EXPLODE_EMPTY" value="empty"/>
-    <env name="ENV_EXPLODE_NULL" value="null"/>
   </php>
   <!--<listeners>
     <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">

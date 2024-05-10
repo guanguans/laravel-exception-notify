@@ -6,6 +6,11 @@ parameters:
 			path: src/Collectors/ApplicationCollector.php
 
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:terminating\\(\\)\\.$#"
+			count: 1
+			path: src/Commands/TestCommand.php
+
+		-
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\DefaultNotifyClientExtender\\:\\:__invoke\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
 			count: 1
 			path: src/DefaultNotifyClientExtender.php

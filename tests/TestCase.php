@@ -72,6 +72,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         config()->set('exception-notify.job.queue', 'exception-notify');
         config()->set('exception-notify.channels.bark.authenticator.token', $this->faker()->uuid());
+        config()->set('exception-notify.channels.bark.client.http_options', []);
         config()->set('exception-notify.channels.bark.client.extender', static fn (Client $client): Client => $client->mock([
             (new HttpFactory)->createResponse(200, '{"code":200,"message":"success","timestamp":1708331409}'),
         ]));

@@ -18,11 +18,29 @@ use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Symfony\Component\Console\Command\Command;
 use function Pest\Laravel\artisan;
 
-it('can test for exception-notify', function (): void {
+afterEach(function (): void {
+    app()->terminate();
+});
+
+it('can test for exception-notify when is not enabled', function (): void {
     config()->set('exception-notify.enabled', false);
-    artisan(TestCommand::class)->assertExitCode(Command::SUCCESS);
-})->group(__DIR__, __FILE__)->skip();
+    artisan(TestCommand::class)->assertExitCode(Command::INVALID);
+})->group(__DIR__, __FILE__);
+
+it('can test for exception-notify when default channels is empty', function (): void {
+    config()->set('exception-notify.defaults', []);
+    artisan(TestCommand::class)->assertExitCode(Command::INVALID);
+})->group(__DIR__, __FILE__);
+
+it('can test for exception-notify when should not report', function (): void {
+    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::skipWhen(
+        static fn (\Throwable $throwable): bool => $throwable instanceof RuntimeException
+    );
+    artisan(TestCommand::class)->assertExitCode(Command::INVALID);
+})->group(__DIR__, __FILE__);
 
 it('will throws RuntimeException', function (): void {
-    artisan(TestCommand::class);
+    artisan(TestCommand::class, [
+        '--channels' => ['bark', 'log'],
+    ]);
 })->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify.');

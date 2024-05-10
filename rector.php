@@ -163,6 +163,7 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         EncapsedStringsToSprintfRector::class,
+        ExplicitBoolCompareRector::class,
         ExplicitReturnNullRector::class,
         LogicalToBooleanRector::class,
         NewlineAfterStatementRector::class,
@@ -174,20 +175,14 @@ return RectorConfig::configure()
         DisallowedEmptyRuleFixerRector::class => [
             // __DIR__.'/src/Support/QueryAnalyzer.php',
         ],
-        ExplicitBoolCompareRector::class => [
-            // __DIR__.'/src/JavascriptRenderer.php',
-        ],
         RemoveExtraParametersRector::class => [
             // __DIR__.'/src/Macros/QueryBuilderMacro.php',
         ],
         RenameForeachValueVariableToMatchExprVariableRector::class => [
             // __DIR__.'/src/OutputManager.php',
         ],
-        StaticArrowFunctionRector::class => [
-            __DIR__.'/tests/ExceptionNotifyManagerTest.php',
-        ],
-        StaticClosureRector::class => [
-            __DIR__.'/src/ReportUsingCreator.php',
+        StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',
         ],
+        StaticClosureRector::class => $staticClosureSkipPaths,
     ]);

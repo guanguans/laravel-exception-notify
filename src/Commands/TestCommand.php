@@ -25,7 +25,7 @@ class TestCommand extends Command
     protected $signature = 'exception-notify:test {--c|channels=* : Specify channels to test}';
     protected $description = 'Test for exception-notify';
 
-    public function handle(ExceptionNotifyManager $exceptionNotifyManager)
+    public function handle(ExceptionNotifyManager $exceptionNotifyManager): int
     {
         $this->output->info('Test for exception-notify start.');
 
