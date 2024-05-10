@@ -143,8 +143,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Bark\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Bark\Messages\Message::class,
@@ -164,8 +162,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Chanify\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Chanify\Messages\TextMessage::class,
@@ -186,8 +182,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\DingTalk\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
@@ -209,8 +203,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Discord\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Discord\Messages\Message::class,
@@ -230,8 +222,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Lark\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Lark\Messages\TextMessage::class,
@@ -253,8 +243,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Ntfy\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Ntfy\Messages\Message::class,
@@ -275,8 +263,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\PushDeer\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\PushDeer\Messages\Message::class,
@@ -298,8 +284,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Slack\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Slack\Messages\Message::class,
@@ -320,8 +304,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\Telegram\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\Telegram\Messages\TextMessage::class,
@@ -341,8 +323,6 @@ return [
             ],
             'client' => [
                 'class' => \Guanguans\Notify\WeWork\Client::class,
-                'http_options' => [],
-                // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
             ],
             'message' => [
                 'class' => \Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,

@@ -86,7 +86,7 @@ final class JsonFixer
         return $head.$this->doFix($json).$tail;
     }
 
-    // trait PadsJson
+    /* ------------------------- trait PadsJson ------------------------- */
     public function pad(string $tmpJson): string
     {
         if (!$this->inStr) {

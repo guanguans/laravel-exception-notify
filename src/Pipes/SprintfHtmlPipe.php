@@ -18,8 +18,11 @@ use Illuminate\Support\Stringable;
 
 class SprintfHtmlPipe extends SprintfPipe
 {
-    public function handle(Collection $collectors, \Closure $next, string $format = '<pre>%s</pre>'): Stringable
-    {
+    public function handle(
+        Collection $collectors,
+        \Closure $next,
+        string $format = '<pre style="overflow: auto;">%s</pre>'
+    ): Stringable {
         return parent::handle($collectors, $next, $format);
     }
 }
