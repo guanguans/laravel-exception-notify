@@ -14,7 +14,7 @@
     </include>
     <exclude>
       <directory>src/Rectors/</directory>
-      <file>src/Support/helpers.php</file>
+      <!--<file>src/Support/helpers.php</file>-->
     </exclude>
   </coverage>
   <testsuites>

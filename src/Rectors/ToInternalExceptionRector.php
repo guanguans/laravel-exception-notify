@@ -45,7 +45,7 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
                         throw new \InvalidArgumentException('on_headers must be callable');
                         CODE_SAMPLE,
                     <<<'CODE_SAMPLE'
-                        throw new \Guanguans\Notify\Foundation\Exceptions\InvalidArgumentException('on_headers must be callable');
+                        throw new \Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException('on_headers must be callable');
                         CODE_SAMPLE,
                     ['exceptionClassPattern' => 'exceptionClassPattern'],
                 ),

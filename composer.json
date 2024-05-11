@@ -87,7 +87,7 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "guanguans/notify": "^2.6",
+        "guanguans/notify": "^2.8",
         "illuminate/support": "^8.23 || ^9.0 || ^10.0 || ^11.0"
     },
     "require-dev": {
@@ -99,6 +99,7 @@
         "ergebnis/rector-rules": "^1.0",
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
+        "hyperf/composer-plugin": "^1.0",
         "icanhazstring/composer-unused": "^0.8",
         "maglnet/composer-require-checker": "^3.8 || ^4.0",
         "mockery/mockery": "^1.6",
@@ -129,6 +130,7 @@
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
+            "hyperf/composer-plugin": true,
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
         },
@@ -151,6 +153,13 @@
             "pre-commit": [
                 "composer checks"
             ]
+        },
+        "hyperf": {
+            "plugin": {
+                "sort-autoload": {
+                    "guanguans/ai-commit": -1
+                }
+            }
         },
         "laravel": {
             "aliases": {
