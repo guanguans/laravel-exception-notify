@@ -17,21 +17,32 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\CollectorManager;
-use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 
-it('can make object', function (): void {
-    expect(make(ExceptionNotifyManager::class))->toBeInstanceOf(ExceptionNotifyManager::class)
-        ->and(make(CollectorManager::class))->toBeInstanceOf(CollectorManager::class);
-})->group(__DIR__, __FILE__);
+it('will throw `InvalidArgumentException` when abstract is null', function (): void {
+    make(null);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
+
+it('will throw `InvalidArgumentException` when abstract is empty array', function (): void {
+    make([]);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can explode env', function (): void {
-    expect(env_explode('ENV_EXPLODE_STRING'))->toBeArray()->toBeTruthy()
-        ->and(env_explode('ENV_EXPLODE_EMPTY'))->toBe([])
-        ->and(env_explode('ENV_EXPLODE_NOT_EXIST'))->toBeNull();
-    // ->and(env_explode('ENV_EXPLODE_TRUE'))->toBeTrue()
-    // ->and(env_explode('ENV_EXPLODE_FALSE'))->toBeFalse()
-    // ->and(env_explode('ENV_EXPLODE_NULL'))->toBeNull()
+    expect([
+        env_explode('ENV_EXPLODE_STRING'),
+        env_explode('ENV_EXPLODE_EMPTY'),
+        env_explode('ENV_EXPLODE_NOT_EXIST'),
+        // env_explode('ENV_EXPLODE_FALSE'),
+        // env_explode('ENV_EXPLODE_NULL'),
+        // env_explode('ENV_EXPLODE_TRUE'),
+    ])->sequence(
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeArray()->toBeTruthy(),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeArray()->toBeFalsy(),
+        static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeNull(),
+        // static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeFalse(),
+        // static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeNull(),
+        // static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBeTrue(),
+    );
 })->group(__DIR__, __FILE__);
 
 it('can human bytes', function (): void {

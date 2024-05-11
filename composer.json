@@ -102,7 +102,6 @@
         "ergebnis/license": "^2.4",
         "ergebnis/php-cs-fixer-config": "dev-main",
         "ergebnis/rector-rules": "^1.0",
-        "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
         "hyperf/composer-plugin": "^1.0",
         "icanhazstring/composer-unused": "^0.8",
@@ -148,7 +147,7 @@
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
-            "forward-command": false,
+            "forward-command": true,
             "target-directory": "vendor-bin"
         },
         "hooks": {
