@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.4.0"></a>
+## [4.4.0] - 2024-05-11
+### Refactor
+- Replace ExceptionNotifyManager with ExceptionNotify facade
+- **FuncCallToStaticCall:** refactor static calls to function calls
+- **StaticCallToFuncCall:** refactor Str::of to str
+- **composer:** remove guanguans/ai-commit dependency
+- **config:** update exception-notify extender function
+
+### Test
+- **Channels:** Update mail channel configuration
+
+### Pull Requests
+- Merge pull request [#65](https://github.com/guanguans/laravel-exception-notify/issues/65) from guanguans/imgbot
+
+
 <a name="4.3.3"></a>
 ## [4.3.3] - 2024-05-10
 ### Docs
@@ -847,7 +863,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.3...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.0...HEAD
+[4.4.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.3...4.4.0
 [4.3.3]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.2...4.3.3
 [4.3.2]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.1...4.3.2
 [4.3.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.0...4.3.1
