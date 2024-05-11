@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors\Concerns;
 
-use Illuminate\Support\Str;
-
 /**
  * @mixin \Guanguans\LaravelExceptionNotify\Collectors\Collector
  */
@@ -23,7 +21,7 @@ trait Naming
     public static function name(): string
     {
         return ucwords(
-            (string) Str::of(class_basename(static::class))
+            (string) str(class_basename(static::class))
                 ->beforeLast(class_basename(self::class))
                 ->snake(' ')
         );

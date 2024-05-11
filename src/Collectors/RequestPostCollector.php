@@ -14,11 +14,16 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class RequestPostCollector extends Collector
 {
     private Request $request;
+    private array $hiddenPatterns = [
+        'password',
+        '*password',
+        'password*',
+        '*password*',
+    ];
 
     public function __construct(Request $request)
     {
@@ -28,8 +33,8 @@ class RequestPostCollector extends Collector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->transform(static function ($value, string $key) {
-                if (Str::of($key)->is(['password', '*password', 'password*', '*password*'])) {
+            ->transform(function ($value, string $key) {
+                if (str($key)->is($this->hiddenPatterns)) {
                     return '******';
                 }
 

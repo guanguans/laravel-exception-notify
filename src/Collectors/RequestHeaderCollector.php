@@ -17,11 +17,11 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends Collector
 {
-    private const REJECTED_HEADERS = [
+    private Request $request;
+    private array $rejects = [
         'Authorization',
         'Cookie',
     ];
-    private Request $request;
 
     public function __construct(Request $request)
     {
@@ -31,7 +31,7 @@ class RequestHeaderCollector extends Collector
     public function collect(): array
     {
         return collect($this->request->header())
-            ->reject(static fn (array $header, string $key): bool => \in_array($key, self::REJECTED_HEADERS, true))
+            ->reject(fn (array $header, string $key): bool => \in_array($key, $this->rejects, true))
             ->map(static fn (array $header): string => $header[0])
             ->all();
     }

@@ -53,7 +53,7 @@ class TestCommand extends Command
                     The exception [%s] should not be reported.
                     Please check the configuration.
                     warning,
-                \get_class($runtimeException)
+                RuntimeException::class
             ));
 
             return self::INVALID;

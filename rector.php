@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Rectors\ToInternalExceptionRector;
+use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -31,6 +32,8 @@ use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
+use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
@@ -156,6 +159,9 @@ return RectorConfig::configure()
     ])
     ->withConfiguredRule(RenameFunctionRector::class, [
         'test' => 'it',
+    ])
+    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
+        new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
     ->withSkip([
         '**/Fixtures/*',

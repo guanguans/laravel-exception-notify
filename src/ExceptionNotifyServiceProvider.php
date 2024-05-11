@@ -16,7 +16,6 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -25,14 +24,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 {
     public array $singletons = [];
 
-    /**
-     * @throws \ReflectionException
-     * @throws BindingResolutionException
-     */
     public function register(): void
     {
         $this->setupConfig()
-            ->registerMacros()
+            // ->registerMacros()
             ->registerExceptionNotifyManager()
             ->registerCollectorManager()
             ->registerTestCommand();
@@ -67,15 +62,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom($source, 'exception-notify');
 
-        return $this;
-    }
-
-    /**
-     * @throws \ReflectionException
-     * @throws BindingResolutionException
-     */
-    private function registerMacros(): self
-    {
         return $this;
     }
 
