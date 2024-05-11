@@ -78,12 +78,12 @@ Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
 ```php
 <?php
 
-use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Arr;
 
 public function boot(): void
 {
-    ExceptionNotifyManager::skipWhen(static function (\Throwable $throwable) {
+    ExceptionNotify::skipWhen(static function (\Throwable $throwable) {
         if (app()->environment(['local', 'testing'])) {
             return true;
         }

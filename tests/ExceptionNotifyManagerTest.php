@@ -20,6 +20,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -71,7 +72,7 @@ it('should not report', function (): void {
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
-    ExceptionNotifyManager::skipWhen(function (\Throwable $throwable) {
+    ExceptionNotify::skipWhen(function (\Throwable $throwable) {
         if (app()->environment('testing')) {
             return true;
         }

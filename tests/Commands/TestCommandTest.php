@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Symfony\Component\Console\Command\Command;
 use function Pest\Laravel\artisan;
 
@@ -33,7 +34,7 @@ it('can test for exception-notify when default channels is empty', function (): 
 })->group(__DIR__, __FILE__);
 
 it('can test for exception-notify when should not report', function (): void {
-    \Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::skipWhen(
+    ExceptionNotify::skipWhen(
         static fn (\Throwable $throwable): bool => $throwable instanceof RuntimeException
     );
     artisan(TestCommand::class)->assertExitCode(Command::INVALID);
