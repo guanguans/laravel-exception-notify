@@ -16,7 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Pipes;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
-class AddKeywordPipe extends AddChorePipe
+class AddKeywordChorePipe extends AddChorePipe
 {
     public function handle(Collection $collectors, \Closure $next, $value, $key = 'keyword'): Stringable
     {

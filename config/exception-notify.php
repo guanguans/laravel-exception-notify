@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
@@ -189,7 +189,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
                 SprintfMarkdownPipe::class,
                 hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
@@ -228,7 +228,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(AddKeywordPipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
+                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
                 hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],

@@ -32,7 +32,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
@@ -95,7 +95,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestSessionCollector::class,
         ]);
         config()->set('exception-notify.channels.log.pipes', [
-            hydrate_pipe(AddKeywordPipe::class, 'keyword'),
+            hydrate_pipe(AddKeywordChorePipe::class, 'keyword'),
             SprintfHtmlPipe::class,
             SprintfMarkdownPipe::class,
             FixPrettyJsonPipe::class,
