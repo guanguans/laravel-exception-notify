@@ -32,6 +32,7 @@ class ApplicationCollector extends Collector
             'name' => config('app.name'),
             'version' => $this->container->version(),
             'environment' => $this->container->environment(),
+            'debug' => config('app.debug'),
             'locale' => $this->container->getLocale(),
             'in console' => $this->container->runningInConsole(),
         ];

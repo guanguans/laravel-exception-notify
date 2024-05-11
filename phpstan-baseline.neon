@@ -16,11 +16,6 @@ parameters:
 			path: src/Commands/TestCommand.php
 
 		-
-			message: "#^Call to method push\\(\\) on an unknown class Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
-			count: 1
-			path: src/Commands/TestCommand.php
-
-		-
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"
 			count: 1
 			path: src/Rectors/ToInternalExceptionRector.php

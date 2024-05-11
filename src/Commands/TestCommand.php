@@ -94,10 +94,10 @@ class TestCommand extends Command
                     config()->set(
                         "exception-notify.channels.$name.client.extender",
                         static fn (Client $client): Client => $client
-                            ->before(
-                                \Guanguans\Notify\Foundation\Middleware\Response::class,
-                                Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
-                            )
+                            // ->before(
+                            //     \Guanguans\Notify\Foundation\Middleware\Response::class,
+                            //     Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
+                            // )
                             ->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'))
                     );
                 }

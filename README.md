@@ -1,6 +1,6 @@
 # laravel-exception-notify
 
-> Monitor exception and report it to notification channels(Log、Mail、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、XiZhi、YiFengChuanHua、Zulip).
+> Monitor exception and report it to notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -30,7 +30,7 @@
 ## Installation
 
 ```bash
-composer require guanguans/laravel-exception-notify -v
+composer require guanguans/laravel-exception-notify --ansi -v
 ```
 
 ## Configuration
@@ -46,7 +46,7 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 * [Notify](https://github.com/guanguans/notify#platform-support)
 * Dump(For debugging exception messages)
 * Log(For debugging exception messages)
-* [Mail](https://example.com)
+* Mail
 
 ### Configure channels in the `config/exception-notify.php` and `.env` file
 
@@ -67,9 +67,9 @@ php artisan exception-notify:test --ansi -v
 
 ### Notification examples
 
-|           discord            |          lark          |            mail            |
-|:----------------------------:|:----------------------:|:--------------------------:|
-| ![discord](docs/discord.jpg) | ![lark](docs/lark.jpg) | ![mail.jpg](docs/mail.jpg) |
+|           discord            |          lark          |          mail          |
+|:----------------------------:|:----------------------:|:----------------------:|
+| ![discord](docs/discord.jpg) | ![lark](docs/lark.jpg) | ![mail](docs/mail.jpg) |
 
 ### Skip report
 
