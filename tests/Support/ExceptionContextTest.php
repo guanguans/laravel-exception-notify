@@ -15,10 +15,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
 it('can get marked exception context', function (): void {
-    expect(ExceptionContext::getMarked(new \Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException))->toBeArray();
+    expect(ExceptionContext::getMarked(new RuntimeException))->toBeArray();
 
     try {
         eval('throw new Exception("eval");');

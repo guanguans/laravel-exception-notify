@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Config\Repository;
 use Psr\Http\Message\ResponseInterface;
 
@@ -25,7 +26,7 @@ it('will throw `InvalidArgumentException`', function (): void {
             'extender' => null,
         ],
     ]));
-})->group(__DIR__, __FILE__)->throws(\Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException::class);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can report', function (): void {
     expect(app(ExceptionNotifyManager::class)->driver('bark'))

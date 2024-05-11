@@ -15,14 +15,14 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Illuminate\Support\Facades\Mail;
 
 it('will throw `InvalidArgumentException`', function (): void {
-    config()->set('exception-notify.channels.mail.extender', null);
-
+    config()->set('exception-notify.channels.mail.extender');
     $this->app->make(ExceptionNotifyManager::class)->driver('mail');
-})->group(__DIR__, __FILE__)->throws(\Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException::class);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('will throw `TransportException`', function (): void {
     config()->set(
