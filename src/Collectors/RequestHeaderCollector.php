@@ -28,9 +28,6 @@ class RequestHeaderCollector extends Collector
         $this->request = $request;
     }
 
-    /**
-     * @noinspection PhpUndefinedMethodInspection
-     */
     public function collect(): array
     {
         return collect($this->request->header())
