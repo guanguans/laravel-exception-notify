@@ -19,6 +19,7 @@ use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 class CollectorManager extends Fluent
@@ -46,7 +47,7 @@ class CollectorManager extends Fluent
         return (string) (new Pipeline(app()))
             ->send($collectors)
             ->through(FixPrettyJsonPipe::class, ...config("exception-notify.channels.$channel.pipes", []))
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode(
+            ->then(static fn (Collection $collectors): Stringable => Str::of(json_pretty_encode(
                 $collectors->jsonSerialize()
             )));
     }

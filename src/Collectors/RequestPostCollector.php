@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RequestPostCollector extends Collector
 {
@@ -34,7 +35,7 @@ class RequestPostCollector extends Collector
     {
         return collect($this->request->post())
             ->transform(function ($value, string $key) {
-                if (str($key)->is($this->hiddenPatterns)) {
+                if (Str::of($key)->is($this->hiddenPatterns)) {
                     return '******';
                 }
 

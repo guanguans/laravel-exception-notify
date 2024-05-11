@@ -32,7 +32,9 @@ use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
+use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use RectorLaravel\Set\LaravelSetList;
 
@@ -160,8 +162,11 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameFunctionRector::class, [
         'test' => 'it',
     ])
-    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
-        new StaticCallToFuncCall(Str::class, 'of', 'str'),
+    // ->withConfiguredRule(StaticCallToFuncCallRector::class, [
+    //     new StaticCallToFuncCall(Str::class, 'of', 'str'),
+    // ])
+    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
+        new FuncCallToStaticCall('str', Str::class, 'of'),
     ])
     ->withSkip([
         '**/Fixtures/*',
