@@ -6,14 +6,14 @@ parameters:
 			path: src/Collectors/ApplicationCollector.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:terminating\\(\\)\\.$#"
+			message: "#^Anonymous function should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
 			count: 1
 			path: src/Commands/TestCommand.php
 
 		-
-			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\DefaultNotifyClientExtender\\:\\:__invoke\\(\\) should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:terminating\\(\\)\\.$#"
 			count: 1
-			path: src/DefaultNotifyClientExtender.php
+			path: src/Commands/TestCommand.php
 
 		-
 			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"

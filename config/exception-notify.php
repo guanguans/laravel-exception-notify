@@ -123,7 +123,13 @@ return [
         //     'client' => [
         //         'class' => \Guanguans\Notify\Foo\Client::class,
         //         'http_options' => [],
-        //         // 'extender' => \Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender::class,
+        //         'extender' => static fn (Guanguans\Notify\Foundation\Client $client) => $client->push(
+        //             GuzzleHttp\Middleware::log(
+        //                 Illuminate\Support\Facades\Log::channel(),
+        //                 new GuzzleHttp\MessageFormatter(GuzzleHttp\MessageFormatter::DEBUG),
+        //                 'debug'
+        //             ),
+        //         ),
         //     ],
         //     'message' => [
         //         'class' => \Guanguans\Notify\Foo\Messages\Message::class,

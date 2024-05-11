@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Commands;
 
-use Guanguans\LaravelExceptionNotify\DefaultNotifyClientExtender;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
+use Guanguans\Notify\Foundation\Client;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -87,7 +90,12 @@ class TestCommand extends Command
             ->only(config('exception-notify.defaults'))
             ->each(static function (array $config, string $name): void {
                 if ('notify' === $config['driver']) {
-                    config()->set("exception-notify.channels.$name.client.extender", DefaultNotifyClientExtender::class);
+                    config()->set(
+                        "exception-notify.channels.$name.client.extender",
+                        static fn (Client $client): Client => $client->push(
+                            Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'),
+                        )
+                    );
                 }
             });
     }
