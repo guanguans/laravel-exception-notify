@@ -90,7 +90,7 @@ class TestCommand extends Command
         collect(config('exception-notify.channels'))
             ->only(config('exception-notify.defaults'))
             ->each(static function (array $config, string $name): void {
-                if ('notify' === $config['driver']) {
+                if ('notify' === ($config['driver'] ?? $name)) {
                     config()->set(
                         "exception-notify.channels.$name.client.extender",
                         static fn (Client $client): Client => $client
