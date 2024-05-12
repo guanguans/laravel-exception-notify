@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.4.1"></a>
+## [4.4.1] - 2024-05-12
+### Fix
+- **command:** Fix condition check for driver in TestCommand.php
+
+### Refactor
+- **collectors:** remove unnecessary properties from ExceptionBasicCollector
+- **pipes:** Add LimitLengthPipe to CollectorManager
+
+
 <a name="4.4.0"></a>
 ## [4.4.0] - 2024-05-11
 ### Refactor
@@ -863,7 +873,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.1...HEAD
+[4.4.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.0...4.4.1
 [4.4.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.3...4.4.0
 [4.3.3]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.2...4.3.3
 [4.3.2]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.1...4.3.2
