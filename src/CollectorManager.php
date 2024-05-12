@@ -16,6 +16,7 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Contracts\Collector;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
+use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
@@ -46,9 +47,38 @@ class CollectorManager extends Fluent
     {
         return (string) (new Pipeline(app()))
             ->send($collectors)
-            ->through(FixPrettyJsonPipe::class, ...config("exception-notify.channels.$channel.pipes", []))
+            ->through($this->toPipes($channel))
             ->then(static fn (Collection $collectors): Stringable => Str::of(json_pretty_encode(
                 $collectors->jsonSerialize()
             )));
+    }
+
+    private function toPipes(string $channel): array
+    {
+        $index = collect($pipes = config("exception-notify.channels.$channel.pipes", []))->search(
+            static fn (string $pipe) => Str::contains($pipe, LimitLengthPipe::class)
+        );
+
+        if (false === $index) {
+            return $pipes;
+        }
+
+        return collect($pipes)
+            ->push(FixPrettyJsonPipe::class)
+            ->sort(static function (string $a, string $b): int {
+                if (FixPrettyJsonPipe::class === $a && !Str::contains($b, LimitLengthPipe::class)) {
+                    return 1;
+                }
+
+                $rules = [
+                    FixPrettyJsonPipe::class,
+                    LimitLengthPipe::class,
+                ];
+
+                return collect($rules)->search(static fn (string $rule) => Str::contains($a, $rule))
+                    <=> collect($rules)->search(static fn (string $rule) => Str::contains($b, $rule));
+            })
+            // ->dump()
+            ->all();
     }
 }
