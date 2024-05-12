@@ -26,9 +26,9 @@ class ExceptionBasicCollector extends ExceptionCollector
             'class' => \get_class($this->exception),
             'file' => $this->exception->getFile(),
             'line' => $this->exception->getLine(),
-            'status_code' => $this->flattenException->getStatusCode(),
-            'status_text' => $this->flattenException->getStatusText(),
-            'headers' => $this->flattenException->getHeaders(),
+            // 'status_code' => $this->flattenException->getStatusCode(),
+            // 'status_text' => $this->flattenException->getStatusText(),
+            // 'headers' => $this->flattenException->getHeaders(),
         ];
     }
 }
