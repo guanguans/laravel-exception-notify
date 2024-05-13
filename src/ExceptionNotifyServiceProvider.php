@@ -139,7 +139,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     protected function extendExceptionHandler(): self
     {
         $this->app->extend(ExceptionHandler::class, function (ExceptionHandler $exceptionHandler): ExceptionHandler {
-            if ($reportUsingCreator = config('exception-notify.report_using_creator')) {
+            if (
+                ($reportUsingCreator = config('exception-notify.report_using_creator'))
+                && method_exists($exceptionHandler, 'reportable')
+            ) {
                 /** @var callable(ExceptionHandler):callable|class-string $reportUsingCreator */
                 if (\is_string($reportUsingCreator) && class_exists($reportUsingCreator)) {
                     $reportUsingCreator = $this->app->make($reportUsingCreator);
