@@ -31,13 +31,13 @@ class RequestBasicCollector extends Collector
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
             'action' => optional($this->request->route())->getActionName(),
-            'duration' => value(function (): string {
+            'duration' => (function (): string {
                 $startTime = \defined('LARAVEL_START')
                     ? LARAVEL_START
                     : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
                 return human_milliseconds((microtime(true) - $startTime) * 1000);
-            }),
+            })(),
         ];
     }
 }
