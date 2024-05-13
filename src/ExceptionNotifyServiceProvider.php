@@ -110,10 +110,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     private function extendExceptionHandler(): self
     {
         $this->app->extend(ExceptionHandler::class, static function (ExceptionHandler $exceptionHandler): ExceptionHandler {
-            /** @var \Illuminate\Foundation\Exceptions\Handler $exceptionHandler */
-            $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
-                ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
-            });
+            if (method_exists($exceptionHandler, 'reportable')) {
+                $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
+                    ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
+                });
+            }
 
             return $exceptionHandler;
         });
