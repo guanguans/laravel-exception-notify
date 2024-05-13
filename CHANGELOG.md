@@ -8,6 +8,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.4.2"></a>
+## [4.4.2] - 2024-05-13
+
 <a name="4.4.1"></a>
 ## [4.4.1] - 2024-05-12
 ### Fix
@@ -873,7 +876,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.2...HEAD
+[4.4.2]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.1...4.4.2
 [4.4.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.0...4.4.1
 [4.4.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.3...4.4.0
 [4.3.3]: https://github.com/guanguans/laravel-exception-notify/compare/4.3.2...4.3.3
