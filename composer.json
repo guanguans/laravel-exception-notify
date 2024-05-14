@@ -206,10 +206,14 @@
         "composer-updater-dry-run": "@composer-updater --dry-run",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "facade-lint": "@facade-update --lint",
-        "facade-update": "/opt/homebrew/opt/php@8.1/bin/php -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify",
+        "facade-update": [
+            "@putenvs",
+            "$PHP81 -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify"
+        ],
         "lint": [
-            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec /opt/homebrew/opt/php@7.4/bin/php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
-            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec /opt/homebrew/opt/php@7.4/bin/php -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
+            "@putenvs",
+            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
+            "for DIR in ./config ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
         ],
         "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
         "mark-separate": "printf '\\n!\\n!\\t\\033[0;33m%s\\033[0m\\n!\\n\\n' \"----------------\"",
@@ -226,6 +230,14 @@
         ],
         "psalm": "@php ./vendor/bin/psalm",
         "psalm-baseline": "@psalm --update-baseline",
+        "putenvs": [
+            "@putenv PHP73=/opt/homebrew/opt/php@7.3/bin/php",
+            "@putenv PHP74=/opt/homebrew/opt/php@7.4/bin/php",
+            "@putenv PHP80=/opt/homebrew/opt/php@8.0/bin/php",
+            "@putenv PHP81=/opt/homebrew/opt/php@8.1/bin/php",
+            "@putenv PHP82=/opt/homebrew/opt/php@8.2/bin/php",
+            "@putenv PHP83=/opt/homebrew/opt/php@8.3/bin/php"
+        ],
         "rector": "@php ./vendor/bin/rector --ansi -v",
         "rector-custom-rule": "@rector custom-rule",
         "rector-detect-node": "@rector detect-node --loop",
@@ -244,5 +256,16 @@
         "test": "@pest",
         "test-coverage": "@pest-coverage",
         "test-migrate-configuration": "@pest-migrate-configuration"
+    },
+    "scripts-aliases": {
+        "pest": [
+            "test"
+        ],
+        "pest-coverage": [
+            "test-coverage"
+        ],
+        "pest-migrate-configuration": [
+            "test-migrate-configuration"
+        ]
     }
 }
