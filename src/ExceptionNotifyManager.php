@@ -155,7 +155,7 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
-        if (!$this->container->environment(config('exception-notify.env'))) {
+        if (!$this->container->environment(config('exception-notify.envs'))) {
             return true;
         }
 

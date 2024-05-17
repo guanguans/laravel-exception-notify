@@ -25,7 +25,7 @@ return [
     /**
      * The list of environments that should be reported.
      */
-    'env' => env_explode('EXCEPTION_NOTIFY_ENV', [
+    'envs' => env_explode('EXCEPTION_NOTIFY_ENVS', [
         // 'production',
         // 'local',
         // 'testing',
