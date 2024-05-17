@@ -72,18 +72,17 @@ it('should not report', function (): void {
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
-    ExceptionNotify::skipWhen(function (\Throwable $throwable) {
-        if (app()->environment('testing')) {
-            return true;
-        }
+    config()->set('exception-notify.env', 'production');
+    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 
-        return Arr::first(
-            [
-                Exception::class,
-            ],
-            static fn (string $type): bool => $throwable instanceof $type
-        );
-    });
+    config()->set('exception-notify.enabled', true);
+    config()->set('exception-notify.env', '*');
+    ExceptionNotify::skipWhen(static fn (\Throwable $throwable) => Arr::first(
+        [
+            Exception::class,
+        ],
+        static fn (string $type): bool => $throwable instanceof $type
+    ));
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 })->group(__DIR__, __FILE__);
 

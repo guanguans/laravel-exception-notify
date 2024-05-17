@@ -155,6 +155,10 @@ class ExceptionNotifyManager extends Manager
             return true;
         }
 
+        if (!$this->container->environment(config('exception-notify.env'))) {
+            return true;
+        }
+
         if ($this->shouldSkip($throwable)) {
             return true;
         }

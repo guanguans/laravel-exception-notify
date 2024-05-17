@@ -23,6 +23,16 @@ return [
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
     /**
+     * The list of environments that should be reported.
+     */
+    'env' => env_explode('EXCEPTION_NOTIFY_ENV', [
+        // 'production',
+        // 'local',
+        // 'testing',
+        '*',
+    ]),
+
+    /**
      * The rate limit of same exception.
      */
     'rate_limit' => [
