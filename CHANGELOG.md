@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.5.1"></a>
+## [4.5.1] - 2024-05-17
+### Refactor
+- **config:** remove PhpInfoCollector from exception-notify config
+
+
 <a name="4.5.0"></a>
 ## [4.5.0] - 2024-05-17
 ### Docs
@@ -984,7 +990,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.1...HEAD
+[4.5.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.0...4.5.1
 [4.5.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.4...4.5.0
 [3.8.4]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.2...3.8.4
 [4.4.2]: https://github.com/guanguans/laravel-exception-notify/compare/4.4.1...4.4.2
