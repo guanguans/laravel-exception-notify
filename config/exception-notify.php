@@ -36,7 +36,7 @@ return [
      * The options of report exception job.
      */
     'job' => [
-        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default', 'sync')),
+        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default')),
         'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
 
