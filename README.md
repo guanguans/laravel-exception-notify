@@ -83,19 +83,13 @@ use Illuminate\Support\Arr;
 
 public function boot(): void
 {
-    ExceptionNotify::skipWhen(static function (\Throwable $throwable) {
-        if (app()->environment(['local', 'testing'])) {
-            return true;
-        }
-
-        return Arr::first(
-            [
-                Symfony\Component\HttpKernel\Exception\HttpException::class,
-                Illuminate\Http\Exceptions\HttpResponseException::class,
-            ],
-            static fn (string $type): bool => $throwable instanceof $type
-        );
-    });
+    ExceptionNotify::skipWhen(static fn (\Throwable $throwable) => Arr::first(
+        [
+            \Symfony\Component\HttpKernel\Exception\HttpException::class,
+            \Illuminate\Http\Exceptions\HttpResponseException::class,
+        ],
+        static fn (string $exception): bool => $throwable instanceof $exception
+    ));
 }
 ```
 
