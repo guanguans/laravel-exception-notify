@@ -112,7 +112,7 @@ return [
             'driver' => 'mail',
             'mailer' => null,
             'to' => [
-                'users' => env_explode('EXCEPTION_NOTIFY_MAIL_TO', [
+                'users' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_USERS', [
                     'your@example.mail',
                 ]),
             ],
