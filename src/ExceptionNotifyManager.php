@@ -22,6 +22,7 @@ use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
@@ -191,12 +192,14 @@ class ExceptionNotifyManager extends Manager
      */
     private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
     {
-        if (app(RateLimiter::class)->tooManyAttempts($key, $maxAttempts)) {
+        $rateLimiter = new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')));
+
+        if ($rateLimiter->tooManyAttempts($key, $maxAttempts)) {
             return false;
         }
 
-        return tap(true, static function () use ($key, $decaySeconds): void {
-            app(RateLimiter::class)->hit($key, $decaySeconds);
+        return tap(true, static function () use ($rateLimiter, $key, $decaySeconds): void {
+            $rateLimiter->hit($key, $decaySeconds);
         });
     }
 
