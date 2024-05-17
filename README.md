@@ -45,7 +45,7 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 
 * [Notify](https://github.com/guanguans/notify#platform-support)
 * Dump(For debugging exception messages)
-* Log(For debugging exception messages)
+* Log
 * Mail
 
 ### Configure channels in the `config/exception-notify.php` and `.env` file
