@@ -149,6 +149,8 @@ return RectorConfig::configure()
         // RectorLaravel\Rector\StaticCall\RouteActionCallableRector::class,
     ])
     ->withRules([
+        StaticArrowFunctionRector::class,
+        StaticClosureRector::class,
         ToInternalExceptionRector::class,
     ])
     ->withConfiguredRule(RectorLaravel\Rector\MethodCall\EloquentOrderByToLatestOrOldestRector::class, [
