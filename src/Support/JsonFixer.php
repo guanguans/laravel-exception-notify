@@ -264,7 +264,7 @@ final class JsonFixer
             return $json;
         }
 
-        throw new RuntimeException(sprintf('Could not fix JSON (tried padding `%s`)', substr($tmpJson, $length)));
+        throw new RuntimeException(\sprintf('Could not fix JSON (tried padding `%s`)', substr($tmpJson, $length)));
     }
 
     private function padLiteral(string $tmpJson): string

@@ -47,7 +47,7 @@ class ExceptionContext
                     $line = $markedExceptionLine;
                 }
 
-                return [sprintf("%{$maxLineLen}s", $line) => $code];
+                return [\sprintf("%{$maxLineLen}s", $line) => $code];
             })
             ->all();
     }

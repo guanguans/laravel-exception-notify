@@ -53,7 +53,7 @@ return [
     /**
      * The title of exception notification report.
      */
-    'title' => env('EXCEPTION_NOTIFY_TITLE', sprintf('The %s application exception report', config('app.name'))),
+    'title' => env('EXCEPTION_NOTIFY_TITLE', \sprintf('The %s application exception report', config('app.name'))),
 
     /**
      * The list of collector.

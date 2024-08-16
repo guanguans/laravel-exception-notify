@@ -21,6 +21,6 @@ class SprintfPipe
 {
     public function handle(Collection $collectors, \Closure $next, string $format): Stringable
     {
-        return Str::of(sprintf($format, $next($collectors)));
+        return Str::of(\sprintf($format, $next($collectors)));
     }
 }

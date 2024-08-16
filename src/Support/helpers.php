@@ -29,7 +29,7 @@ if (!\function_exists('make')) {
     {
         if (!\is_string($abstract) && !\is_array($abstract)) {
             throw new InvalidArgumentException(
-                sprintf('Invalid argument type(string/array): %s.', \gettype($abstract))
+                \sprintf('Invalid argument type(string/array): %s.', \gettype($abstract))
             );
         }
 
@@ -50,7 +50,7 @@ if (!\function_exists('make')) {
             return make($abstract, $parameters);
         }
 
-        throw new InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(\sprintf(
             'The argument of abstract must be an array containing a `%s` element.',
             implode('` or `', $classes)
         ));
@@ -99,7 +99,7 @@ if (!\function_exists('hydrate_pipe')) {
      */
     function hydrate_pipe(string $pipe, ...$parameters): string
     {
-        return [] === $parameters ? $pipe : sprintf('%s:%s', $pipe, implode(',', $parameters));
+        return [] === $parameters ? $pipe : \sprintf('%s:%s', $pipe, implode(',', $parameters));
     }
 }
 
@@ -121,7 +121,7 @@ if (!\function_exists('human_bytes')) {
             $decimals = 0;
         }
 
-        return sprintf("%.{$decimals}f%s", $bytes / (1024 ** $factor), $size[$factor]);
+        return \sprintf("%.{$decimals}f%s", $bytes / (1024 ** $factor), $size[$factor]);
     }
 }
 
@@ -129,13 +129,13 @@ if (!\function_exists('human_milliseconds')) {
     function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
         if (1 > $milliseconds) {
-            return sprintf('%sμs', round($milliseconds * 1000, $precision));
+            return \sprintf('%sμs', round($milliseconds * 1000, $precision));
         }
 
         if (1000 > $milliseconds) {
-            return sprintf('%sms', round($milliseconds, $precision));
+            return \sprintf('%sms', round($milliseconds, $precision));
         }
 
-        return sprintf('%ss', round($milliseconds / 1000, $precision));
+        return \sprintf('%ss', round($milliseconds / 1000, $precision));
     }
 }

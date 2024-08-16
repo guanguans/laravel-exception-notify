@@ -48,7 +48,7 @@ class TestCommand extends Command
         $runtimeException = new RuntimeException('Test for exception-notify.');
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
-            $this->output->warning(sprintf(
+            $this->output->warning(\sprintf(
                 <<<'warning'
                     The exception [%s] should not be reported.
                     Please check the configuration.
@@ -65,7 +65,7 @@ class TestCommand extends Command
             $this->laravel->terminating(function (): void {
                 $this->output->section('Current default channels:');
                 $this->output->listing($defaults = config('exception-notify.defaults'));
-                $this->output->warning(sprintf(
+                $this->output->warning(\sprintf(
                     <<<'warning'
                         An exception has been thrown to trigger the exception notification monitor.
                         Please check whether your channels(%s) received the exception notification reports.
