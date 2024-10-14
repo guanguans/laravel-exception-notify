@@ -69,6 +69,7 @@ class ExceptionContext
 
     private static function getFile(\Throwable $throwable): array
     {
+        // file($throwable->getFile());
         return collect(explode(\PHP_EOL, file_get_contents($throwable->getFile())))
             ->slice($throwable->getLine() - 10, 20)
             ->mapWithKeys(static fn (string $code, int $line): array => [$line + 1 => $code])
