@@ -8,6 +8,28 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="4.7.0"></a>
+## [4.7.0] - 2025-03-01
+### CI
+- **composer-updater:** Refactor coding style and cleanup warnings
+- **tests:** Update PHP versions in CI workflow
+
+### Docs
+- update copyright year to 2025 in multiple files
+
+### Feat
+- **composer:** Update framework dependency
+- **composer:** update dependencies and improve scripts
+
+### Test
+- **LogChannelTest:** Skip test for specific Laravel versions
+
+### Pull Requests
+- Merge pull request [#72](https://github.com/guanguans/laravel-exception-notify/issues/72) from laravel-shift/l12-compatibility
+- Merge pull request [#71](https://github.com/guanguans/laravel-exception-notify/issues/71) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.3.0
+- Merge pull request [#70](https://github.com/guanguans/laravel-exception-notify/issues/70) from guanguans/dependabot/github_actions/codecov/codecov-action-5
+
+
 <a name="4.6.0"></a>
 ## [4.6.0] - 2024-08-16
 ### CI
@@ -1005,7 +1027,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.6.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...HEAD
+[4.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.6.0...4.7.0
 [4.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.1...4.6.0
 [4.5.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.0...4.5.1
 [4.5.0]: https://github.com/guanguans/laravel-exception-notify/compare/3.8.4...4.5.0
