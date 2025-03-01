@@ -14,10 +14,15 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Composer\Semver\Comparator;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Illuminate\Foundation\Application;
 
 it('can report', function (): void {
     expect($this->app->make(ExceptionNotifyManager::class)->driver('log'))
         ->report('report')
         ->toBeNull();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip(
+    Comparator::greaterThanOrEqualTo(Application::VERSION, '9.0.0')
+    && Comparator::lessThan(Application::VERSION, '10.0.0')
+);
