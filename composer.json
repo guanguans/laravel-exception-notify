@@ -208,7 +208,7 @@
         "composer-require-checker": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v",
         "composer-require-checker-json": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v --output=json | jq",
         "composer-unused": "@php ./vendor/bin/composer-unused --ansi -v",
-        "composer-updater": "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.3/bin/php --except-packages=pestphp/pest-plugin-laravel --ansi",
+        "composer-updater": "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.4/bin/php --except-packages=pestphp/pest-plugin-laravel --ansi",
         "composer-updater-dry-run": "@composer-updater --dry-run",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "facade-lint": "@facade-update --lint",
@@ -228,7 +228,14 @@
         "md-lint": "lint-md --config .lintmdrc ./*.md ./.github/ ./docs/",
         "pest": "@php ./vendor/bin/pest --coverage",
         "pest-coverage": "@pest --coverage-html=./.build/phpunit/ --coverage-clover=./.build/phpunit/clover.xml --coverage",
+        "pest-highest": [
+            "@putenvs",
+            "$PHP83 ./vendor/bin/pest --coverage"
+        ],
         "pest-migrate-configuration": "@pest --migrate-configuration",
+        "pest-profile": "@pest --profile",
+        "pest-type-coverage": "@pest --type-coverage",
+        "pest-update-snapshots": "@pest -d --update-snapshots",
         "phpstan": "@php ./vendor/bin/phpstan analyse --ansi -v",
         "phpstan-baseline": "@phpstan --generate-baseline --allow-empty-baseline",
         "post-merge": [
@@ -242,7 +249,8 @@
             "@putenv PHP80=/opt/homebrew/opt/php@8.0/bin/php",
             "@putenv PHP81=/opt/homebrew/opt/php@8.1/bin/php",
             "@putenv PHP82=/opt/homebrew/opt/php@8.2/bin/php",
-            "@putenv PHP83=/opt/homebrew/opt/php@8.3/bin/php"
+            "@putenv PHP83=/opt/homebrew/opt/php@8.3/bin/php",
+            "@putenv PHP84=/opt/homebrew/opt/php@8.4/bin/php"
         ],
         "rector": "@php ./vendor/bin/rector --ansi -v",
         "rector-custom-rule": "@rector custom-rule",
@@ -261,7 +269,12 @@
         "style-lint": "@style-fix --diff --dry-run",
         "test": "@pest",
         "test-coverage": "@pest-coverage",
-        "test-migrate-configuration": "@pest-migrate-configuration"
+        "test-highest": "@pest-highest",
+        "test-migrate-configuration": "@pest-migrate-configuration",
+        "test-phpunit": "@php ./vendor/bin/phpunit --cache-result-file=./.build/phpunit/.phpunit.result.cache --coverage-text --ansi -v",
+        "test-phpunit-coverage": "@test --coverage-html=./.build/phpunit/ --coverage-clover=clover.xml",
+        "test-type-coverage": "@pest-type-coverage",
+        "test-update-snapshots": "@pest-update-snapshots"
     },
     "scripts-aliases": {
         "pest": [

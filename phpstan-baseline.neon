@@ -1,31 +1,73 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Property Guanguans\\\\LaravelExceptionNotify\\\\Collectors\\\\ApplicationCollector\\:\\:\\$container \\(Illuminate\\\\Foundation\\\\Application\\) does not accept Illuminate\\\\Container\\\\Container\\.$#"
+			message: '#^Property Guanguans\\LaravelExceptionNotify\\Collectors\\ApplicationCollector\:\:\$container \(Illuminate\\Foundation\\Application\) does not accept Illuminate\\Container\\Container\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: src/Collectors/ApplicationCollector.php
 
 		-
-			message: "#^Anonymous function should return Guanguans\\\\Notify\\\\Foundation\\\\Client but returns Guanguans\\\\Notify\\\\Foundation\\\\Concerns\\\\HasHttpClient\\.$#"
+			message: '#^Anonymous function should return Guanguans\\Notify\\Foundation\\Client but returns Guanguans\\Notify\\Foundation\\Concerns\\HasHttpClient\.$#'
+			identifier: return.type
 			count: 1
 			path: src/Commands/TestCommand.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Foundation\\\\Application\\:\\:terminating\\(\\)\\.$#"
+			message: '#^Call to an undefined method Illuminate\\Contracts\\Foundation\\Application\:\:terminating\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: src/Commands/TestCommand.php
 
 		-
-			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Rectors\\\\ToInternalExceptionRector\\:\\:refactor\\(\\) should return 1\\|2\\|3\\|4\\|array\\<PhpParser\\\\Node\\>\\|PhpParser\\\\Node\\|null but empty return statement found\\.$#"
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 1 so it can be removed from the return type\.$#'
+			identifier: return.unusedType
 			count: 1
 			path: src/Rectors/ToInternalExceptionRector.php
 
 		-
-			message: "#^Method Guanguans\\\\LaravelExceptionNotify\\\\Support\\\\ExceptionContext\\:\\:getEval\\(\\) never returns void so it can be removed from the return type\\.$#"
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 2 so it can be removed from the return type\.$#'
+			identifier: return.unusedType
 			count: 1
-			path: src/Support/ExceptionContext.php
+			path: src/Rectors/ToInternalExceptionRector.php
 
 		-
-			message: "#^Result of && is always false\\.$#"
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 3 so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 4 so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns array\<PhpParser\\Node\> so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) should return 1\|2\|3\|4\|array\<PhpParser\\Node\>\|PhpParser\\Node\|null but empty return statement found\.$#'
+			identifier: return.empty
+			count: 1
+			path: src/Rectors/ToInternalExceptionRector.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<string, mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Support/helpers.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
 			count: 1
 			path: src/Support/helpers.php

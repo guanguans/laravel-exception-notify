@@ -96,6 +96,9 @@ $status = (new SingleCommandApplication)
                 $this->differ = $differ ?? new Differ;
             }
 
+            /**
+             * @noinspection NullPointerExceptionInspection
+             */
             public function __invoke(): void
             {
                 $this
@@ -104,7 +107,7 @@ $status = (new SingleCommandApplication)
                     ->updateComposerPackages()
                     ->updateOutdatedComposerPackages()
                     ->updateComposerPackages()
-                    ->normalizeComposerJson()
+                    // ->normalizeComposerJson()
                     ->success();
             }
 
@@ -160,7 +163,7 @@ $status = (new SingleCommandApplication)
             {
                 $outdatedComposerPackages = $this->getOutdatedComposerPackages();
                 $decodedComposerJson = json_decode(file_get_contents($this->composerJsonPath), true);
-                (fn () => self::reload(null))->call(new InstalledVersions);
+                InstalledVersions::reload([]);
 
                 foreach ($decodedComposerJson as $name => &$value) {
                     if (!\in_array($name, ['require', 'require-dev'], true)) {
@@ -195,9 +198,12 @@ $status = (new SingleCommandApplication)
             {
                 return array_reduce(
                     json_decode(
-                        $this
-                            ->mustRunCommand("$this->highestComposerBinary outdated --format=json --direct --ansi")
-                            ->getOutput(),
+                        substr(
+                            $output = $this
+                                ->mustRunCommand("$this->highestComposerBinary outdated --format=json --direct --ansi")
+                                ->getOutput(),
+                            strpos($output, '{')
+                        ),
                         true
                     )['installed'],
                     function (array $carry, array $package): array {
@@ -244,9 +250,16 @@ $status = (new SingleCommandApplication)
                 $input = null,
                 ?float $timeout = 300
             ): Process {
+                $additionalOptions = [
+                    '--no-interaction',
+                    '--no-plugins',
+                    '--no-scripts',
+                    '--ansi',
+                ];
+
                 $process = \is_string($command)
-                    ? Process::fromShellCommandline($command, $cwd, $env, $input, $timeout)
-                    : new Process($command, $cwd, $env, $input, $timeout);
+                    ? Process::fromShellCommandline(\sprintf("$command %s", implode(' ', $additionalOptions)), $cwd, $env, $input, $timeout)
+                    : new Process($command + $additionalOptions, $cwd, $env, $input, $timeout);
 
                 $this->symfonyStyle->warning($process->getCommandLine());
 
@@ -270,7 +283,6 @@ $status = (new SingleCommandApplication)
 
             /**
              * @noinspection SuspiciousLoopInspection
-             * @noinspection ComparisonScalarOrderInspection
              * @noinspection MissingParameterTypeDeclarationInspection
              *
              * @param array|string $pattern
@@ -308,19 +320,17 @@ $status = (new SingleCommandApplication)
                     $diff,
                 );
 
-                $formatted = array_map(static function (string $line): string {
-                    return preg_replace(
-                        [
-                            '/^(\+.*)$/',
-                            '/^(-.*)$/',
-                        ],
-                        [
-                            '<fg=green>$1</>',
-                            '<fg=red>$1</>',
-                        ],
-                        $line,
-                    );
-                }, $lines);
+                $formatted = array_map(static fn (string $line): string => preg_replace(
+                    [
+                        '/^(\+.*)$/',
+                        '/^(-.*)$/',
+                    ],
+                    [
+                        '<fg=green>$1</>',
+                        '<fg=red>$1</>',
+                    ],
+                    $line,
+                ), $lines);
 
                 return implode(
                     "\n",
