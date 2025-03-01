@@ -8,6 +8,22 @@
   xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
 >
   <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"-->
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printers\DefaultPrinter"-->
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printers\ReportablePrinter"-->
+  <php>
+    <env name="APP_KEY" value="base64:e2ASw7JCNMYR6PWInGGQrzUzisuDvv8bhNl14XGbUi8="/>
+    <env name="ENV_EXPLODE_EMPTY" value="empty"/>
+    <env name="ENV_EXPLODE_FALSE" value="false"/>
+    <env name="ENV_EXPLODE_NULL" value="null"/>
+    <env name="ENV_EXPLODE_STRING" value="log,null"/>
+    <env name="ENV_EXPLODE_TRUE" value="true"/>
+  </php>
+  <testsuites>
+    <testsuite name="Guanguans Test Suite">
+      <directory>tests/</directory>
+      <exclude>vendor/</exclude>
+    </testsuite>
+  </testsuites>
   <coverage>
     <include>
       <directory suffix=".php">src/</directory>
@@ -17,35 +33,18 @@
       <!--<file>src/Support/helpers.php</file>-->
     </exclude>
   </coverage>
-  <testsuites>
-    <testsuite name="Guanguans Test Suite">
-      <directory>tests/</directory>
-      <exclude>vendor/</exclude>
-    </testsuite>
-  </testsuites>
-  <php>
-    <env name="APP_KEY" value="base64:e2ASw7JCNMYR6PWInGGQrzUzisuDvv8bhNl14XGbUi8="/>
-    <env name="ENV_EXPLODE_EMPTY" value="empty"/>
-    <env name="ENV_EXPLODE_FALSE" value="false"/>
-    <env name="ENV_EXPLODE_NULL" value="null"/>
-    <env name="ENV_EXPLODE_STRING" value="log,null"/>
-    <env name="ENV_EXPLODE_TRUE" value="true"/>
-  </php>
-  <!--<listeners>
-    <listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
-      <arguments>
-        <array>
-          <element key="slowThreshold">
-            <integer>500</integer>
-          </element>
-          <element key="reportLength">
-            <integer>10</integer>
-          </element>
-          <element key="stopOnSlow">
-            <boolean>false</boolean>
-          </element>
-        </array>
-      </arguments>
-    </listener>
-  </listeners>-->
+  <source>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <exclude>
+      <directory>src/Rectors/</directory>
+      <!--<file>src/Support/helpers.php</file>-->
+    </exclude>
+  </source>
+  <extensions>
+    <!--<extension class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>-->
+    <!--<extension class="Ergebnis\PHPUnit\SlowTestDetector\Extension"/>-->
+    <!--<bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension"/>-->
+  </extensions>
 </phpunit>
