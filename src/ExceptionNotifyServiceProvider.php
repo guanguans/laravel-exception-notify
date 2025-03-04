@@ -148,7 +148,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     private function toAlias(string $class): string
     {
-        return Str::of($class)
+        return str($class)
             ->replaceFirst(__NAMESPACE__, '')
             ->start('\\'.class_basename(ExceptionNotify::class))
             ->replaceFirst('\\', '')

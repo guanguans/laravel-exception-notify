@@ -68,15 +68,15 @@ return RectorConfig::configure()
     ->withDowngradeSets(php80: true)
     ->withPhpSets(php80: true)
     ->withPreparedSets(
-        // deadCode: true,
+        deadCode: true,
         codeQuality: true,
         codingStyle: true,
-        // typeDeclarations: true,
-        // privatization: true,
+        typeDeclarations: true,
+        privatization: true,
         naming: true,
         instanceOf: true,
         earlyReturn: true,
-        // phpunitCodeQuality: true,
+        phpunitCodeQuality: true,
     )
     ->withSets([
         PHPUnitSetList::PHPUNIT_90,
@@ -172,12 +172,12 @@ return RectorConfig::configure()
     //     'phpstan-ignore-next-line',
     //     'psalm-suppress',
     // ])
-    // ->withConfiguredRule(StaticCallToFuncCallRector::class, [
-    //     new StaticCallToFuncCall(Str::class, 'of', 'str'),
-    // ])
-    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-        new FuncCallToStaticCall('str', Str::class, 'of'),
+    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
+        new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
+    // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
+    //     new FuncCallToStaticCall('str', Str::class, 'of'),
+    // ])
     // ->withConfiguredRule(
     //     RenameFunctionRector::class,
     //     [

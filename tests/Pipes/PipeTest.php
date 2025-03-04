@@ -21,7 +21,6 @@ use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 it('can collect', function (): void {
@@ -46,7 +45,7 @@ it('can collect', function (): void {
              */
             static fn (
                 Collection $collectors
-            ): Stringable => Str::of(json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
+            ): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
         );
 
     expect($report)->toBeInstanceOf(Stringable::class);
