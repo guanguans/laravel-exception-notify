@@ -29,7 +29,7 @@ class RequestPostCollector extends Collector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->transform(function ($value, string $key) {
+            ->transform(function (mixed $value, string $key) {
                 if (str($key)->is($this->hiddenPatterns)) {
                     return '******';
                 }

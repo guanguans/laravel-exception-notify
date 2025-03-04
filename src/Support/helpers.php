@@ -90,7 +90,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\hydrate_pipe')) {
     /**
      * @param class-string $pipe
      */
-    function hydrate_pipe(string $pipe, ...$parameters): string
+    function hydrate_pipe(string $pipe, mixed ...$parameters): string
     {
         return [] === $parameters ? $pipe : \sprintf('%s:%s', $pipe, implode(',', $parameters));
     }

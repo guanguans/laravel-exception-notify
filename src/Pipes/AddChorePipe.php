@@ -26,7 +26,7 @@ class AddChorePipe
      *
      * @param array-key $key
      */
-    public function handle(Collection $collectors, \Closure $next, mixed $value, $key): Stringable
+    public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key): Stringable
     {
         return $next(collect(Arr::add(
             $collectors->all(),

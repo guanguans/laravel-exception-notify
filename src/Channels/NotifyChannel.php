@@ -39,7 +39,7 @@ class NotifyChannel extends Channel
             'client' => 'required|array',
             'client.class' => 'required|string',
             'client.http_options' => 'array',
-            'client.extender' => static function (string $attribute, $value, \Closure $fail): void {
+            'client.extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
                 if (\is_string($value) || \is_callable($value)) {
                     return;
                 }
@@ -94,7 +94,7 @@ class NotifyChannel extends Channel
         $replace = [config('exception-notify.title'), $report];
         $options = Arr::except($this->configRepository->get('message'), 'class');
 
-        array_walk_recursive($options, static function (&$value) use ($replace): void {
+        array_walk_recursive($options, static function (mixed &$value) use ($replace): void {
             \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
         });
 

@@ -83,7 +83,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             CollectorManager::class,
             static fn (Container $container): CollectorManager => new CollectorManager(
                 collect(config('exception-notify.collectors', []))
-                    ->map(static function ($parameters, $class) use ($container) {
+                    ->map(static function (array|string $parameters, int|string $class) use ($container) {
                         if (!\is_array($parameters)) {
                             [$parameters, $class] = [(array) $class, $parameters];
                         }

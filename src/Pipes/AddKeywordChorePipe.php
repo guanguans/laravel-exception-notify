@@ -18,7 +18,7 @@ use Illuminate\Support\Stringable;
 
 class AddKeywordChorePipe extends AddChorePipe
 {
-    public function handle(Collection $collectors, \Closure $next, mixed $value, $key = 'keyword'): Stringable
+    public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key = 'keyword'): Stringable
     {
         return parent::handle($collectors, $next, $value, $key);
     }

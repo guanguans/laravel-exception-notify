@@ -28,7 +28,7 @@ class MailChannel extends Channel
         $validator = validator($configRepository->all(), [
             'mailer' => 'nullable|string',
             'to' => 'required|array',
-            'extender' => static function (string $attribute, $value, \Closure $fail): void {
+            'extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
                 if (\is_string($value) || \is_callable($value)) {
                     return;
                 }

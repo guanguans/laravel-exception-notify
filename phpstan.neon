@@ -32,7 +32,7 @@ parameters:
     excludePaths:
         - tests/Fixtures/
 #    level: max
-    level: 5
+    level: 6
     tmpDir: .build/phpstan
     errorFormat: symplify
 #    errorFormat: friendly
@@ -43,7 +43,7 @@ parameters:
     type_coverage:
         declare: 100
         return_type: 100
-        param_type: 0
+        param_type: 100
         property_type: 100
         constant_type: 100
     disallowedFunctionCalls:
@@ -58,12 +58,12 @@ parameters:
             message: 'use config() instead'
     ignoreErrors:
 #        - '#^Unable to resolve the template type T(Key|Value) in call to function collect$#'
-#        -
-#            identifier: argument.templateType
-#        -
-#            identifier: missingType.iterableValue
-#        -
-#            identifier: missingType.generics
+        -
+            identifier: argument.templateType
+        -
+            identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
 #        -
 #            identifier: new.static
 #        -
