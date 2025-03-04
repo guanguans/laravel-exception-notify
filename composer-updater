@@ -237,7 +237,6 @@ $status = (new SingleCommandApplication)
             }
 
             /**
-             * @noinspection MissingParameterTypeDeclarationInspection
              * @noinspection PhpSameParameterValueInspection
              *
              * @param mixed $input The input as stream resource, scalar or \Traversable, or null for no input
@@ -282,7 +281,6 @@ $status = (new SingleCommandApplication)
 
             /**
              * @noinspection SuspiciousLoopInspection
-             * @noinspection MissingParameterTypeDeclarationInspection
              */
             private function strIs(array|string $pattern, string $value): bool
             {
