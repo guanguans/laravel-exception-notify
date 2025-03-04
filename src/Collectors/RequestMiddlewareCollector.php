@@ -26,6 +26,6 @@ class RequestMiddlewareCollector extends Collector
 
     public function collect(): array
     {
-        return (array) optional($this->request->route())->gatherMiddleware();
+        return (array) $this->request->route()?->gatherMiddleware();
     }
 }

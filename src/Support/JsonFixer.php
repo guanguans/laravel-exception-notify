@@ -197,7 +197,7 @@ final class JsonFixer
         $this->updatePos($char, $index);
     }
 
-    private function lastToken()
+    private function lastToken(): mixed
     {
         return end($this->stack);
     }

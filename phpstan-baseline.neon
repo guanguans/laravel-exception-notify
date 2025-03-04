@@ -7,14 +7,20 @@ parameters:
 			path: src/Collectors/ApplicationCollector.php
 
 		-
-			message: '#^Anonymous function should return Guanguans\\Notify\\Foundation\\Client but returns Guanguans\\Notify\\Foundation\\Concerns\\HasHttpClient\.$#'
-			identifier: return.type
+			message: '#^Cannot call method getActionName\(\) on object\|string\.$#'
+			identifier: method.nonObject
 			count: 1
-			path: src/Commands/TestCommand.php
+			path: src/Collectors/RequestBasicCollector.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Contracts\\Foundation\\Application\:\:terminating\(\)\.$#'
-			identifier: method.notFound
+			message: '#^Cannot call method gatherMiddleware\(\) on object\|string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Collectors/RequestMiddlewareCollector.php
+
+		-
+			message: '#^Anonymous function should return Guanguans\\Notify\\Foundation\\Client but returns Guanguans\\Notify\\Foundation\\Concerns\\HasHttpClient\.$#'
+			identifier: return.type
 			count: 1
 			path: src/Commands/TestCommand.php
 
@@ -61,13 +67,13 @@ parameters:
 			path: src/Rectors/ToInternalExceptionRector.php
 
 		-
-			message: '#^Call to function is_array\(\) with array\<string, mixed\> will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
+			message: '#^PHPDoc tag @return with type array\<int, string\>\|void\|null is not subtype of native type array\|null\.$#'
+			identifier: return.phpDocType
 			count: 1
-			path: src/Support/helpers.php
+			path: src/Support/ExceptionContext.php
 
 		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
+			message: '#^Variable \$keys on left side of \?\?\= is never defined\.$#'
+			identifier: nullCoalesce.variable
 			count: 1
 			path: src/Support/helpers.php

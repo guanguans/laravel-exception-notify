@@ -30,7 +30,7 @@ class RequestBasicCollector extends Collector
             'url' => $this->request->url(),
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
-            'action' => optional($this->request->route())->getActionName(),
+            'action' => $this->request->route()?->getActionName(),
             'duration' => (function (): string {
                 $startTime = \defined('LARAVEL_START')
                     ? LARAVEL_START
