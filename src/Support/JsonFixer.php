@@ -153,7 +153,7 @@ final class JsonFixer
         }
 
         foreach (['true', 'false', 'null'] as $literal) {
-            if (0 === strpos($literal, $json)) {
+            if (str_starts_with($literal, $json)) {
                 return $literal;
             }
         }

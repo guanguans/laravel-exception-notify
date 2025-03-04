@@ -19,10 +19,6 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 
-it('will throw `InvalidArgumentException` when abstract is null', function (): void {
-    make(null);
-})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
-
 it('will throw `InvalidArgumentException` when abstract is empty array', function (): void {
     make([]);
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);

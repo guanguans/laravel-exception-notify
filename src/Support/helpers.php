@@ -16,43 +16,40 @@ use Illuminate\Support\Arr;
 
 if (!\function_exists('make')) {
     /**
-     * @psalm-param string|array<string, mixed> $abstract
+     * @see https://github.com/yiisoft/yii2/blob/master/framework/BaseYii.php
      *
-     * @param mixed $abstract
+     * @param array<string, mixed>|string $abstract
+     * @param array<string, mixed> $parameters
      *
-     * @throws \InvalidArgumentException
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     *
-     * @return mixed
      */
-    function make($abstract, array $parameters = [])
+    function make(array|string $abstract, array $parameters = []): mixed
     {
-        if (!\is_string($abstract) && !\is_array($abstract)) {
-            throw new InvalidArgumentException(
-                \sprintf('Invalid argument type(string/array): %s.', \gettype($abstract))
-            );
-        }
-
         if (\is_string($abstract)) {
             return resolve($abstract, $parameters);
         }
 
-        $classes = ['__class', '_class', 'class'];
-
-        foreach ($classes as $class) {
-            if (!isset($abstract[$class])) {
-                continue;
+        foreach (
+            $keys ??= [
+                '__abstract',
+                '__class',
+                '__name',
+                '_abstract',
+                '_class',
+                '_name',
+                'abstract',
+                'class',
+                'name',
+            ] as $key
+        ) {
+            if (isset($abstract[$key])) {
+                return make($abstract[$key], $parameters + Arr::except($abstract, $key));
             }
-
-            $parameters = Arr::except($abstract, $class) + $parameters;
-            $abstract = $abstract[$class];
-
-            return make($abstract, $parameters);
         }
 
         throw new InvalidArgumentException(\sprintf(
             'The argument of abstract must be an array containing a `%s` element.',
-            implode('` or `', $classes)
+            implode('` or `', $keys)
         ));
     }
 }
@@ -60,12 +57,8 @@ if (!\function_exists('make')) {
 if (!\function_exists('env_explode')) {
     /**
      * @noinspection LaravelFunctionsInspection
-     *
-     * @param mixed $default
-     *
-     * @return mixed
      */
-    function env_explode(string $key, $default = null, string $delimiter = ',', int $limit = \PHP_INT_MAX)
+    function env_explode(string $key, mixed $default = null, string $delimiter = ',', int $limit = \PHP_INT_MAX): mixed
     {
         $env = env($key, $default);
 
@@ -79,11 +72,9 @@ if (!\function_exists('env_explode')) {
 
 if (!\function_exists('json_pretty_encode')) {
     /**
-     * @param mixed $value
-     *
      * @throws JsonException
      */
-    function json_pretty_encode($value, int $options = 0, int $depth = 512): string
+    function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string
     {
         return json_encode(
             $value,

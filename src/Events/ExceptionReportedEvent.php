@@ -19,15 +19,12 @@ class ExceptionReportedEvent
 {
     public Channel $channel;
 
-    /** @var mixed */
-    public $result;
+    public mixed $result;
 
     /**
      * @noinspection MissingParameterTypeDeclarationInspection
-     *
-     * @param mixed $result
      */
-    public function __construct(Channel $channel, $result)
+    public function __construct(Channel $channel, mixed $result)
     {
         $this->channel = $channel;
         $this->result = $result;

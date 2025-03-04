@@ -27,7 +27,7 @@ $license = License\Type\MIT::text(
 
 $license->save();
 
-$ruleSet = Config\RuleSet\Php74::create()
+$ruleSet = Config\RuleSet\Php80::create()
     ->withHeader($license->header())
     ->withRules(Config\Rules::fromArray([
         '@PHP70Migration' => true,

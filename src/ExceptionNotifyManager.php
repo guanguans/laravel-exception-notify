@@ -48,11 +48,8 @@ class ExceptionNotifyManager extends Manager
      * Handle dynamic method calls into the method.
      *
      * @noinspection MissingReturnTypeInspection
-     *
-     * @param mixed $method
-     * @param mixed $parameters
      */
-    public function __call($method, $parameters)
+    public function __call(mixed $method, mixed $parameters)
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
@@ -69,10 +66,9 @@ class ExceptionNotifyManager extends Manager
     /**
      * @noinspection MissingParameterTypeDeclarationInspection
      *
-     * @param mixed $condition
      * @param list<string>|string $channels
      */
-    public function reportIf($condition, \Throwable $throwable, $channels = null): void
+    public function reportIf(mixed $condition, \Throwable $throwable, null|array|string $channels = null): void
     {
         value($condition) and $this->report($throwable, $channels);
     }
@@ -82,7 +78,7 @@ class ExceptionNotifyManager extends Manager
      *
      * @param list<string>|string $channels
      */
-    public function report(\Throwable $throwable, $channels = null): void
+    public function report(\Throwable $throwable, null|array|string $channels = null): void
     {
         try {
             if ($this->shouldntReport($throwable)) {
@@ -122,10 +118,8 @@ class ExceptionNotifyManager extends Manager
     /**
      * @noinspection MissingParentCallInspection
      * @noinspection MethodVisibilityInspection
-     *
-     * @param mixed $driver
      */
-    protected function createDriver($driver): Channel
+    protected function createDriver(mixed $driver): Channel
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);
