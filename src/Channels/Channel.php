@@ -17,10 +17,5 @@ use Illuminate\Config\Repository;
 
 abstract class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
 {
-    protected Repository $config;
-
-    public function __construct(Repository $config)
-    {
-        $this->config = $config;
-    }
+    public function __construct(protected Repository $configRepository) {}
 }

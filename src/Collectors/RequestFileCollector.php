@@ -18,12 +18,7 @@ use Illuminate\Http\UploadedFile;
 
 class RequestFileCollector extends Collector
 {
-    private Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(private Request $request) {}
 
     /**
      * @noinspection CallableParameterUseCaseInTypeContextInspection

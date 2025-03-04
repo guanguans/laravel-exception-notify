@@ -17,16 +17,12 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends Collector
 {
-    private Request $request;
     private array $rejects = [
         'Authorization',
         'Cookie',
     ];
 
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(private Request $request) {}
 
     public function collect(): array
     {

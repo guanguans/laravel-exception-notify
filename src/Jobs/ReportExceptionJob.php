@@ -30,13 +30,9 @@ class ReportExceptionJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
 
-    /** @var array<string, string> */
-    private array $reports;
-
-    public function __construct(array $reports)
-    {
-        $this->reports = $reports;
-
+    public function __construct(/** @var array<string, string> */
+        private array $reports
+    ) {
         $this->onConnection(config('exception-notify.job.connection'));
 
         if ($queue = config('exception-notify.job.queue')) {

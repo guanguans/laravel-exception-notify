@@ -20,12 +20,7 @@ use Illuminate\Support\Stringable;
 
 class FixPrettyJsonPipe
 {
-    private JsonFixer $jsonFixer;
-
-    public function __construct(JsonFixer $jsonFixer)
-    {
-        $this->jsonFixer = $jsonFixer;
-    }
+    public function __construct(private JsonFixer $jsonFixer) {}
 
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): Stringable
     {
@@ -39,7 +34,7 @@ class FixPrettyJsonPipe
                 ->fix((string) $report);
 
             return Str::of(json_pretty_encode(json_decode($fixedReport, true, 512, \JSON_THROW_ON_ERROR)));
-        } catch (\Throwable $throwable) {
+        } catch (\Throwable) {
             return $report;
         }
     }

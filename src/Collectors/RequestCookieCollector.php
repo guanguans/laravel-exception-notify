@@ -17,12 +17,7 @@ use Illuminate\Http\Request;
 
 class RequestCookieCollector extends Collector
 {
-    private Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(private Request $request) {}
 
     public function collect(): array
     {

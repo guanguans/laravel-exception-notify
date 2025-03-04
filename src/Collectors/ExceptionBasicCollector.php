@@ -23,7 +23,7 @@ class ExceptionBasicCollector extends ExceptionCollector
         return [
             'message' => $this->exception->getMessage(),
             'code' => $this->exception->getCode(),
-            'class' => \get_class($this->exception),
+            'class' => $this->exception::class,
             'file' => $this->exception->getFile(),
             'line' => $this->exception->getLine(),
             // 'status_code' => $this->flattenException->getStatusCode(),

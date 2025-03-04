@@ -17,12 +17,8 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 
 class ExceptionReportingEvent
 {
-    public Channel $channel;
-    public string $report;
-
-    public function __construct(Channel $channel, string $report)
-    {
-        $this->channel = $channel;
-        $this->report = $report;
-    }
+    public function __construct(
+        public Channel $channel,
+        public string $report
+    ) {}
 }

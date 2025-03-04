@@ -18,7 +18,6 @@ use Illuminate\Support\Str;
 
 class RequestPostCollector extends Collector
 {
-    private Request $request;
     private array $hiddenPatterns = [
         'password',
         '*password',
@@ -26,10 +25,7 @@ class RequestPostCollector extends Collector
         '*password*',
     ];
 
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(private Request $request) {}
 
     public function collect(): array
     {

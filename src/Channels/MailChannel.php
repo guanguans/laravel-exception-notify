@@ -47,7 +47,7 @@ class MailChannel extends Channel
     public function report(string $report): void
     {
         /** @var Mailer|PendingMail $mailerOrPendingMail */
-        $mailerOrPendingMail = collect($this->config->all())
+        $mailerOrPendingMail = collect($this->configRepository->all())
             ->except(['driver', 'mailer', 'extender', 'pipes'])
             ->reduce(
                 static function (object $mailerOrPendingMail, array $parameters, string $method): object {
@@ -55,11 +55,11 @@ class MailChannel extends Channel
 
                     return \is_object($object) ? $object : $mailerOrPendingMail;
                 },
-                Mail::mailer($this->config->get('mailer'))
+                Mail::mailer($this->configRepository->get('mailer'))
             );
 
-        if ($this->config->has('extender')) {
-            $mailerOrPendingMail = app()->call($this->config->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
+        if ($this->configRepository->has('extender')) {
+            $mailerOrPendingMail = app()->call($this->configRepository->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
         }
 
         $mailerOrPendingMail->send(new ReportExceptionMail($report));

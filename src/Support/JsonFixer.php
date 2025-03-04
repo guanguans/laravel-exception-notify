@@ -343,7 +343,7 @@ final class JsonFixer
 
     private function padIf(string $string): string
     {
-        if (':' !== substr($string, -\strlen(':'))) {
+        if (!str_ends_with($string, ':')) {
             return $string.':';
         }
 

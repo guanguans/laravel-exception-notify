@@ -17,15 +17,11 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 
 class ExceptionReportedEvent
 {
-    public Channel $channel;
-    public mixed $result;
-
     /**
      * @noinspection MissingParameterTypeDeclarationInspection
      */
-    public function __construct(Channel $channel, mixed $result)
-    {
-        $this->channel = $channel;
-        $this->result = $result;
-    }
+    public function __construct(
+        public Channel $channel,
+        public mixed $result
+    ) {}
 }

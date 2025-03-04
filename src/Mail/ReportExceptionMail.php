@@ -17,12 +17,7 @@ use Illuminate\Mail\Mailable;
 
 class ReportExceptionMail extends Mailable
 {
-    private string $report;
-
-    public function __construct(string $report)
-    {
-        $this->report = $report;
-    }
+    public function __construct(private string $report) {}
 
     public function build(): self
     {

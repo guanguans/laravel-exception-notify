@@ -17,13 +17,10 @@ use Illuminate\Container\Container;
 
 class ApplicationCollector extends Collector
 {
-    /** @var \Illuminate\Foundation\Application */
-    private Container $container;
-
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
+    public function __construct(
+        /** @var \Illuminate\Foundation\Application */
+        private Container $container
+    ) {}
 
     public function collect(): array
     {

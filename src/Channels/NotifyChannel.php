@@ -72,16 +72,16 @@ class NotifyChannel extends Channel
     private function createClient(): Client
     {
         /** @var Client $client */
-        $client = make($this->config->get('client.class'), [
-            'authenticator' => make($this->config->get('authenticator')),
+        $client = make($this->configRepository->get('client.class'), [
+            'authenticator' => make($this->configRepository->get('authenticator')),
         ]);
 
-        if ($this->config->has('client.http_options')) {
-            $client->setHttpOptions($this->config->get('client.http_options'));
+        if ($this->configRepository->has('client.http_options')) {
+            $client->setHttpOptions($this->configRepository->get('client.http_options'));
         }
 
-        return $this->config->has('client.extender')
-            ? app()->call($this->config->get('client.extender'), ['client' => $client])
+        return $this->configRepository->has('client.extender')
+            ? app()->call($this->configRepository->get('client.extender'), ['client' => $client])
             : $client;
     }
 
@@ -91,12 +91,12 @@ class NotifyChannel extends Channel
     private function createMessage(string $report): Message
     {
         $replace = [config('exception-notify.title'), $report];
-        $options = Arr::except($this->config->get('message'), 'class');
+        $options = Arr::except($this->configRepository->get('message'), 'class');
 
         array_walk_recursive($options, static function (&$value) use ($replace): void {
             \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
         });
 
-        return make($this->config->get('message.class'), ['options' => $options]);
+        return make($this->configRepository->get('message.class'), ['options' => $options]);
     }
 }

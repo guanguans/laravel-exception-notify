@@ -78,12 +78,8 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
         if (
             !$class instanceof Name
             || Str::is($this->except, $class->toString())
-            || 0 === strncmp(
-                $class->toString(),
-                'Guanguans\\LaravelExceptionNotify\\Exceptions\\',
-                \strlen('Guanguans\\LaravelExceptionNotify\\Exceptions\\'),
-            )
-            || 0 !== substr_compare($class->toString(), 'Exception', -\strlen('Exception'))
+            || str_starts_with($class->toString(), 'Guanguans\\LaravelExceptionNotify\\Exceptions\\')
+            || !str_ends_with($class->toString(), 'Exception')
         ) {
             return;
         }
