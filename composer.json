@@ -195,9 +195,13 @@
         "checks": [
             "@composer-normalize",
             "@composer-validate",
+            "@composer-require-checker",
             "@composer-unused",
+            "@yaml-lint",
             "@md-lint",
+            "@facade-lint",
             "@style-lint",
+            "@phpmnd",
             "@test",
             "@phpstan",
             "@rector-dry-run"
