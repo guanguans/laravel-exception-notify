@@ -90,7 +90,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "ext-json": "*",
         "guanguans/notify": "^2.14 || ^3.0",
         "laravel/framework": "^8.83 || ^9.0 || ^10.0 || ^11.0 || ^12.0"
