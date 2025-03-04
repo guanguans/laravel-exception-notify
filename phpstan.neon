@@ -1,35 +1,74 @@
 includes:
-    - phpstan-baseline.neon
+    - baselines/loader.neon
+#    - phpstan-baseline.neon
+
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+#    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+
 #    - vendor-bin/larastan/vendor/larastan/larastan/extension.neon
-#    - vendor/roavcome/no-floaters/rules.neon
-#    - vendor/phpstan/phpstan-strict-rules/rules.neon
-#    - vendor/ergebnis/phpstan-rules/rules.neon
 #    - vendor/ekino/phpstan-banned-code/extension.neon
+#    - vendor/ergebnis/phpstan-rules/rules.neon
+#    - vendor/phpstan/phpstan-strict-rules/rules.neon
+#    - vendor/roave/no-floaters/rules.neon
+
+    - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
+#    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
+#    - vendor/symplify/phpstan-rules/config/naming-rules.neon
+#    - vendor/symplify/phpstan-rules/config/static-rules.neon
+#    - vendor/symplify/phpstan-rules/config/symplify-rules.neon
+
+#    - vendor/symplify/phpstan-rules/config/doctrine-rules.neon
+#    - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
+#    - vendor/symplify/phpstan-rules/config/rector-rules.neon
+#    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
 
 parameters:
-    level: 5
     paths:
-        - config
-        - src
+        - config/
+        - src/
+    excludePaths:
+#        - tests/Fixtures/
+#    level: max
+    level: 5
     tmpDir: .build/phpstan
-#    checkOctaneCompatibility: true
-#    checkModelProperties: true
-#    checkMissingIterableValueType: true
-#    disallowFloatsEverywhere: true
-
-#    strictRules:
-#        allRules: false
-#        booleansInConditions: false
-#        uselessCast: false
-#        requireParentConstructorCall: false
-#        disallowedConstructs: false
-#        overwriteVariablesWithLoop: false
-#        closureUsesThis: false
-#        matchingInheritedMethodNames: false
-#        numericOperandsInArithmeticOperators: false
-#        strictCalls: false
-#        switchConditionsMatchingType: false
-#        noVariableVariables: false
+    errorFormat: symplify
+#    errorFormat: friendly
+#    friendly:
+#        lineBefore: 3
+#        lineAfter: 3
+#        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    type_coverage:
+        declare: 0
+        return_type: 0
+        param_type: 0
+        property_type: 0
+        constant_type: 0
+    disallowedFunctionCalls:
+        -
+            function: 'env()'
+            message: 'use config() instead'
+        -
+            function: 'env_explode()'
+            message: 'use config() instead'
+        -
+            function: 'env_getcsv()'
+            message: 'use config() instead'
     ignoreErrors:
-#        - "#^Unsafe usage of new static\\(\\)\\.$#"
-        - "#^Unsafe call to private method Guanguans\\\\LaravelExceptionNotify\\\\.*\\:\\:.*\\(\\) through static\\:\\:\\.$#"
+#        - '#^Unable to resolve the template type T(Key|Value) in call to function collect$#'
+#        -
+#            identifier: argument.templateType
+#        -
+#            identifier: missingType.iterableValue
+#        -
+#            identifier: missingType.generics
+#        -
+#            identifier: new.static
+#        -
+#            identifier: logicalOr.resultUnused
+#        -
+#            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
+#            count: 1
+#            path: ./src/Support/helpers.php

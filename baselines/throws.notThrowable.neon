@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^PHPDoc tag @throws with type Guanguans\\LaravelExceptionNotify\\Support\\JsonException is not subtype of Throwable$#'
+            count: 1
+            path: ../src/Support/helpers.php

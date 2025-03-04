@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Unsafe call to private method Guanguans\\LaravelExceptionNotify\\Support\\ExceptionContext\:\:getEval\(\) through static\:\:\.$#'
+            count: 1
+            path: ../src/Support/ExceptionContext.php
+
+        -
+            message: '#^Unsafe call to private method Guanguans\\LaravelExceptionNotify\\Support\\ExceptionContext\:\:getFile\(\) through static\:\:\.$#'
+            count: 1
+            path: ../src/Support/ExceptionContext.php

@@ -1,0 +1,18 @@
+# total 25 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
+            count: 23
+            path: ../config/exception-notify.php
+
+        -
+            message: '#^Calling sha1\(\) is forbidden, use hash\(\) with at least SHA\-256 for secure hash, or password_hash\(\) for passwords\.$#'
+            count: 1
+            path: ../src/ExceptionNotifyManager.php
+
+        -
+            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
+            count: 1
+            path: ../src/Support/helpers.php
