@@ -205,7 +205,7 @@ final class JsonFixer
     /**
      * @noinspection PhpInconsistentReturnPointsInspection
      */
-    private function popToken(?string $token = null)
+    private function popToken(?string $token = null): mixed
     {
         // Last one
         if (null === $token) {

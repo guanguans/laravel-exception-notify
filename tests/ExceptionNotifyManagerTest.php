@@ -110,7 +110,10 @@ it('will throw `InvalidArgumentException`', function (): void {
 
 it('can create custom driver', function (): void {
     app(ExceptionNotifyManager::class)->extend('foo', static fn (): Channel => new class implements Channel {
-        public function report(string $report): void {}
+        public function report(string $report): mixed
+        {
+            return null;
+        }
     });
 
     expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(Channel::class);

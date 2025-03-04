@@ -30,7 +30,7 @@ parameters:
         - config/
         - src/
     excludePaths:
-#        - tests/Fixtures/
+        - tests/Fixtures/
 #    level: max
     level: 5
     tmpDir: .build/phpstan
@@ -41,11 +41,11 @@ parameters:
 #        lineAfter: 3
 #        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
     type_coverage:
-        declare: 0
-        return_type: 0
+        declare: 100
+        return_type: 100
         param_type: 0
-        property_type: 0
-        constant_type: 0
+        property_type: 100
+        constant_type: 100
     disallowedFunctionCalls:
         -
             function: 'env()'

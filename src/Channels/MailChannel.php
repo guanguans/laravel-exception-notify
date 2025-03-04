@@ -44,7 +44,7 @@ class MailChannel extends Channel
         parent::__construct($configRepository);
     }
 
-    public function report(string $report): void
+    public function report(string $report): mixed
     {
         /** @var Mailer|PendingMail $mailerOrPendingMail */
         $mailerOrPendingMail = collect($this->configRepository->all())
@@ -62,6 +62,6 @@ class MailChannel extends Channel
             $mailerOrPendingMail = app()->call($this->configRepository->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
         }
 
-        $mailerOrPendingMail->send(new ReportExceptionMail($report));
+        return $mailerOrPendingMail->send(new ReportExceptionMail($report));
     }
 }

@@ -20,5 +20,5 @@ interface Channel
      *
      * @return mixed|never-return|void
      */
-    public function report(string $report);
+    public function report(string $report): mixed;
 }
