@@ -45,9 +45,9 @@ use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+    use Faker;
     use MockeryPHPUnitIntegration;
     use VarDumperTestTrait;
-    use Faker;
 
     protected function setUp(): void
     {

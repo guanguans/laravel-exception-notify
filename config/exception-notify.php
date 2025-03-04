@@ -155,14 +155,14 @@ return [
         'bark' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Bark\Authenticator::class,
+                'class' => Guanguans\Notify\Bark\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_BARK_TOKEN'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Bark\Client::class,
+                'class' => Guanguans\Notify\Bark\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Bark\Messages\Message::class,
+                'class' => Guanguans\Notify\Bark\Messages\Message::class,
                 'title' => '{title}',
                 'body' => '{report}',
             ],
@@ -174,14 +174,14 @@ return [
         'chanify' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Chanify\Authenticator::class,
+                'class' => Guanguans\Notify\Chanify\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_CHANIFY_TOKEN'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Chanify\Client::class,
+                'class' => Guanguans\Notify\Chanify\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Chanify\Messages\TextMessage::class,
+                'class' => Guanguans\Notify\Chanify\Messages\TextMessage::class,
                 'title' => '{title}',
                 'text' => '{report}',
             ],
@@ -193,15 +193,15 @@ return [
         'dingTalk' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\DingTalk\Authenticator::class,
+                'class' => Guanguans\Notify\DingTalk\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_DINGTALK_TOKEN'),
                 'secret' => env('EXCEPTION_NOTIFY_DINGTALK_SECRET'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\DingTalk\Client::class,
+                'class' => Guanguans\Notify\DingTalk\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
+                'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
                 'title' => '{title}',
                 'text' => '{report}',
             ],
@@ -215,14 +215,14 @@ return [
         'discord' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Discord\Authenticator::class,
+                'class' => Guanguans\Notify\Discord\Authenticator::class,
                 'webHook' => env('EXCEPTION_NOTIFY_DISCORD_WEBHOOK'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Discord\Client::class,
+                'class' => Guanguans\Notify\Discord\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Discord\Messages\Message::class,
+                'class' => Guanguans\Notify\Discord\Messages\Message::class,
                 'content' => '{report}',
             ],
             'pipes' => [
@@ -233,15 +233,15 @@ return [
         'lark' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Lark\Authenticator::class,
+                'class' => Guanguans\Notify\Lark\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_LARK_TOKEN'),
                 'secret' => env('EXCEPTION_NOTIFY_LARK_SECRET'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Lark\Client::class,
+                'class' => Guanguans\Notify\Lark\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Lark\Messages\TextMessage::class,
+                'class' => Guanguans\Notify\Lark\Messages\TextMessage::class,
                 'text' => '{report}',
             ],
             'pipes' => [
@@ -253,16 +253,16 @@ return [
         'ntfy' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Foundation\Authenticators\NullAuthenticator::class,
+                'class' => Guanguans\Notify\Foundation\Authenticators\NullAuthenticator::class,
                 // 'class' => \Guanguans\Notify\Ntfy\Authenticator::class,
                 // 'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN', ''),
                 // 'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD', ''),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Ntfy\Client::class,
+                'class' => Guanguans\Notify\Ntfy\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Ntfy\Messages\Message::class,
+                'class' => Guanguans\Notify\Ntfy\Messages\Message::class,
                 'topic' => env('EXCEPTION_NOTIFY_NTFY_TOPIC', 'laravel-exception-notify'),
                 'title' => '{title}',
                 'message' => '{report}',
@@ -275,14 +275,14 @@ return [
         'pushDeer' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\PushDeer\Authenticator::class,
+                'class' => Guanguans\Notify\PushDeer\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_PUSHDEER_TOKEN'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\PushDeer\Client::class,
+                'class' => Guanguans\Notify\PushDeer\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\PushDeer\Messages\Message::class,
+                'class' => Guanguans\Notify\PushDeer\Messages\Message::class,
                 'type' => 'markdown',
                 'text' => '{title}',
                 'desp' => '{report}',
@@ -296,14 +296,14 @@ return [
         'slack' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Slack\Authenticator::class,
+                'class' => Guanguans\Notify\Slack\Authenticator::class,
                 'webHook' => env('EXCEPTION_NOTIFY_SLACK_WEBHOOK'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Slack\Client::class,
+                'class' => Guanguans\Notify\Slack\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Slack\Messages\Message::class,
+                'class' => Guanguans\Notify\Slack\Messages\Message::class,
                 'mrkdwn' => true,
                 'text' => '{report}',
             ],
@@ -316,14 +316,14 @@ return [
         'telegram' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\Telegram\Authenticator::class,
+                'class' => Guanguans\Notify\Telegram\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_TELEGRAM_TOKEN'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\Telegram\Client::class,
+                'class' => Guanguans\Notify\Telegram\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\Telegram\Messages\TextMessage::class,
+                'class' => Guanguans\Notify\Telegram\Messages\TextMessage::class,
                 'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
                 'text' => '{report}',
             ],
@@ -335,14 +335,14 @@ return [
         'weWork' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => \Guanguans\Notify\WeWork\Authenticator::class,
+                'class' => Guanguans\Notify\WeWork\Authenticator::class,
                 'token' => env('EXCEPTION_NOTIFY_WEWORK_TOKEN'),
             ],
             'client' => [
-                'class' => \Guanguans\Notify\WeWork\Client::class,
+                'class' => Guanguans\Notify\WeWork\Client::class,
             ],
             'message' => [
-                'class' => \Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
+                'class' => Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
                 'content' => '{report}',
             ],
             'pipes' => [

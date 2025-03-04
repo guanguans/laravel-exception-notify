@@ -77,7 +77,7 @@ it('should not report', function (): void {
 
     config()->set('exception-notify.enabled', true);
     config()->set('exception-notify.envs', '*');
-    ExceptionNotify::skipWhen(static fn (\Throwable $throwable) => Arr::first(
+    ExceptionNotify::skipWhen(static fn (Throwable $throwable) => Arr::first(
         [
             Exception::class,
         ],

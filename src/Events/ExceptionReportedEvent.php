@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 class ExceptionReportedEvent
 {
     public Channel $channel;
-
     public mixed $result;
 
     /**

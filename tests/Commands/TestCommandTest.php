@@ -35,7 +35,7 @@ it('can test for exception-notify when default channels is empty', function (): 
 
 it('can test for exception-notify when should not report', function (): void {
     ExceptionNotify::skipWhen(
-        static fn (\Throwable $throwable): bool => $throwable instanceof RuntimeException
+        static fn (Throwable $throwable): bool => $throwable instanceof RuntimeException
     );
     artisan(TestCommand::class)->assertExitCode(Command::INVALID);
 })->group(__DIR__, __FILE__);
