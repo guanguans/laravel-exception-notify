@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Rectors;
+namespace Guanguans\LaravelExceptionNotify\Support\Rectors;
 
 use Guanguans\Notify\Foundation\Support\Str;
 use PhpParser\Node;

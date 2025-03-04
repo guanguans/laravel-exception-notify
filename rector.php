@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\LaravelExceptionNotify\Rectors\ToInternalExceptionRector;
+use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;

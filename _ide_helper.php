@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection EmptyClassInspection */
+/** @noinspection ClassNameCollisionInspection */
+
 declare(strict_types=1);
 
 /**
