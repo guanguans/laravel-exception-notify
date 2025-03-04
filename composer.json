@@ -102,8 +102,10 @@
         "driftingly/rector-laravel": "^2.0",
         "ergebnis/composer-normalize": "^2.45",
         "ergebnis/rector-rules": "^1.3",
+        "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
         "hyperf/composer-plugin": "^1.0",
+        "laravel/facade-documenter": "dev-main",
         "maglnet/composer-require-checker": "^4.4",
         "mockery/mockery": "^1.6",
         "orchestra/testbench": "^7.52 || ^8.0 || ^9.0 || ^10.0",
@@ -114,6 +116,12 @@
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "rector/rector": "^2.0"
+    },
+    "repositories": {
+        "facade-documenter": {
+            "type": "vcs",
+            "url": "git@github.com:laravel/facade-documenter.git"
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -218,7 +226,7 @@
         "facade-lint": "@facade-update --lint",
         "facade-update": [
             "@putenvs",
-            "$PHP81 -f ./facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify"
+            "$PHP81 -f ./vendor/bin/facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify"
         ],
         "lint": [
             "@putenvs",
