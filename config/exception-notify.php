@@ -15,6 +15,8 @@ use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
+use function Guanguans\LaravelExceptionNotify\Support\env_explode;
+use function Guanguans\LaravelExceptionNotify\Support\hydrate_pipe;
 
 return [
     /**
@@ -25,7 +27,7 @@ return [
     /**
      * The list of environments that should be reported.
      */
-    'envs' => \Guanguans\LaravelExceptionNotify\Support\env_explode('EXCEPTION_NOTIFY_ENVS', [
+    'envs' => env_explode('EXCEPTION_NOTIFY_ENVS', [
         // 'production',
         // 'local',
         // 'testing',
@@ -82,7 +84,7 @@ return [
     /**
      * The default reported channels.
      */
-    'defaults' => \Guanguans\LaravelExceptionNotify\Support\env_explode('EXCEPTION_NOTIFY_DEFAULTS', [
+    'defaults' => env_explode('EXCEPTION_NOTIFY_DEFAULTS', [
         'log',
     ]),
 
@@ -112,7 +114,7 @@ return [
             'driver' => 'mail',
             'mailer' => null,
             'to' => [
-                'users' => \Guanguans\LaravelExceptionNotify\Support\env_explode('EXCEPTION_NOTIFY_MAIL_TO_USERS', [
+                'users' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_USERS', [
                     'your@example.mail',
                 ]),
             ],
@@ -167,7 +169,7 @@ return [
                 'body' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 4096),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -186,7 +188,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 1024),
+                hydrate_pipe(LimitLengthPipe::class, 1024),
             ],
         ],
 
@@ -206,9 +208,9 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
                 SprintfMarkdownPipe::class,
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 20000),
+                hydrate_pipe(LimitLengthPipe::class, 20000),
             ],
         ],
 
@@ -226,7 +228,7 @@ return [
                 'content' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 2000),
+                hydrate_pipe(LimitLengthPipe::class, 2000),
             ],
         ],
 
@@ -245,8 +247,8 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 30720),
+                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
+                hydrate_pipe(LimitLengthPipe::class, 30720),
             ],
         ],
 
@@ -268,7 +270,7 @@ return [
                 'message' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 4096),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -328,7 +330,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 4096),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
 
@@ -347,7 +349,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 4096),
+                hydrate_pipe(LimitLengthPipe::class, 4096),
             ],
         ],
     ],

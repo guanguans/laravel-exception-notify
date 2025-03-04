@@ -16,7 +16,6 @@ declare(strict_types=1);
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\LaravelExceptionNotify\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Str;
-use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
@@ -27,13 +26,9 @@ use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
-use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
-use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
-use Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchExprVariableRector;
-use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
+use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
-use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
@@ -43,7 +38,7 @@ use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/config',
+        // __DIR__.'/config',
         __DIR__.'/src',
         __DIR__.'/tests',
         __DIR__.'/composer-updater',
@@ -58,8 +53,8 @@ return RectorConfig::configure()
     ->withCache(__DIR__.'/.build/rector/')
     ->withParallel()
     // ->withoutParallel()
-    ->withImportNames(importNames: false)
-    // ->withImportNames(importDocBlockNames: false, importShortClasses: false)
+    // ->withImportNames(importNames: false)
+    ->withImportNames(importDocBlockNames: false, importShortClasses: false)
     ->withPhpVersion(PhpVersion::PHP_80)
     ->withFluentCallNewLine()
     ->withAttributesSets(phpunit: true)
@@ -206,23 +201,12 @@ return RectorConfig::configure()
     ->withSkip([
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
-        ExplicitReturnNullRector::class,
         LogicalToBooleanRector::class,
         NewlineAfterStatementRector::class,
-        RenameParamToMatchTypeRector::class,
-        RenameVariableToMatchMethodCallReturnTypeRector::class,
+        ReturnBinaryOrToEarlyReturnRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
-        DisallowedEmptyRuleFixerRector::class => [
-            // __DIR__.'/src/Support/QueryAnalyzer.php',
-        ],
-        RemoveExtraParametersRector::class => [
-            // __DIR__.'/src/Macros/QueryBuilderMacro.php',
-        ],
-        RenameForeachValueVariableToMatchExprVariableRector::class => [
-            // __DIR__.'/src/OutputManager.php',
-        ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',
         ],

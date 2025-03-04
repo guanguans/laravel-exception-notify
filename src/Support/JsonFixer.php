@@ -221,6 +221,8 @@ final class JsonFixer
                 break;
             }
         }
+
+        return null;
     }
 
     private function maybeStr(string $prev, string $char, int $index): bool

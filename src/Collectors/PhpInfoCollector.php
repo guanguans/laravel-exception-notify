@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
+
 class PhpInfoCollector extends Collector
 {
     public function collect(): array
@@ -20,7 +22,7 @@ class PhpInfoCollector extends Collector
         return [
             'version' => \PHP_VERSION,
             'interface' => \PHP_SAPI,
-            'memory' => \Guanguans\LaravelExceptionNotify\Support\human_bytes(memory_get_peak_usage(true)),
+            'memory' => human_bytes(memory_get_peak_usage(true)),
         ];
     }
 }

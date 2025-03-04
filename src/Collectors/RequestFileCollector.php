@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
 
 class RequestFileCollector extends Collector
 {
@@ -27,10 +28,10 @@ class RequestFileCollector extends Collector
     {
         $files = $this->request->allFiles();
 
-        array_walk_recursive($files, static function (UploadedFile &$file): void {
-            $file = [
-                'name' => $file->getClientOriginalName(),
-                'size' => \Guanguans\LaravelExceptionNotify\Support\human_bytes($file->isFile() ? $file->getSize() : 0),
+        array_walk_recursive($files, static function (UploadedFile &$uploadedFile): void {
+            $uploadedFile = [
+                'name' => $uploadedFile->getClientOriginalName(),
+                'size' => human_bytes($uploadedFile->isFile() ? $uploadedFile->getSize() : 0),
             ];
         });
 

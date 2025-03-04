@@ -21,6 +21,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
+use function Guanguans\LaravelExceptionNotify\Support\make;
 
 class NotifyChannel extends Channel
 {
@@ -29,9 +30,9 @@ class NotifyChannel extends Channel
         'report' => '{report}',
     ];
 
-    public function __construct(Repository $config)
+    public function __construct(Repository $configRepository)
     {
-        $validator = validator($config->all(), [
+        $validator = validator($configRepository->all(), [
             'authenticator' => 'required|array',
             'authenticator.class' => 'required|string',
 
@@ -54,7 +55,7 @@ class NotifyChannel extends Channel
             throw new InvalidArgumentException($validator->errors()->first());
         }
 
-        parent::__construct($config);
+        parent::__construct($configRepository);
     }
 
     /**
@@ -72,8 +73,8 @@ class NotifyChannel extends Channel
     private function createClient(): Client
     {
         /** @var Client $client */
-        $client = \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('client.class'), [
-            'authenticator' => \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('authenticator')),
+        $client = make($this->configRepository->get('client.class'), [
+            'authenticator' => make($this->configRepository->get('authenticator')),
         ]);
 
         if ($this->configRepository->has('client.http_options')) {
@@ -97,6 +98,6 @@ class NotifyChannel extends Channel
             \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
         });
 
-        return \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('message.class'), ['options' => $options]);
+        return make($this->configRepository->get('message.class'), ['options' => $options]);
     }
 }

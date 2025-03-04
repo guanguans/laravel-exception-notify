@@ -23,9 +23,9 @@ use Illuminate\Support\Str;
 
 class MailChannel extends Channel
 {
-    public function __construct(Repository $config)
+    public function __construct(Repository $configRepository)
     {
-        $validator = validator($config->all(), [
+        $validator = validator($configRepository->all(), [
             'mailer' => 'nullable|string',
             'to' => 'required|array',
             'extender' => static function (string $attribute, $value, \Closure $fail): void {
@@ -41,7 +41,7 @@ class MailChannel extends Channel
             throw new InvalidArgumentException($validator->errors()->first());
         }
 
-        parent::__construct($config);
+        parent::__construct($configRepository);
     }
 
     public function report(string $report): void

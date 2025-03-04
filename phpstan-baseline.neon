@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Property Guanguans\\LaravelExceptionNotify\\Collectors\\ApplicationCollector\:\:\$container \(Illuminate\\Foundation\\Application\) does not accept Illuminate\\Container\\Container\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: src/Collectors/ApplicationCollector.php
-
-		-
 			message: '#^Cannot call method getActionName\(\) on object\|string\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -25,52 +19,16 @@ parameters:
 			path: src/Commands/TestCommand.php
 
 		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 1 so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 2 so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 3 so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns 4 so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns array\<PhpParser\\Node\> so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) never returns null so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
-			message: '#^Method Guanguans\\LaravelExceptionNotify\\Rectors\\ToInternalExceptionRector\:\:refactor\(\) should return 1\|2\|3\|4\|array\<PhpParser\\Node\>\|PhpParser\\Node\|null but empty return statement found\.$#'
-			identifier: return.empty
-			count: 1
-			path: src/Rectors/ToInternalExceptionRector.php
-
-		-
 			message: '#^PHPDoc tag @return with type array\<int, string\>\|void\|null is not subtype of native type array\|null\.$#'
 			identifier: return.phpDocType
 			count: 1
 			path: src/Support/ExceptionContext.php
+
+		-
+			message: '#^PHPDoc tag @throws with type Guanguans\\LaravelExceptionNotify\\Support\\JsonException is not subtype of Throwable$#'
+			identifier: throws.notThrowable
+			count: 1
+			path: src/Support/helpers.php
 
 		-
 			message: '#^Variable \$keys on left side of \?\?\= is never defined\.$#'

@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Rectors;
 
 use Guanguans\Notify\Foundation\Support\Str;
 use PhpParser\Node;
+use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
@@ -62,7 +63,7 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
     public function getNodeTypes(): array
     {
         return [
-            Node\Expr\New_::class,
+            New_::class,
         ];
     }
 
@@ -71,7 +72,7 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
      *
      * @throws \ReflectionException
      */
-    public function refactor(Node $node)
+    public function refactor(Node $node): ?Node
     {
         $class = $node->class;
 
@@ -81,7 +82,7 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
             || str_starts_with($class->toString(), 'Guanguans\\LaravelExceptionNotify\\Exceptions\\')
             || !str_ends_with($class->toString(), 'Exception')
         ) {
-            return;
+            return null;
         }
 
         $internalExceptionClass = "\\Guanguans\\LaravelExceptionNotify\\Exceptions\\{$class->getLast()}";

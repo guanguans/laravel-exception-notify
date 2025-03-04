@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
+use function Guanguans\LaravelExceptionNotify\Support\human_milliseconds;
 
 class RequestBasicCollector extends Collector
 {
@@ -31,7 +32,7 @@ class RequestBasicCollector extends Collector
                     ? LARAVEL_START
                     : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
-                return \Guanguans\LaravelExceptionNotify\Support\human_milliseconds((microtime(true) - $startTime) * 1000);
+                return human_milliseconds((microtime(true) - $startTime) * 1000);
             })(),
         ];
     }
