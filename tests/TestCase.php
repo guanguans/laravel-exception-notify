@@ -95,12 +95,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestSessionCollector::class,
         ]);
         config()->set('exception-notify.channels.log.pipes', [
-            hydrate_pipe(AddKeywordChorePipe::class, 'keyword'),
+            \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(AddKeywordChorePipe::class, 'keyword'),
             SprintfHtmlPipe::class,
             SprintfMarkdownPipe::class,
             FixPrettyJsonPipe::class,
-            hydrate_pipe(LimitLengthPipe::class, 512),
-            hydrate_pipe(ReplaceStrPipe::class, '.php', '.PHP'),
+            \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 512),
+            \Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(ReplaceStrPipe::class, '.php', '.PHP'),
         ]);
     }
 

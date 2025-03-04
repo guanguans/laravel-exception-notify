@@ -48,7 +48,7 @@ class CollectorManager extends Fluent
         return (string) (new Pipeline(app()))
             ->send($collectors)
             ->through($this->toPipes($channel))
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode(
+            ->then(static fn (Collection $collectors): Stringable => str(\Guanguans\LaravelExceptionNotify\Support\json_pretty_encode(
                 $collectors->jsonSerialize()
             )));
     }

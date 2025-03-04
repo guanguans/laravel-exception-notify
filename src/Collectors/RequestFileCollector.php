@@ -30,7 +30,7 @@ class RequestFileCollector extends Collector
         array_walk_recursive($files, static function (UploadedFile &$file): void {
             $file = [
                 'name' => $file->getClientOriginalName(),
-                'size' => human_bytes($file->isFile() ? $file->getSize() : 0),
+                'size' => \Guanguans\LaravelExceptionNotify\Support\human_bytes($file->isFile() ? $file->getSize() : 0),
             ];
         });
 

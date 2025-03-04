@@ -45,7 +45,7 @@ it('can collect', function (): void {
              */
             static fn (
                 Collection $collectors
-            ): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
+            ): Stringable => str(\Guanguans\LaravelExceptionNotify\Support\json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
         );
 
     expect($report)->toBeInstanceOf(Stringable::class);

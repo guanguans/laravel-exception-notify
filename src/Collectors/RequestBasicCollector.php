@@ -31,7 +31,7 @@ class RequestBasicCollector extends Collector
                     ? LARAVEL_START
                     : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
 
-                return human_milliseconds((microtime(true) - $startTime) * 1000);
+                return \Guanguans\LaravelExceptionNotify\Support\human_milliseconds((microtime(true) - $startTime) * 1000);
             })(),
         ];
     }

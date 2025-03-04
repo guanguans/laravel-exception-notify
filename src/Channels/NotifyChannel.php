@@ -72,8 +72,8 @@ class NotifyChannel extends Channel
     private function createClient(): Client
     {
         /** @var Client $client */
-        $client = make($this->configRepository->get('client.class'), [
-            'authenticator' => make($this->configRepository->get('authenticator')),
+        $client = \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('client.class'), [
+            'authenticator' => \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('authenticator')),
         ]);
 
         if ($this->configRepository->has('client.http_options')) {
@@ -97,6 +97,6 @@ class NotifyChannel extends Channel
             \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
         });
 
-        return make($this->configRepository->get('message.class'), ['options' => $options]);
+        return \Guanguans\LaravelExceptionNotify\Support\make($this->configRepository->get('message.class'), ['options' => $options]);
     }
 }

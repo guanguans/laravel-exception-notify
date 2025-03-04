@@ -20,14 +20,14 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 
 it('will throw `InvalidArgumentException` when abstract is empty array', function (): void {
-    make([]);
+    \Guanguans\LaravelExceptionNotify\Support\make([]);
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can explode env', function (): void {
     expect([
-        env_explode('ENV_EXPLODE_STRING'),
-        env_explode('ENV_EXPLODE_EMPTY'),
-        env_explode('ENV_EXPLODE_NOT_EXIST'),
+        \Guanguans\LaravelExceptionNotify\Support\env_explode('ENV_EXPLODE_STRING'),
+        \Guanguans\LaravelExceptionNotify\Support\env_explode('ENV_EXPLODE_EMPTY'),
+        \Guanguans\LaravelExceptionNotify\Support\env_explode('ENV_EXPLODE_NOT_EXIST'),
         // env_explode('ENV_EXPLODE_FALSE'),
         // env_explode('ENV_EXPLODE_NULL'),
         // env_explode('ENV_EXPLODE_TRUE'),
@@ -43,10 +43,10 @@ it('can explode env', function (): void {
 
 it('can human bytes', function (): void {
     expect([
-        human_bytes(0),
-        human_bytes(10),
-        human_bytes(10000),
-        human_bytes(10000000),
+        \Guanguans\LaravelExceptionNotify\Support\human_bytes(0),
+        \Guanguans\LaravelExceptionNotify\Support\human_bytes(10),
+        \Guanguans\LaravelExceptionNotify\Support\human_bytes(10000),
+        \Guanguans\LaravelExceptionNotify\Support\human_bytes(10000000),
     ])->sequence(
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('0B'),
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('10B'),
@@ -57,10 +57,10 @@ it('can human bytes', function (): void {
 
 it('can human milliseconds', function (): void {
     expect([
-        human_milliseconds(0),
-        human_milliseconds(0.5),
-        human_milliseconds(500),
-        human_milliseconds(500000),
+        \Guanguans\LaravelExceptionNotify\Support\human_milliseconds(0),
+        \Guanguans\LaravelExceptionNotify\Support\human_milliseconds(0.5),
+        \Guanguans\LaravelExceptionNotify\Support\human_milliseconds(500),
+        \Guanguans\LaravelExceptionNotify\Support\human_milliseconds(500000),
     ])->sequence(
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('0μs'),
         static fn (Pest\Expectation $expectation): Pest\Expectation => $expectation->toBe('500μs'),

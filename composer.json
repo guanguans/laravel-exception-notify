@@ -252,7 +252,7 @@
             "@putenv PHP83=/opt/homebrew/opt/php@8.3/bin/php",
             "@putenv PHP84=/opt/homebrew/opt/php@8.4/bin/php"
         ],
-        "rector": "@php ./vendor/bin/rector --ansi -v",
+        "rector": "@php ./vendor/bin/rector --clear-cache --ansi -v",
         "rector-custom-rule": "@rector custom-rule",
         "rector-detect-node": "@rector detect-node --loop",
         "rector-dry-run": "@rector --dry-run",

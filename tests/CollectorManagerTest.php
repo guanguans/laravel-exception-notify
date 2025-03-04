@@ -27,7 +27,7 @@ it('can map to reports', function (): void {
         "exception-notify.channels.$name.pipes",
         collect($config['pipes'] ?? [])
             ->reject(fn (string $pipe) => Str::contains($pipe, SprintfHtmlPipe::class))
-            ->push(hydrate_pipe(LimitLengthPipe::class, 512))
+            ->push(\Guanguans\LaravelExceptionNotify\Support\hydrate_pipe(LimitLengthPipe::class, 512))
             ->all()
     ));
 

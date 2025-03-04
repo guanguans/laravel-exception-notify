@@ -11,10 +11,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+namespace Guanguans\LaravelExceptionNotify\Support;
+
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
 
-if (!\function_exists('make')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\make')) {
     /**
      * @see https://github.com/yiisoft/yii2/blob/master/framework/BaseYii.php
      *
@@ -54,7 +56,7 @@ if (!\function_exists('make')) {
     }
 }
 
-if (!\function_exists('env_explode')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\env_explode')) {
     /**
      * @noinspection LaravelFunctionsInspection
      */
@@ -70,7 +72,7 @@ if (!\function_exists('env_explode')) {
     }
 }
 
-if (!\function_exists('json_pretty_encode')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\json_pretty_encode')) {
     /**
      * @throws JsonException
      */
@@ -84,7 +86,7 @@ if (!\function_exists('json_pretty_encode')) {
     }
 }
 
-if (!\function_exists('hydrate_pipe')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\hydrate_pipe')) {
     /**
      * @param class-string $pipe
      */
@@ -94,7 +96,7 @@ if (!\function_exists('hydrate_pipe')) {
     }
 }
 
-if (!\function_exists('human_bytes')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\human_bytes')) {
     /**
      * Convert bytes to human readable format.
      *
@@ -116,7 +118,7 @@ if (!\function_exists('human_bytes')) {
     }
 }
 
-if (!\function_exists('human_milliseconds')) {
+if (!\function_exists('Guanguans\LaravelApiResponse\Support\human_milliseconds')) {
     function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
         if (1 > $milliseconds) {

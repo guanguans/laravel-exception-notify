@@ -1,8 +1,9 @@
 <?php
 
-/** @noinspection PhpUnused */
-/** @noinspection PhpUndefinedClassInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection PhpInconsistentReturnPointsInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUnused */
 /** @noinspection StaticClosureCanBeUsedInspection */
 
 declare(strict_types=1);
@@ -68,3 +69,13 @@ function fixtures_path(string $path = ''): string
 {
     return __DIR__.\DIRECTORY_SEPARATOR.'fixtures'.($path ? \DIRECTORY_SEPARATOR.$path : $path);
 }
+
+function faker(string $locale = Factory::DEFAULT_LOCALE): Generator
+{
+    return fake($locale);
+}
+
+// function fake(string $locale = Factory::DEFAULT_LOCALE): Generator
+// {
+//     return Factory::create($locale);
+// }

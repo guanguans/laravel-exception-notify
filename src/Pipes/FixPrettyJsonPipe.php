@@ -32,7 +32,7 @@ class FixPrettyJsonPipe
                 ->missingValue($missingValue)
                 ->fix((string) $report);
 
-            return str(json_pretty_encode(json_decode($fixedReport, true, 512, \JSON_THROW_ON_ERROR)));
+            return str(\Guanguans\LaravelExceptionNotify\Support\json_pretty_encode(json_decode($fixedReport, true, 512, \JSON_THROW_ON_ERROR)));
         } catch (\Throwable) {
             return $report;
         }

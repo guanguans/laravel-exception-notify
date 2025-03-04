@@ -166,39 +166,43 @@ return RectorConfig::configure()
     ])
     ->withConfiguredRule(RectorLaravel\Rector\StaticCall\RouteActionCallableRector::class, [
     ])
-    // ->withConfiguredRule(RemoveAnnotationRector::class, [
-    //     'codeCoverageIgnore',
-    //     'phpstan-ignore',
-    //     'phpstan-ignore-next-line',
-    //     'psalm-suppress',
-    // ])
+    ->withConfiguredRule(RemoveAnnotationRector::class, [
+        'codeCoverageIgnore',
+        'phpstan-ignore',
+        'phpstan-ignore-next-line',
+        'psalm-suppress',
+    ])
     ->withConfiguredRule(StaticCallToFuncCallRector::class, [
         new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
     // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
     //     new FuncCallToStaticCall('str', Str::class, 'of'),
     // ])
-    // ->withConfiguredRule(
-    //     RenameFunctionRector::class,
-    //     [
-    //         'Pest\Faker\fake' => 'fake',
-    //         'Pest\Faker\faker' => 'faker',
-    //         // 'faker' => 'fake',
-    //         'test' => 'it',
-    //     ] + array_reduce(
-    //         [
-    //             'make',
-    //             'env_explode',
-    //         ],
-    //         static function (array $carry, string $func): array {
-    //             /** @see https://github.com/laravel/framework/blob/11.x/src/Illuminate/Support/functions.php */
-    //             $carry[$func] = "Guanguans\\LaravelApiResponse\\Support\\$func";
-    //
-    //             return $carry;
-    //         },
-    //         []
-    //     )
-    // )
+    ->withConfiguredRule(
+        RenameFunctionRector::class,
+        [
+            'Pest\Faker\fake' => 'fake',
+            'Pest\Faker\faker' => 'faker',
+            // 'faker' => 'fake',
+            'test' => 'it',
+        ] + array_reduce(
+            [
+                'make',
+                'env_explode',
+                'json_pretty_encode',
+                'hydrate_pipe',
+                'human_bytes',
+                'human_milliseconds',
+            ],
+            static function (array $carry, string $func): array {
+                /** @see https://github.com/laravel/framework/blob/11.x/src/Illuminate/Support/functions.php */
+                $carry[$func] = "Guanguans\\LaravelExceptionNotify\\Support\\$func";
+
+                return $carry;
+            },
+            []
+        )
+    )
     ->withSkip([
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
