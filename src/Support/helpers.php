@@ -74,7 +74,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\env_explode')) {
 
 if (!\function_exists('Guanguans\LaravelApiResponse\Support\json_pretty_encode')) {
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string
     {

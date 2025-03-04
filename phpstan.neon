@@ -68,7 +68,7 @@ parameters:
 #            identifier: new.static
 #        -
 #            identifier: logicalOr.resultUnused
-#        -
-#            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
-#            count: 1
-#            path: ./src/Support/helpers.php
+        -
+            identifier: method.nonObject
+        -
+            identifier: symplify.noDynamicName

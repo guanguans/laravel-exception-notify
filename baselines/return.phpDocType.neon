@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^PHPDoc tag @return with type array\<int, string\>\|void\|null is not subtype of native type array\|null\.$#'
-            count: 1
-            path: ../src/Support/ExceptionContext.php

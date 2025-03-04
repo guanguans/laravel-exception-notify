@@ -1,9 +1,4 @@
 includes:
     - disallowed.function.neon
-    - method.nonObject.neon
     - nullCoalesce.variable.neon
-    - return.phpDocType.neon
     - return.type.neon
-    - staticClassAccess.privateMethod.neon
-    - symplify.noDynamicName.neon
-    - throws.notThrowable.neon

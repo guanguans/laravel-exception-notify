@@ -54,11 +54,11 @@ class ExceptionContext
 
     public static function get(\Throwable $throwable): array
     {
-        return static::getEval($throwable) ?: static::getFile($throwable);
+        return self::getEval($throwable) ?: self::getFile($throwable);
     }
 
     /**
-     * @return null|array<int, string>|void
+     * @return null|array<int, string>
      */
     private static function getEval(\Throwable $throwable): ?array
     {
