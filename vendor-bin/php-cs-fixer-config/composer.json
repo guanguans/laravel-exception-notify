@@ -1,0 +1,6 @@
+{
+    "require-dev": {
+        "ergebnis/php-cs-fixer-config": "dev-main",
+        "ergebnis/license": "^2.6"
+    }
+}
