@@ -208,6 +208,7 @@
         "checks": [
             "@composer-normalize",
             "@composer-validate",
+            "@composer-dependency-analyser",
             "@composer-require-checker",
             "@composer-unused",
             "@yaml-lint",
@@ -222,6 +223,7 @@
         "composer-audit": "@composer audit --ansi -v",
         "composer-bin-all-update": "@composer bin all update --ansi -v",
         "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",
+        "composer-dependency-analyser": "@php ./vendor/bin/composer-dependency-analyser --verbose",
         "composer-normalize": "@composer normalize --dry-run --diff --ansi -v",
         "composer-require-checker": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v",
         "composer-require-checker-json": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v --output=json | jq",
