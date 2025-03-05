@@ -18,6 +18,9 @@ use Illuminate\Support\Stringable;
 
 class LimitLengthPipe
 {
+    /**
+     * @param \Closure(\Illuminate\Support\Collection): \Illuminate\Support\Stringable $next
+     */
     public function handle(Collection $collectors, \Closure $next, int $length, float $percentage = 0.9): Stringable
     {
         return $next($collectors)->substr(0, (int) ($length * $percentage));

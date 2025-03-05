@@ -18,6 +18,9 @@ use Illuminate\Support\Stringable;
 
 class ReplaceStrPipe
 {
+    /**
+     * @param \Closure(\Illuminate\Support\Collection): \Illuminate\Support\Stringable $next
+     */
     public function handle(Collection $collectors, \Closure $next, string $search, string $replace): Stringable
     {
         return $next($collectors)->replace($search, $replace);

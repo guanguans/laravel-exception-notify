@@ -2,3 +2,4 @@ includes:
     - disallowed.function.neon
     - nullCoalesce.variable.neon
     - return.type.neon
+    - typePerfect.narrowPublicClassMethodParamType.neon
