@@ -69,16 +69,12 @@ return [
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
         Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
 
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
-
         // Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
         // Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
+        // Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
     ],
 
     /**

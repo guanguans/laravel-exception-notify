@@ -20,15 +20,12 @@ use Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestCookieCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestMiddlewareCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestSessionCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
@@ -85,15 +82,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             ExceptionTraceCollector::class,
             PhpInfoCollector::class,
             RequestBasicCollector::class,
-            RequestCookieCollector::class,
             RequestFileCollector::class,
             RequestHeaderCollector::class,
-            RequestMiddlewareCollector::class,
             RequestPostCollector::class,
             RequestQueryCollector::class,
             RequestRawFileCollector::class,
             RequestServerCollector::class,
-            RequestSessionCollector::class,
         ]);
         config()->set('exception-notify.channels.log.pipes', [
             hydrate_pipe(AddKeywordChorePipe::class, 'keyword'),
