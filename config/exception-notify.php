@@ -16,7 +16,6 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use function Guanguans\LaravelExceptionNotify\Support\env_explode;
-use function Guanguans\LaravelExceptionNotify\Support\hydrate_pipe;
 
 return [
     /**
@@ -125,12 +124,12 @@ return [
         // 'foo' => [
         //     'driver' => 'notify',
         //     'authenticator' => [
-        //         'class' => \Guanguans\Notify\Foo\Authenticator::class,
+        //         'class' => Guanguans\Notify\Foo\Authenticator::class,
         //         'parameter1' => '...',
         //         // ...
         //     ],
         //     'client' => [
-        //         'class' => \Guanguans\Notify\Foo\Client::class,
+        //         'class' => Guanguans\Notify\Foo\Client::class,
         //         'http_options' => [],
         //         'extender' => static fn (Guanguans\Notify\Foundation\Client $client) => $client->push(
         //             GuzzleHttp\Middleware::log(
@@ -141,12 +140,12 @@ return [
         //         ),
         //     ],
         //     'message' => [
-        //         'class' => \Guanguans\Notify\Foo\Messages\Message::class,
+        //         'class' => Guanguans\Notify\Foo\Messages\Message::class,
         //         'title' => '{report}',
         //         'content' => '{report}',
         //     ],
         //     'pipes' => [
-        //         hydrate_pipe(LimitLengthPipe::class, 1024),
+        //         LimitLengthPipe::with(1024),
         //     ],
         // ],
 
@@ -165,7 +164,7 @@ return [
                 'body' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 4096),
+                LimitLengthPipe::with(4096),
             ],
         ],
 
@@ -184,7 +183,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 1024),
+                LimitLengthPipe::with(1024),
             ],
         ],
 
@@ -204,9 +203,9 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
+                AddKeywordChorePipe::with(env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 20000),
+                LimitLengthPipe::with(20000),
             ],
         ],
 
@@ -224,7 +223,7 @@ return [
                 'content' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 2000),
+                LimitLengthPipe::with(2000),
             ],
         ],
 
@@ -243,8 +242,8 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(AddKeywordChorePipe::class, env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
-                hydrate_pipe(LimitLengthPipe::class, 30720),
+                AddKeywordChorePipe::with(env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
+                LimitLengthPipe::with(30720),
             ],
         ],
 
@@ -266,7 +265,7 @@ return [
                 'message' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 4096),
+                LimitLengthPipe::with(4096),
             ],
         ],
 
@@ -287,7 +286,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                // hydrate_pipe(LimitLengthPipe::class, 4096),
+                // LimitLengthPipe::with(4096),
             ],
         ],
 
@@ -307,7 +306,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                // hydrate_pipe(LimitLengthPipe::class, 10240),
+                // LimitLengthPipe::with(10240),
             ],
         ],
 
@@ -326,7 +325,7 @@ return [
                 'text' => '{report}',
             ],
             'pipes' => [
-                hydrate_pipe(LimitLengthPipe::class, 4096),
+                LimitLengthPipe::with(4096),
             ],
         ],
 
@@ -345,7 +344,7 @@ return [
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
-                hydrate_pipe(LimitLengthPipe::class, 4096),
+                LimitLengthPipe::with(4096),
             ],
         ],
     ],

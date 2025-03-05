@@ -63,6 +63,9 @@ parameters:
         -
             function: 'env_getcsv()'
             message: 'use config() instead'
+        -
+            function: 'hydrate_pipe()'
+            message: 'use Pipe::with() instead'
     ignoreErrors:
 #        - '#^Unable to resolve the template type T(Key|Value) in call to function collect$#'
         -

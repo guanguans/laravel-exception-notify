@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
 class ReplaceStrPipe
 {
+    use WithPipeArgs;
+
     /**
      * @param \Closure(\Illuminate\Support\Collection): \Illuminate\Support\Stringable $next
      */

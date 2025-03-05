@@ -59,8 +59,11 @@ final class HydratePipeFuncCallToStaticCallRector extends AbstractRector
         if ($this->isName($node, 'Guanguans\LaravelExceptionNotify\Support\hydrate_pipe')) {
             $args = $node->getArgs();
 
+            /** @var Node\Expr\ClassConstFetch $classConstFetch */
+            $classConstFetch = $args[0]->value;
+
             return $this->nodeFactory->createStaticCall(
-                $this->getName($args[0]->value),
+                $this->getName($classConstFetch->class),
                 'with',
                 \array_slice($args, 1)
             );

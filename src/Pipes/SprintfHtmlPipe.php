@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
 class SprintfHtmlPipe extends SprintfPipe
 {
+    use WithPipeArgs;
+
     public function handle(
         Collection $collectors,
         \Closure $next,

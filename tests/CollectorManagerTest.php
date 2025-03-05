@@ -21,14 +21,13 @@ use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Illuminate\Support\Str;
-use function Guanguans\LaravelExceptionNotify\Support\hydrate_pipe;
 
 it('can map to reports', function (): void {
     collect(config('exception-notify.channels'))->each(fn (array $config, string $name) => config()->set(
         "exception-notify.channels.$name.pipes",
         collect($config['pipes'] ?? [])
             ->reject(fn (string $pipe) => Str::contains($pipe, SprintfHtmlPipe::class))
-            ->push(hydrate_pipe(LimitLengthPipe::class, 512))
+            ->push(LimitLengthPipe::with(512))
             ->all()
     ));
 

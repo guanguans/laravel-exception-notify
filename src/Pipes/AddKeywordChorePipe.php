@@ -13,11 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
+use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
 class AddKeywordChorePipe extends AddChorePipe
 {
+    use WithPipeArgs;
+
     public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key = 'keyword'): Stringable
     {
         return parent::handle($collectors, $next, $value, $key);

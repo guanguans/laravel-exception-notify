@@ -14,12 +14,15 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Guanguans\LaravelExceptionNotify\Support\JsonFixer;
+use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
 class FixPrettyJsonPipe
 {
+    use WithPipeArgs;
+
     public function __construct(private JsonFixer $jsonFixer) {}
 
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): Stringable

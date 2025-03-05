@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
+use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -21,6 +22,8 @@ use Illuminate\Support\Stringable;
 
 class AddChorePipe
 {
+    use WithPipeArgs;
+
     /**
      * @noinspection MissingParameterTypeDeclarationInspection
      *

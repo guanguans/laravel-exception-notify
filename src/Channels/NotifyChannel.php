@@ -23,6 +23,9 @@ use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
+/**
+ * @see \Illuminate\Log\LogManager
+ */
 class NotifyChannel extends Channel
 {
     public const TEMPLATES = [

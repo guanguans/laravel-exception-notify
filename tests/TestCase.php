@@ -39,7 +39,6 @@ use Guanguans\Notify\Foundation\Client;
 use GuzzleHttp\Psr7\HttpFactory;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
-use function Guanguans\LaravelExceptionNotify\Support\hydrate_pipe;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -90,12 +89,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestServerCollector::class,
         ]);
         config()->set('exception-notify.channels.log.pipes', [
-            hydrate_pipe(AddKeywordChorePipe::class, 'keyword'),
+            AddKeywordChorePipe::with('keyword'),
             SprintfHtmlPipe::class,
             SprintfMarkdownPipe::class,
             FixPrettyJsonPipe::class,
-            hydrate_pipe(LimitLengthPipe::class, 512),
-            hydrate_pipe(ReplaceStrPipe::class, '.php', '.PHP'),
+            LimitLengthPipe::with(512),
+            ReplaceStrPipe::with('.php', '.PHP'),
         ]);
     }
 
