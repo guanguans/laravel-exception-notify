@@ -27,4 +27,13 @@ class LogChannel extends Channel
 
         return null;
     }
+
+    protected function rules(): array
+    {
+        return [
+            'channel' => 'nullable|string',
+            'level' => 'string',
+            'context' => 'array',
+        ] + parent::rules();
+    }
 }

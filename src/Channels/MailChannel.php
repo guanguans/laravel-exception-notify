@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
-use Illuminate\Config\Repository;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\PendingMail;
 use Illuminate\Support\Facades\Mail;
@@ -23,27 +21,6 @@ use Illuminate\Support\Str;
 
 class MailChannel extends Channel
 {
-    public function __construct(Repository $configRepository)
-    {
-        $validator = validator($configRepository->all(), [
-            'mailer' => 'nullable|string',
-            'to' => 'required|array',
-            'extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
-                if (\is_string($value) || \is_callable($value)) {
-                    return;
-                }
-
-                $fail("The $attribute must be a callable or string.");
-            },
-        ]);
-
-        if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
-        }
-
-        parent::__construct($configRepository);
-    }
-
     public function report(string $report): mixed
     {
         /** @var Mailer|PendingMail $mailerOrPendingMail */
@@ -63,5 +40,20 @@ class MailChannel extends Channel
         }
 
         return $mailerOrPendingMail->send(new ReportExceptionMail($report));
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'mailer' => 'nullable|string',
+            'to' => 'required|array',
+            'extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
+                if (\is_string($value) || \is_callable($value)) {
+                    return;
+                }
+
+                $fail("The $attribute must be a callable or string.");
+            },
+        ] + parent::rules();
     }
 }

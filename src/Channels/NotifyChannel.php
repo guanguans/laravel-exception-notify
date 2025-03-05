@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Message;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
@@ -33,9 +31,18 @@ class NotifyChannel extends Channel
         'report' => '{report}',
     ];
 
-    public function __construct(Repository $configRepository)
+    /**
+     * @throws BindingResolutionException
+     * @throws GuzzleException
+     */
+    public function report(string $report): ResponseInterface
     {
-        $validator = validator($configRepository->all(), [
+        return $this->createClient()->send($this->createMessage($report));
+    }
+
+    protected function rules(): array
+    {
+        return [
             'authenticator' => 'required|array',
             'authenticator.class' => 'required|string',
 
@@ -52,22 +59,7 @@ class NotifyChannel extends Channel
 
             'message' => 'required|array',
             'message.class' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
-        }
-
-        parent::__construct($configRepository);
-    }
-
-    /**
-     * @throws BindingResolutionException
-     * @throws GuzzleException
-     */
-    public function report(string $report): ResponseInterface
-    {
-        return $this->createClient()->send($this->createMessage($report));
+        ] + parent::rules();
     }
 
     /**
