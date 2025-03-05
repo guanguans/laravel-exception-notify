@@ -64,8 +64,6 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @noinspection MissingParameterTypeDeclarationInspection
-     *
      * @param list<string>|string $channels
      */
     public function reportIf(mixed $condition, \Throwable $throwable, null|array|string $channels = null): void
@@ -74,8 +72,6 @@ class ExceptionNotifyManager extends Manager
     }
 
     /**
-     * @noinspection MissingParameterTypeDeclarationInspection
-     *
      * @param list<string>|string $channels
      */
     public function report(\Throwable $throwable, null|array|string $channels = null): void
@@ -190,15 +186,9 @@ class ExceptionNotifyManager extends Manager
      */
     private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
     {
-        $rateLimiter = new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')));
-
-        if ($rateLimiter->tooManyAttempts($key, $maxAttempts)) {
-            return false;
-        }
-
-        return tap(true, static function () use ($rateLimiter, $key, $decaySeconds): void {
-            $rateLimiter->hit($key, $decaySeconds);
-        });
+        return (
+            new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')))
+        )->attempt($key, $maxAttempts, static fn (): bool => true, $decaySeconds);
     }
 
     private function createDumpDriver(): Channel
