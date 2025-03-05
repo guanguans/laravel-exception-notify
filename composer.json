@@ -96,6 +96,7 @@
         "laravel/framework": "^9.52 || ^10.0 || ^11.0 || ^12.0"
     },
     "require-dev": {
+        "azjezz/psl": "^1.9 || ^2.0 || ^3.0",
         "bamarni/composer-bin-plugin": "^1.8",
         "brainmaestro/composer-git-hooks": "^3.0",
         "composer/semver": "^3.4",
@@ -108,6 +109,7 @@
         "laravel/facade-documenter": "dev-main",
         "maglnet/composer-require-checker": "^4.4",
         "mockery/mockery": "^1.6",
+        "nette/utils": "^4.0",
         "orchestra/testbench": "^7.52 || ^8.0 || ^9.0 || ^10.0",
         "pestphp/pest": "^1.23 || ^2.0 || ^3.0",
         "pestphp/pest-plugin-faker": "^1.0 || ^2.0 || ^3.0",
@@ -169,6 +171,13 @@
             "forward-command": true,
             "target-directory": "vendor-bin"
         },
+        "branch-alias": {
+            "dev-main": "5.x-dev"
+        },
+        "composer-normalize": {
+            "indent-size": 4,
+            "indent-style": "space"
+        },
         "hooks": {
             "post-merge": [
                 "composer checks"
@@ -202,24 +211,25 @@
         "ai-commit-github-models": "@ai-commit --generator=github_models_cli",
         "ai-commit-github-models-no-verify": "@ai-commit-github-models --no-verify",
         "ai-commit-no-verify": "@ai-commit --no-verify",
-        "benchmark": "@php ./vendor/bin/phpbench run --warmup=1 --retry-threshold=1 --iterations=3 --revs=5 --ansi -v",
+        "benchmark": "@php ./vendor/bin/phpbench run --report=aggregate --ansi -v",
         "cghooks": "@php ./vendor/bin/cghooks --ansi -v",
         "cghooks-ignore": "[ ! -f \"./vendor/bin/cghooks\" ] && exit 0 || php ./vendor/bin/cghooks --ansi -v",
         "checks": [
             "@composer-normalize",
             "@composer-validate",
-            "@composer-dependency-analyser",
-            "@composer-require-checker",
-            "@composer-unused",
             "@yaml-lint",
             "@md-lint",
             "@facade-lint",
-            "@sk-check-conflicts",
             "@style-lint",
+            "@composer-dependency-analyser",
+            "@class-leak-check",
+            "@sk-check-conflicts",
             "@test",
             "@phpstan",
             "@rector-dry-run"
         ],
+        "class-leak": "@php ./vendor/bin/class-leak --ansi -v",
+        "class-leak-check": "@class-leak check ./config ./src --skip-suffix=Pipe --skip-type=\\Guanguans\\LaravelExceptionNotify\\Contracts\\Channel --skip-type=\\Guanguans\\LaravelExceptionNotify\\Contracts\\Collector --skip-type=Rector\\Rector\\AbstractRector",
         "composer-audit": "@composer audit --ansi -v",
         "composer-bin-all-update": "@composer bin all update --ansi -v",
         "composer-check-platform-reqs": "@composer check-platform-reqs --lock --ansi -v",
@@ -314,6 +324,8 @@
         "test-phpunit-coverage": "@test --coverage-html=./.build/phpunit/ --coverage-clover=clover.xml",
         "test-type-coverage": "@pest-type-coverage",
         "test-update-snapshots": "@pest-update-snapshots",
+        "time-end": "@php -r 'date_default_timezone_set('\\''Asia/Shanghai'\\''); echo \"\\nTime: \".round(time() - (int) getenv('\\''START_TIME'\\'')).'\\'' seconds, Memory: '\\''.round(memory_get_peak_usage(true) / 1024 / 1024, 2).\" MB\\n\";'",
+        "time-start": "@putenv START_TIME=$(date +%s);",
         "trufflehog": "trufflehog git https://github.com/guanguans/notify --only-verified",
         "yaml-lint": "@php ./vendor/bin/yaml-lint .github --ansi -v",
         "zh-fix": "@zh-lint --fix",
