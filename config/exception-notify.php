@@ -11,6 +11,19 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
@@ -60,20 +73,20 @@ return [
      * The list of collector.
      */
     'collectors' => [
-        Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector::class,
-        Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector::class,
+        ApplicationCollector::class,
+        // PhpInfoCollector::class,
+        ChoreCollector::class,
+        RequestBasicCollector::class,
+        ExceptionBasicCollector::class,
+        ExceptionContextCollector::class,
+        ExceptionTraceCollector::class,
 
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector::class,
-        // Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector::class,
+        // RequestHeaderCollector::class,
+        // RequestQueryCollector::class,
+        // RequestPostCollector::class,
+        // RequestFileCollector::class,
+        // RequestRawFileCollector::class,
+        // RequestServerCollector::class,
     ],
 
     /**
