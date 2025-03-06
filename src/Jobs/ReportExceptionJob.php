@@ -20,17 +20,16 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
 class ReportExceptionJob implements ShouldQueue
 {
-    // use SerializesModels;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
 
-    public function __construct(/** @var array<string, string> */
+    public function __construct(
+        /** @var array<string, string> */
         private array $reports
     ) {
         $this->onConnection(config('exception-notify.job.connection'));

@@ -125,9 +125,9 @@ class ExceptionNotifyManager extends Manager
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));
 
-        if (method_exists($this, $method = "create{$studlyName}Driver")) {
-            return $this->{$method}($configRepository);
-        }
+        // if (method_exists($this, $method = "create{$studlyName}Driver")) {
+        //     return $this->{$method}($configRepository);
+        // }
 
         if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);
@@ -154,7 +154,7 @@ class ExceptionNotifyManager extends Manager
         }
 
         return !$this->attempt(
-            $this->toFingerprint($throwable),
+            $this->fingerprintFor($throwable),
             config('exception-notify.rate_limit.max_attempts'),
             config('exception-notify.rate_limit.decay_seconds')
         );
@@ -171,7 +171,7 @@ class ExceptionNotifyManager extends Manager
         return false;
     }
 
-    private function toFingerprint(\Throwable $throwable): string
+    private function fingerprintFor(\Throwable $throwable): string
     {
         return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
             $throwable->getFile(),
@@ -189,19 +189,5 @@ class ExceptionNotifyManager extends Manager
         return (
             new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')))
         )->attempt($key, $maxAttempts, static fn (): bool => true, $decaySeconds);
-    }
-
-    private function createDumpDriver(): Channel
-    {
-        return new class implements Channel {
-            /**
-             * @noinspection ForgottenDebugOutputInspection
-             * @noinspection DebugFunctionUsageInspection
-             */
-            public function report(string $report): string
-            {
-                return dump($report);
-            }
-        };
     }
 }

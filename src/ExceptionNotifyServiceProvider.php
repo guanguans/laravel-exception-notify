@@ -35,7 +35,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->extendExceptionHandler()
+        $this->registerReportUsing()
             ->registerCommands();
     }
 
@@ -107,17 +107,18 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function extendExceptionHandler(): self
+    /**
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    private function registerReportUsing(): self
     {
-        $this->app->extend(ExceptionHandler::class, static function (ExceptionHandler $exceptionHandler): ExceptionHandler {
-            if (method_exists($exceptionHandler, 'reportable')) {
-                $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
-                    ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
-                });
-            }
-
-            return $exceptionHandler;
-        });
+        if (method_exists($exceptionHandler = $this->app->make(ExceptionHandler::class), 'reportable')) {
+            $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
+                ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
+            });
+        }
 
         return $this;
     }
