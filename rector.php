@@ -181,6 +181,8 @@ return RectorConfig::configure()
             'Pest\Faker\fake' => 'fake',
             'Pest\Faker\faker' => 'faker',
             // 'faker' => 'fake',
+            'Guanguans\Notify\Foundation\Support\rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
+            'rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
             'test' => 'it',
         ] + array_reduce(
             [

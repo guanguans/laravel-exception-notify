@@ -23,6 +23,7 @@ use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
+use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @property \Illuminate\Foundation\Application $container
@@ -62,12 +63,14 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
 
     public function report(\Throwable $throwable): void
     {
-        $this->driver()->report($throwable);
+        rescue(function () use ($throwable): void {
+            $this->driver()->report($throwable);
+        });
     }
 
     public function reportRaw(string $report): mixed
     {
-        return $this->driver()->reportRaw($report);
+        return rescue(fn (): mixed => $this->driver()->reportRaw($report));
     }
 
     public function getDefaultDriver(): string

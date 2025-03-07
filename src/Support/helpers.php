@@ -15,8 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Support;
 
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\make')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
     /**
      * @see https://github.com/yiisoft/yii2/blob/master/framework/BaseYii.php
      *
@@ -56,7 +57,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\make')) {
     }
 }
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\env_explode')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\env_explode')) {
     /**
      * @noinspection LaravelFunctionsInspection
      */
@@ -72,7 +73,28 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\env_explode')) {
     }
 }
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\json_pretty_encode')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\rescue')) {
+    /**
+     * @param null|\Closure $rescue
+     * @param bool|\Closure $log
+     *
+     * @see rescue()
+     */
+    function rescue(callable $callback, mixed $rescue = null, mixed $log = true): mixed
+    {
+        try {
+            return $callback();
+        } catch (\Throwable $throwable) {
+            if (value($log, $throwable)) {
+                Log::error($throwable->getMessage(), ['exception' => $throwable]);
+            }
+
+            return value($rescue, $throwable);
+        }
+    }
+}
+
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_encode')) {
     /**
      * @throws \JsonException
      */
@@ -86,7 +108,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\json_pretty_encode')
     }
 }
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\hydrate_pipe')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\hydrate_pipe')) {
     /**
      * @param class-string $pipe
      */
@@ -96,7 +118,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\hydrate_pipe')) {
     }
 }
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\human_bytes')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_bytes')) {
     /**
      * Convert bytes to human readable format.
      *
@@ -118,7 +140,7 @@ if (!\function_exists('Guanguans\LaravelApiResponse\Support\human_bytes')) {
     }
 }
 
-if (!\function_exists('Guanguans\LaravelApiResponse\Support\human_milliseconds')) {
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_milliseconds')) {
     function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
         if (1 > $milliseconds) {
