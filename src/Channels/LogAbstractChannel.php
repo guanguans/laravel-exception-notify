@@ -13,22 +13,27 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-class DumpChannel extends Channel
+use Illuminate\Support\Facades\Log;
+
+class LogAbstractChannel extends Channel
 {
-    /**
-     * @noinspection ForgottenDebugOutputInspection
-     * @noinspection DebugFunctionUsageInspection
-     */
     public function reportRaw(string $report): mixed
     {
-        return $this->configRepository->get('exit', false) ? dd($report) : dump($report);
+        Log::channel($this->configRepository->get('channel'))->log(
+            $this->configRepository->get('level', 'error'),
+            $report,
+            $this->configRepository->get('context', []),
+        );
+
+        return null;
     }
 
     protected function rules(): array
     {
         return [
             'channel' => 'nullable|string',
-            'exit' => 'bool',
+            'level' => 'string',
+            'context' => 'array',
         ] + parent::rules();
     }
 }

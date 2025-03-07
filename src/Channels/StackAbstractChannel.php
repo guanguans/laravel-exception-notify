@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 
-class StackChannel extends Channel
+class StackAbstractChannel extends AbstractChannel
 {
     public function report(\Throwable $throwable): void
     {

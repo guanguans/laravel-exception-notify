@@ -16,11 +16,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -29,15 +27,16 @@ use Illuminate\Support\Traits\Tappable;
 /**
  * @property \Illuminate\Foundation\Application $container
  *
- * @method Channel driver($driver = null)
+ * @method \Guanguans\LaravelExceptionNotify\Channels\Channel driver($driver = null)
+ *
+ * @mixin \Guanguans\LaravelExceptionNotify\Channels\Channel
  */
-class ExceptionNotifyManager extends Manager implements Channel
+class ExceptionNotifyManager extends Manager implements Contracts\Channel
 {
     use Macroable {
         Macroable::__call as macroCall;
     }
     use Tappable;
-    private static array $skipCallbacks = [];
 
     /**
      * @noinspection MissingReturnTypeInspection
@@ -49,11 +48,6 @@ class ExceptionNotifyManager extends Manager implements Channel
         }
 
         return parent::__call($method, $parameters);
-    }
-
-    public static function skipWhen(\Closure $callback): void
-    {
-        self::$skipCallbacks[] = $callback;
     }
 
     public function channel(?string $channel = null): Channel
@@ -81,16 +75,18 @@ class ExceptionNotifyManager extends Manager implements Channel
         return config('exception-notify.default');
     }
 
-    public function shouldReport(\Throwable $throwable): bool
-    {
-        return !$this->shouldntReport($throwable);
-    }
-
     /**
+     * @noinspection MethodShouldBeFinalInspection
      * @noinspection MissingParentCallInspection
-     * @noinspection MethodVisibilityInspection
      */
     protected function createDriver(mixed $driver): Channel
+    {
+        $rawChannel = $this->createRawDriver($driver);
+
+        return $rawChannel instanceof Channel ? $rawChannel : new Channel($rawChannel);
+    }
+
+    protected function createRawDriver(mixed $driver): Channel
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);
@@ -101,69 +97,14 @@ class ExceptionNotifyManager extends Manager implements Channel
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));
 
-        // if (method_exists($this, $method = "create{$studlyName}Driver")) {
-        //     return $this->{$method}($configRepository);
-        // }
+        if (method_exists($this, $method = "create{$studlyName}Driver")) {
+            return $this->{$method}($configRepository);
+        }
 
         if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);
         }
 
         throw new InvalidArgumentException("Driver [$driver] not supported.");
-    }
-
-    /**
-     * @noinspection IfSimplificationOrInspection
-     */
-    private function shouldntReport(\Throwable $throwable): bool
-    {
-        if (!config('exception-notify.enabled')) {
-            return true;
-        }
-
-        if (!$this->container->environment(config('exception-notify.envs'))) {
-            return true;
-        }
-
-        if ($this->shouldSkip($throwable)) {
-            return true;
-        }
-
-        return !$this->attempt(
-            $this->fingerprintFor($throwable),
-            config('exception-notify.rate_limit.max_attempts'),
-            config('exception-notify.rate_limit.decay_seconds')
-        );
-    }
-
-    private function shouldSkip(\Throwable $throwable): bool
-    {
-        foreach (self::$skipCallbacks as $skipCallback) {
-            if ($skipCallback($throwable)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private function fingerprintFor(\Throwable $throwable): string
-    {
-        return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
-            $throwable->getFile(),
-            $throwable->getLine(),
-            $throwable->getCode(),
-            $throwable->getTraceAsString(),
-        ]));
-    }
-
-    /**
-     * @see RateLimiter::attempt
-     */
-    private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
-    {
-        return (
-            new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')))
-        )->attempt($key, $maxAttempts, static fn (): bool => true, $decaySeconds);
     }
 }
