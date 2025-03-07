@@ -19,7 +19,7 @@ use Illuminate\Mail\PendingMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-class MailAbstractChannel extends AbstractChannel
+class MailChannel extends AbstractChannel
 {
     public function reportRaw(string $report): mixed
     {

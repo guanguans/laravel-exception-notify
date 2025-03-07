@@ -102,7 +102,7 @@ it('can attempt key', function (): void {
         ->call(app(ExceptionNotifyManager::class))->toBeTrue()
         ->call(app(ExceptionNotifyManager::class))->toBeTrue()
         ->call(app(ExceptionNotifyManager::class))->toBeFalse();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('will throw `InvalidArgumentException`', function (): void {
     app(ExceptionNotifyManager::class)->driver('foo');

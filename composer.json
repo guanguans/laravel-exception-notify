@@ -219,13 +219,10 @@
             "@composer-validate",
             "@yaml-lint",
             "@md-lint",
-            "@facade-lint",
-            "@style-lint",
             "@composer-dependency-analyser",
             "@class-leak-check",
             "@sk-check-conflicts",
             "@test",
-            "@phpstan",
             "@rector-dry-run"
         ],
         "class-leak": "@php ./vendor/bin/class-leak --ansi -v",

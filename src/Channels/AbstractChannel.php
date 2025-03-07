@@ -42,7 +42,7 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
         }
     }
 
-    final public function report(\Throwable $throwable): void
+    public function report(\Throwable $throwable): void
     {
         try {
             $dispatch = dispatch(new ReportExceptionJob([

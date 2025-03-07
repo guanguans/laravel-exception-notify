@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Illuminate\Support\Facades\Log;
 
-class LogAbstractChannel extends Channel
+class LogChannel extends AbstractChannel
 {
     public function reportRaw(string $report): mixed
     {

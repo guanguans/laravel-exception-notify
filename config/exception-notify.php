@@ -92,12 +92,22 @@ return [
     /**
      * The default reported channels.
      */
-    'default' => env('EXCEPTION_NOTIFY_DEFAULT', 'log'),
+    'default' => env('EXCEPTION_NOTIFY_DEFAULT', 'stack'),
 
     /**
      * The list of channels.
      */
     'channels' => [
+        /**
+         * @see \Symfony\Component\VarDumper\VarDumper::dump()
+         */
+        'stack' => [
+            'driver' => 'stack',
+            'channels' => [
+                'log',
+            ],
+        ],
+
         /**
          * @see \Symfony\Component\VarDumper\VarDumper::dump()
          */

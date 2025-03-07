@@ -18,12 +18,14 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
-        (fn (): array => self::$skipCallbacks = [])->call(app(ExceptionNotifyManager::class));
+        // (fn (): array => self::$skipCallbacks = [])->call(app(ExceptionNotifyManager::class));
+        (fn (): array => self::$skipCallbacks = [])->call(ExceptionNotify::driver());
     })
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})

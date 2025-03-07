@@ -13,9 +13,13 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Events\ExceptionReportedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ExceptionReportFailedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ExceptionReportingEvent;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @see \Illuminate\Log\Logger
@@ -37,12 +41,34 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
 
     public function report(\Throwable $throwable): void
     {
-        $this->doReport($throwable);
+        try {
+            if ($this->shouldntReport($throwable)) {
+                return;
+            }
+
+            $this->channel->report($throwable);
+        } catch (\Throwable $throwable) {
+            Log::error($throwable->getMessage(), ['exception' => $throwable]);
+        }
     }
 
     public function reportRaw(string $report): mixed
     {
-        return $this->doReportRaw($report);
+        try {
+            event(new ExceptionReportingEvent($this->channel, $report));
+
+            $result = $this->channel->reportRaw($report);
+
+            event(new ExceptionReportedEvent($this->channel, $result));
+
+            return $result;
+        } catch (\Throwable $throwable) {
+            Log::error($throwable->getMessage(), ['exception' => $throwable]);
+
+            event(new ExceptionReportFailedEvent($this->channel, $throwable));
+
+            return $throwable;
+        }
     }
 
     public static function skipWhen(\Closure $callback): void
@@ -53,23 +79,6 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);
-    }
-
-    protected function doReport(\Throwable $throwable): void
-    {
-        if ($this->shouldntReport($throwable)) {
-            return;
-        }
-
-        $this->channel->report($throwable);
-
-        // $this->fireLogEvent($level, $message, $context);
-    }
-
-    protected function doReportRaw(string $report): mixed
-    {
-        return $this->channel->reportRaw($report);
-        // $this->fireLogEvent($level, $message, $context);
     }
 
     /**

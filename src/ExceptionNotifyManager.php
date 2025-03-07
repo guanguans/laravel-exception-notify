@@ -86,7 +86,7 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
         return $rawChannel instanceof Channel ? $rawChannel : new Channel($rawChannel);
     }
 
-    protected function createRawDriver(mixed $driver): Channel
+    protected function createRawDriver(mixed $driver): Contracts\Channel
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);
