@@ -38,7 +38,7 @@ class NotifyChannel extends Channel
      * @throws BindingResolutionException
      * @throws GuzzleException
      */
-    public function report(string $report): ResponseInterface
+    public function reportRaw(string $report): ResponseInterface
     {
         return $this->createClient()->send($this->createMessage($report));
     }

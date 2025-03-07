@@ -18,12 +18,9 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Config\Repository;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
@@ -33,10 +30,8 @@ use Illuminate\Support\Traits\Tappable;
  * @property \Illuminate\Foundation\Application $container
  *
  * @method Channel driver($driver = null)
- *
- * @mixin \Guanguans\LaravelExceptionNotify\Contracts\Channel
  */
-class ExceptionNotifyManager extends Manager
+class ExceptionNotifyManager extends Manager implements Channel
 {
     use Macroable {
         Macroable::__call as macroCall;
@@ -45,8 +40,6 @@ class ExceptionNotifyManager extends Manager
     private static array $skipCallbacks = [];
 
     /**
-     * Handle dynamic method calls into the method.
-     *
      * @noinspection MissingReturnTypeInspection
      */
     public function __call(mixed $method, mixed $parameters)
@@ -63,47 +56,29 @@ class ExceptionNotifyManager extends Manager
         self::$skipCallbacks[] = $callback;
     }
 
-    /**
-     * @param list<string>|string $channels
-     */
-    public function reportIf(mixed $condition, \Throwable $throwable, null|array|string $channels = null): void
+    public function channel(?string $channel = null): Channel
     {
-        value($condition) and $this->report($throwable, $channels);
+        return $this->driver($channel);
     }
 
-    /**
-     * @param list<string>|string $channels
-     */
-    public function report(\Throwable $throwable, null|array|string $channels = null): void
+    public function reportIf(mixed $condition, \Throwable $throwable): void
     {
-        try {
-            if ($this->shouldntReport($throwable)) {
-                return;
-            }
+        value($condition) and $this->report($throwable);
+    }
 
-            $dispatch = dispatch(new ReportExceptionJob(
-                app(CollectorManager::class)->mapToReports(
-                    (array) ($channels ?? config('exception-notify.defaults')),
-                    $throwable
-                )
-            ));
+    public function report(\Throwable $throwable): void
+    {
+        $this->driver()->report($throwable);
+    }
 
-            if (
-                !$this->container->runningInConsole()
-                && 'sync' === config('exception-notify.job.connection')
-            ) {
-                $dispatch->afterResponse();
-            }
-
-            unset($dispatch);
-        } catch (\Throwable $throwable) {
-            Log::error($throwable->getMessage(), ['exception' => $throwable]);
-        }
+    public function reportRaw(string $report): mixed
+    {
+        return $this->driver()->reportRaw($report);
     }
 
     public function getDefaultDriver(): string
     {
-        return Arr::first((array) config('exception-notify.defaults'));
+        return config('exception-notify.default');
     }
 
     public function shouldReport(\Throwable $throwable): bool
@@ -122,6 +97,7 @@ class ExceptionNotifyManager extends Manager
         }
 
         $configRepository = new Repository($this->config->get("exception-notify.channels.$driver", []));
+        $configRepository->set('__channel', $driver);
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));
 

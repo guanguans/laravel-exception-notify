@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 
 class MailChannel extends Channel
 {
-    public function report(string $report): mixed
+    public function reportRaw(string $report): mixed
     {
         /** @var Mailer|PendingMail $mailerOrPendingMail */
         $mailerOrPendingMail = collect($this->configRepository->all())

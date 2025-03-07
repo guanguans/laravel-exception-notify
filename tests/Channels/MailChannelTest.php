@@ -31,6 +31,6 @@ it('will throw `TransportException`', function (): void {
     );
 
     Mail::fake();
-    $this->app->make(ExceptionNotifyManager::class)->driver('mail')->report('report');
+    $this->app->make(ExceptionNotifyManager::class)->driver('mail')->reportRaw('report');
     Mail::assertSent(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);

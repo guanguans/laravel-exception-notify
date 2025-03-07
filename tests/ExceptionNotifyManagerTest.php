@@ -110,7 +110,9 @@ it('will throw `InvalidArgumentException`', function (): void {
 
 it('can create custom driver', function (): void {
     app(ExceptionNotifyManager::class)->extend('foo', static fn (): Channel => new class implements Channel {
-        public function report(string $report): mixed
+        public function report(Throwable $throwable): void {}
+
+        public function reportRaw(string $report): mixed
         {
             return null;
         }

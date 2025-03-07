@@ -46,7 +46,7 @@ class ReportExceptionJob implements ShouldQueue
                 $channel = $exceptionNotifyManager->driver($name);
 
                 event(new ExceptionReportingEvent($channel, $report));
-                $result = $channel->report($report);
+                $result = $channel->reportRaw($report);
                 event(new ExceptionReportedEvent($channel, $result));
             } catch (\Throwable $throwable) {
                 Log::error($throwable->getMessage(), ['exception' => $throwable]);

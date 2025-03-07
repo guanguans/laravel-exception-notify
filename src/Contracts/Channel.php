@@ -15,10 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface Channel
 {
-    /**
-     * @noinspection MissingReturnTypeInspection
-     *
-     * @return mixed|never-return|void
-     */
-    public function report(string $report): mixed;
+    public function report(\Throwable $throwable): void;
+
+    public function reportRaw(string $report): mixed;
 }

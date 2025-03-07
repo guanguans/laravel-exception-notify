@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 
 class LogChannel extends Channel
 {
-    public function report(string $report): mixed
+    public function reportRaw(string $report): mixed
     {
         Log::channel($this->configRepository->get('channel'))->log(
             $this->configRepository->get('level', 'error'),

@@ -92,9 +92,7 @@ return [
     /**
      * The default reported channels.
      */
-    'defaults' => env_explode('EXCEPTION_NOTIFY_DEFAULTS', [
-        'log',
-    ]),
+    'default' => env('EXCEPTION_NOTIFY_DEFAULT', 'log'),
 
     /**
      * The list of channels.

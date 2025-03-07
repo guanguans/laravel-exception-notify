@@ -17,10 +17,19 @@ use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 
 class StackChannel extends Channel
 {
-    public function report(string $report): array
+    public function report(\Throwable $throwable): void
+    {
+        collect($this->configRepository->get('channels'))->each(
+            static fn (string $channel) => ExceptionNotify::driver($channel)->report($throwable)
+        );
+    }
+
+    public function reportRaw(string $report): array
     {
         return collect($this->configRepository->get('channels'))
-            ->map(static fn (string $channel): array => ExceptionNotify::driver($channel)->report($report))
+            ->mapWithKeys(
+                static fn (string $channel): array => [$channel => ExceptionNotify::driver($channel)->reportRaw($report)]
+            )
             ->all();
     }
 

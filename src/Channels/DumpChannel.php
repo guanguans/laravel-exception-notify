@@ -19,7 +19,7 @@ class DumpChannel extends Channel
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
      */
-    public function report(string $report): mixed
+    public function reportRaw(string $report): mixed
     {
         return $this->configRepository->get('exit', false) ? dd($report) : dump($report);
     }
