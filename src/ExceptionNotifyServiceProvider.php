@@ -29,7 +29,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         $this->setupConfig()
             // ->registerMacros()
             ->registerExceptionNotifyManager()
-            ->registerCollectorManager()
             ->registerTestCommand();
     }
 
@@ -42,10 +41,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
-            $this->toAlias(CollectorManager::class),
             $this->toAlias(ExceptionNotifyManager::class),
             $this->toAlias(TestCommand::class),
-            CollectorManager::class,
             ExceptionNotifyManager::class,
             TestCommand::class,
         ];
@@ -73,28 +70,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         );
 
         $this->alias(ExceptionNotifyManager::class);
-
-        return $this;
-    }
-
-    private function registerCollectorManager(): self
-    {
-        $this->app->singleton(
-            CollectorManager::class,
-            static fn (Container $container): CollectorManager => new CollectorManager(
-                collect(config('exception-notify.collectors', []))
-                    ->map(static function (array|string $parameters, int|string $class) use ($container) {
-                        if (!\is_array($parameters)) {
-                            [$parameters, $class] = [(array) $class, $parameters];
-                        }
-
-                        return $container->make($class, $parameters);
-                    })
-                    ->all()
-            )
-        );
-
-        $this->alias(CollectorManager::class);
 
         return $this;
     }

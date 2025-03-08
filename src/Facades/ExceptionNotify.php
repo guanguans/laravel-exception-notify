@@ -17,11 +17,11 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static void skipWhen(\Closure $callback)
- * @method static void reportIf(mixed $condition, \Throwable $throwable, array|string $channels = null)
- * @method static void report(\Throwable $throwable, array|string $channels = null)
+ * @method static \Guanguans\LaravelExceptionNotify\Channels\Channel channel(string|null $channel = null)
+ * @method static void reportIf(mixed $condition, \Throwable $throwable)
+ * @method static void report(\Throwable $throwable)
+ * @method static mixed reportRaw(string $report)
  * @method static string getDefaultDriver()
- * @method static bool shouldReport(\Throwable $throwable)
  * @method static mixed driver(string|null $driver = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)
  * @method static array getDrivers()
@@ -34,6 +34,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static void flushMacros()
  * @method static mixed macroCall(string $method, array $parameters)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(callable|null $callback = null)
+ * @method static void reporting(mixed $listener)
+ * @method static void reported(mixed $listener)
+ * @method static void reportFailed(mixed $listener)
+ * @method static void skipWhen(\Closure $callback)
+ * @method static bool shouldReport(\Throwable $throwable)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager
  */

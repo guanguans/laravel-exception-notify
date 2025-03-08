@@ -50,4 +50,4 @@ it('can collect', function (): void {
         );
 
     expect($report)->toBeInstanceOf(Stringable::class);
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();

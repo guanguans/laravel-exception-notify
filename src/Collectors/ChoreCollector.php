@@ -17,9 +17,6 @@ class ChoreCollector extends Collector
 {
     public function collect(): array
     {
-        return [
-            // 'time' => date('Y-m-d H:i:s'),
-            // 'memory' => human_bytes(memory_get_peak_usage(true)),
-        ];
+        return [];
     }
 }

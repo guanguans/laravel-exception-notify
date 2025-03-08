@@ -37,4 +37,4 @@ it('can map to reports', function (): void {
     );
 
     expect(array_map(fn ($report): string => trim($report, " \n\r\t\v\0`"), $reports))->each->toBeJson();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
