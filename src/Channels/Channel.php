@@ -101,8 +101,7 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
             return true;
         }
 
-        if (!app(
-        )->environment(config('exception-notify.envs'))) {
+        if (!app()->environment(config('exception-notify.environments'))) {
             return true;
         }
 

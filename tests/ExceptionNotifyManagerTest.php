@@ -72,11 +72,11 @@ it('should not report', function (): void {
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
-    config()->set('exception-notify.envs', 'production');
+    config()->set('exception-notify.environments', 'production');
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
 
     config()->set('exception-notify.enabled', true);
-    config()->set('exception-notify.envs', '*');
+    config()->set('exception-notify.environments', '*');
     ExceptionNotify::skipWhen(static fn (Throwable $throwable) => Arr::first(
         [
             Exception::class,
