@@ -54,11 +54,6 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
         return $this->driver($channel);
     }
 
-    public function reportIf(mixed $condition, \Throwable $throwable): void
-    {
-        value($condition) and $this->report($throwable);
-    }
-
     public function report(\Throwable $throwable): void
     {
         rescue(function () use ($throwable): void {

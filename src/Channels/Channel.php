@@ -17,6 +17,7 @@ use Guanguans\LaravelExceptionNotify\Events\ExceptionReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ExceptionReportFailedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ExceptionReportingEvent;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
@@ -93,19 +94,16 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
     }
 
     /**
-     * @noinspection IfSimplificationOrInspection
+     * @noinspection NotOptimalIfConditionsInspection
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
-        if (!config('exception-notify.enabled')) {
-            return true;
-        }
-
-        if (!app()->environment(config('exception-notify.environments'))) {
-            return true;
-        }
-
-        if ($this->shouldSkip($throwable)) {
+        if (
+            !config('exception-notify.enabled')
+            || !app()->environment(config('exception-notify.environments'))
+            || $this->shouldSkip($throwable)
+            || !resolve(ExceptionHandler::class)->shouldReport($throwable)
+        ) {
             return true;
         }
 
