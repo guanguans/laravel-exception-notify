@@ -39,7 +39,7 @@ class TestCommand extends Command
             return self::INVALID;
         }
 
-        if (empty(config('exception-notify.defaults'))) {
+        if (blank(config('exception-notify.defaults'))) {
             $this->output->warning('The exception-notify default channels is empty. Please configure it first.');
 
             return self::INVALID;

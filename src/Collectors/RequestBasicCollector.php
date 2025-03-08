@@ -30,7 +30,11 @@ class RequestBasicCollector extends Collector
             'duration' => (function (): string {
                 $startTime = \defined('LARAVEL_START')
                     ? LARAVEL_START
-                    : $this->request->server('REQUEST_TIME_FLOAT', $_SERVER['REQUEST_TIME_FLOAT']);
+                    : $this->request->server('REQUEST_TIME_FLOAT');
+
+                if (blank($startTime)) {
+                    return 'Unknown';
+                }
 
                 return human_milliseconds((microtime(true) - $startTime) * 1000);
             })(),
