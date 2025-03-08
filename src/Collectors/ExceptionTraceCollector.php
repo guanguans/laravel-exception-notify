@@ -20,7 +20,7 @@ class ExceptionTraceCollector extends ExceptionCollector
     public function collect(): array
     {
         return collect(explode(\PHP_EOL, $this->exception->getTraceAsString()))
-            ->filter(static fn (string $trace): bool => !Str::contains($trace, 'vendor'))
+            ->reject(static fn (string $trace): bool => Str::contains($trace, 'vendor'))
             ->map(static fn (string $trace): string => (string) str($trace)->replaceFirst(base_path(), ''))
             ->all();
     }

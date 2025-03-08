@@ -76,14 +76,17 @@ return RectorConfig::configure()
     )
     ->withSets([
         PHPUnitSetList::PHPUNIT_90,
-
-        LaravelSetList::LARAVEL_90,
-        // LaravelSetList::LARAVEL_STATIC_TO_INJECTION,
-        LaravelSetList::LARAVEL_CODE_QUALITY,
-        LaravelSetList::LARAVEL_ARRAY_STR_FUNCTION_TO_STATIC_CALL,
-        LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
-        LaravelSetList::LARAVEL_FACADE_ALIASES_TO_FULL_NAMES,
-        LaravelSetList::LARAVEL_ELOQUENT_MAGIC_METHOD_TO_QUERY_BUILDER,
+        ...collect((new ReflectionClass(LaravelSetList::class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
+            ->filter(
+                static fn (
+                    string $constant,
+                    string $name
+                ): bool => !\in_array($name, ['LARAVEL_STATIC_TO_INJECTION', 'LARAVEL_STATIC_TO_INJECTION'], true)
+                    && ('LARAVEL_90' === $name || !preg_match('/^LARAVEL_\d{2,3}$/', $name))
+            )
+            // ->dd()
+            ->values()
+            ->all(),
     ])
     ->withRules([
         ArraySpreadInsteadOfArrayMergeRector::class,

@@ -40,9 +40,7 @@ abstract class AbstractChannel implements Channel
             $this->attributes()
         );
 
-        if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
-        }
+        throw_if($validator->fails(), InvalidArgumentException::class, $validator->errors()->first());
     }
 
     public function report(\Throwable $throwable): void
