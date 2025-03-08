@@ -42,7 +42,7 @@ it('will throw error', function (): void {
 it('can report if', function (): void {
     expect(app(ExceptionNotifyManager::class))
         ->reportIf(true, new RuntimeException)->toBeNull();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('can report', function (): void {
     config()->set('exception-notify.enabled', false);

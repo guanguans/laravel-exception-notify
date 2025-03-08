@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Contracts\Channel;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
@@ -26,7 +27,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
-abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
+abstract class AbstractChannel implements Channel
 {
     public const CHANNEL_KEY = '__channel';
 
@@ -121,10 +122,10 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
 
     protected function getCollectors(): Collection
     {
-        return collect([
-            ...config('exception-notify.collectors', []),
-            ...$this->configRepository->get('collectors', []),
-        ])->map(static function (array|string $parameters, int|string $class) {
+        return collect(array_merge(
+            config('exception-notify.collectors', []),
+            $this->configRepository->get('collectors', [])
+        ))->map(static function (array|string $parameters, int|string $class) {
             if (!\is_array($parameters)) {
                 [$parameters, $class] = [(array) $class, $parameters];
             }

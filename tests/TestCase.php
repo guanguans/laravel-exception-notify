@@ -101,7 +101,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineRoutes($router): void
     {
         $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
-            ExceptionNotify::report(new RuntimeException('What happened?'), ['dump', 'log', 'bark', 'lark']);
+            config()->set('exception-notify.channels.stack.channels', ['dump', 'log', 'bark', 'lark']);
+            ExceptionNotify::report(new RuntimeException('What happened?'));
         }));
 
         $router->any('exception', static fn () => tap(response('exception'), static function (): void {

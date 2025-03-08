@@ -141,7 +141,7 @@ return RectorConfig::configure()
         // // RectorLaravel\Rector\Namespace_\FactoryDefinitionRector::class,
         RectorLaravel\Rector\New_\AddGuardToLoginEventRector::class,
         RectorLaravel\Rector\PropertyFetch\ReplaceFakerInstanceWithHelperRector::class,
-        RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector::class,
+        // RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector::class,
         // RectorLaravel\Rector\StaticCall\MinutesToSecondsInCacheRector::class,
         RectorLaravel\Rector\StaticCall\Redirect301ToPermanentRedirectRector::class,
         // // RectorLaravel\Rector\StaticCall\ReplaceAssertTimesSendWithAssertSentTimesRector::class,
