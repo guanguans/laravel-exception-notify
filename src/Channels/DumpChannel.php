@@ -27,7 +27,6 @@ class DumpChannel extends AbstractChannel
     protected function rules(): array
     {
         return [
-            'channel' => 'nullable|string',
             'exit' => 'bool',
         ] + parent::rules();
     }
