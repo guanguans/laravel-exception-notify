@@ -28,6 +28,8 @@ use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
 abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
 {
+    public const CHANNEL_KEY = '__channel';
+
     public function __construct(protected Repository $configRepository)
     {
         $validator = Validator::make(
@@ -45,18 +47,16 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
     public function report(\Throwable $throwable): void
     {
         try {
-            $dispatch = dispatch(new ReportExceptionJob([
-                $this->getChannel() => $this->getReport(),
-            ]));
+            $pendingDispatch = ReportExceptionJob::dispatch($this->getChannel(), $this->getReport());
 
             if (
                 'sync' === config('exception-notify.job.connection')
                 && !app()->runningInConsole()
             ) {
-                $dispatch->afterResponse();
+                $pendingDispatch->afterResponse();
             }
 
-            unset($dispatch);
+            unset($pendingDispatch); // Trigger the job
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
         }
@@ -68,9 +68,7 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
             'driver' => 'required|string',
             'collectors' => 'array',
             'pipes' => 'array',
-            '__channel' => 'string',
-            '_channel' => 'string',
-            'channel' => 'string',
+            self::CHANNEL_KEY => 'string',
         ];
     }
 
@@ -89,9 +87,7 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
         return (string) (new Pipeline(app()))
             ->send($this->getCollectors())
             ->through($this->getPipes())
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode(
-                $collectors->jsonSerialize()
-            )));
+            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
     }
 
     protected function getPipes(): array
@@ -139,12 +135,6 @@ abstract class AbstractChannel implements \Guanguans\LaravelExceptionNotify\Cont
 
     protected function getChannel(): string
     {
-        foreach (['__channel', '_channel', 'channel'] as $key) {
-            if ($this->configRepository->has($key)) {
-                return $this->configRepository->get($key);
-            }
-        }
-
-        throw new \InvalidArgumentException('The channel is not set.');
+        return $this->configRepository->get(self::CHANNEL_KEY);
     }
 }

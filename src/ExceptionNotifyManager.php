@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Config\Repository;
@@ -39,9 +40,6 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
     }
     use Tappable;
 
-    /**
-     * @noinspection MissingReturnTypeInspection
-     */
     public function __call(mixed $method, mixed $parameters)
     {
         if (static::hasMacro($method)) {
@@ -95,8 +93,12 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
             return $this->callCustomCreator($driver);
         }
 
-        $configRepository = new Repository($this->config->get("exception-notify.channels.$driver", []));
-        $configRepository->set('__channel', $driver);
+        $configRepository = tap(
+            new Repository($this->config->get("exception-notify.channels.$driver", [])),
+            static function (Repository $configRepository) use ($driver): void {
+                $configRepository->set(AbstractChannel::CHANNEL_KEY, $driver);
+            }
+        );
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));
 
