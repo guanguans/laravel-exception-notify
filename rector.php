@@ -30,6 +30,7 @@ use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
+use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
@@ -50,6 +51,7 @@ return RectorConfig::configure()
         // __DIR__.'/config',
         __DIR__.'/src',
         __DIR__.'/tests',
+        ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
         __DIR__.'/composer-updater',
     ])
     ->withRootFiles()
@@ -64,9 +66,8 @@ return RectorConfig::configure()
     // ->withoutParallel()
     // ->withImportNames(importNames: false)
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
-    ->withPhpVersion(PhpVersion::PHP_80)
     ->withFluentCallNewLine()
-    ->withAttributesSets(phpunit: true)
+    ->withAttributesSets(phpunit: true, all: true)
     ->withComposerBased(phpunit: true)
     ->withPhpVersion(PhpVersion::PHP_80)
     ->withDowngradeSets(php80: true)
@@ -80,6 +81,8 @@ return RectorConfig::configure()
         naming: true,
         instanceOf: true,
         earlyReturn: true,
+        carbon: true,
+        rectorPreset: true,
         phpunitCodeQuality: true,
     )
     ->withSets([
@@ -175,6 +178,9 @@ return RectorConfig::configure()
         TypeHintTappableCallRector::class,
     ])
     ->withSkip([
+        DowngradeArraySpreadStringKeyRector::class => [
+            __FILE__,
+        ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',
         ],

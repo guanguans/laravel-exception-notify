@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Carbon\Carbon;
 use Illuminate\Container\Container;
 
 class ApplicationCollector extends Collector
@@ -25,7 +26,7 @@ class ApplicationCollector extends Collector
     public function collect(): array
     {
         return [
-            'time' => date('Y-m-d H:i:s'),
+            'time' => Carbon::now()->format('Y-m-d H:i:s'),
             'name' => config('app.name'),
             'version' => $this->container->version(),
             'environment' => $this->container->environment(),
