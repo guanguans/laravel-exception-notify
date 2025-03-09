@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Guanguans\LaravelExceptionNotify\Events\ExceptionReportedEvent;
-use Guanguans\LaravelExceptionNotify\Events\ExceptionReportFailedEvent;
-use Guanguans\LaravelExceptionNotify\Events\ExceptionReportingEvent;
+use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ReportFailedEvent;
+use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Cache;
@@ -53,17 +53,17 @@ class Channel implements ChannelContract
     public function reportContent(string $content): mixed
     {
         try {
-            Event::dispatch(new ExceptionReportingEvent($this->channelContract, $content));
+            Event::dispatch(new ReportingEvent($this->channelContract, $content));
 
             $result = $this->channelContract->reportContent($content);
 
-            Event::dispatch(new ExceptionReportedEvent($this->channelContract, $result));
+            Event::dispatch(new ReportedEvent($this->channelContract, $result));
 
             return $result;
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
 
-            Event::dispatch(new ExceptionReportFailedEvent($this->channelContract, $throwable));
+            Event::dispatch(new ReportFailedEvent($this->channelContract, $throwable));
 
             return $throwable;
         }
@@ -71,17 +71,17 @@ class Channel implements ChannelContract
 
     public function reporting(mixed $listener): void
     {
-        Event::listen(ExceptionReportingEvent::class, $listener);
+        Event::listen(ReportingEvent::class, $listener);
     }
 
     public function reported(mixed $listener): void
     {
-        Event::listen(ExceptionReportedEvent::class, $listener);
+        Event::listen(ReportedEvent::class, $listener);
     }
 
     public function reportFailed(mixed $listener): void
     {
-        Event::listen(ExceptionReportFailedEvent::class, $listener);
+        Event::listen(ReportFailedEvent::class, $listener);
     }
 
     public static function skipWhen(\Closure $callback): void
