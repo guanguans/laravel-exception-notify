@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
@@ -22,6 +23,7 @@ use Psr\Http\Message\ResponseInterface;
 
 it('will throw `InvalidArgumentException`', function (): void {
     new NotifyChannel(new Repository([
+        AbstractChannel::CHANNEL_CONFIG_KEY => 'null',
         'client' => [
             'extender' => null,
         ],
@@ -30,6 +32,6 @@ it('will throw `InvalidArgumentException`', function (): void {
 
 it('can report', function (): void {
     expect(app(ExceptionNotifyManager::class)->driver('bark'))
-        ->reportContent('report')
+        ->reportContent('content')
         ->toBeInstanceOf(ResponseInterface::class);
 })->group(__DIR__, __FILE__);

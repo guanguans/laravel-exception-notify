@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Parameters should have "Guanguans\\LaravelExceptionNotify\\Exceptions\\RuntimeException" types as the only types passed to this method$#'
-            count: 1
-            path: ../src/ExceptionNotifyManager.php

@@ -35,7 +35,7 @@ it('will throw error', function (): void {
     try {
         app(ExceptionNotifyManager::class)->bar();
     } catch (Throwable $throwable) {
-        expect($throwable)->toBeInstanceOf(Error::class);
+        expect($throwable)->toBeInstanceOf(BadMethodCallException::class);
     }
 })->group(__DIR__, __FILE__);
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Http\UploadedFile;
 
 it('can report exception', function (): void {
@@ -38,5 +39,5 @@ it('can auto report exception', function (): void {
 
 it('is a testing', function (): void {
     config()->set('exception-notify.channels.lark', ['driver' => 'notify']);
-    Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::driver('lark');
+    ExceptionNotify::driver('lark');
 })->group(__DIR__, __FILE__)->skip(true);
