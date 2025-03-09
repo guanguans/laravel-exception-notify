@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 
 abstract class AbstractExceptionCollector extends AbstractCollector implements ExceptionAwareContract
 {
-    use Concerns\ExceptionAware;
+    use ExceptionAware;
 }

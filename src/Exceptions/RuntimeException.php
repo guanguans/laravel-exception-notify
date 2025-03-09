@@ -13,6 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Exceptions;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Throwable;
+use Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract;
 
-class RuntimeException extends \RuntimeException implements Throwable {}
+class RuntimeException extends \RuntimeException implements ThrowableContract {}
