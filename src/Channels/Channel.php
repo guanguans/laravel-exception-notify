@@ -21,7 +21,7 @@ use Illuminate\Cache\RateLimiter;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Log;
+use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @see \Illuminate\Log\Logger
@@ -39,34 +39,33 @@ class Channel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        try {
+        rescue(function () use ($throwable): void {
             if ($this->shouldntReport($throwable)) {
                 return;
             }
 
             $this->channelContract->report($throwable);
-        } catch (\Throwable $throwable) {
-            Log::error($throwable->getMessage(), ['exception' => $throwable]);
-        }
+        });
     }
 
     public function reportContent(string $content): mixed
     {
-        try {
-            Event::dispatch(new ReportingEvent($this->channelContract, $content));
+        return rescue(
+            function () use ($content): mixed {
+                Event::dispatch(new ReportingEvent($this->channelContract, $content));
 
-            $result = $this->channelContract->reportContent($content);
+                $result = $this->channelContract->reportContent($content);
 
-            Event::dispatch(new ReportedEvent($this->channelContract, $result));
+                Event::dispatch(new ReportedEvent($this->channelContract, $result));
 
-            return $result;
-        } catch (\Throwable $throwable) {
-            Log::error($throwable->getMessage(), ['exception' => $throwable]);
+                return $result;
+            },
+            function (\Throwable $throwable): \Throwable {
+                Event::dispatch(new ReportFailedEvent($this->channelContract, $throwable));
 
-            Event::dispatch(new ReportFailedEvent($this->channelContract, $throwable));
-
-            return $throwable;
-        }
+                return $throwable;
+            }
+        );
     }
 
     public function reporting(mixed $listener): void
