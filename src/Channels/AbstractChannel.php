@@ -14,12 +14,13 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
+use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Illuminate\Config\Repository;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -30,16 +31,27 @@ abstract class AbstractChannel implements ChannelContract
 {
     public const CHANNEL_CONFIG_KEY = '__channel';
 
+    /**
+     * @throws \Throwable
+     */
     public function __construct(protected Repository $configRepository)
     {
         $validator = Validator::make(
             $this->configRepository->all(),
-            $this->rules(),
+            $rules = $this->rules(),
             $this->messages(),
-            $this->attributes()
+            $this->attributes() + collect(Arr::dot($rules))
+                ->keys()
+                ->mapWithKeys(fn (string $attribute): array => [
+                    $attribute => str('exception-notify.channels.')
+                        ->append($this->getChannel(), '.', $attribute)
+                        ->toString(),
+                ])
+                // ->dump()
+                ->all()
         );
 
-        throw_if($validator->fails(), InvalidArgumentException::class, $validator->errors()->first());
+        throw_if($validator->fails(), InvalidConfigurationException::fromValidator($validator));
     }
 
     public function report(\Throwable $throwable): void

@@ -22,9 +22,7 @@ class StackChannel extends AbstractChannel
     {
         collect($this->configRepository->get('channels'))->each(
             static function (string $channel) use ($throwable): void {
-                rescue(static function () use ($channel, $throwable): void {
-                    ExceptionNotify::driver($channel)->report($throwable);
-                });
+                rescue(static fn (): mixed => ExceptionNotify::driver($channel)->report($throwable));
             }
         );
     }

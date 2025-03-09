@@ -35,3 +35,8 @@ it('can auto report exception', function (): void {
         ])
         ->assertStatus(500);
 })->group(__DIR__, __FILE__);
+
+it('is a testing', function (): void {
+    config()->set('exception-notify.channels.lark', ['driver' => 'notify']);
+    Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify::driver('lark');
+})->group(__DIR__, __FILE__)->skip(true);
