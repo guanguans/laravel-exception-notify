@@ -15,29 +15,36 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Illuminate\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
-    public array $singletons = [];
+    public array $singletons = [
+        ExceptionNotifyManager::class,
+        TestCommand::class,
+    ];
 
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     public function register(): void
     {
-        $this->setupConfig()
-            // ->registerMacros()
-            ->registerExceptionNotifyManager()
-            ->registerTestCommand();
+        $this->setupConfig()->registerAliases();
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function boot(): void
     {
-        $this->registerReportUsing()
-            ->registerCommands();
+        $this->registerReportUsing()->registerCommands();
     }
 
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     public function provides(): array
     {
         return [
@@ -62,22 +69,11 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         return $this;
     }
 
-    private function registerExceptionNotifyManager(): self
+    private function registerAliases(): self
     {
-        $this->app->singleton(
-            ExceptionNotifyManager::class,
-            static fn (Container $container): ExceptionNotifyManager => new ExceptionNotifyManager($container)
-        );
-
-        $this->alias(ExceptionNotifyManager::class);
-
-        return $this;
-    }
-
-    private function registerTestCommand(): self
-    {
-        $this->app->singleton(TestCommand::class);
-        $this->alias(TestCommand::class);
+        foreach ($this->singletons as $singleton) {
+            $this->alias($singleton);
+        }
 
         return $this;
     }
