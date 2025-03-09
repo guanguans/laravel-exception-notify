@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Support\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use function Guanguans\LaravelExceptionNotify\Support\make;
 
 trait ApplyConfigurationToObjectable
 {
@@ -50,6 +51,18 @@ trait ApplyConfigurationToObjectable
                     }
                 }
             })
-            ->pipe(static fn (Collection $configuration): object => $object);
+            ->pipe(static function (Collection $configuration) use ($object): object {
+                $extender = $configuration->get('extender');
+
+                if (!$extender) {
+                    return $object;
+                }
+
+                if (!\is_callable($extender) && (\is_array($extender) || \is_string($extender))) {
+                    $extender = make($extender);
+                }
+
+                return $extender($object);
+            });
     }
 }
