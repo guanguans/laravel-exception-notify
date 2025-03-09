@@ -14,13 +14,18 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 class StackChannel extends AbstractChannel
 {
     public function report(\Throwable $throwable): void
     {
         collect($this->configRepository->get('channels'))->each(
-            static fn (string $channel) => ExceptionNotify::driver($channel)->report($throwable)
+            static function (string $channel) use ($throwable): void {
+                rescue(function () use ($channel, $throwable): void {
+                    ExceptionNotify::driver($channel)->report($throwable);
+                });
+            }
         );
     }
 
@@ -28,7 +33,9 @@ class StackChannel extends AbstractChannel
     {
         return collect($this->configRepository->get('channels'))
             ->mapWithKeys(
-                static fn (string $channel): array => [$channel => ExceptionNotify::driver($channel)->reportContent($content)]
+                static fn (string $channel): array => [
+                    $channel => rescue(fn () => ExceptionNotify::driver($channel)->reportContent($content)),
+                ]
             )
             ->all();
     }
