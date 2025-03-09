@@ -63,6 +63,7 @@ return RectorConfig::configure()
         '**/__snapshots__/*',
         '**/Fixtures/*',
         __DIR__.'/tests/FeatureTest.php',
+        __DIR__.'/tests/ExceptionNotifyManagerTest.php',
         // __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')

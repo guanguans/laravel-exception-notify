@@ -120,3 +120,13 @@ it('can create custom driver', function (): void {
 
     expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(ChannelContract::class);
 })->group(__DIR__, __FILE__);
+
+it('are same fingerprints for exceptions of throw in the same position', function (): void {
+    collect(range(1, 10))
+        ->map(fn (): string => (fn () => $this->fingerprintFor(new Exception(microtime())))->call(ExceptionNotify::driver('log')))
+        ->reduce(static function (?string $previousFingerprint, string $fingerprint): string {
+            $previousFingerprint and expect($previousFingerprint)->toBe($fingerprint);
+
+            return $fingerprint;
+        });
+})->group(__DIR__, __FILE__);

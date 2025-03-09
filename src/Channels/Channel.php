@@ -136,7 +136,7 @@ class Channel implements ChannelContract
             $throwable->getFile(),
             $throwable->getLine(),
             $throwable->getCode(),
-            $throwable->getTraceAsString(),
+            // $throwable->getTraceAsString(),
         ]));
     }
 
