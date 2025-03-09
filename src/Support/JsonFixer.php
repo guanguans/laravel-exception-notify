@@ -202,9 +202,6 @@ final class JsonFixer
         return end($this->stack);
     }
 
-    /**
-     * @noinspection PhpInconsistentReturnPointsInspection
-     */
     private function popToken(?string $token = null): mixed
     {
         // Last one

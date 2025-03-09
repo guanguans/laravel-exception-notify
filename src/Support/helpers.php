@@ -108,16 +108,6 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_enco
     }
 }
 
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\hydrate_pipe')) {
-    /**
-     * @param class-string $pipe
-     */
-    function hydrate_pipe(string $pipe, mixed ...$parameters): string
-    {
-        return [] === $parameters ? $pipe : \sprintf('%s:%s', $pipe, implode(',', $parameters));
-    }
-}
-
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_bytes')) {
     /**
      * Convert bytes to human readable format.

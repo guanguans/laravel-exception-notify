@@ -25,8 +25,6 @@ class AddChorePipe
     use WithPipeArgs;
 
     /**
-     * @noinspection MissingParameterTypeDeclarationInspection
-     *
      * @param array-key $key
      */
     public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key): Stringable

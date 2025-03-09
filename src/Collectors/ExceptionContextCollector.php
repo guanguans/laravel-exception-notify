@@ -17,8 +17,17 @@ use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
 class ExceptionContextCollector extends AbstractExceptionCollector
 {
+    public function __construct(
+        private string $mark = '➤',
+        private int $lineNumber = 5
+    ) {}
+
     public function collect(): array
     {
-        return ExceptionContext::getMarked($this->exception);
+        return ExceptionContext::getMarked(
+            $this->exception,
+            $this->mark,
+            $this->lineNumber
+        );
     }
 }
