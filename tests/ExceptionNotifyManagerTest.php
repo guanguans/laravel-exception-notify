@@ -16,7 +16,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
@@ -109,7 +109,7 @@ it('will throw `InvalidArgumentException`', function (): void {
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can create custom driver', function (): void {
-    app(ExceptionNotifyManager::class)->extend('foo', static fn (): Channel => new class implements Channel {
+    app(ExceptionNotifyManager::class)->extend('foo', static fn (): ChannelContract => new class implements ChannelContract {
         public function report(Throwable $throwable): void {}
 
         public function reportContent(string $content): mixed
@@ -118,5 +118,5 @@ it('can create custom driver', function (): void {
         }
     });
 
-    expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(Channel::class);
+    expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(ChannelContract::class);
 })->group(__DIR__, __FILE__);

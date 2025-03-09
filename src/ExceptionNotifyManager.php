@@ -18,6 +18,7 @@ namespace Guanguans\LaravelExceptionNotify;
 
 use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
@@ -33,7 +34,7 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  *
  * @mixin \Guanguans\LaravelExceptionNotify\Channels\Channel
  */
-class ExceptionNotifyManager extends Manager implements Contracts\Channel
+class ExceptionNotifyManager extends Manager implements ChannelContract
 {
     use Macroable {
         Macroable::__call as macroCall;
@@ -77,12 +78,12 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
      */
     protected function createDriver(mixed $driver): Channel
     {
-        $rawChannel = $this->createRawDriver($driver);
+        $channelContract = $this->createOriginalDriver($driver);
 
-        return $rawChannel instanceof Channel ? $rawChannel : new Channel($rawChannel);
+        return $channelContract instanceof Channel ? $channelContract : new Channel($channelContract);
     }
 
-    protected function createRawDriver(mixed $driver): Contracts\Channel
+    protected function createOriginalDriver(mixed $driver): ChannelContract
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);

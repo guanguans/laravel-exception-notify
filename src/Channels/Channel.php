@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ExceptionReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ExceptionReportFailedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ExceptionReportingEvent;
@@ -28,12 +29,12 @@ use Illuminate\Support\Facades\Log;
  * @see \Illuminate\Log\LogManager::get()
  * @see \Illuminate\Log\LogManager::stack()
  */
-class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
+class Channel implements ChannelContract
 {
     private static array $skipCallbacks = [];
 
     public function __construct(
-        private \Guanguans\LaravelExceptionNotify\Contracts\Channel $channel
+        private ChannelContract $channelContract
     ) {}
 
     public function report(\Throwable $throwable): void
@@ -43,7 +44,7 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
                 return;
             }
 
-            $this->channel->report($throwable);
+            $this->channelContract->report($throwable);
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
         }
@@ -52,17 +53,17 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
     public function reportContent(string $content): mixed
     {
         try {
-            Event::dispatch(new ExceptionReportingEvent($this->channel, $content));
+            Event::dispatch(new ExceptionReportingEvent($this->channelContract, $content));
 
-            $result = $this->channel->reportContent($content);
+            $result = $this->channelContract->reportContent($content);
 
-            Event::dispatch(new ExceptionReportedEvent($this->channel, $result));
+            Event::dispatch(new ExceptionReportedEvent($this->channelContract, $result));
 
             return $result;
         } catch (\Throwable $throwable) {
             Log::error($throwable->getMessage(), ['exception' => $throwable]);
 
-            Event::dispatch(new ExceptionReportFailedEvent($this->channel, $throwable));
+            Event::dispatch(new ExceptionReportFailedEvent($this->channelContract, $throwable));
 
             return $throwable;
         }

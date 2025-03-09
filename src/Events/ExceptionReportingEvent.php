@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Events;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 
 class ExceptionReportingEvent
 {
     public function __construct(
-        public Channel $channel,
+        public ChannelContract $channelContract,
         public string $report
     ) {}
 }

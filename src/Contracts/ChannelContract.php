@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-interface Channel
+interface ChannelContract
 {
     public function report(\Throwable $throwable): void;
 

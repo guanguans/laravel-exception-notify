@@ -100,13 +100,13 @@ Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
 ```php
 <?php
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Container\Container;
 
 public function boot(): void
 {
-    ExceptionNotify::extend('YourChannelName', function (Container $container): Channel {
+    ExceptionNotify::extend('YourChannelName', function (Container $container): ChannelContract {
         return 'Instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.';
     });
 }

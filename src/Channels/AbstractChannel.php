@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Contracts\Channel;
+use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
-abstract class AbstractChannel implements Channel
+abstract class AbstractChannel implements ChannelContract
 {
     public const CHANNEL_KEY = '__channel';
 
