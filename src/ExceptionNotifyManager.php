@@ -20,9 +20,13 @@ use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
+use Guanguans\Notify\Foundation\Concerns\Dumpable;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Conditionable;
+use Illuminate\Support\Traits\ForwardsCalls;
+use Illuminate\Support\Traits\Localizable;
 use Illuminate\Support\Traits\Macroable;
 use Illuminate\Support\Traits\Tappable;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
@@ -36,12 +40,16 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  */
 class ExceptionNotifyManager extends Manager implements ChannelContract
 {
+    use Conditionable;
+    use Dumpable;
+    use ForwardsCalls;
+    use Localizable;
     use Macroable {
         Macroable::__call as macroCall;
     }
     use Tappable;
 
-    public function __call(mixed $method, mixed $parameters)
+    public function __call(mixed $method, mixed $parameters): mixed
     {
         if (static::hasMacro($method)) {
             return $this->macroCall($method, $parameters);
@@ -75,6 +83,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
     /**
      * @noinspection MethodShouldBeFinalInspection
      * @noinspection MissingParentCallInspection
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     protected function createDriver(mixed $driver): Channel
     {
@@ -83,7 +92,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
         return $channelContract instanceof Channel ? $channelContract : new Channel($channelContract);
     }
 
-    protected function createOriginalDriver(mixed $driver): ChannelContract
+    protected function createOriginalDriver(string $driver): ChannelContract
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);
@@ -91,9 +100,10 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
         $configRepository = tap(
             new Repository($this->config->get("exception-notify.channels.$driver", [])),
-            static function (Repository $configRepository) use ($driver): void {
-                $configRepository->set(AbstractChannel::CHANNEL_KEY, $driver);
-            }
+            static fn (Repository $configRepository): mixed => $configRepository->set(
+                AbstractChannel::CHANNEL_CONFIG_KEY,
+                $driver
+            )
         );
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));

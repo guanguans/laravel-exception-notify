@@ -28,7 +28,7 @@ use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
 abstract class AbstractChannel implements ChannelContract
 {
-    public const CHANNEL_KEY = '__channel';
+    public const CHANNEL_CONFIG_KEY = '__channel';
 
     public function __construct(protected Repository $configRepository)
     {
@@ -62,7 +62,7 @@ abstract class AbstractChannel implements ChannelContract
             'driver' => 'required|string',
             'collectors' => 'array',
             'pipes' => 'array',
-            self::CHANNEL_KEY => 'string',
+            self::CHANNEL_CONFIG_KEY => 'string',
         ];
     }
 
@@ -129,6 +129,6 @@ abstract class AbstractChannel implements ChannelContract
 
     protected function getChannel(): string
     {
-        return $this->configRepository->get(self::CHANNEL_KEY);
+        return $this->configRepository->get(self::CHANNEL_CONFIG_KEY);
     }
 }
