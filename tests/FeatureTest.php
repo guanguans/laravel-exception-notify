@@ -81,5 +81,5 @@ it('is a testing', function (): void {
             LimitLengthPipe::with(20000),
         ],
     ]);
-    ExceptionNotify::driver('dingTalk')->report(new Exception('This is a test exception.'));
+    ExceptionNotify::driver('mail')->report(new Exception('This is a test exception.'));
 })->group(__DIR__, __FILE__)->skip(true);

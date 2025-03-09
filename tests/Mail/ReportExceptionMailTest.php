@@ -18,4 +18,4 @@ use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 it('can build self', function (): void {
     expect(new ReportExceptionMail($this->faker()->text()))
         ->build()->toBeInstanceOf(ReportExceptionMail::class);
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();

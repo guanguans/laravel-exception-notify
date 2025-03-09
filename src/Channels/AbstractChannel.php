@@ -143,4 +143,17 @@ abstract class AbstractChannel implements ChannelContract
     {
         return $this->configRepository->get(self::CHANNEL_CONFIGURATION_KEY);
     }
+
+    protected function applyContentToConfiguration(array $configuration, string $content): array
+    {
+        array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
+            \is_string($value) and $value = str_replace(
+                [NotifyChannel::TITLE_TEMPLATE, NotifyChannel::CONTENT_TEMPLATE],
+                [config('exception-notify.title'), $content],
+                $value
+            );
+        });
+
+        return $configuration;
+    }
 }

@@ -13,47 +13,41 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
-use Illuminate\Mail\Mailer;
-use Illuminate\Mail\PendingMail;
+use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\SentMessage;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+use function Guanguans\LaravelExceptionNotify\Support\make;
 
 class MailChannel extends AbstractChannel
 {
-    public function reportContent(string $content): mixed
+    use ApplyConfigurationToObjectable;
+
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function reportContent(string $content): ?SentMessage
     {
-        /** @var Mailer|PendingMail $mailerOrPendingMail */
-        $mailerOrPendingMail = collect($this->configRepository->all())
-            ->except(['driver', 'mailer', 'extender', 'pipes'])
-            ->reduce(
-                static function (object $mailerOrPendingMail, array $parameters, string $method): object {
-                    $object = app()->call([$mailerOrPendingMail, Str::camel($method)], $parameters);
-
-                    return \is_object($object) ? $object : $mailerOrPendingMail;
-                },
-                Mail::mailer($this->configRepository->get('mailer'))
-            );
-
-        if ($this->configRepository->has('extender')) {
-            $mailerOrPendingMail = app()->call($this->configRepository->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
-        }
-
-        return $mailerOrPendingMail->send(new ReportExceptionMail($content));
+        return Mail::mailer($this->configRepository->get('mailer'))->send($this->makeMail($content));
     }
 
     protected function rules(): array
     {
         return [
             'mailer' => 'nullable|string',
+            'class' => 'required|string',
             'to' => 'required|array',
-            'extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
-                if (\is_string($value) || \is_callable($value)) {
-                    return;
-                }
-
-                $fail("The $attribute must be a callable or string.");
-            },
         ] + parent::rules();
+    }
+
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    private function makeMail(string $content): Mailable
+    {
+        return $this->applyConfigurationToObject(
+            make($configuration = $this->applyContentToConfiguration($this->configRepository->all(), $content)),
+            $configuration
+        );
     }
 }

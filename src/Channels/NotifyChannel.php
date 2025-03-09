@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
 use Guanguans\Notify\Foundation\Message;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
@@ -27,6 +26,7 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class NotifyChannel extends AbstractChannel
 {
+    use ApplyConfigurationToObjectable;
     public const TITLE_TEMPLATE = '{title}';
     public const CONTENT_TEMPLATE = '{content}';
 
@@ -79,51 +79,9 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeMessage(string $content): Message
     {
-        $configuration = $this->configRepository->get('message');
-
-        array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
-            \is_string($value) and $value = str_replace(
-                [self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE],
-                [config('exception-notify.title'), $content],
-                $value
-            );
-        });
-
-        return $this->applyConfigurationToObject(make($configuration), $configuration);
-    }
-
-    private function applyConfigurationToObject(
-        object $object,
-        array $configuration,
-        ?array $except = null
-    ): object {
-        return collect($configuration)
-            ->except($except)
-            // ->filter(static fn (mixed $value): bool => \is_array($value) && !array_is_list($value))
-            ->each(static function (mixed $value, string $key) use ($object): void {
-                foreach (
-                    [
-                        static fn (string $key): string => $key,
-                        static fn (string $key): string => Str::camel($key),
-                        static fn (string $key): string => 'set'.Str::studly($key),
-                        static fn (string $key): string => 'on'.Str::studly($key),
-                    ] as $case
-                ) {
-                    if (method_exists($object, $method = $case($key))) {
-                        $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
-
-                        if (1 === $numberOfParameters) {
-                            $object->{$method}($value);
-
-                            return;
-                        }
-
-                        app()->call([$object, $method], $value);
-
-                        return;
-                    }
-                }
-            })
-            ->pipe(static fn (Collection $configuration): object => $object);
+        return $this->applyConfigurationToObject(
+            make($configuration = $this->applyContentToConfiguration($this->configRepository->get('message'), $content)),
+            $configuration
+        );
     }
 }
