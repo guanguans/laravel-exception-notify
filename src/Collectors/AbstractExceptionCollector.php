@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 
-abstract class ExceptionCollector extends Collector implements ExceptionAware
+abstract class AbstractExceptionCollector extends AbstractCollector implements ExceptionAware
 {
     use Concerns\ExceptionAware;
 }

@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
 
-class RequestHeaderCollector extends Collector
+class RequestHeaderCollector extends AbstractCollector
 {
     private array $rejects = [
         'Authorization',

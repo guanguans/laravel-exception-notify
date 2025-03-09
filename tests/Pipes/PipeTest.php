@@ -15,7 +15,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\CollectorManager;
-use Guanguans\LaravelExceptionNotify\Contracts\Collector;
+use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
@@ -28,15 +28,15 @@ it('can collect', function (): void {
     $report = (new Pipeline($this->app))
         ->send(
             collect(app(CollectorManager::class))
-                ->transform(static function (Collector $collector): Collector {
-                    if ($collector instanceof ExceptionAware) {
-                        $collector->setException(new RuntimeException);
+                ->transform(static function (CollectorContract $collectorContract): CollectorContract {
+                    if ($collectorContract instanceof ExceptionAware) {
+                        $collectorContract->setException(new RuntimeException);
                     }
 
-                    return $collector;
+                    return $collectorContract;
                 })
-                ->mapWithKeys(static fn (Collector $collector): array => [
-                    $collector::name() => $collector->collect(),
+                ->mapWithKeys(static fn (CollectorContract $collectorContract): array => [
+                    $collectorContract::name() => $collectorContract->collect(),
                 ])
         )
         ->through(FixPrettyJsonPipe::class)

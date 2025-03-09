@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Support\Str;
 
-class ExceptionTraceCollector extends ExceptionCollector
+class ExceptionTraceCollector extends AbstractExceptionCollector
 {
     public function collect(): array
     {

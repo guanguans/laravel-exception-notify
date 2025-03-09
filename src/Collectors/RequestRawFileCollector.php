@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-class RequestRawFileCollector extends Collector
+class RequestRawFileCollector extends AbstractCollector
 {
     public function collect(): array
     {

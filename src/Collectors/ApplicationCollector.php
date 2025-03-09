@@ -16,7 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 use Carbon\Carbon;
 use Illuminate\Container\Container;
 
-class ApplicationCollector extends Collector
+class ApplicationCollector extends AbstractCollector
 {
     public function __construct(
         /** @var \Illuminate\Foundation\Application */

@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
 
-class PhpInfoCollector extends Collector
+class PhpInfoCollector extends AbstractCollector
 {
     public function collect(): array
     {

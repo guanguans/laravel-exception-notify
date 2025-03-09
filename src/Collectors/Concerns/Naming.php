@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors\Concerns;
 
 /**
- * @mixin \Guanguans\LaravelExceptionNotify\Collectors\Collector
+ * @mixin \Guanguans\LaravelExceptionNotify\Collectors\AbstractCollector
  */
 trait Naming
 {

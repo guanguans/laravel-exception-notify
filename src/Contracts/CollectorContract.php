@@ -11,11 +11,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Collectors;
+namespace Guanguans\LaravelExceptionNotify\Contracts;
 
-use Guanguans\LaravelExceptionNotify\Collectors\Concerns\Naming;
-
-abstract class Collector implements \Guanguans\LaravelExceptionNotify\Contracts\Collector
+interface CollectorContract
 {
-    use Naming;
+    public static function name(): string;
+
+    public function collect(): array;
 }

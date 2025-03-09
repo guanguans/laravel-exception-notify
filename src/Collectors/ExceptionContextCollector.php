@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 
-class ExceptionContextCollector extends ExceptionCollector
+class ExceptionContextCollector extends AbstractExceptionCollector
 {
     public function collect(): array
     {

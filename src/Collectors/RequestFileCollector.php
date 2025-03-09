@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
 
-class RequestFileCollector extends Collector
+class RequestFileCollector extends AbstractCollector
 {
     public function __construct(private Request $request) {}
 

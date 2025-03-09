@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
 
-class RequestPostCollector extends Collector
+class RequestPostCollector extends AbstractCollector
 {
     private array $hiddenPatterns = [
         'password',

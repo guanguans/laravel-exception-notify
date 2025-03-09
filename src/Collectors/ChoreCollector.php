@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-class ChoreCollector extends Collector
+class ChoreCollector extends AbstractCollector
 {
     public function collect(): array
     {

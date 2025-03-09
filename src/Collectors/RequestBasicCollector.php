@@ -16,7 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 use Illuminate\Http\Request;
 use function Guanguans\LaravelExceptionNotify\Support\human_milliseconds;
 
-class RequestBasicCollector extends Collector
+class RequestBasicCollector extends AbstractCollector
 {
     public function __construct(private Request $request) {}
 

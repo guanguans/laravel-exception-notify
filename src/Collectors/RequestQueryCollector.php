@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Http\Request;
 
-class RequestQueryCollector extends Collector
+class RequestQueryCollector extends AbstractCollector
 {
     public function __construct(private Request $request) {}
 
