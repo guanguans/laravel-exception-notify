@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Guanguans\LaravelExceptionNotify\Channels\Channel channel(string|null $channel = null)
  * @method static void reportIf(mixed $condition, \Throwable $throwable)
  * @method static void report(\Throwable $throwable)
- * @method static mixed reportRaw(string $report)
+ * @method static mixed reportRaw(string $content)
  * @method static string getDefaultDriver()
  * @method static mixed driver(string|null $driver = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)

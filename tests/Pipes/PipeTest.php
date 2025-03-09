@@ -25,7 +25,7 @@ use Illuminate\Support\Stringable;
 use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
 it('can collect', function (): void {
-    $report = (new Pipeline($this->app))
+    $content = (new Pipeline($this->app))
         ->send(
             collect(app(CollectorManager::class))
                 ->transform(static function (CollectorContract $collectorContract): CollectorContract {
@@ -49,5 +49,5 @@ it('can collect', function (): void {
             ): Stringable => str(json_pretty_encode($collectors->jsonSerialize()))->substr(-256)
         );
 
-    expect($report)->toBeInstanceOf(Stringable::class);
+    expect($content)->toBeInstanceOf(Stringable::class);
 })->group(__DIR__, __FILE__)->skip();

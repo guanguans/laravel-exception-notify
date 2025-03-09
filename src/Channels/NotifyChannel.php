@@ -33,6 +33,8 @@ class NotifyChannel extends AbstractChannel
         'title' => '{title}',
         'report' => '{report}',
     ];
+    public const TITLE_TEMPLATE = '{title}';
+    public const CONTENT_TEMPLATE = '{content}';
 
     /**
      * @throws BindingResolutionException
@@ -97,13 +99,13 @@ class NotifyChannel extends AbstractChannel
     /**
      * @throws BindingResolutionException
      */
-    private function createMessage(string $report): Message
+    private function createMessage(string $content): Message
     {
-        $replace = [config('exception-notify.title'), $report];
+        $replace = [config('exception-notify.title'), $content];
         $options = Arr::except($this->configRepository->get('message'), 'class');
 
         array_walk_recursive($options, static function (mixed &$value) use ($replace): void {
-            \is_string($value) and $value = str_replace(self::TEMPLATES, $replace, $value);
+            \is_string($value) and $value = str_replace([self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE], $replace, $value);
         });
 
         return make($this->configRepository->get('message.class'), ['options' => $options]);

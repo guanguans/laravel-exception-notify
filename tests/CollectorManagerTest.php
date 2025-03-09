@@ -31,10 +31,10 @@ it('can map to reports', function (): void {
             ->all()
     ));
 
-    $reports = app(CollectorManager::class)->mapToReports(
+    $contents = app(CollectorManager::class)->mapToReports(
         array_keys(config('exception-notify.channels')),
         new RuntimeException
     );
 
-    expect(array_map(fn ($report): string => trim($report, " \n\r\t\v\0`"), $reports))->each->toBeJson();
+    expect(array_map(fn ($content): string => trim($content, " \n\r\t\v\0`"), $contents))->each->toBeJson();
 })->group(__DIR__, __FILE__)->skip();

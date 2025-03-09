@@ -17,12 +17,12 @@ use Illuminate\Mail\Mailable;
 
 class ReportExceptionMail extends Mailable
 {
-    public function __construct(private string $report) {}
+    public function __construct(private string $content) {}
 
     public function build(): self
     {
         return $this
             ->subject(config('exception-notify.title'))
-            ->html($this->report);
+            ->html($this->content);
     }
 }
