@@ -16,11 +16,9 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
 use Guanguans\Notify\Foundation\Message;
-use Guanguans\Notify\Foundation\Support\Str;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
@@ -33,12 +31,12 @@ class NotifyChannel extends AbstractChannel
     public const CONTENT_TEMPLATE = '{content}';
 
     /**
-     * @throws BindingResolutionException
-     * @throws GuzzleException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function reportContent(string $content): ResponseInterface
     {
-        return $this->createClient()->send($this->createMessage($content));
+        return $this->makeClient()->send($this->makeMessage($content));
     }
 
     protected function rules(): array
@@ -46,89 +44,86 @@ class NotifyChannel extends AbstractChannel
         return [
             'authenticator' => 'required|array',
             'authenticator.class' => 'required|string',
-
             'client' => 'required|array',
             'client.class' => 'required|string',
-            'client.http_options' => 'array',
-            'client.extender' => static function (string $attribute, mixed $value, \Closure $fail): void {
-                if (\is_string($value) || \is_callable($value)) {
-                    return;
-                }
-
-                $fail("The $attribute must be a callable or string.");
-            },
-
             'message' => 'required|array',
             'message.class' => 'required|string',
+            // 'message.options' => 'required|array',
         ] + parent::rules();
     }
 
     /**
      * @throws BindingResolutionException
      */
-    private function createClient(): Client
+    private function makeClient(): Client
     {
-        /** @var Client $client */
-        $client = make($this->configRepository->get('client.class'), [
-            'authenticator' => $this->createAuthenticator(),
-        ]);
-
-        if ($this->configRepository->has('client.http_options')) {
-            $client->setHttpOptions($this->configRepository->get('client.http_options'));
-        }
-
-        return $this->configRepository->has('client.extender')
-            ? app()->call($this->configRepository->get('client.extender'), ['client' => $client])
-            : $client;
+        return $this->applyConfigurationToObject(
+            make($this->configRepository->get('client.class'), ['authenticator' => $this->makeAuthenticator()]),
+            $this->configRepository->get('client')
+        );
     }
 
     /**
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    private function createAuthenticator(): Authenticator
+    private function makeAuthenticator(): Authenticator
     {
-        $options = $this->configRepository->get('authenticator');
-
-        return $this->applyOptionsToObject($options, make($options));
+        return $this->applyConfigurationToObject(
+            make($configuration = $this->configRepository->get('authenticator')),
+            $configuration
+        );
     }
 
     /**
      * @throws BindingResolutionException
      */
-    private function createMessage(string $content): Message
+    private function makeMessage(string $content): Message
     {
-        $replace = [config('exception-notify.title'), $content];
-        $options = Arr::except($this->configRepository->get('message'), 'class');
+        $configuration = $this->configRepository->get('message');
 
-        array_walk_recursive($options, static function (mixed &$value) use ($replace): void {
-            \is_string($value) and $value = str_replace([self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE], $replace, $value);
+        array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
+            \is_string($value) and $value = str_replace(
+                [self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE],
+                [config('exception-notify.title'), $content],
+                $value
+            );
         });
 
-        return make($this->configRepository->get('message.class'), ['options' => $options]);
+        return $this->applyConfigurationToObject(make($configuration), $configuration);
     }
 
-    private function applyOptionsToObject(array $options, object $object): object
-    {
-        return collect($options)
-            ->except([
-            ])
+    private function applyConfigurationToObject(
+        object $object,
+        array $configuration,
+        ?array $except = null
+    ): object {
+        return collect($configuration)
+            ->except($except)
+            // ->filter(static fn (mixed $value): bool => \is_array($value) && !array_is_list($value))
             ->each(static function (mixed $value, string $key) use ($object): void {
                 foreach (
                     [
-                        static fn (string $name): string => $name,
-                        static fn (string $name): string => Str::camel($name),
-                        static fn (string $name): string => 'set'.Str::pascal($name),
+                        static fn (string $key): string => $key,
+                        static fn (string $key): string => Str::camel($key),
+                        static fn (string $key): string => 'set'.Str::studly($key),
+                        static fn (string $key): string => 'on'.Str::studly($key),
                     ] as $case
                 ) {
                     if (method_exists($object, $method = $case($key))) {
-                        $object->{$method}($value);
+                        $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
+
+                        if (1 === $numberOfParameters) {
+                            $object->{$method}($value);
+
+                            return;
+                        }
+
+                        app()->call([$object, $method], $value);
 
                         return;
                     }
                 }
             })
-            ->pipe(static fn (Collection $options): object => $options->has('extender')
-                ? $options->get('extender')($object)
-                : $object);
+            ->pipe(static fn (Collection $configuration): object => $object);
     }
 }

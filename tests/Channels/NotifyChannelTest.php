@@ -23,7 +23,7 @@ use Psr\Http\Message\ResponseInterface;
 
 it('will throw `InvalidArgumentException`', function (): void {
     new NotifyChannel(new Repository([
-        AbstractChannel::CHANNEL_CONFIG_KEY => 'null',
+        AbstractChannel::CHANNEL_CONFIGURATION_KEY => 'null',
         'client' => [
             'extender' => null,
         ],
