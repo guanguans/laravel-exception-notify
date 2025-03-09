@@ -22,7 +22,7 @@ class StackChannel extends AbstractChannel
     {
         collect($this->configRepository->get('channels'))->each(
             static function (string $channel) use ($throwable): void {
-                rescue(function () use ($channel, $throwable): void {
+                rescue(static function () use ($channel, $throwable): void {
                     ExceptionNotify::driver($channel)->report($throwable);
                 });
             }
@@ -34,7 +34,7 @@ class StackChannel extends AbstractChannel
         return collect($this->configRepository->get('channels'))
             ->mapWithKeys(
                 static fn (string $channel): array => [
-                    $channel => rescue(fn () => ExceptionNotify::driver($channel)->reportContent($content)),
+                    $channel => rescue(static fn () => ExceptionNotify::driver($channel)->reportContent($content)),
                 ]
             )
             ->all();

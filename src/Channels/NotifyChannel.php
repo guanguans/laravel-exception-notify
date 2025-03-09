@@ -29,10 +29,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class NotifyChannel extends AbstractChannel
 {
-    public const TEMPLATES = [
-        'title' => '{title}',
-        'report' => '{report}',
-    ];
     public const TITLE_TEMPLATE = '{title}';
     public const CONTENT_TEMPLATE = '{content}';
 

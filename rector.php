@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
+use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Collection;
@@ -36,8 +37,10 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
+use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
+use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 use RectorLaravel\Rector\Class_\ModelCastsPropertyToCastsMethodRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
@@ -135,6 +138,11 @@ return RectorConfig::configure()
     // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
     //     new FuncCallToStaticCall('str', Str::class, 'of'),
     // ])
+    ->withConfiguredRule(StringToClassConstantRector::class, [
+        new StringToClassConstant('{title}', NotifyChannel::class, 'TITLE_TEMPLATE'),
+        new StringToClassConstant('{content}', NotifyChannel::class, 'CONTENT_TEMPLATE'),
+        new StringToClassConstant('{report}', NotifyChannel::class, 'CONTENT_TEMPLATE'),
+    ])
     ->withConfiguredRule(
         RenameFunctionRector::class,
         [
@@ -179,6 +187,10 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         DowngradeArraySpreadStringKeyRector::class => [
+            __FILE__,
+        ],
+        StringToClassConstantRector::class => [
+            __DIR__.'/src/Channels/NotifyChannel.php',
             __FILE__,
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
