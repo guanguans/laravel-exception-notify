@@ -28,13 +28,7 @@ class ReportExceptionJob implements ShouldQueue
     public function __construct(
         private string $channel,
         private string $content
-    ) {
-        $this->onConnection(config('exception-notify.job.connection'));
-
-        if ($queue = config('exception-notify.job.queue')) {
-            $this->onQueue($queue);
-        }
-    }
+    ) {}
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {

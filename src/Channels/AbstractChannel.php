@@ -15,10 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
-use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
+use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -29,6 +30,7 @@ use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 
 abstract class AbstractChannel implements ChannelContract
 {
+    use ApplyConfigurationToObjectable;
     public const CHANNEL_CONFIGURATION_KEY = '__channel';
     public const TITLE_TEMPLATE = '{title}';
     public const CONTENT_TEMPLATE = '{content}';
@@ -58,16 +60,21 @@ abstract class AbstractChannel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        $pendingDispatch = ReportExceptionJob::dispatch($this->getChannel(), $this->getContent());
+        $pendingDispatch = dispatch($this->makeJob());
 
-        if (
-            'sync' === config('exception-notify.job.connection')
-            && !app()->runningInConsole()
-        ) {
+        if ('sync' === config('exception-notify.job.connection') && !app()->runningInConsole()) {
             $pendingDispatch->afterResponse();
         }
 
         unset($pendingDispatch); // Trigger the job
+    }
+
+    protected function makeJob(): ShouldQueue
+    {
+        return $this->applyConfigurationToObject(
+            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent()),
+            config('exception-notify.job')
+        );
     }
 
     protected function rules(): array

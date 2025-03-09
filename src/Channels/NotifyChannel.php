@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
 use Guanguans\Notify\Foundation\Message;
@@ -26,8 +25,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class NotifyChannel extends AbstractChannel
 {
-    use ApplyConfigurationToObjectable;
-
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Illuminate\Contracts\Container\BindingResolutionException

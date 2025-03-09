@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\SentMessage;
 use Illuminate\Support\Facades\Mail;
@@ -21,8 +20,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
 
 class MailChannel extends AbstractChannel
 {
-    use ApplyConfigurationToObjectable;
-
     /**
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
