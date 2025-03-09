@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportFailedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Illuminate\Cache\RateLimiter;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
@@ -36,6 +35,11 @@ class Channel implements ChannelContract
     public function __construct(
         private ChannelContract $channelContract
     ) {}
+
+    public function reportIf(mixed $condition, \Throwable $throwable): void
+    {
+        value($condition) and $this->report($throwable);
+    }
 
     public function report(\Throwable $throwable): void
     {
@@ -102,7 +106,6 @@ class Channel implements ChannelContract
             !config('exception-notify.enabled')
             || !app()->environment(config('exception-notify.environments'))
             || $this->shouldSkip($throwable)
-            || !resolve(ExceptionHandler::class)->shouldReport($throwable)
         ) {
             return true;
         }

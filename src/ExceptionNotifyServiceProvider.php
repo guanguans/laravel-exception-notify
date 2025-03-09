@@ -90,8 +90,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     private function registerReportUsing(): self
     {
         if (method_exists($exceptionHandler = $this->app->make(ExceptionHandler::class), 'reportable')) {
-            $exceptionHandler->reportable(static function (\Throwable $throwable): void {
-                ExceptionNotify::report($throwable);
+            $exceptionHandler->reportable(static function (\Throwable $throwable) use ($exceptionHandler): void {
+                ExceptionNotify::reportIf($exceptionHandler->shouldReport($throwable), $throwable);
             });
         }
 
