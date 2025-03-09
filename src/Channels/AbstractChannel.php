@@ -21,7 +21,6 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Illuminate\Config\Repository;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
@@ -45,20 +44,16 @@ abstract class AbstractChannel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        try {
-            $pendingDispatch = ReportExceptionJob::dispatch($this->getChannel(), $this->getReport());
+        $pendingDispatch = ReportExceptionJob::dispatch($this->getChannel(), $this->getContent());
 
-            if (
-                'sync' === config('exception-notify.job.connection')
-                && !app()->runningInConsole()
-            ) {
-                $pendingDispatch->afterResponse();
-            }
-
-            unset($pendingDispatch); // Trigger the job
-        } catch (\Throwable $throwable) {
-            Log::error($throwable->getMessage(), ['exception' => $throwable]);
+        if (
+            'sync' === config('exception-notify.job.connection')
+            && !app()->runningInConsole()
+        ) {
+            $pendingDispatch->afterResponse();
         }
+
+        unset($pendingDispatch); // Trigger the job
     }
 
     protected function rules(): array
@@ -81,7 +76,7 @@ abstract class AbstractChannel implements ChannelContract
         return [];
     }
 
-    protected function getReport(): string
+    protected function getContent(): string
     {
         return (string) (new Pipeline(app()))
             ->send($this->getCollectors())

@@ -27,7 +27,7 @@ class ReportExceptionJob implements ShouldQueue
 
     public function __construct(
         private string $channel,
-        private string $report
+        private string $content
     ) {
         $this->onConnection(config('exception-notify.job.connection'));
 
@@ -38,6 +38,6 @@ class ReportExceptionJob implements ShouldQueue
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
-        $exceptionNotifyManager->driver($this->channel)->reportContent($this->report);
+        $exceptionNotifyManager->driver($this->channel)->reportContent($this->content);
     }
 }
