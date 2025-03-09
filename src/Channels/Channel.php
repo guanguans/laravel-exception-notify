@@ -17,6 +17,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportFailedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
+use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
@@ -30,6 +31,7 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  */
 class Channel implements ChannelContract
 {
+    use AggregationTrait;
     private static array $skipCallbacks = [];
 
     public function __construct(

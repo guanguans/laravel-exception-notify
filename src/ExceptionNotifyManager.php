@@ -20,15 +20,10 @@ use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Guanguans\Notify\Foundation\Concerns\Dumpable;
+use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
 use Illuminate\Support\Str;
-use Illuminate\Support\Traits\Conditionable;
-use Illuminate\Support\Traits\ForwardsCalls;
-use Illuminate\Support\Traits\Localizable;
-use Illuminate\Support\Traits\Macroable;
-use Illuminate\Support\Traits\Tappable;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
@@ -40,14 +35,9 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  */
 class ExceptionNotifyManager extends Manager implements ChannelContract
 {
-    use Conditionable;
-    use Dumpable;
-    use ForwardsCalls;
-    use Localizable;
-    use Macroable {
-        Macroable::__call as macroCall;
+    use AggregationTrait {
+        AggregationTrait::__call as macroCall;
     }
-    use Tappable;
 
     public function __call(mixed $method, mixed $parameters): mixed
     {

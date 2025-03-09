@@ -40,7 +40,7 @@ return [
     /**
      * The list of environments that should be reported.
      */
-    'environments' => env_explode('EXCEPTION_NOTIFY_ENVS', [
+    'environments' => env_explode('EXCEPTION_NOTIFY_ENVIRONMENTS', [
         // 'production',
         // 'local',
         // 'testing',
@@ -79,7 +79,7 @@ return [
         ChoreCollector::class,
         RequestBasicCollector::class,
         ExceptionBasicCollector::class,
-        ExceptionContextCollector::class,
+        ExceptionContextCollector::class => ['mark' => '', 'lineNumber' => 5],
         ExceptionTraceCollector::class,
 
         // RequestHeaderCollector::class,
