@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
-use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
+use Guanguans\Notify\Foundation\Contracts\Client;
 use Guanguans\Notify\Foundation\Message;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Http\Message\ResponseInterface;

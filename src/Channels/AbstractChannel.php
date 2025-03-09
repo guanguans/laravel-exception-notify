@@ -17,7 +17,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
-use Guanguans\LaravelExceptionNotify\Support\Traits\ApplyConfigurationToObjectable;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -27,10 +26,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
+use function Guanguans\LaravelExceptionNotify\Support\make;
 
 abstract class AbstractChannel implements ChannelContract
 {
-    use ApplyConfigurationToObjectable;
     public const CHANNEL_CONFIGURATION_KEY = '__channel';
     public const TITLE_TEMPLATE = '{title}';
     public const CONTENT_TEMPLATE = '{content}';
@@ -164,5 +163,49 @@ abstract class AbstractChannel implements ChannelContract
         });
 
         return $configuration;
+    }
+
+    protected function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
+    {
+        return collect($configuration)
+            ->except($except)
+            // ->filter(static fn (mixed $value): bool => \is_array($value) && !array_is_list($value))
+            ->each(static function (mixed $value, string $key) use ($object): void {
+                foreach (
+                    [
+                        static fn (string $key): string => $key,
+                        static fn (string $key): string => Str::camel($key),
+                        static fn (string $key): string => 'set'.Str::studly($key),
+                        static fn (string $key): string => 'on'.Str::studly($key),
+                    ] as $caster
+                ) {
+                    if (method_exists($object, $method = $caster($key))) {
+                        $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
+
+                        if (1 === $numberOfParameters) {
+                            $object->{$method}($value);
+
+                            return;
+                        }
+
+                        app()->call([$object, $method], $value);
+
+                        return;
+                    }
+                }
+            })
+            ->pipe(static function (Collection $configuration) use ($object): object {
+                $extender = $configuration->get('extender');
+
+                if (!$extender) {
+                    return $object;
+                }
+
+                if (!\is_callable($extender) && (\is_array($extender) || \is_string($extender))) {
+                    $extender = make($extender);
+                }
+
+                return $extender($object);
+            });
     }
 }
