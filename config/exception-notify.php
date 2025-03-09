@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
@@ -163,8 +163,8 @@ return [
         //     ],
         //     'message' => [
         //         'class' => Guanguans\Notify\Foo\Messages\Message::class,
-        //         'title' => NotifyChannel::CONTENT_TEMPLATE,
-        //         'content' => NotifyChannel::CONTENT_TEMPLATE,
+        //         'title' => AbstractChannel::CONTENT_TEMPLATE,
+        //         'content' => AbstractChannel::CONTENT_TEMPLATE,
         //     ],
         //     'pipes' => [
         //         LimitLengthPipe::with(1024),
@@ -182,8 +182,8 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\Bark\Messages\Message::class,
-                'title' => NotifyChannel::TITLE_TEMPLATE,
-                'body' => NotifyChannel::CONTENT_TEMPLATE,
+                'title' => AbstractChannel::TITLE_TEMPLATE,
+                'body' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 LimitLengthPipe::with(4096),
@@ -201,8 +201,8 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\Chanify\Messages\TextMessage::class,
-                'title' => NotifyChannel::TITLE_TEMPLATE,
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'title' => AbstractChannel::TITLE_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 LimitLengthPipe::with(1024),
@@ -221,8 +221,8 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
-                'title' => NotifyChannel::TITLE_TEMPLATE,
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'title' => AbstractChannel::TITLE_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 AddKeywordChorePipe::with(env('EXCEPTION_NOTIFY_DINGTALK_KEYWORD')),
@@ -242,7 +242,7 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\Discord\Messages\Message::class,
-                'content' => NotifyChannel::CONTENT_TEMPLATE,
+                'content' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 LimitLengthPipe::with(2000),
@@ -261,7 +261,7 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\Lark\Messages\TextMessage::class,
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 AddKeywordChorePipe::with(env('EXCEPTION_NOTIFY_LARK_KEYWORD')),
@@ -283,8 +283,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Ntfy\Messages\Message::class,
                 'topic' => env('EXCEPTION_NOTIFY_NTFY_TOPIC', 'laravel-exception-notify'),
-                'title' => NotifyChannel::TITLE_TEMPLATE,
-                'message' => NotifyChannel::CONTENT_TEMPLATE,
+                'title' => AbstractChannel::TITLE_TEMPLATE,
+                'message' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 LimitLengthPipe::with(4096),
@@ -303,8 +303,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\PushDeer\Messages\Message::class,
                 'type' => 'markdown',
-                'text' => NotifyChannel::TITLE_TEMPLATE,
-                'desp' => NotifyChannel::CONTENT_TEMPLATE,
+                'text' => AbstractChannel::TITLE_TEMPLATE,
+                'desp' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
@@ -324,7 +324,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Slack\Messages\Message::class,
                 'mrkdwn' => true,
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,
@@ -344,7 +344,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Telegram\Messages\TextMessage::class,
                 'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 LimitLengthPipe::with(4096),
@@ -362,7 +362,7 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
-                'content' => NotifyChannel::CONTENT_TEMPLATE,
+                'content' => AbstractChannel::CONTENT_TEMPLATE,
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,

@@ -27,8 +27,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
 class NotifyChannel extends AbstractChannel
 {
     use ApplyConfigurationToObjectable;
-    public const TITLE_TEMPLATE = '{title}';
-    public const CONTENT_TEMPLATE = '{content}';
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException

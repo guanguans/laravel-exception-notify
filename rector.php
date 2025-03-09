@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Collection;
@@ -62,6 +62,7 @@ return RectorConfig::configure()
     ->withSkip([
         '**/__snapshots__/*',
         '**/Fixtures/*',
+        __DIR__.'/tests/FeatureTest.php',
         // __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')
@@ -139,9 +140,9 @@ return RectorConfig::configure()
     //     new FuncCallToStaticCall('str', Str::class, 'of'),
     // ])
     ->withConfiguredRule(StringToClassConstantRector::class, [
-        new StringToClassConstant('{title}', NotifyChannel::class, 'TITLE_TEMPLATE'),
-        new StringToClassConstant('{content}', NotifyChannel::class, 'CONTENT_TEMPLATE'),
-        new StringToClassConstant('{report}', NotifyChannel::class, 'CONTENT_TEMPLATE'),
+        new StringToClassConstant('{title}', AbstractChannel::class, 'TITLE_TEMPLATE'),
+        new StringToClassConstant('{content}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
+        new StringToClassConstant('{report}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
     ])
     ->withConfiguredRule(
         RenameFunctionRector::class,
@@ -190,7 +191,7 @@ return RectorConfig::configure()
             __FILE__,
         ],
         StringToClassConstantRector::class => [
-            __DIR__.'/src/Channels/NotifyChannel.php',
+            __DIR__.'/src/Channels/AbstractChannel.php',
             __FILE__,
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [

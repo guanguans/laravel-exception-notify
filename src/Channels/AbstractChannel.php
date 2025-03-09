@@ -30,6 +30,8 @@ use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 abstract class AbstractChannel implements ChannelContract
 {
     public const CHANNEL_CONFIGURATION_KEY = '__channel';
+    public const TITLE_TEMPLATE = '{title}';
+    public const CONTENT_TEMPLATE = '{content}';
 
     /**
      * @throws \Throwable
@@ -148,7 +150,7 @@ abstract class AbstractChannel implements ChannelContract
     {
         array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
             \is_string($value) and $value = str_replace(
-                [NotifyChannel::TITLE_TEMPLATE, NotifyChannel::CONTENT_TEMPLATE],
+                [self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE],
                 [config('exception-notify.title'), $content],
                 $value
             );

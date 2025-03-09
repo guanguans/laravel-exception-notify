@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\NotifyChannel;
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
@@ -69,11 +69,11 @@ it('is a testing', function (): void {
         'message' => [
             'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
             'options' => [
-                'title' => NotifyChannel::TITLE_TEMPLATE,
-                'text' => NotifyChannel::CONTENT_TEMPLATE,
+                'title' => AbstractChannel::TITLE_TEMPLATE,
+                'text' => AbstractChannel::CONTENT_TEMPLATE,
             ],
-            'title' => NotifyChannel::TITLE_TEMPLATE,
-            'text' => NotifyChannel::CONTENT_TEMPLATE,
+            'title' => AbstractChannel::TITLE_TEMPLATE,
+            'text' => AbstractChannel::CONTENT_TEMPLATE,
         ],
         'pipes' => [
             AddKeywordChorePipe::with('string'),
@@ -82,4 +82,4 @@ it('is a testing', function (): void {
         ],
     ]);
     ExceptionNotify::driver('mail')->report(new Exception('This is a test exception.'));
-})->group(__DIR__, __FILE__)->skip(true);
+})->group(__DIR__, __FILE__)->skip();
