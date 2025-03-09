@@ -30,6 +30,6 @@ it('will throw `InvalidArgumentException`', function (): void {
 
 it('can report', function (): void {
     expect(app(ExceptionNotifyManager::class)->driver('bark'))
-        ->reportRaw('report')
+        ->reportContent('report')
         ->toBeInstanceOf(ResponseInterface::class);
 })->group(__DIR__, __FILE__);

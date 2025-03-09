@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 
 class MailChannel extends AbstractChannel
 {
-    public function reportRaw(string $report): mixed
+    public function reportContent(string $content): mixed
     {
         /** @var Mailer|PendingMail $mailerOrPendingMail */
         $mailerOrPendingMail = collect($this->configRepository->all())
@@ -39,7 +39,7 @@ class MailChannel extends AbstractChannel
             $mailerOrPendingMail = app()->call($this->configRepository->get('extender'), ['mailerOrPendingMail' => $mailerOrPendingMail]);
         }
 
-        return $mailerOrPendingMail->send(new ReportExceptionMail($report));
+        return $mailerOrPendingMail->send(new ReportExceptionMail($content));
     }
 
     protected function rules(): array

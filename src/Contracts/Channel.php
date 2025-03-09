@@ -17,5 +17,5 @@ interface Channel
 {
     public function report(\Throwable $throwable): void;
 
-    public function reportRaw(string $report): mixed;
+    public function reportContent(string $content): mixed;
 }

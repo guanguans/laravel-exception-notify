@@ -19,9 +19,9 @@ class DumpChannel extends AbstractChannel
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
      */
-    public function reportRaw(string $report): mixed
+    public function reportContent(string $content): mixed
     {
-        return $this->configRepository->get('exit', false) ? dd($report) : dump($report);
+        return $this->configRepository->get('exit', false) ? dd($content) : dump($content);
     }
 
     protected function rules(): array

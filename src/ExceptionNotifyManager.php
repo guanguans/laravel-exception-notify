@@ -61,9 +61,9 @@ class ExceptionNotifyManager extends Manager implements Contracts\Channel
         });
     }
 
-    public function reportRaw(string $report): mixed
+    public function reportContent(string $content): mixed
     {
-        return rescue(fn (): mixed => $this->driver()->reportRaw($report));
+        return rescue(fn (): mixed => $this->driver()->reportContent($content));
     }
 
     public function getDefaultDriver(): string

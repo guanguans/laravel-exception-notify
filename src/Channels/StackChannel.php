@@ -24,11 +24,11 @@ class StackChannel extends AbstractChannel
         );
     }
 
-    public function reportRaw(string $report): array
+    public function reportContent(string $content): array
     {
         return collect($this->configRepository->get('channels'))
             ->mapWithKeys(
-                static fn (string $channel): array => [$channel => ExceptionNotify::driver($channel)->reportRaw($report)]
+                static fn (string $channel): array => [$channel => ExceptionNotify::driver($channel)->reportContent($content)]
             )
             ->all();
     }

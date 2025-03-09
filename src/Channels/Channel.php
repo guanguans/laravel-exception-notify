@@ -49,12 +49,12 @@ class Channel implements \Guanguans\LaravelExceptionNotify\Contracts\Channel
         }
     }
 
-    public function reportRaw(string $report): mixed
+    public function reportContent(string $content): mixed
     {
         try {
-            Event::dispatch(new ExceptionReportingEvent($this->channel, $report));
+            Event::dispatch(new ExceptionReportingEvent($this->channel, $content));
 
-            $result = $this->channel->reportRaw($report);
+            $result = $this->channel->reportContent($content);
 
             Event::dispatch(new ExceptionReportedEvent($this->channel, $result));
 

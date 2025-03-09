@@ -38,9 +38,9 @@ class NotifyChannel extends AbstractChannel
      * @throws BindingResolutionException
      * @throws GuzzleException
      */
-    public function reportRaw(string $report): ResponseInterface
+    public function reportContent(string $content): ResponseInterface
     {
-        return $this->createClient()->send($this->createMessage($report));
+        return $this->createClient()->send($this->createMessage($content));
     }
 
     protected function rules(): array

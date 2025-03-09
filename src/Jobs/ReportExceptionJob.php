@@ -38,6 +38,6 @@ class ReportExceptionJob implements ShouldQueue
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
-        $exceptionNotifyManager->driver($this->channel)->reportRaw($this->report);
+        $exceptionNotifyManager->driver($this->channel)->reportContent($this->report);
     }
 }
