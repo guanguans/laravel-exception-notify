@@ -8,6 +8,96 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.0.0-beta1"></a>
+## [5.0.0-beta1] - 2025-03-10
+### CI
+- improve type safety and add type perfect settings
+- **baselines:** Remove deprecated baseline files and update configs
+- **baselines:** Add new baseline files for PHPStan errors
+- **composer:** Add class-leak commands to composer.json
+- **composer:** Add new composer packages and update configurations
+- **config:** Add Composer Dependency Analyser configuration
+- **config:** Refactor composer-unused and remove unused files
+- **config:** Update composer require checker configuration
+- **dependencies:** Add facade-documenter and ai-commit packages
+- **rector:** Add class visibility change configuration and utility function
+
+### Feat
+- Refactor hydrate_pipe function to static call and update checks
+- **channels:** Introduce AbstractChannel and Refactor Channels
+- **channels:** Refactor report methods to improve exception handling
+- **channels:** Add StackChannel for handling reports
+- **commands:** Add Configureable trait for dynamic options
+- **exception-notify:** Add conditional reporting to exception handler
+- **naming:** Add Naming trait for dynamic channel names
+- **tests:** Refactor namespace and classmap for tests
+- **trait:** Enhance configuration handling with extender support
+- **traits:** Add MakeStaticable, SetStateable, and WithPipeArgs
+- **workflows:** Update Laravel and PHP dependencies configuration
+- **workflows:** upgrade PHP version to 8.0
+
+### Fix
+- **Channel:** Pass throwable to job and collectors
+- **abstract-channel:** Remove unset of pending dispatch job
+- **config:** Add mail reporting support for exceptions
+- **dependencies:** Remove Carbon from ignored packages
+- **tests:** Add ExceptionNotifyManagerTest for exception fingerprints
+
+### Refactor
+- Refactor function calls to use global scope
+- Update types and improve PHP version compatibility
+- Update type hinting to use mixed type for parameters
+- Replace Str::of() with str() for consistency
+- Improve code quality and consistency in rector.php
+- Consolidate mail reporting and config application
+- **Channel:** Improve exception reporting logic
+- **Channel:** Rename configuration key for clarity
+- **Channel:** Improve error handling using rescue function
+- **Channel:** Remove rescue usage and optimize report methods
+- **Channel:** Simplify event handling in report methods
+- **Channel:** Validate configuration on construction
+- **Channels:** Simplify exception reporting logic
+- **Channels:** Remove ApplyConfigurationToObjectable trait
+- **Channels:** Improve method visibility and organization
+- **Contracts:** Rename Throwable to ThrowableContract and update usages
+- **Dependencies:** Refactor function calls to support namespace
+- **ExceptionNotifyManager:** Simplify rate limiting logic
+- **HydratePipeFuncCallToStaticCallRector:** Use ValueResolver for static call
+- **Notifiable:** Rename report variable to content
+- **NotifyChannel:** Simplify authenticator creation process
+- **StackChannel:** Improve error handling in report methods
+- **baselines:** Remove obsolete NEON files and update imports
+- **channel:** Rename report method and parameter
+- **channels:** Implement DumpChannel class for logging
+- **channels:** Rename reportRaw to reportContent
+- **channels:** Rename CHANNEL_KEY to CHANNEL_CONFIG_KEY
+- **channels:** Replace InvalidArgumentException with InvalidConfigurationException
+- **channels:** Simplify channel handling in AbstractChannel
+- **collectors:** Remove unused request collectors
+- **collectors:** Rename Collector classes to AbstractCollector
+- **collectors:** Improve null safety and type hints in methods
+- **collectors:** Improve time handling with Carbon
+- **collectors:** Change name method to instance method
+- **commands:** Update TestCommand signature and logic
+- **config:** Replace NotifyChannel usage with AbstractChannel
+- **config:** Enable PHP 8.0 migration rules and clean code
+- **config:** Simplify constructor property promotion
+- **config:** Rename 'envs' to 'environments'
+- **config:** Organize project structure and update scripts
+- **contracts:** Rename Channel interface to ChannelContract
+- **contracts:** Rename ExceptionAware to ExceptionAwareContract
+- **core:** Simplify channel interfaces and collector merging
+- **core:** Update report methods to return mixed type
+- **events:** Rename exception events for clarity
+- **exception-notify:** Update rescue function usage
+- **exception-notify:** Improve job dispatch handling
+- **exception-notify:** Simplify templates in NotifyChannel
+- **pipes:** Replace hydrate_pipe calls with static calls
+- **service provider:** Simplify singleton registrations
+- **support:** Integrate AggregationTrait into Channel and Manager
+- **support:** Improve exception handling with line number
+
+
 <a name="4.7.0"></a>
 ## [4.7.0] - 2025-03-01
 ### CI
@@ -1027,7 +1117,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...HEAD
+[5.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...5.0.0-beta1
 [4.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.6.0...4.7.0
 [4.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.1...4.6.0
 [4.5.1]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.0...4.5.1
