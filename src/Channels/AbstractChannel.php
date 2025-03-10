@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
+use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
+use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
@@ -59,7 +61,7 @@ abstract class AbstractChannel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        $pendingDispatch = dispatch($this->makeJob());
+        $pendingDispatch = dispatch($this->makeJob($throwable));
 
         if (
             'sync' === config('exception-notify.job.connection', config('queue.default'))
@@ -71,10 +73,10 @@ abstract class AbstractChannel implements ChannelContract
         // unset($pendingDispatch); // Trigger the job
     }
 
-    protected function makeJob(): ShouldQueue
+    protected function makeJob(\Throwable $throwable): ShouldQueue
     {
         return $this->applyConfigurationToObject(
-            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent()),
+            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent($throwable)),
             config('exception-notify.job')
         );
     }
@@ -99,10 +101,10 @@ abstract class AbstractChannel implements ChannelContract
         return [];
     }
 
-    protected function getContent(): string
+    protected function getContent(\Throwable $throwable): string
     {
         return (string) (new Pipeline(app()))
-            ->send($this->getCollectors())
+            ->send($this->getCollectors($throwable))
             ->through($this->getPipes())
             ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
     }
@@ -136,18 +138,24 @@ abstract class AbstractChannel implements ChannelContract
             ->all();
     }
 
-    protected function getCollectors(): Collection
+    protected function getCollectors(\Throwable $throwable): Collection
     {
         return collect(array_merge(
             config('exception-notify.collectors', []),
             $this->configRepository->get('collectors', [])
-        ))->map(static function (array|string $parameters, int|string $class) {
+        ))->map(static function (array|string $parameters, int|string $class): CollectorContract {
             if (!\is_array($parameters)) {
                 [$parameters, $class] = [(array) $class, $parameters];
             }
 
             return app()->make($class, $parameters);
-        });
+        })->mapWithKeys(
+            static function (CollectorContract $collector) use ($throwable): array {
+                $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
+
+                return [$collector::name() => $collector->collect()];
+            }
+        );
     }
 
     protected function getChannel(): string
