@@ -146,7 +146,7 @@ class Channel implements ChannelContract
     private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
     {
         return (
-            new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store')))
+            new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store', config('cache.default'))))
         )->attempt($key, $maxAttempts, static fn (): bool => true, $decaySeconds);
     }
 }

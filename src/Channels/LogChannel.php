@@ -15,6 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Illuminate\Support\Facades\Log;
 
+/**
+ * @see \Illuminate\Log\LogManager
+ */
 class LogChannel extends AbstractChannel
 {
     public function reportContent(string $content): mixed

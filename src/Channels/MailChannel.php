@@ -18,6 +18,11 @@ use Illuminate\Mail\SentMessage;
 use Illuminate\Support\Facades\Mail;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
+/**
+ * @see \Illuminate\Mail\MailManager
+ * @see \Illuminate\Mail\Mailer
+ * @see \Illuminate\Mail\PendingMail
+ */
 class MailChannel extends AbstractChannel
 {
     /**

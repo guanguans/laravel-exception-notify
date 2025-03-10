@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+/**
+ * @see \Symfony\Component\VarDumper\VarDumper::dump()
+ */
 class DumpChannel extends AbstractChannel
 {
     /**

@@ -61,11 +61,14 @@ abstract class AbstractChannel implements ChannelContract
     {
         $pendingDispatch = dispatch($this->makeJob());
 
-        if ('sync' === config('exception-notify.job.connection') && !app()->runningInConsole()) {
+        if (
+            'sync' === config('exception-notify.job.connection', config('queue.default'))
+            && !app()->runningInConsole()
+        ) {
             $pendingDispatch->afterResponse();
         }
 
-        unset($pendingDispatch); // Trigger the job
+        // unset($pendingDispatch); // Trigger the job
     }
 
     protected function makeJob(): ShouldQueue
@@ -80,9 +83,9 @@ abstract class AbstractChannel implements ChannelContract
     {
         return [
             'driver' => 'required|string',
+            self::CHANNEL_CONFIGURATION_KEY => 'required|string',
             'collectors' => 'array',
             'pipes' => 'array',
-            self::CHANNEL_CONFIGURATION_KEY => 'string',
         ];
     }
 
@@ -168,7 +171,20 @@ abstract class AbstractChannel implements ChannelContract
     protected function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
     {
         return collect($configuration)
-            ->except($except)
+            ->except(
+                $except ?? collect((new \ReflectionObject($object))->getConstructor()?->getParameters())
+                    ->map(static fn (\ReflectionParameter $reflectionParameter): string => $reflectionParameter->getName())
+                    ->push(
+                        '__abstract',
+                        '__class',
+                        '__name',
+                        '_abstract',
+                        '_class',
+                        '_name',
+                        self::CHANNEL_CONFIGURATION_KEY,
+                    )
+                    ->all()
+            )
             // ->filter(static fn (mixed $value): bool => \is_array($value) && !array_is_list($value))
             ->each(static function (mixed $value, string $key) use ($object): void {
                 foreach (

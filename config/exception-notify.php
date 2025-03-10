@@ -52,7 +52,7 @@ return [
      * The rate limit of same exception.
      */
     'rate_limit' => [
-        'cache_store' => env('EXCEPTION_NOTIFY_RATE_LIMIT_CACHE_STORE', config('cache.default')),
+        'cache_store' => env('EXCEPTION_NOTIFY_RATE_LIMIT_CACHE_STORE'),
         'key_prefix' => env('EXCEPTION_NOTIFY_RATE_LIMIT_KEY_PREFIX', 'exception_notify_'),
         'max_attempts' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_MAX_ATTEMPTS', config('app.debug') ? 50 : 1),
         'decay_seconds' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_DECAY_SECONDS', 300),
@@ -63,8 +63,8 @@ return [
      */
     'job' => [
         'class' => ReportExceptionJob::class,
-        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', config('queue.default')),
-        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
+        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION'),
+        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE', 'exception-notify'),
     ],
 
     /**
@@ -81,7 +81,7 @@ return [
         ChoreCollector::class,
         RequestBasicCollector::class,
         ExceptionBasicCollector::class,
-        ExceptionContextCollector::class => ['mark' => '', 'lineNumber' => 5],
+        ExceptionContextCollector::class,
         ExceptionTraceCollector::class,
 
         // RequestHeaderCollector::class,
@@ -102,7 +102,7 @@ return [
      */
     'channels' => [
         /**
-         * @see \Symfony\Component\VarDumper\VarDumper::dump()
+         * @see \Guanguans\LaravelExceptionNotify\Channels\StackChannel
          */
         'stack' => [
             'driver' => 'stack',
@@ -112,14 +112,14 @@ return [
         ],
 
         /**
-         * @see \Symfony\Component\VarDumper\VarDumper::dump()
+         * @see \Guanguans\LaravelExceptionNotify\Channels\DumpChannel
          */
         'dump' => [
             'driver' => 'dump',
         ],
 
         /**
-         * @see \Illuminate\Log\LogManager
+         * @see \Guanguans\LaravelExceptionNotify\Channels\LogChannel
          */
         'log' => [
             'driver' => 'log',
@@ -127,7 +127,7 @@ return [
         ],
 
         /**
-         * @see \Illuminate\Mail\MailManager
+         * @see \Guanguans\LaravelExceptionNotify\Channels\MailChannel
          */
         'mail' => [
             'driver' => 'mail',

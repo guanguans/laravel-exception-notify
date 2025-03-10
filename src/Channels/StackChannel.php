@@ -16,6 +16,9 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
+/**
+ * @see \Illuminate\Log\LogManager::createStackDriver()
+ */
 class StackChannel extends AbstractChannel
 {
     public function report(\Throwable $throwable): void

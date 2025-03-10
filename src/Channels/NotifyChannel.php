@@ -21,7 +21,9 @@ use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
 /**
- * @see \Illuminate\Log\LogManager
+ * @see \Guanguans\Notify\Foundation\Client
+ * @see \Guanguans\Notify\Foundation\Message
+ * @see \Guanguans\Notify\Foundation\Authenticators
  */
 class NotifyChannel extends AbstractChannel
 {
