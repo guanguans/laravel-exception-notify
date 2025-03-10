@@ -15,13 +15,11 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
-use Guanguans\LaravelExceptionNotify\Events\ReportFailedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
-use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @see \Illuminate\Log\Logger
@@ -45,33 +43,20 @@ class Channel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        rescue(function () use ($throwable): void {
-            if ($this->shouldntReport($throwable)) {
-                return;
-            }
+        if ($this->shouldntReport($throwable)) {
+            return;
+        }
 
-            $this->channelContract->report($throwable);
-        });
+        $this->channelContract->report($throwable);
     }
 
     public function reportContent(string $content): mixed
     {
-        return rescue(
-            function () use ($content): mixed {
-                Event::dispatch(new ReportingEvent($this->channelContract, $content));
+        Event::dispatch(new ReportingEvent($this->channelContract, $content));
+        $result = $this->channelContract->reportContent($content);
+        Event::dispatch(new ReportedEvent($this->channelContract, $result));
 
-                $result = $this->channelContract->reportContent($content);
-
-                Event::dispatch(new ReportedEvent($this->channelContract, $result));
-
-                return $result;
-            },
-            function (\Throwable $throwable): \Throwable {
-                Event::dispatch(new ReportFailedEvent($this->channelContract, $throwable));
-
-                return $throwable;
-            }
-        );
+        return $result;
     }
 
     public function reporting(mixed $listener): void
@@ -82,11 +67,6 @@ class Channel implements ChannelContract
     public function reported(mixed $listener): void
     {
         Event::listen(ReportedEvent::class, $listener);
-    }
-
-    public function reportFailed(mixed $listener): void
-    {
-        Event::listen(ReportFailedEvent::class, $listener);
     }
 
     public static function skipWhen(\Closure $callback): void
@@ -100,6 +80,8 @@ class Channel implements ChannelContract
     }
 
     /**
+     * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
+     *
      * @noinspection NotOptimalIfConditionsInspection
      */
     private function shouldntReport(\Throwable $throwable): bool
@@ -130,13 +112,15 @@ class Channel implements ChannelContract
         return false;
     }
 
+    /**
+     * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
+     */
     private function fingerprintFor(\Throwable $throwable): string
     {
         return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
             $throwable->getFile(),
             $throwable->getLine(),
             $throwable->getCode(),
-            // $throwable->getTraceAsString(),
         ]));
     }
 
