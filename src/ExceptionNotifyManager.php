@@ -82,7 +82,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
         return $channelContract instanceof Channel ? $channelContract : new Channel($channelContract);
     }
 
-    protected function createOriginalDriver(string $driver): ChannelContract
+    private function createOriginalDriver(string $driver): ChannelContract
     {
         if (isset($this->customCreators[$driver])) {
             return $this->callCustomCreator($driver);
