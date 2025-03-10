@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Tests;
+namespace Guanguans\LaravelExceptionNotifyTests;
 
 use Faker\Factory;
 use Faker\Generator;

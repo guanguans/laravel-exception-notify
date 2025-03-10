@@ -150,8 +150,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Guanguans\\LaravelExceptionNotify\\Tests\\": "tests"
-        }
+            "Guanguans\\LaravelExceptionNotifyTests\\": "tests"
+        },
+        "exclude-from-classmap": [
+            "tests/Fixtures/laravel"
+        ]
     },
     "config": {
         "allow-plugins": {

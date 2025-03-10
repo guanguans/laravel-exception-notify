@@ -11,8 +11,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Tests\Mail;
-
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 
 it('can build self', function (): void {

@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Guanguans\LaravelExceptionNotify\Tests\TestCase;
+use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
 
 uses(TestCase::class)
