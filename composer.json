@@ -153,6 +153,7 @@
             "Guanguans\\LaravelExceptionNotifyTests\\": "tests"
         },
         "exclude-from-classmap": [
+            "tests/Fixtures/Illuminate",
             "tests/Fixtures/laravel"
         ]
     },

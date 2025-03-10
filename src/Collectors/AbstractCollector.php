@@ -19,4 +19,9 @@ use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 abstract class AbstractCollector implements CollectorContract
 {
     use Naming;
+
+    public static function fallbackName(): string
+    {
+        return static::name();
+    }
 }

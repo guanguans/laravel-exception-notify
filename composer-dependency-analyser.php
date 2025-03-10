@@ -35,7 +35,6 @@ return (new Configuration)
     ->ignoreErrorsOnPackages(
         [
             'guzzlehttp/guzzle',
-            'nesbot/carbon',
             'psr/http-message',
             'symfony/console',
             'symfony/error-handler',

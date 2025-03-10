@@ -27,17 +27,9 @@ class RequestBasicCollector extends AbstractCollector
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
             'action' => $this->request->route()?->getActionName(),
-            'duration' => (function (): string {
-                $startTime = \defined('LARAVEL_START')
-                    ? LARAVEL_START
-                    : $this->request->server('REQUEST_TIME_FLOAT');
-
-                if (blank($startTime)) {
-                    return 'Unknown';
-                }
-
-                return human_milliseconds((microtime(true) - $startTime) * 1000);
-            })(),
+            'duration' => blank($startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT'))
+                ? 'Unknown'
+                : human_milliseconds((microtime(true) - $startTime) * 1000),
         ];
     }
 }

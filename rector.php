@@ -13,11 +13,13 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Carbon\Carbon;
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
+use Illuminate\Support\Carbon as IlluminateCarbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Node\Expr\ClassConstFetch;
@@ -41,6 +43,7 @@ use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
@@ -84,7 +87,7 @@ return RectorConfig::configure()
         '**/Fixtures/*',
         __DIR__.'/tests/FeatureTest.php',
         __DIR__.'/tests/ExceptionNotifyManagerTest.php',
-        // __FILE__,
+        __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')
     ->withParallel()
@@ -145,6 +148,9 @@ return RectorConfig::configure()
         'phpstan-ignore',
         'phpstan-ignore-next-line',
         'psalm-suppress',
+    ])
+    ->withConfiguredRule(RenameClassRector::class, [
+        Carbon::class => IlluminateCarbon::class,
     ])
     ->withConfiguredRule(StaticCallToFuncCallRector::class, [
         new StaticCallToFuncCall(Str::class, 'of', 'str'),
@@ -238,6 +244,7 @@ return RectorConfig::configure()
         )
     )
     ->withSkip([
+        DowngradeArraySpreadStringKeyRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
@@ -253,12 +260,8 @@ return RectorConfig::configure()
         TypeHintTappableCallRector::class,
     ])
     ->withSkip([
-        DowngradeArraySpreadStringKeyRector::class => [
-            __FILE__,
-        ],
         ScalarValueToConstFetchRector::class => [
             __DIR__.'/src/Channels/AbstractChannel.php',
-            __FILE__,
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',

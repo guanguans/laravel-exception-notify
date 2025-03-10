@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Carbon\Carbon;
 use Illuminate\Container\Container;
+use Illuminate\Support\Carbon;
 
 class ApplicationCollector extends AbstractCollector
 {
@@ -30,7 +30,7 @@ class ApplicationCollector extends AbstractCollector
             'name' => config('app.name'),
             'version' => $this->container->version(),
             'environment' => $this->container->environment(),
-            'debug' => config('app.debug'),
+            'debug' => $this->container->hasDebugModeEnabled(),
             'locale' => $this->container->getLocale(),
             'in console' => $this->container->runningInConsole(),
         ];
