@@ -21,9 +21,9 @@ use Illuminate\Support\Str;
  */
 class ExceptionContext
 {
-    public static function getMarked(\Throwable $throwable, string $mark = '➤', int $lineNumber = 5): array
+    public static function getMarked(\Throwable $throwable, string $mark = '➤', int $number = 5): array
     {
-        return collect(self::get($throwable, $lineNumber))
+        return collect(self::get($throwable, $number))
             ->tap(static function (Collection $collection) use (
                 &$exceptionLine,
                 $throwable,
@@ -52,9 +52,9 @@ class ExceptionContext
             ->all();
     }
 
-    public static function get(\Throwable $throwable, int $lineNumber = 5): array
+    public static function get(\Throwable $throwable, int $number = 5): array
     {
-        return self::getEval($throwable) ?: self::getFile($throwable, $lineNumber);
+        return self::getEval($throwable) ?: self::getFile($throwable, $number);
     }
 
     /**
@@ -69,10 +69,10 @@ class ExceptionContext
         return null;
     }
 
-    private static function getFile(\Throwable $throwable, int $lineNumber = 5): array
+    private static function getFile(\Throwable $throwable, int $number = 5): array
     {
         return collect(file($throwable->getFile()))
-            ->slice($throwable->getLine() - $lineNumber, 2 * $lineNumber - 1)
+            ->slice($throwable->getLine() - $number, 2 * $number - 1)
             ->mapWithKeys(static fn (string $code, int $line): array => [$line + 1 => $code])
             ->all();
     }

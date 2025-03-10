@@ -19,7 +19,7 @@ class ExceptionContextCollector extends AbstractExceptionCollector
 {
     public function __construct(
         private string $mark = '➤',
-        private int $lineNumber = 5
+        private int $number = 5
     ) {}
 
     public function collect(): array
@@ -27,7 +27,7 @@ class ExceptionContextCollector extends AbstractExceptionCollector
         return ExceptionContext::getMarked(
             $this->exception,
             $this->mark,
-            $this->lineNumber
+            $this->number
         );
     }
 }

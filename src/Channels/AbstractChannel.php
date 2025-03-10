@@ -48,9 +48,7 @@ abstract class AbstractChannel implements ChannelContract
             $this->attributes() + collect(Arr::dot($rules))
                 ->keys()
                 ->mapWithKeys(fn (string $attribute): array => [
-                    $attribute => str('exception-notify.channels.')
-                        ->append($this->getChannel(), '.', $attribute)
-                        ->toString(),
+                    $attribute => str($this->getChannel())->append('.', $attribute)->toString(),
                 ])
                 // ->dump()
                 ->all()
@@ -73,14 +71,6 @@ abstract class AbstractChannel implements ChannelContract
         // unset($pendingDispatch); // Trigger the job
     }
 
-    protected function makeJob(\Throwable $throwable): ShouldQueue
-    {
-        return $this->applyConfigurationToObject(
-            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent($throwable)),
-            config('exception-notify.job')
-        );
-    }
-
     protected function rules(): array
     {
         return [
@@ -99,68 +89,6 @@ abstract class AbstractChannel implements ChannelContract
     protected function attributes(): array
     {
         return [];
-    }
-
-    protected function getContent(\Throwable $throwable): string
-    {
-        return (string) (new Pipeline(app()))
-            ->send($this->getCollectors($throwable))
-            ->through($this->getPipes())
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
-    }
-
-    protected function getPipes(): array
-    {
-        $index = collect($pipes = $this->configRepository->get('pipes', []))->search(
-            static fn (string $pipe) => Str::contains($pipe, LimitLengthPipe::class)
-        );
-
-        if (false === $index) {
-            return $pipes;
-        }
-
-        return collect($pipes)
-            ->push(FixPrettyJsonPipe::class)
-            ->sort(static function (string $a, string $b): int {
-                if (FixPrettyJsonPipe::class === $a && !Str::contains($b, LimitLengthPipe::class)) {
-                    return 1;
-                }
-
-                $rules = [
-                    FixPrettyJsonPipe::class,
-                    LimitLengthPipe::class,
-                ];
-
-                return collect($rules)->search(static fn (string $rule) => Str::contains($a, $rule))
-                    <=> collect($rules)->search(static fn (string $rule) => Str::contains($b, $rule));
-            })
-            // ->dump()
-            ->all();
-    }
-
-    protected function getCollectors(\Throwable $throwable): Collection
-    {
-        return collect(array_merge(
-            config('exception-notify.collectors', []),
-            $this->configRepository->get('collectors', [])
-        ))->map(static function (array|string $parameters, int|string $class): CollectorContract {
-            if (!\is_array($parameters)) {
-                [$parameters, $class] = [(array) $class, $parameters];
-            }
-
-            return app()->make($class, $parameters);
-        })->mapWithKeys(
-            static function (CollectorContract $collectorContract) use ($throwable): array {
-                $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
-
-                return [$collectorContract->name() => $collectorContract->collect()];
-            }
-        );
-    }
-
-    protected function getChannel(): string
-    {
-        return $this->configRepository->get(self::CHANNEL_CONFIGURATION_KEY);
     }
 
     protected function applyContentToConfiguration(array $configuration, string $content): array
@@ -231,5 +159,75 @@ abstract class AbstractChannel implements ChannelContract
 
                 return $extender($object);
             });
+    }
+
+    private function getChannel(): string
+    {
+        return $this->configRepository->get(self::CHANNEL_CONFIGURATION_KEY);
+    }
+
+    private function makeJob(\Throwable $throwable): ShouldQueue
+    {
+        return $this->applyConfigurationToObject(
+            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent($throwable)),
+            config('exception-notify.job')
+        );
+    }
+
+    private function getContent(\Throwable $throwable): string
+    {
+        return (string) (new Pipeline(app()))
+            ->send($this->getCollectors($throwable))
+            ->through($this->getPipes())
+            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
+    }
+
+    private function getCollectors(\Throwable $throwable): Collection
+    {
+        return collect(array_merge(
+            config('exception-notify.collectors', []),
+            $this->configRepository->get('collectors', [])
+        ))->map(static function (array|string $parameters, int|string $class): CollectorContract {
+            if (!\is_array($parameters)) {
+                [$parameters, $class] = [(array) $class, $parameters];
+            }
+
+            return app()->make($class, $parameters);
+        })->mapWithKeys(
+            static function (CollectorContract $collectorContract) use ($throwable): array {
+                $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
+
+                return [$collectorContract->name() => $collectorContract->collect()];
+            }
+        );
+    }
+
+    private function getPipes(): array
+    {
+        $index = collect($pipes = $this->configRepository->get('pipes', []))->search(
+            static fn (string $pipe) => Str::contains($pipe, LimitLengthPipe::class)
+        );
+
+        if (false === $index) {
+            return $pipes;
+        }
+
+        return collect($pipes)
+            ->push(FixPrettyJsonPipe::class)
+            ->sort(static function (string $a, string $b): int {
+                if (FixPrettyJsonPipe::class === $a && !Str::contains($b, LimitLengthPipe::class)) {
+                    return 1;
+                }
+
+                $rules = [
+                    FixPrettyJsonPipe::class,
+                    LimitLengthPipe::class,
+                ];
+
+                return collect($rules)->search(static fn (string $rule) => Str::contains($a, $rule))
+                    <=> collect($rules)->search(static fn (string $rule) => Str::contains($b, $rule));
+            })
+            // ->dump()
+            ->all();
     }
 }
