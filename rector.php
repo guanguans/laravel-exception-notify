@@ -20,6 +20,12 @@ use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStatic
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Scalar\Float_;
+use PhpParser\Node\Scalar\Int_;
+use PhpParser\Node\Scalar\String_;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
@@ -36,11 +42,11 @@ use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
+use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
-use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
+use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
-use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
@@ -146,11 +152,41 @@ return RectorConfig::configure()
     // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
     //     new FuncCallToStaticCall('str', Str::class, 'of'),
     // ])
-    ->withConfiguredRule(StringToClassConstantRector::class, [
-        new StringToClassConstant('{title}', AbstractChannel::class, 'TITLE_TEMPLATE'),
-        new StringToClassConstant('{content}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
-        new StringToClassConstant('{report}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
-    ])
+    ->withConfiguredRule(
+        ScalarValueToConstFetchRector::class,
+        collect([
+            AbstractChannel::class,
+        ])
+            ->map(static fn (string $class) => collect((new ReflectionClass($class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
+                ->reduce(
+                    static function (array $carry, mixed $value, string $name) use ($class): array {
+                        $scalarValueToConstFetch = match (true) {
+                            \is_string($value) => new ScalarValueToConstFetch(
+                                new String_($value),
+                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
+                            ),
+                            \is_int($value) => new ScalarValueToConstFetch(
+                                new Int_($value),
+                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
+                            ),
+                            \is_float($value) => new ScalarValueToConstFetch(
+                                new Float_($value),
+                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
+                            ),
+                            default => null,
+                        };
+
+                        $scalarValueToConstFetch and $carry[] = $scalarValueToConstFetch;
+
+                        return $carry;
+                    },
+                    []
+                ))
+            ->flatten()
+            // ->dd()
+            ->all()
+    )
+
     ->withConfiguredRule(
         ChangeMethodVisibilityRector::class,
         $classes
@@ -220,7 +256,7 @@ return RectorConfig::configure()
         DowngradeArraySpreadStringKeyRector::class => [
             __FILE__,
         ],
-        StringToClassConstantRector::class => [
+        ScalarValueToConstFetchRector::class => [
             __DIR__.'/src/Channels/AbstractChannel.php',
             __FILE__,
         ],
