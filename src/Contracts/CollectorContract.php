@@ -15,7 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Contracts;
 
 interface CollectorContract
 {
-    public static function name(): string;
+    public function name(): string;
 
     public function collect(): array;
 }

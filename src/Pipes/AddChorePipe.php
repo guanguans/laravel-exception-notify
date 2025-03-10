@@ -31,7 +31,7 @@ class AddChorePipe
     {
         return $next(collect(Arr::add(
             $collectors->all(),
-            Str::start($key, ChoreCollector::name().'.'),
+            Str::start($key, ChoreCollector::fallbackName().'.'),
             $value
         )));
     }

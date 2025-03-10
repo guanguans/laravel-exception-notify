@@ -18,7 +18,12 @@ namespace Guanguans\LaravelExceptionNotify\Channels\Concerns;
  */
 trait Naming
 {
-    public static function name(): string
+    public function name(): string
+    {
+        return static::fallbackName();
+    }
+
+    public static function fallbackName(): string
     {
         return str(class_basename(static::class))
             ->beforeLast(class_basename(self::class))

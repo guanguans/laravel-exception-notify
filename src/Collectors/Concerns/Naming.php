@@ -18,7 +18,12 @@ namespace Guanguans\LaravelExceptionNotify\Collectors\Concerns;
  */
 trait Naming
 {
-    public static function name(): string
+    public function name(): string
+    {
+        return static::fallbackName();
+    }
+
+    public static function fallbackName(): string
     {
         return ucwords(
             (string) str(class_basename(static::class))

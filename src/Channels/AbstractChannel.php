@@ -153,7 +153,7 @@ abstract class AbstractChannel implements ChannelContract
             static function (CollectorContract $collectorContract) use ($throwable): array {
                 $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
 
-                return [$collectorContract::name() => $collectorContract->collect()];
+                return [$collectorContract->name() => $collectorContract->collect()];
             }
         );
     }

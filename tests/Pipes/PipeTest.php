@@ -36,7 +36,7 @@ it('can collect', function (): void {
                     return $collectorContract;
                 })
                 ->mapWithKeys(static fn (CollectorContract $collectorContract): array => [
-                    $collectorContract::name() => $collectorContract->collect(),
+                    $collectorContract->name() => $collectorContract->collect(),
                 ])
         )
         ->through(FixPrettyJsonPipe::class)
