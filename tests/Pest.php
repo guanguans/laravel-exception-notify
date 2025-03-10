@@ -20,6 +20,7 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Tests\TestCase;
+use Illuminate\Support\Collection;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
@@ -81,3 +82,16 @@ function faker(string $locale = Factory::DEFAULT_LOCALE): Generator
 // {
 //     return Factory::create($locale);
 // }
+
+function classes(): Collection
+{
+    return collect(spl_autoload_functions())
+        ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
+            $splAutoloadFunctions
+                ->firstOrFail(
+                    static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
+                )[0]
+                ->getClassMap()
+        ))
+        ->keys();
+}

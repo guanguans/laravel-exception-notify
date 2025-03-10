@@ -42,12 +42,26 @@ use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
+use Rector\ValueObject\Visibility;
+use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
+use Rector\Visibility\ValueObject\ChangeMethodVisibility;
 use RectorLaravel\Rector\Class_\ModelCastsPropertyToCastsMethodRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
 use RectorLaravel\Rector\FuncCall\TypeHintTappableCallRector;
 use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelSetList;
+
+/** @var \Illuminate\Support\Collection $classes */
+$classes = collect(spl_autoload_functions())
+    ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
+        $splAutoloadFunctions
+            ->firstOrFail(
+                static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
+            )[0]
+            ->getClassMap()
+    ))
+    ->keys();
 
 return RectorConfig::configure()
     ->withPaths([
@@ -112,15 +126,7 @@ return RectorConfig::configure()
         StaticClosureRector::class,
         HydratePipeFuncCallToStaticCallRector::class,
         ToInternalExceptionRector::class,
-        ...collect(spl_autoload_functions())
-            ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
-                $splAutoloadFunctions
-                    ->firstOrFail(
-                        static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
-                    )[0]
-                    ->getClassMap()
-            ))
-            ->keys()
+        ...$classes
             ->filter(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
             ->filter(static fn (string $class): bool => (new ReflectionClass($class))->isInstantiable())
             // ->filter(static fn (string $class): bool => is_subclass_of($class, ConfigurableRectorInterface::class))
@@ -145,6 +151,29 @@ return RectorConfig::configure()
         new StringToClassConstant('{content}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
         new StringToClassConstant('{report}', AbstractChannel::class, 'CONTENT_TEMPLATE'),
     ])
+    ->withConfiguredRule(
+        ChangeMethodVisibilityRector::class,
+        $classes
+            ->filter(static fn (string $class): bool => str_starts_with($class, 'Guanguans\LaravelExceptionNotify'))
+            ->mapWithKeys(static fn (string $class): array => [$class => new ReflectionClass($class)])
+            ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isTrait())
+            ->map(
+                static fn (ReflectionClass $reflectionClass): array => collect($reflectionClass->getMethods(ReflectionMethod::IS_PRIVATE))
+                    ->reject(static fn (ReflectionMethod $reflectionMethod): bool => $reflectionMethod->isFinal())
+                    ->map(
+                        static fn (ReflectionMethod $reflectionMethod): ChangeMethodVisibility => new ChangeMethodVisibility(
+                            $reflectionClass->getName(),
+                            $reflectionMethod->getName(),
+                            Visibility::PROTECTED
+                        )
+                    )
+                    ->all()
+            )
+            ->flatten()
+            // ->dd()
+            ->values()
+            ->all(),
+    )
     ->withConfiguredRule(
         RenameFunctionRector::class,
         [
