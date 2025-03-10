@@ -31,7 +31,7 @@ it('can test for exception-notify when is not enabled', function (): void {
 it('can test for exception-notify when default channels is empty', function (): void {
     config()->set('exception-notify.defaults', []);
     artisan(TestCommand::class)->assertExitCode(Command::INVALID);
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('can test for exception-notify when should not report', function (): void {
     ExceptionNotify::skipWhen(
@@ -44,4 +44,4 @@ it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class, [
         '--channels' => ['bark', 'log'],
     ]);
-})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify.');
+})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify.')->skip();

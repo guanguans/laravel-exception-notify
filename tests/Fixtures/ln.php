@@ -19,8 +19,8 @@ use Symfony\Component\Process\Process;
 require __DIR__.'/../../vendor/autoload.php';
 
 $process = new Process([
-    // 'ln', '-sf', $dir = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/', basename($dir),
-    'ln', '-sf', $dir = __DIR__.'/../../vendor/laravel/framework/src/Illuminate/', basename($dir),
+    'ln', '-sf', $dir = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/', basename($dir),
+    // 'ln', '-sf', $dir = __DIR__.'/../../vendor/laravel/framework/src/Illuminate/', basename($dir),
 ]);
 
 $outputStyle = new OutputStyle(new ArgvInput, new ConsoleOutput);

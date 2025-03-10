@@ -26,6 +26,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
+use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
@@ -64,7 +65,7 @@ return [
     'job' => [
         'class' => ReportExceptionJob::class,
         'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION'),
-        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE', 'exception-notify'),
+        'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
 
     /**
@@ -106,9 +107,21 @@ return [
          */
         'stack' => [
             'driver' => 'stack',
-            'channels' => [
+            'channels' => env_explode('EXCEPTION_NOTIFY_STACK_CHANNELS', [
+                // 'dump',
                 'log',
-            ],
+                // 'mail',
+                // 'bark',
+                // 'chanify',
+                // 'dingTalk',
+                // 'discord',
+                // 'lark',
+                // 'ntfy',
+                // 'pushDeer',
+                // 'slack',
+                // 'telegram',
+                // 'weWork',
+            ]),
         ],
 
         /**
@@ -132,8 +145,11 @@ return [
         'mail' => [
             'driver' => 'mail',
             'mailer' => null,
+            'class' => ReportExceptionMail::class,
+            'title' => AbstractChannel::TITLE_TEMPLATE,
+            'content' => AbstractChannel::CONTENT_TEMPLATE,
             'to' => [
-                'users' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_USERS', [
+                'address' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_ADDRESS', [
                     'your@example.mail',
                 ]),
             ],
@@ -364,7 +380,9 @@ return [
             ],
             'message' => [
                 'class' => Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
-                'content' => AbstractChannel::CONTENT_TEMPLATE,
+                'options' => [
+                    'content' => AbstractChannel::CONTENT_TEMPLATE,
+                ],
             ],
             'pipes' => [
                 SprintfMarkdownPipe::class,

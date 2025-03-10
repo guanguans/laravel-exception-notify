@@ -85,8 +85,10 @@ return RectorConfig::configure()
     ->withSkip([
         '**/__snapshots__/*',
         '**/Fixtures/*',
-        __DIR__.'/tests/FeatureTest.php',
+        __DIR__.'/tests/Channels/LogChannelTest.php',
         __DIR__.'/tests/ExceptionNotifyManagerTest.php',
+        __DIR__.'/tests/FeatureTest.php',
+        __DIR__.'/tests/Fixtures/',
         __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')

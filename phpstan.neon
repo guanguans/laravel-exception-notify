@@ -81,6 +81,8 @@ parameters:
 #        -
 #            identifier: logicalOr.resultUnused
         -
+            identifier: trait.unused
+        -
             identifier: method.nonObject
         -
             identifier: symplify.noDynamicName

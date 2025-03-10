@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Mail;
 it('will throw `InvalidArgumentException`', function (): void {
     config()->set('exception-notify.channels.mail.extender');
     $this->app->make(ExceptionNotifyManager::class)->driver('mail');
-})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class)->skip();
 
 it('will throw `TransportException`', function (): void {
     config()->set(

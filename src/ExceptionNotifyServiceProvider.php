@@ -28,10 +28,15 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     /**
      * @noinspection PhpMissingParentCallCommonInspection
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function register(): void
     {
-        $this->setupConfig()->registerAliases();
+        $this
+            ->setupConfig()
+            ->registerAliases()
+            ->registerReportUsing();
     }
 
     /**
@@ -39,7 +44,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerReportUsing()->registerCommands();
+        $this
+            // ->registerReportUsing()
+            ->registerCommands();
     }
 
     /**
