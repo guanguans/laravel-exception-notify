@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Commands;
 
+use Guanguans\LaravelExceptionNotify\Commands\Concerns\Configureable;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\Notify\Foundation\Client;
@@ -26,6 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TestCommand extends Command
 {
+    use Configureable;
     protected $signature = 'exception-notify:test {--c|channels=* : Specify channels to test}';
     protected $description = 'Test for exception-notify';
 

@@ -150,10 +150,10 @@ abstract class AbstractChannel implements ChannelContract
 
             return app()->make($class, $parameters);
         })->mapWithKeys(
-            static function (CollectorContract $collector) use ($throwable): array {
-                $collector instanceof ExceptionAwareContract and $collector->setException($throwable);
+            static function (CollectorContract $collectorContract) use ($throwable): array {
+                $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
 
-                return [$collector::name() => $collector->collect()];
+                return [$collectorContract::name() => $collectorContract->collect()];
             }
         );
     }
