@@ -84,15 +84,7 @@ class Channel implements ChannelContract
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
-        if ($this->shouldSkip($throwable)) {
-            return true;
-        }
-
-        return !$this->attempt(
-            $this->fingerprintFor($throwable),
-            config('exception-notify.rate_limit.max_attempts'),
-            config('exception-notify.rate_limit.decay_seconds')
-        );
+        return $this->shouldSkip($throwable) ? true : !$this->attempt($throwable);
     }
 
     private function shouldSkip(\Throwable $throwable): bool
@@ -107,25 +99,29 @@ class Channel implements ChannelContract
     }
 
     /**
+     * @see RateLimiter::attempt()
+     * @see \Illuminate\Cache\RateLimiting\Limit
+     */
+    private function attempt(\Throwable $throwable): bool
+    {
+        return with(new RateLimiter(Cache::store(config('exception-notify.rate_limiter.cache_store'))))->attempt(
+            $this->fingerprintFor($throwable),
+            config('exception-notify.rate_limiter.max_attempts'),
+            static fn (): bool => true,
+            config('exception-notify.rate_limiter.decay_seconds')
+        );
+    }
+
+    /**
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
      * @see \Illuminate\Foundation\Exceptions\Handler::throttle()
      * @see \Illuminate\Foundation\Exceptions\Handler::throttleUsing()
      */
     private function fingerprintFor(\Throwable $throwable): string
     {
-        return config('exception-notify.rate_limit.key_prefix').hash(
-            'xxh128',
+        return config('exception-notify.rate_limiter.key_prefix').hash(
+            'sha256',
             implode(':', [$throwable->getFile(), $throwable->getLine(), $throwable->getCode()])
         );
-    }
-
-    /**
-     * @see RateLimiter::attempt
-     */
-    private function attempt(string $key, int $maxAttempts, int $decaySeconds = 60): bool
-    {
-        return (
-            new RateLimiter(Cache::store(config('exception-notify.rate_limit.cache_store', config('cache.default'))))
-        )->attempt($key, $maxAttempts, static fn (): bool => true, $decaySeconds);
     }
 }
