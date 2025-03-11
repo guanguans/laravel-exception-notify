@@ -35,7 +35,7 @@ use function Guanguans\LaravelExceptionNotify\Support\env_explode;
 
 return [
     /**
-     * Enable or disable exception notify.
+     * Enable or disable auto exception notify.
      */
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 

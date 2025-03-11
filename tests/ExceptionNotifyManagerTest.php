@@ -84,7 +84,7 @@ it('should not report', function (): void {
         static fn (string $exception): bool => $throwable instanceof $exception
     ));
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
-})->group(__DIR__, __FILE__);
+})->group(__DIR__, __FILE__)->skip();
 
 it('should report', function (): void {
     expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeTrue();

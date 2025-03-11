@@ -81,16 +81,10 @@ class Channel implements ChannelContract
 
     /**
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
-     *
-     * @noinspection NotOptimalIfConditionsInspection
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
-        if (
-            !config('exception-notify.enabled')
-            || !app()->environment(config('exception-notify.environments'))
-            || $this->shouldSkip($throwable)
-        ) {
+        if ($this->shouldSkip($throwable)) {
             return true;
         }
 
@@ -114,14 +108,15 @@ class Channel implements ChannelContract
 
     /**
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
+     * @see \Illuminate\Foundation\Exceptions\Handler::throttle()
+     * @see \Illuminate\Foundation\Exceptions\Handler::throttleUsing()
      */
     private function fingerprintFor(\Throwable $throwable): string
     {
-        return config('exception-notify.rate_limit.key_prefix').sha1(implode('|', [
-            $throwable->getFile(),
-            $throwable->getLine(),
-            $throwable->getCode(),
-        ]));
+        return config('exception-notify.rate_limit.key_prefix').hash(
+            'xxh128',
+            implode(':', [$throwable->getFile(), $throwable->getLine(), $throwable->getCode()])
+        );
     }
 
     /**
