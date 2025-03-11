@@ -54,7 +54,7 @@ return [
      */
     'rate_limit' => [
         'cache_store' => env('EXCEPTION_NOTIFY_RATE_LIMIT_CACHE_STORE'),
-        'key_prefix' => env('EXCEPTION_NOTIFY_RATE_LIMIT_KEY_PREFIX', 'exception_notify_'),
+        'key_prefix' => env('EXCEPTION_NOTIFY_RATE_LIMIT_KEY_PREFIX', 'exception-notify:rate-limit:'),
         'max_attempts' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_MAX_ATTEMPTS', config('app.debug') ? 50 : 1),
         'decay_seconds' => (int) env('EXCEPTION_NOTIFY_RATE_LIMIT_DECAY_SECONDS', 300),
     ],

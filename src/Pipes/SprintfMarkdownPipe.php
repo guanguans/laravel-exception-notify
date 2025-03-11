@@ -25,7 +25,7 @@ class SprintfMarkdownPipe extends SprintfPipe
         Collection $collectors,
         \Closure $next,
         string $format = <<<'mark'
-            ```
+            ```json
             %s
             ```
             mark

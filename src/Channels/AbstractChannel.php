@@ -129,10 +129,16 @@ abstract class AbstractChannel implements ChannelContract
                         static fn (string $key): string => Str::camel($key),
                         static fn (string $key): string => 'set'.Str::studly($key),
                         static fn (string $key): string => 'on'.Str::studly($key),
+                        // static fn (string $key): string => 'using'.Str::studly($key),
+                        // static fn (string $key): string => 'use'.Str::studly($key),
                     ] as $caster
                 ) {
                     if (method_exists($object, $method = $caster($key))) {
                         $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
+
+                        if (0 === $numberOfParameters) {
+                            continue;
+                        }
 
                         if (1 === $numberOfParameters) {
                             $object->{$method}($value);

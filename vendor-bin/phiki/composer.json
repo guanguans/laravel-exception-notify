@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "phiki/phiki": "^1.1"
+    }
+}
