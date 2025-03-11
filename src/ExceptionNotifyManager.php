@@ -16,7 +16,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
-use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
@@ -87,10 +86,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
         $configRepository = tap(
             new Repository($this->config->get("exception-notify.channels.$driver", [])),
-            static fn (Repository $configRepository): mixed => $configRepository->set(
-                AbstractChannel::CHANNEL_CONFIGURATION_KEY,
-                $driver
-            )
+            static fn (Repository $configRepository): mixed => $configRepository->set('__channel', $driver)
         );
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));

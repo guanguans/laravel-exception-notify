@@ -32,7 +32,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
 
 abstract class AbstractChannel implements ChannelContract
 {
-    public const CHANNEL_CONFIGURATION_KEY = '__channel';
     public const TITLE_TEMPLATE = '{title}';
     public const CONTENT_TEMPLATE = '{content}';
 
@@ -74,8 +73,8 @@ abstract class AbstractChannel implements ChannelContract
     protected function rules(): array
     {
         return [
+            '__channel' => 'required|string',
             'driver' => 'required|string',
-            self::CHANNEL_CONFIGURATION_KEY => 'required|string',
             'collectors' => 'array',
             'pipes' => 'array',
         ];
@@ -111,13 +110,13 @@ abstract class AbstractChannel implements ChannelContract
                 $except ?? collect((new \ReflectionObject($object))->getConstructor()?->getParameters())
                     ->map(static fn (\ReflectionParameter $reflectionParameter): string => $reflectionParameter->getName())
                     ->push(
+                        '__channel',
                         '__abstract',
                         '__class',
                         '__name',
                         '_abstract',
                         '_class',
                         '_name',
-                        self::CHANNEL_CONFIGURATION_KEY,
                     )
                     ->all()
             )
@@ -169,7 +168,7 @@ abstract class AbstractChannel implements ChannelContract
 
     private function getChannel(): string
     {
-        return $this->configRepository->get(self::CHANNEL_CONFIGURATION_KEY);
+        return $this->configRepository->get('__channel');
     }
 
     private function makeJob(\Throwable $throwable): ShouldQueue
