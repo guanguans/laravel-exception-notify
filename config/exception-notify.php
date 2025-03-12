@@ -290,10 +290,9 @@ return [
         'ntfy' => [
             'driver' => 'notify',
             'authenticator' => [
-                'class' => Guanguans\Notify\Foundation\Authenticators\NullAuthenticator::class,
-                // 'class' => \Guanguans\Notify\Ntfy\Authenticator::class,
-                // 'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN', ''),
-                // 'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD', ''),
+                'class' => Guanguans\Notify\Ntfy\Authenticator::class,
+                'usernameOrToken' => env('EXCEPTION_NOTIFY_NTFY_USERNAMEORTOKEN'),
+                'password' => env('EXCEPTION_NOTIFY_NTFY_PASSWORD'),
             ],
             'client' => [
                 'class' => Guanguans\Notify\Ntfy\Client::class,

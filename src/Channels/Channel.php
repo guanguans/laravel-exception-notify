@@ -36,11 +36,6 @@ class Channel implements ChannelContract
         private ChannelContract $channelContract
     ) {}
 
-    public function reportIf(mixed $condition, \Throwable $throwable): void
-    {
-        value($condition) and $this->report($throwable);
-    }
-
     public function report(\Throwable $throwable): void
     {
         if ($this->shouldntReport($throwable)) {

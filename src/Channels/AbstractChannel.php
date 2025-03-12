@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Pipeline\Pipeline;
@@ -209,29 +208,8 @@ abstract class AbstractChannel implements ChannelContract
 
     private function getPipes(): array
     {
-        $index = collect($pipes = $this->configRepository->get('pipes', []))->search(
-            static fn (string $pipe) => Str::contains($pipe, LimitLengthPipe::class)
-        );
-
-        if (false === $index) {
-            return $pipes;
-        }
-
-        return collect($pipes)
-            ->push(FixPrettyJsonPipe::class)
-            ->sort(static function (string $a, string $b): int {
-                if (FixPrettyJsonPipe::class === $a && !Str::contains($b, LimitLengthPipe::class)) {
-                    return 1;
-                }
-
-                $rules = [
-                    FixPrettyJsonPipe::class,
-                    LimitLengthPipe::class,
-                ];
-
-                return collect($rules)->search(static fn (string $rule) => Str::contains($a, $rule))
-                    <=> collect($rules)->search(static fn (string $rule) => Str::contains($b, $rule));
-            })
+        return collect($this->configRepository->get('pipes', []))
+            ->prepend(FixPrettyJsonPipe::class)
             // ->dump()
             ->all();
     }
