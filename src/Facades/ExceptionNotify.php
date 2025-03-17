@@ -38,10 +38,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void flushMacros()
  * @method static mixed macroCall(string $method, array $parameters)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager|\Illuminate\Support\HigherOrderTapProxy tap(callable|null $callback = null)
- * @method static void reportIf(mixed $condition, \Throwable $throwable)
  * @method static void reporting(mixed $listener)
  * @method static void reported(mixed $listener)
- * @method static void reportFailed(mixed $listener)
  * @method static void skipWhen(\Closure $callback)
  * @method static bool shouldReport(\Throwable $throwable)
  *

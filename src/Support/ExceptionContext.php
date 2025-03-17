@@ -62,8 +62,8 @@ class ExceptionContext
      */
     private static function getEval(\Throwable $throwable): ?array
     {
-        if (Str::contains($throwable->getFile(), "eval()'d code")) {
-            return [$throwable->getLine() => "eval()'d code"];
+        if (Str::contains($throwable->getFile(), $row = "eval()'d code")) {
+            return [$throwable->getLine() => $row];
         }
 
         return null;

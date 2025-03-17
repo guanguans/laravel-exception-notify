@@ -13,10 +13,19 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Collectors\Concerns\Naming;
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 
 abstract class AbstractCollector implements CollectorContract
 {
-    use Naming;
+    public function name(): string
+    {
+        return static::fallbackName();
+    }
+
+    public static function fallbackName(): string
+    {
+        return (string) str(class_basename(static::class))
+            ->beforeLast(str(class_basename(self::class))->replace('Abstract', ''))
+            ->snake(' ');
+    }
 }

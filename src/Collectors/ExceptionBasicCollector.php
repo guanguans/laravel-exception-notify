@@ -26,9 +26,6 @@ class ExceptionBasicCollector extends AbstractExceptionCollector
             'class' => $this->exception::class,
             'file' => $this->exception->getFile(),
             'line' => $this->exception->getLine(),
-            // 'status_code' => $this->flattenException->getStatusCode(),
-            // 'status_text' => $this->flattenException->getStatusText(),
-            // 'headers' => $this->flattenException->getHeaders(),
         ];
     }
 }

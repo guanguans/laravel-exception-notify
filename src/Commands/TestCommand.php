@@ -28,11 +28,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TestCommand extends Command
 {
     use Configureable;
+
+    /** @noinspection ClassOverridesFieldOfSuperClassInspection */
     protected $signature = <<<'SIGNATURE'
         exception-notify:test
         {--c|channel=* : Specify channel to test}
         {--j|job-connection=* : Specify job connection to test}
         SIGNATURE;
+
+    /** @noinspection ClassOverridesFieldOfSuperClassInspection */
     protected $description = 'Test for exception-notify';
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int

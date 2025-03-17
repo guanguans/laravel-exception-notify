@@ -13,10 +13,17 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Collectors\Concerns\ExceptionAware;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 abstract class AbstractExceptionCollector extends AbstractCollector implements ExceptionAwareContract
 {
-    use ExceptionAware;
+    protected \Throwable $exception;
+    protected FlattenException $flattenException;
+
+    public function setException(\Throwable $throwable): void
+    {
+        $this->exception = $throwable;
+        $this->flattenException = FlattenException::createFromThrowable($throwable);
+    }
 }

@@ -27,7 +27,7 @@ use Illuminate\Support\Str;
 /**
  * @property \Illuminate\Foundation\Application $container
  *
- * @method \Guanguans\LaravelExceptionNotify\Channels\Channel driver($driver = null)
+ * @method \Guanguans\LaravelExceptionNotify\Channels\Channel driver(?string $driver = null)
  *
  * @mixin \Guanguans\LaravelExceptionNotify\Channels\Channel
  */

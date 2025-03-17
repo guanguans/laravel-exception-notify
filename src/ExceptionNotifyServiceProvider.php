@@ -37,11 +37,12 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             ->setupConfig()
             ->registerAliases()
             ->registerReportUsing();
+
+        $this->booting(function (): void {
+            $this->registerReportUsing();
+        });
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function boot(): void
     {
         $this

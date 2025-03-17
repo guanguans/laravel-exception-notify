@@ -223,10 +223,10 @@ return RectorConfig::configure()
         RenameFunctionRector::class,
         [
             // 'faker' => 'fake',
-            'Guanguans\Notify\Foundation\Support\rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
+            'Guanguans\LaravelExceptionNotify\Support\rescue' => 'rescue',
+            'Guanguans\Notify\Foundation\Support\rescue' => 'rescue',
             'Pest\Faker\fake' => 'fake',
             'Pest\Faker\faker' => 'faker',
-            'rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
             'test' => 'it',
         ] + array_reduce(
             [

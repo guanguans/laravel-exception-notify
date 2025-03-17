@@ -17,10 +17,6 @@ trait WithPipeArgs
 {
     public static function with(mixed ...$args): string
     {
-        if ([] === $args) {
-            return static::class;
-        }
-
-        return static::class.':'.implode(',', $args);
+        return [] === $args ? static::class : static::class.':'.implode(',', $args);
     }
 }

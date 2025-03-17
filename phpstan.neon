@@ -68,24 +68,15 @@ parameters:
             message: 'use Pipe::with() instead'
     ignoreErrors:
 #        - '#^Unable to resolve the template type T(Key|Value) in call to function collect$#'
-        -
-            identifier: argument.templateType
-        -
-            identifier: missingType.iterableValue
-        -
-            identifier: missingType.generics
-        -
-            identifier: return.void
-#        -
-#            identifier: new.static
-#        -
-#            identifier: logicalOr.resultUnused
-        -
-            identifier: trait.unused
-        -
-            identifier: method.nonObject
-        -
-            identifier: symplify.noDynamicName
+#        - identifier: logicalOr.resultUnused
+#        - identifier: new.static
+#        - identifier: trait.unused
+        - identifier: argument.templateType
+        - identifier: method.nonObject
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
+        - identifier: return.void
+        - identifier: symplify.noDynamicName
         -
             message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
             path: ./config/exception-notify.php
