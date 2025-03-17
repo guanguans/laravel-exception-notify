@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.0.0-beta2"></a>
+## [5.0.0-beta2] - 2025-03-17
+### Fix
+- **config:** Refactor message options in exception-notify config
+- **config:** Update rate limit key prefix format
+- **support:** Improve error handling with rescue function
+
+### Refactor
+- **channel:** replace CHANNEL_CONFIGURATION_KEY with __channel
+- **channels:** Improve method readability and type hints
+- **collector:** Simplify naming and exception handling
+- **commands:** Improve exception-notify command handling
+- **config:** Rename rate_limit to rate_limiter
+- **exception-notify:** Simplify exception reporting logic
+
+### Test
+- **channels:** Add tests for exception reporting functionality
+
+
 <a name="5.0.0-beta1"></a>
 ## [5.0.0-beta1] - 2025-03-10
 ### CI
@@ -1117,7 +1136,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...HEAD
+[5.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...5.0.0-beta2
 [5.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...5.0.0-beta1
 [4.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.6.0...4.7.0
 [4.6.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.5.1...4.6.0
