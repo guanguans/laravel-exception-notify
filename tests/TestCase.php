@@ -38,7 +38,11 @@ use Guanguans\LaravelExceptionNotify\Pipes\ReplaceStrPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use Guanguans\Notify\Foundation\Client;
+use Guanguans\Notify\Foundation\Response;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\HttpFactory;
+use Illuminate\Support\Facades\Log;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
@@ -105,6 +109,23 @@ class TestCase extends \Orchestra\Testbench\TestCase
             LimitLengthPipe::with(512),
             ReplaceStrPipe::with('.PHP', '.php'),
         ]);
+
+        collect(config('exception-notify.channels'))->each(static function (array $configuration, string $name): void {
+            if ('notify' === ($configuration['driver'] ?? $name)) {
+                config()->set(
+                    "exception-notify.channels.$name.client.extender",
+                    static fn (Client $client): Client => $client
+                        ->mock([
+                            new \GuzzleHttp\Psr7\Response(body: $name),
+                        ])
+                        // ->before(
+                        //     \Guanguans\Notify\Foundation\Middleware\Response::class,
+                        //     Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
+                        // )
+                        ->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'))
+                );
+            }
+        });
     }
 
     protected function defineRoutes($router): void
@@ -113,17 +134,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
             config()->set('exception-notify.channels.stack.channels', [
                 'dump',
                 'log',
-                // 'mail',
+                'mail',
                 'bark',
-                // 'chanify',
-                // 'dingTalk',
-                // 'discord',
-                // 'lark',
-                // 'ntfy',
-                // 'pushDeer',
-                // 'slack',
-                // 'telegram',
-                // 'weWork',
+                'chanify',
+                'dingTalk',
+                'discord',
+                'lark',
+                'ntfy',
+                'pushDeer',
+                'slack',
+                'telegram',
+                'weWork',
             ]);
 
             ExceptionNotify::report(new RuntimeException('What happened?'));
