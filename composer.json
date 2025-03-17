@@ -112,7 +112,7 @@
         "maglnet/composer-require-checker": "^4.4",
         "mockery/mockery": "^1.6",
         "nette/utils": "^4.0",
-        "orchestra/testbench": "^7.52 || ^8.0 || ^9.0 || ^10.0",
+        "orchestra/testbench": "^7.53 || ^8.0 || ^9.0 || ^10.0",
         "pestphp/pest": "^1.23 || ^2.0 || ^3.0",
         "pestphp/pest-plugin-faker": "^1.0 || ^2.0 || ^3.0",
         "pestphp/pest-plugin-laravel": "^1.4 || ^2.0 || ^3.0",
@@ -127,7 +127,7 @@
         "shipmonk/phpstan-baseline-per-identifier": "^2.1",
         "spaze/phpstan-disallowed-calls": "^4.4",
         "symplify/phpstan-extensions": "^12.0",
-        "symplify/phpstan-rules": "^14.3",
+        "symplify/phpstan-rules": "^14.4",
         "symplify/vendor-patches": "^11.4",
         "tomasvotruba/class-leak": "^2.0",
         "tomasvotruba/type-coverage": "^2.0"
