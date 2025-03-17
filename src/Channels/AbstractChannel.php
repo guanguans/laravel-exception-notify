@@ -48,13 +48,15 @@ abstract class AbstractChannel implements ChannelContract
                 ->mapWithKeys(fn (string $attribute): array => [
                     $attribute => str($this->getChannel())->append('.', $attribute)->toString(),
                 ])
-                // ->dump()
                 ->all()
         );
 
         throw_if($validator->fails(), InvalidConfigurationException::fromValidator($validator));
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function report(\Throwable $throwable): void
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
@@ -66,7 +68,7 @@ abstract class AbstractChannel implements ChannelContract
             $pendingDispatch->afterResponse();
         }
 
-        // unset($pendingDispatch); // Trigger the job
+        // unset($pendingDispatch);
     }
 
     protected function rules(): array
@@ -119,7 +121,6 @@ abstract class AbstractChannel implements ChannelContract
                     )
                     ->all()
             )
-            // ->filter(static fn (mixed $value): bool => \is_array($value) && !array_is_list($value))
             ->each(static function (mixed $value, string $key) use ($object): void {
                 foreach (
                     [
@@ -127,8 +128,6 @@ abstract class AbstractChannel implements ChannelContract
                         static fn (string $key): string => Str::camel($key),
                         static fn (string $key): string => 'set'.Str::studly($key),
                         static fn (string $key): string => 'on'.Str::studly($key),
-                        // static fn (string $key): string => 'using'.Str::studly($key),
-                        // static fn (string $key): string => 'use'.Str::studly($key),
                     ] as $caster
                 ) {
                     if (method_exists($object, $method = $caster($key))) {
@@ -170,6 +169,9 @@ abstract class AbstractChannel implements ChannelContract
         return $this->configRepository->get('__channel');
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
         return $this->applyConfigurationToObject(
@@ -178,6 +180,9 @@ abstract class AbstractChannel implements ChannelContract
         );
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     private function getContent(\Throwable $throwable): string
     {
         return (string) (new Pipeline(app()))
@@ -186,31 +191,29 @@ abstract class AbstractChannel implements ChannelContract
             ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     private function getCollectors(\Throwable $throwable): Collection
     {
         return collect(array_merge(
             config('exception-notify.collectors', []),
             $this->configRepository->get('collectors', [])
-        ))->map(static function (array|string $parameters, int|string $class): CollectorContract {
+        ))->mapWithKeys(static function (array|string $parameters, int|string $class) use ($throwable): array {
             if (!\is_array($parameters)) {
                 [$parameters, $class] = [(array) $class, $parameters];
             }
 
-            return app()->make($class, $parameters);
-        })->mapWithKeys(
-            static function (CollectorContract $collectorContract) use ($throwable): array {
-                $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
+            /** @var CollectorContract $collectorContract */
+            $collectorContract = app()->make($class, $parameters);
+            $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
 
-                return [$collectorContract->name() => $collectorContract->collect()];
-            }
-        );
+            return [$collectorContract->name() => $collectorContract->collect()];
+        });
     }
 
     private function getPipes(): array
     {
-        return collect($this->configRepository->get('pipes', []))
-            ->prepend(FixPrettyJsonPipe::class)
-            // ->dump()
-            ->all();
+        return collect($this->configRepository->get('pipes', []))->prepend(FixPrettyJsonPipe::class)->all();
     }
 }

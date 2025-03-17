@@ -21,6 +21,10 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  */
 class StackChannel extends AbstractChannel
 {
+    /**
+     * @noinspection MissingParentCallInspection
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     public function report(\Throwable $throwable): void
     {
         collect($this->configRepository->get('channels'))->each(

@@ -28,7 +28,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
 class NotifyChannel extends AbstractChannel
 {
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function reportContent(string $content): ResponseInterface
@@ -45,7 +44,6 @@ class NotifyChannel extends AbstractChannel
             'client.class' => 'required|string',
             'message' => 'required|array',
             'message.class' => 'required|string',
-            // 'message.options' => 'required|array',
         ] + parent::rules();
     }
 
@@ -55,8 +53,8 @@ class NotifyChannel extends AbstractChannel
     private function makeClient(): Client
     {
         return $this->applyConfigurationToObject(
-            make($this->configRepository->get('client.class'), ['authenticator' => $this->makeAuthenticator()]),
-            $this->configRepository->get('client')
+            make($configuration = $this->configRepository->get('client') + ['authenticator' => $this->makeAuthenticator()]),
+            $configuration
         );
     }
 

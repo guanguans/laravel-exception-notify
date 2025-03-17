@@ -79,7 +79,7 @@ class Channel implements ChannelContract
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
-        return $this->shouldSkip($throwable) ? true : !$this->attempt($throwable);
+        return $this->shouldSkip($throwable) || !$this->attempt($throwable);
     }
 
     private function shouldSkip(\Throwable $throwable): bool
@@ -114,8 +114,7 @@ class Channel implements ChannelContract
      */
     private function fingerprintFor(\Throwable $throwable): string
     {
-        return config('exception-notify.rate_limiter.key_prefix').hash(
-            'sha256',
+        return config('exception-notify.rate_limiter.key_prefix').sha1(
             implode(':', [$throwable->getFile(), $throwable->getLine(), $throwable->getCode()])
         );
     }
