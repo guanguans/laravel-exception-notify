@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpMissingParentCallCommonInspection */
+
 declare(strict_types=1);
 
 /**
@@ -62,12 +64,19 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             ExceptionNotifyServiceProvider::class,
+            ...parent::getPackageProviders($app),
+        ];
+    }
+
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'ExceptionNotify' => ExceptionNotify::class,
         ];
     }
 
     protected function defineEnvironment($app): void
     {
-        config()->set('exception-notify.job.queue', 'exception-notify');
         config()->set('exception-notify.channels.bark.authenticator.token', $this->faker()->uuid());
         config()->set('exception-notify.channels.bark.client.http_options', []);
         config()->set('exception-notify.channels.bark.client.extender', static fn (Client $client): Client => $client->mock([
@@ -94,14 +103,29 @@ class TestCase extends \Orchestra\Testbench\TestCase
             SprintfMarkdownPipe::class,
             FixPrettyJsonPipe::class,
             LimitLengthPipe::with(512),
-            ReplaceStrPipe::with('.php', '.PHP'),
+            ReplaceStrPipe::with('.PHP', '.php'),
         ]);
     }
 
     protected function defineRoutes($router): void
     {
         $router->any('report-exception', static fn () => tap(response('report-exception'), static function (): void {
-            config()->set('exception-notify.channels.stack.channels', ['dump', 'log', 'bark', 'lark']);
+            config()->set('exception-notify.channels.stack.channels', [
+                'dump',
+                'log',
+                // 'mail',
+                'bark',
+                // 'chanify',
+                // 'dingTalk',
+                // 'discord',
+                // 'lark',
+                // 'ntfy',
+                // 'pushDeer',
+                // 'slack',
+                // 'telegram',
+                // 'weWork',
+            ]);
+
             ExceptionNotify::report(new RuntimeException('What happened?'));
         }));
 

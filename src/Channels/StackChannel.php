@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @see \Illuminate\Log\LogManager::createStackDriver()

@@ -18,6 +18,6 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 
 it('can report', function (): void {
     expect($this->app->make(ExceptionNotifyManager::class)->driver('log'))
-        ->report(new Exception('test'))
+        ->report(new Exception('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);

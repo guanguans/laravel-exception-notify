@@ -37,7 +37,6 @@ use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
-use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
 use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
@@ -86,10 +85,6 @@ return RectorConfig::configure()
         '**/__snapshots__/*',
         '**/Fixtures/*',
         __DIR__.'/src/Channels/Channel.php',
-        __DIR__.'/tests/Channels/LogChannelTest.php',
-        __DIR__.'/tests/ExceptionNotifyManagerTest.php',
-        __DIR__.'/tests/FeatureTest.php',
-        __DIR__.'/tests/Fixtures/',
         __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')
@@ -121,11 +116,11 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_90,
         ...collect((new ReflectionClass(LaravelSetList::class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
             ->reject(
-                static fn (
-                    string $constant,
-                    string $name
-                ): bool => \in_array($name, ['LARAVEL_STATIC_TO_INJECTION', 'LARAVEL_'], true)
-                    || preg_match('/^LARAVEL_\d{2,3}$/', $name)
+                static fn (string $constant, string $name): bool => \in_array(
+                    $name,
+                    ['LARAVEL_STATIC_TO_INJECTION', 'LARAVEL_'],
+                    true
+                ) || preg_match('/^LARAVEL_\d{2,3}$/', $name)
             )
             // ->dd()
             ->values()
@@ -141,7 +136,6 @@ return RectorConfig::configure()
         ...$classes
             ->filter(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
             ->filter(static fn (string $class): bool => (new ReflectionClass($class))->isInstantiable())
-            // ->filter(static fn (string $class): bool => is_subclass_of($class, ConfigurableRectorInterface::class))
             ->values()
             // ->dd()
             ->all(),
@@ -169,19 +163,12 @@ return RectorConfig::configure()
             ->map(static fn (string $class) => collect((new ReflectionClass($class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
                 ->reduce(
                     static function (array $carry, mixed $value, string $name) use ($class): array {
+                        $classConstFetch = new ClassConstFetch(new FullyQualified($class), new Identifier($name));
+
                         $scalarValueToConstFetch = match (true) {
-                            \is_string($value) => new ScalarValueToConstFetch(
-                                new String_($value),
-                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
-                            ),
-                            \is_int($value) => new ScalarValueToConstFetch(
-                                new Int_($value),
-                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
-                            ),
-                            \is_float($value) => new ScalarValueToConstFetch(
-                                new Float_($value),
-                                new ClassConstFetch(new FullyQualified($class), new Identifier($name))
-                            ),
+                            \is_string($value) => new ScalarValueToConstFetch(new String_($value), $classConstFetch),
+                            \is_int($value) => new ScalarValueToConstFetch(new Int_($value), $classConstFetch),
+                            \is_float($value) => new ScalarValueToConstFetch(new Float_($value), $classConstFetch),
                             default => null,
                         };
 
@@ -222,7 +209,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(
         RenameFunctionRector::class,
         [
-            // 'faker' => 'fake',
+            'faker' => 'fake',
             'Guanguans\LaravelExceptionNotify\Support\rescue' => 'rescue',
             'Guanguans\Notify\Foundation\Support\rescue' => 'rescue',
             'Pest\Faker\fake' => 'fake',

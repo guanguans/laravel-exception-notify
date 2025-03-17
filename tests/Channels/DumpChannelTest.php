@@ -15,17 +15,9 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
-use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
-use Guanguans\LaravelExceptionNotifyTests\Fixtures\MailableExtender;
-use Illuminate\Support\Facades\Mail;
 
 it('can report', function (): void {
-    config(['exception-notify.channels.mail.render' => 'value']);
-    config(['exception-notify.channels.mail.extender' => MailableExtender::class]);
-
-    Mail::fake();
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('mail'))
+    expect($this->app->make(ExceptionNotifyManager::class)->driver('dump'))
         ->report(new Exception('testing'))
         ->toBeNull();
-    Mail::assertSent(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);

@@ -24,8 +24,8 @@ abstract class AbstractCollector implements CollectorContract
 
     public static function fallbackName(): string
     {
-        return (string) str(class_basename(static::class))
-            ->beforeLast(str(class_basename(self::class))->replace('Abstract', ''))
-            ->snake(' ');
+        return ucwords((string) str(class_basename(static::class))
+            ->beforeLast(str(class_basename(self::class))->remove('Abstract'))
+            ->snake(' '));
     }
 }

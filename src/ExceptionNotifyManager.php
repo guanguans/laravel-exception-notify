@@ -91,10 +91,6 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
         $studlyName = Str::studly($configRepository->get('driver', $driver));
 
-        if (method_exists($this, $method = "create{$studlyName}Driver")) {
-            return $this->{$method}($configRepository);
-        }
-
         if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);
         }

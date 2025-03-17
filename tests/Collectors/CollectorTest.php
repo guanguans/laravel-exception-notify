@@ -17,7 +17,7 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 
 it('can collect request basic', function (): void {
-    \define('LARAVEL_START', microtime(true));
+    \defined('LARAVEL_START') or \define('LARAVEL_START', microtime(true));
 
     expect(app(RequestBasicCollector::class))
         ->collect()->toBeArray();

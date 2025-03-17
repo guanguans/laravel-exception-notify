@@ -11,9 +11,14 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
+namespace Guanguans\LaravelExceptionNotifyTests\Fixtures;
 
-it('can build self', function (): void {
-    expect(new ReportExceptionMail($this->faker()->title(), $this->faker()->text()))
-        ->build()->toBeInstanceOf(ReportExceptionMail::class);
-})->group(__DIR__, __FILE__);
+use Illuminate\Mail\Mailable;
+
+class MailableExtender
+{
+    public function __invoke(Mailable $mailable): Mailable
+    {
+        return $mailable;
+    }
+}

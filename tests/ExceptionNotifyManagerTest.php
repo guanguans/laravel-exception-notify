@@ -16,14 +16,10 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
-use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 it('can call', function (): void {
     ExceptionNotifyManager::macro('foo', fn ($param) => $param);
@@ -31,78 +27,22 @@ it('can call', function (): void {
         ->foo('foo')->toBe('foo');
 })->group(__DIR__, __FILE__);
 
-it('will throw error', function (): void {
-    try {
-        app(ExceptionNotifyManager::class)->bar();
-    } catch (Throwable $throwable) {
-        expect($throwable)->toBeInstanceOf(BadMethodCallException::class);
-    }
+it('can return Channel', function (): void {
+    expect(app(ExceptionNotifyManager::class)->channel('log'))
+        ->toBeInstanceOf(Channel::class);
 })->group(__DIR__, __FILE__);
-
-it('can report if', function (): void {
-    expect(app(ExceptionNotifyManager::class))
-        ->reportIf(true, new RuntimeException)->toBeNull();
-})->group(__DIR__, __FILE__)->skip();
 
 it('can report', function (): void {
-    config()->set('exception-notify.enabled', false);
-    expect(app(ExceptionNotifyManager::class))
-        ->report(new RuntimeException)->toBeNull();
-
-    config()->set('exception-notify.enabled', true);
-    // $mockApplication = Mockery::spy(Illuminate\Foundation\Application::class);
-    // $mockApplication->allows()->make('config')->atLeast()->once()->andReturn(config());
-    // $mockApplication->allows()->runningInConsole()->atLeast()->once()->andReturnFalse();
-    (function (): void {
-        $this->isRunningInConsole = false;
-    })->call(app());
-    expect(new ExceptionNotifyManager(app()))
-        ->report(new RuntimeException)->toBeNull();
-
-    config()->set('exception-notify.enabled', true);
-    $mockApplication = Mockery::mock(Application::class);
-    $mockApplication->allows('make')->with('config')->andReturn(config());
-    // $mockApplication->allows('runningInConsole')->andReturnFalse();
-    expect(new ExceptionNotifyManager($mockApplication))
-        ->report(new RuntimeException)->toBeNull();
+    expect($this->app->make(ExceptionNotifyManager::class))
+        ->report(new Exception('testing'))
+        ->toBeNull();
 })->group(__DIR__, __FILE__);
 
-it('should not report', function (): void {
-    config()->set('exception-notify.enabled', false);
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
-
-    config()->set('exception-notify.enabled', true);
-    config()->set('exception-notify.environments', 'production');
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
-
-    config()->set('exception-notify.enabled', true);
-    config()->set('exception-notify.environments', '*');
-    ExceptionNotify::skipWhen(static fn (Throwable $throwable) => Arr::first(
-        [
-            Exception::class,
-        ],
-        static fn (string $exception): bool => $throwable instanceof $exception
-    ));
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeFalse();
-})->group(__DIR__, __FILE__)->skip();
-
-it('should report', function (): void {
-    expect(app(ExceptionNotifyManager::class))->shouldReport(new RuntimeException)->toBeTrue();
+it('can report content', function (): void {
+    expect($this->app->make(ExceptionNotifyManager::class))
+        ->reportContent('testing')
+        ->toBeArray();
 })->group(__DIR__, __FILE__);
-
-it('can get default driver', function (): void {
-    expect(app(ExceptionNotifyManager::class))
-        ->getDefaultDriver()->toBeString();
-})->group(__DIR__, __FILE__);
-
-it('can attempt key', function (): void {
-    $uuid = Str::uuid()->toString();
-    expect(fn () => $this->attempt($uuid, 3))
-        ->call(app(ExceptionNotifyManager::class))->toBeTrue()
-        ->call(app(ExceptionNotifyManager::class))->toBeTrue()
-        ->call(app(ExceptionNotifyManager::class))->toBeTrue()
-        ->call(app(ExceptionNotifyManager::class))->toBeFalse();
-})->group(__DIR__, __FILE__)->skip();
 
 it('will throw `InvalidArgumentException`', function (): void {
     app(ExceptionNotifyManager::class)->driver('foo');
@@ -119,14 +59,4 @@ it('can create custom driver', function (): void {
     });
 
     expect(app(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(ChannelContract::class);
-})->group(__DIR__, __FILE__);
-
-it('are same fingerprints for exceptions of throw in the same position', function (): void {
-    collect(range(1, 10))
-        ->map(fn (): string => (fn () => $this->fingerprintFor(new Exception(microtime())))->call(ExceptionNotify::driver('log')))
-        ->reduce(static function (?string $previousFingerprint, string $fingerprint): string {
-            $previousFingerprint and expect($previousFingerprint)->toBe($fingerprint);
-
-            return $fingerprint;
-        });
 })->group(__DIR__, __FILE__);

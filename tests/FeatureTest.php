@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 
@@ -14,11 +16,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
-use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
-use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use Illuminate\Http\UploadedFile;
 
 it('can report exception', function (): void {
@@ -41,45 +39,10 @@ it('can auto report exception', function (): void {
         ->assertStatus(500);
 })->group(__DIR__, __FILE__);
 
-it('is a testing', function (): void {
-    config()->set('exception-notify.channels.dingTalk', [
-        'driver' => 'notify',
-        'authenticator' => [
-            'class' => Guanguans\Notify\DingTalk\Authenticator::class,
-            'token' => 'string',
-            'secret' => 'string',
-            'secrets' => 'string',
-        ],
-        'client' => [
-            'class' => Guanguans\Notify\DingTalk\Client::class,
-            'http_options' => [
-                'base_uri' => 'string',
-                'timeout' => 10,
-                'connect_timeout' => 10,
-                'proxy' => 'string',
-                'verify' => true,
-                'cert_path' => 'string',
-                'key_path' => 'string',
-                'ca_path' => 'string',
-                'ca_info' => 'string',
-                'ssl_version' => 'string',
-                'stream_context_options' => [],
-            ],
-        ],
-        'message' => [
-            'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
-            'options' => [
-                'title' => AbstractChannel::TITLE_TEMPLATE,
-                'text' => AbstractChannel::CONTENT_TEMPLATE,
-            ],
-            'title' => AbstractChannel::TITLE_TEMPLATE,
-            'text' => AbstractChannel::CONTENT_TEMPLATE,
-        ],
-        'pipes' => [
-            AddKeywordChorePipe::with('string'),
-            SprintfMarkdownPipe::class,
-            LimitLengthPipe::with(20000),
-        ],
-    ]);
-    ExceptionNotify::driver('mail')->report(new Exception('This is a test exception.'));
-})->group(__DIR__, __FILE__)->skip();
+it('can report', function (): void {
+    collect(config('exception-notify.channels'))
+        ->keys()
+        ->each(function (string $channel): void {
+            expect(ExceptionNotify::driver($channel))->report(new Exception('testing'))->toBeNull();
+        });
+})->group(__DIR__, __FILE__);
