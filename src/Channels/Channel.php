@@ -38,20 +38,24 @@ class Channel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        if ($this->shouldntReport($throwable)) {
-            return;
-        }
+        \Guanguans\LaravelExceptionNotify\Support\rescue(function () use ($throwable): void {
+            if ($this->shouldntReport($throwable)) {
+                return;
+            }
 
-        $this->channelContract->report($throwable);
+            $this->channelContract->report($throwable);
+        });
     }
 
     public function reportContent(string $content): mixed
     {
-        Event::dispatch(new ReportingEvent($this->channelContract, $content));
-        $result = $this->channelContract->reportContent($content);
-        Event::dispatch(new ReportedEvent($this->channelContract, $result));
+        return \Guanguans\LaravelExceptionNotify\Support\rescue(function () use ($content): mixed {
+            Event::dispatch(new ReportingEvent($this->channelContract, $content));
+            $result = $this->channelContract->reportContent($content);
+            Event::dispatch(new ReportedEvent($this->channelContract, $result));
 
-        return $result;
+            return $result;
+        });
     }
 
     public function reporting(mixed $listener): void

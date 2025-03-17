@@ -15,6 +15,7 @@ namespace Guanguans\LaravelExceptionNotify\Support;
 
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
     /**
@@ -53,6 +54,27 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
             'The argument of abstract must be an array containing a `%s` element.',
             implode('` or `', $keys)
         ));
+    }
+}
+
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\rescue')) {
+    /**
+     * @param null|\Closure $rescue
+     * @param bool|\Closure $log
+     *
+     * @see rescue()
+     */
+    function rescue(callable $callback, mixed $rescue = null, mixed $log = true): mixed
+    {
+        try {
+            return $callback();
+        } catch (\Throwable $throwable) {
+            if (value($log, $throwable)) {
+                Log::error($throwable->getMessage(), ['exception' => $throwable]);
+            }
+
+            return value($rescue, $throwable);
+        }
     }
 }
 

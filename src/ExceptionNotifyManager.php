@@ -53,12 +53,14 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        $this->driver()->report($throwable);
+        \Guanguans\LaravelExceptionNotify\Support\rescue(function () use ($throwable): void {
+            $this->driver()->report($throwable);
+        });
     }
 
     public function reportContent(string $content): mixed
     {
-        return $this->driver()->reportContent($content);
+        return \Guanguans\LaravelExceptionNotify\Support\rescue(fn (): mixed => $this->driver()->reportContent($content));
     }
 
     public function getDefaultDriver(): string

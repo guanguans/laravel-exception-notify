@@ -202,6 +202,10 @@ return [
                 'class' => Guanguans\Notify\Bark\Messages\Message::class,
                 'title' => AbstractChannel::TITLE_TEMPLATE,
                 'body' => AbstractChannel::CONTENT_TEMPLATE,
+                'options' => [
+                    'title' => AbstractChannel::TITLE_TEMPLATE,
+                    'body' => AbstractChannel::CONTENT_TEMPLATE,
+                ],
             ],
             'pipes' => [
                 LimitLengthPipe::with(4096),
