@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support\Rectors;
 
-use Guanguans\Notify\Foundation\Support\Str;
+use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
@@ -108,8 +108,13 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
             return;
         }
 
+        $file = __DIR__."/../../Exceptions/{$name->getLast()}.php";
+
+        /** @noinspection MkdirRaceConditionInspection */
+        is_dir($dir = \dirname($file)) or mkdir($dir, 0755, true);
+
         file_put_contents(
-            __DIR__."/../Exceptions/{$name->getLast()}.php",
+            $file,
             <<<PHP
                 <?php
 

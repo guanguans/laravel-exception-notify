@@ -20,6 +20,7 @@ use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 
 it('can call', function (): void {
     ExceptionNotifyManager::macro('foo', fn ($param) => $param);
@@ -34,7 +35,7 @@ it('can return Channel', function (): void {
 
 it('can report', function (): void {
     expect($this->app->make(ExceptionNotifyManager::class))
-        ->report(new Exception('testing'))
+        ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);
 

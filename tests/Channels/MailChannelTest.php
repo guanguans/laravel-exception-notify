@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotifyTests\Fixtures\MailableExtender;
 use Illuminate\Support\Facades\Mail;
@@ -25,7 +26,7 @@ it('can report', function (): void {
 
     Mail::fake();
     expect($this->app->make(ExceptionNotifyManager::class)->driver('mail'))
-        ->report(new Exception('testing'))
+        ->report(new RuntimeException('testing'))
         ->toBeNull();
     Mail::assertSent(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);

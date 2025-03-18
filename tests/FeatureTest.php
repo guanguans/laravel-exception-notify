@@ -16,6 +16,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Http\UploadedFile;
 
@@ -43,6 +44,6 @@ it('can report', function (): void {
     collect(config('exception-notify.channels'))
         ->keys()
         ->each(function (string $channel): void {
-            expect(ExceptionNotify::driver($channel))->report(new Exception('testing'))->toBeNull();
+            expect(ExceptionNotify::driver($channel))->report(new RuntimeException('testing'))->toBeNull();
         });
 })->group(__DIR__, __FILE__);

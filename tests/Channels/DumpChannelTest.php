@@ -15,9 +15,10 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 
 it('can report', function (): void {
     expect($this->app->make(ExceptionNotifyManager::class)->driver('dump'))
-        ->report(new Exception('testing'))
+        ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);
