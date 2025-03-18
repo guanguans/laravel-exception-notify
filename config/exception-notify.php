@@ -158,9 +158,10 @@ return [
             ],
         ],
 
-        // /**
-        //  * @see https://github.com/guanguans/notify#platform-support
-        //  */
+        /**
+         * @see \Guanguans\LaravelExceptionNotify\Channels\NotifyChannel
+         * @see https://github.com/guanguans/notify#platform-support
+         */
         // 'foo' => [
         //     'driver' => 'notify',
         //     'authenticator' => [
