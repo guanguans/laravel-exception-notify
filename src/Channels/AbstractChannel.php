@@ -16,6 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
+use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Illuminate\Config\Repository;
@@ -31,9 +32,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
 
 abstract class AbstractChannel implements ChannelContract
 {
-    public const TITLE_TEMPLATE = '{title}';
-    public const CONTENT_TEMPLATE = '{content}';
-
     /**
      * @throws \Throwable
      */
@@ -95,7 +93,7 @@ abstract class AbstractChannel implements ChannelContract
     {
         array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
             \is_string($value) and $value = str_replace(
-                [self::TITLE_TEMPLATE, self::CONTENT_TEMPLATE],
+                [TemplateContract::TITLE, TemplateContract::CONTENT],
                 [config('exception-notify.title'), $content],
                 $value
             );
@@ -156,7 +154,7 @@ abstract class AbstractChannel implements ChannelContract
                     return $object;
                 }
 
-                if (!\is_callable($extender) && (\is_array($extender) || \is_string($extender))) {
+                if (!\is_callable($extender)) {
                     $extender = make($extender);
                 }
 

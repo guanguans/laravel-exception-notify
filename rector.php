@@ -16,7 +16,7 @@ declare(strict_types=1);
 use Carbon\Carbon;
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
+use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Illuminate\Support\Carbon as IlluminateCarbon;
@@ -61,7 +61,7 @@ use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelSetList;
 
 /** @var \Illuminate\Support\Collection $classes */
-$classes = collect(spl_autoload_functions())
+$classes ??= collect(spl_autoload_functions())
     ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
         $splAutoloadFunctions
             ->firstOrFail(
@@ -158,7 +158,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
         collect([
-            AbstractChannel::class,
+            TemplateContract::class,
         ])
             ->map(static fn (string $class) => collect((new ReflectionClass($class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
                 ->reduce(
@@ -251,7 +251,7 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ScalarValueToConstFetchRector::class => [
-            __DIR__.'/src/Channels/AbstractChannel.php',
+            __DIR__.'/src/Contracts/TemplateContract.php',
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',

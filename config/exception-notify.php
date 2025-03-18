@@ -11,7 +11,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
@@ -25,6 +24,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
+use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
@@ -146,8 +146,8 @@ return [
             'driver' => 'mail',
             'mailer' => null,
             'class' => ReportExceptionMail::class,
-            'title' => AbstractChannel::TITLE_TEMPLATE,
-            'content' => AbstractChannel::CONTENT_TEMPLATE,
+            'title' => TemplateContract::TITLE,
+            'content' => TemplateContract::CONTENT,
             'to' => [
                 'address' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_ADDRESS', [
                     'your@example.mail',
@@ -182,8 +182,8 @@ return [
         //     'message' => [
         //         'class' => Guanguans\Notify\Foo\Messages\Message::class,
         //         'options' => [
-        //             'title' => AbstractChannel::CONTENT_TEMPLATE,
-        //             'content' => AbstractChannel::CONTENT_TEMPLATE,
+        //             'title' => TemplateContract::CONTENT,
+        //             'content' => TemplateContract::CONTENT,
         //         ],
         //     ],
         //     'pipes' => [
@@ -203,8 +203,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Bark\Messages\Message::class,
                 'options' => [
-                    'title' => AbstractChannel::TITLE_TEMPLATE,
-                    'body' => AbstractChannel::CONTENT_TEMPLATE,
+                    'title' => TemplateContract::TITLE,
+                    'body' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -224,8 +224,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Chanify\Messages\TextMessage::class,
                 'options' => [
-                    'title' => AbstractChannel::TITLE_TEMPLATE,
-                    'text' => AbstractChannel::CONTENT_TEMPLATE,
+                    'title' => TemplateContract::TITLE,
+                    'text' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -246,8 +246,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
                 'options' => [
-                    'title' => AbstractChannel::TITLE_TEMPLATE,
-                    'text' => AbstractChannel::CONTENT_TEMPLATE,
+                    'title' => TemplateContract::TITLE,
+                    'text' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -269,7 +269,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Discord\Messages\Message::class,
                 'options' => [
-                    'content' => AbstractChannel::CONTENT_TEMPLATE,
+                    'content' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -290,7 +290,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Lark\Messages\TextMessage::class,
                 'options' => [
-                    'text' => AbstractChannel::CONTENT_TEMPLATE,
+                    'text' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -313,8 +313,8 @@ return [
                 'class' => Guanguans\Notify\Ntfy\Messages\Message::class,
                 'options' => [
                     'topic' => env('EXCEPTION_NOTIFY_NTFY_TOPIC', 'laravel-exception-notify'),
-                    'title' => AbstractChannel::TITLE_TEMPLATE,
-                    'message' => AbstractChannel::CONTENT_TEMPLATE,
+                    'title' => TemplateContract::TITLE,
+                    'message' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -335,8 +335,8 @@ return [
                 'class' => Guanguans\Notify\PushDeer\Messages\Message::class,
                 'options' => [
                     'type' => 'markdown',
-                    'text' => AbstractChannel::TITLE_TEMPLATE,
-                    'desp' => AbstractChannel::CONTENT_TEMPLATE,
+                    'text' => TemplateContract::TITLE,
+                    'desp' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -358,7 +358,7 @@ return [
                 'class' => Guanguans\Notify\Slack\Messages\Message::class,
                 'options' => [
                     'mrkdwn' => true,
-                    'text' => AbstractChannel::CONTENT_TEMPLATE,
+                    'text' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -380,7 +380,7 @@ return [
                 'class' => Guanguans\Notify\Telegram\Messages\TextMessage::class,
                 'options' => [
                     'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
-                    'text' => AbstractChannel::CONTENT_TEMPLATE,
+                    'text' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -400,7 +400,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
                 'options' => [
-                    'content' => AbstractChannel::CONTENT_TEMPLATE,
+                    'content' => TemplateContract::CONTENT,
                 ],
             ],
             'pipes' => [
