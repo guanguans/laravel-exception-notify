@@ -37,10 +37,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             ->setupConfig()
             ->registerAliases()
             ->registerReportUsing();
-
-        $this->booting(function (): void {
-            $this->registerReportUsing();
-        });
     }
 
     public function boot(): void

@@ -1,8 +1,8 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection DebugFunctionUsageInspection */
 /** @noinspection ForgottenDebugOutputInspection */
-/** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 
 declare(strict_types=1);
@@ -22,6 +22,13 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Support\Facades\Log;
+
+it('can not report', function (): void {
+    config()->set('exception-notify.rate_limiter.max_attempts', 0);
+    expect($this->app->make(ExceptionNotifyManager::class))
+        ->report(new RuntimeException('testing'))
+        ->toBeNull();
+})->group(__DIR__, __FILE__);
 
 it('can listen reporting and reported event', function (): void {
     ExceptionNotify::reporting(function (ReportingEvent $reportingEvent): void {

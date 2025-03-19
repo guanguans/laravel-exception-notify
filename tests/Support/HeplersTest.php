@@ -1,10 +1,10 @@
 <?php
 
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection AnonymousFunctionStaticInspection */
-/** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
 
 declare(strict_types=1);
 
@@ -18,15 +18,26 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Pest\Expectation;
 use function Guanguans\LaravelExceptionNotify\Support\env_explode;
 use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
 use function Guanguans\LaravelExceptionNotify\Support\human_milliseconds;
 use function Guanguans\LaravelExceptionNotify\Support\make;
+use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 it('will throw `InvalidArgumentException` when abstract is empty array', function (): void {
     make([]);
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
+
+it('can catch a potential exception and return a default value', function (): void {
+    expect(rescue(
+        function (): void {
+            throw new RuntimeException('testing');
+        },
+        fn (Throwable $throwable): Throwable => $throwable
+    ))->toBeInstanceOf(RuntimeException::class);
+})->group(__DIR__, __FILE__);
 
 it('can explode env', function (): void {
     expect([

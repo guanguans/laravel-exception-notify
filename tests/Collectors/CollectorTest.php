@@ -15,10 +15,18 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
+use Illuminate\Support\Facades\Request;
 
 it('can collect request basic', function (): void {
-    \defined('LARAVEL_START') or \define('LARAVEL_START', microtime(true));
+    // $defined = $this->getFunctionMock(class_namespace(RequestBasicCollector::class), 'defined');
+    // $defined->expects($this->once())->willReturn(false);
+
+    Request::spy()
+        ->allows('server')
+        ->withArgs(['REQUEST_TIME_FLOAT'])
+        ->once()
+        ->andReturnNull();
 
     expect(app(RequestBasicCollector::class))
         ->collect()->toBeArray();
-})->group(__DIR__, __FILE__)->skip(\defined('LARAVEL_START'));
+})->group(__DIR__, __FILE__);

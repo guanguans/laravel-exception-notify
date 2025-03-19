@@ -36,17 +36,19 @@ use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
 use Guanguans\Notify\Foundation\Client;
-use Guanguans\Notify\Foundation\Response;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Log;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     use Faker;
     use MockeryPHPUnitIntegration;
+    use PHPMock;
     use VarDumperTestTrait;
 
     protected function setUp(): void
@@ -92,12 +94,42 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestQueryCollector::class,
             RequestRawFileCollector::class,
         ]);
-        config()->set('exception-notify.channels.log.pipes', [
+
+        config()->set('exception-notify.channels.mail.pipes', [
             AddKeywordChorePipe::with('keyword'),
             SprintfHtmlPipe::class,
             SprintfMarkdownPipe::class,
             FixPrettyJsonPipe::class,
             LimitLengthPipe::with(512),
+        ]);
+
+        config()->set('exception-notify.channels.stack.channels', [
+            'dump',
+            'log',
+            'mail',
+            'bark',
+            'chanify',
+            'dingTalk',
+            'discord',
+            'lark',
+            'ntfy',
+            'pushDeer',
+            'slack',
+            'telegram',
+            'weWork',
+        ]);
+
+        config([
+            'exception-notify.channels.bark.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.chanify.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.dingTalk.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.discord.authenticator.webHook' => fake()->url(),
+            'exception-notify.channels.lark.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.ntfy.authenticator.usernameOrToken' => fake()->uuid(),
+            'exception-notify.channels.pushDeer.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.slack.authenticator.webHook' => fake()->url(),
+            'exception-notify.channels.telegram.authenticator.token' => fake()->uuid(),
+            'exception-notify.channels.weWork.authenticator.token' => fake()->uuid(),
         ]);
 
         collect(config('exception-notify.channels'))->each(static function (array $configuration, string $name): void {
@@ -106,12 +138,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
                     "exception-notify.channels.$name.client.extender",
                     static fn (Client $client): Client => $client
                         ->mock([
-                            new \GuzzleHttp\Psr7\Response(body: $name),
+                            new Response(body: $name),
                         ])
-                        // ->before(
-                        //     \Guanguans\Notify\Foundation\Middleware\Response::class,
-                        //     Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
-                        // )
                         ->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'))
                 );
             }
@@ -125,22 +153,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             static fn () => tap(
                 response('proactive-report-exception'),
                 static function (): void {
-                    config()->set('exception-notify.channels.stack.channels', [
-                        'dump',
-                        'log',
-                        'mail',
-                        'bark',
-                        'chanify',
-                        'dingTalk',
-                        'discord',
-                        'lark',
-                        'ntfy',
-                        'pushDeer',
-                        'slack',
-                        'telegram',
-                        'weWork',
-                    ]);
-
                     ExceptionNotify::report(new RuntimeException('What happened?'));
                 }
             )
