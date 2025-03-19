@@ -20,9 +20,9 @@ use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Http\UploadedFile;
 
-it('can report exception', function (): void {
+it('can proactive report exception', function (): void {
     $this
-        ->post('report-exception?foo=bar', [
+        ->post('proactive-report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
@@ -30,9 +30,9 @@ it('can report exception', function (): void {
         ->assertOk();
 })->group(__DIR__, __FILE__);
 
-it('can auto report exception', function (): void {
+it('can automatic report exception', function (): void {
     $this
-        ->post('exception?foo=bar', [
+        ->post('automatic-report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
@@ -40,7 +40,7 @@ it('can auto report exception', function (): void {
         ->assertStatus(500);
 })->group(__DIR__, __FILE__);
 
-it('can report', function (): void {
+it('can all report exception', function (): void {
     collect(config('exception-notify.channels'))
         ->keys()
         ->each(function (string $channel): void {
