@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Guanguans\LaravelExceptionNotify\Contracts;
+namespace Guanguans\LaravelExceptionNotify;
 
-interface TemplateContract
+interface Template
 {
     public const TITLE = '{title}';
     public const CONTENT = '{content}';

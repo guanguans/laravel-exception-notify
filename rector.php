@@ -16,9 +16,9 @@ declare(strict_types=1);
 use Carbon\Carbon;
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
+use Guanguans\LaravelExceptionNotify\Template;
 use Illuminate\Support\Carbon as IlluminateCarbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -158,7 +158,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
         collect([
-            TemplateContract::class,
+            Template::class,
         ])
             ->map(static fn (string $class) => collect((new ReflectionClass($class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
                 ->reduce(

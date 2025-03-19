@@ -23,13 +23,13 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
-use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
+use Guanguans\LaravelExceptionNotify\Template;
 use function Guanguans\LaravelExceptionNotify\Support\env_explode;
 
 return [
@@ -144,8 +144,8 @@ return [
             'driver' => 'mail',
             'mailer' => env('EXCEPTION_NOTIFY_MAIL_MAILER'),
             'class' => ReportExceptionMail::class,
-            'title' => TemplateContract::TITLE,
-            'content' => TemplateContract::CONTENT,
+            'title' => Template::TITLE,
+            'content' => Template::CONTENT,
             'to' => [
                 'address' => env_explode('EXCEPTION_NOTIFY_MAIL_TO_ADDRESS', [
                     'your@example.mail',
@@ -181,8 +181,8 @@ return [
         //     'message' => [
         //         'class' => Guanguans\Notify\Foo\Messages\Message::class,
         //         'options' => [
-        //             'title' => TemplateContract::CONTENT,
-        //             'content' => TemplateContract::CONTENT,
+        //             'title' => Template::CONTENT,
+        //             'content' => Template::CONTENT,
         //         ],
         //     ],
         //     'pipes' => [
@@ -202,8 +202,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Bark\Messages\Message::class,
                 'options' => [
-                    'title' => TemplateContract::TITLE,
-                    'body' => TemplateContract::CONTENT,
+                    'title' => Template::TITLE,
+                    'body' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -223,8 +223,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Chanify\Messages\TextMessage::class,
                 'options' => [
-                    'title' => TemplateContract::TITLE,
-                    'text' => TemplateContract::CONTENT,
+                    'title' => Template::TITLE,
+                    'text' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -245,8 +245,8 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\DingTalk\Messages\MarkdownMessage::class,
                 'options' => [
-                    'title' => TemplateContract::TITLE,
-                    'text' => TemplateContract::CONTENT,
+                    'title' => Template::TITLE,
+                    'text' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -268,7 +268,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Discord\Messages\Message::class,
                 'options' => [
-                    'content' => TemplateContract::CONTENT,
+                    'content' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -289,7 +289,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\Lark\Messages\TextMessage::class,
                 'options' => [
-                    'text' => TemplateContract::CONTENT,
+                    'text' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -312,8 +312,8 @@ return [
                 'class' => Guanguans\Notify\Ntfy\Messages\Message::class,
                 'options' => [
                     'topic' => env('EXCEPTION_NOTIFY_NTFY_TOPIC', 'laravel-exception-notify'),
-                    'title' => TemplateContract::TITLE,
-                    'message' => TemplateContract::CONTENT,
+                    'title' => Template::TITLE,
+                    'message' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -334,8 +334,8 @@ return [
                 'class' => Guanguans\Notify\PushDeer\Messages\Message::class,
                 'options' => [
                     'type' => 'markdown',
-                    'text' => TemplateContract::TITLE,
-                    'desp' => TemplateContract::CONTENT,
+                    'text' => Template::TITLE,
+                    'desp' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -357,7 +357,7 @@ return [
                 'class' => Guanguans\Notify\Slack\Messages\Message::class,
                 'options' => [
                     'mrkdwn' => true,
-                    'text' => TemplateContract::CONTENT,
+                    'text' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -379,7 +379,7 @@ return [
                 'class' => Guanguans\Notify\Telegram\Messages\TextMessage::class,
                 'options' => [
                     'chat_id' => env('EXCEPTION_NOTIFY_TELEGRAM_CHAT_ID'),
-                    'text' => TemplateContract::CONTENT,
+                    'text' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
@@ -399,7 +399,7 @@ return [
             'message' => [
                 'class' => Guanguans\Notify\WeWork\Messages\MarkdownMessage::class,
                 'options' => [
-                    'content' => TemplateContract::CONTENT,
+                    'content' => Template::CONTENT,
                 ],
             ],
             'pipes' => [
