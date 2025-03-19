@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void reporting(mixed $listener)
  * @method static void reported(mixed $listener)
  * @method static void skipWhen(\Closure $callback)
+ * @method static void flush()
  * @method static bool shouldReport(\Throwable $throwable)
  *
  * @see \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager

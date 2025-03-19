@@ -25,11 +25,11 @@ use Illuminate\Support\Facades\Log;
 
 it('can listen reporting and reported event', function (): void {
     ExceptionNotify::reporting(function (ReportingEvent $reportingEvent): void {
-        Log::info($reportingEvent::class);
+        // Log::info($reportingEvent::class);
     });
 
     ExceptionNotify::reported(function (ReportedEvent $reportedEvent): void {
-        Log::info($reportedEvent::class);
+        // Log::info($reportedEvent::class);
     });
 
     expect($this->app->make(ExceptionNotifyManager::class))

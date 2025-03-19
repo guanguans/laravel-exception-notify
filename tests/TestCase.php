@@ -27,7 +27,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
@@ -92,7 +91,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestPostCollector::class,
             RequestQueryCollector::class,
             RequestRawFileCollector::class,
-            RequestServerCollector::class,
         ]);
         config()->set('exception-notify.channels.log.pipes', [
             AddKeywordChorePipe::with('keyword'),

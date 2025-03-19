@@ -23,7 +23,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestServerCollector;
 use Guanguans\LaravelExceptionNotify\Contracts\TemplateContract;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
@@ -90,7 +89,6 @@ return [
         // RequestPostCollector::class,
         // RequestFileCollector::class,
         // RequestRawFileCollector::class,
-        // RequestServerCollector::class,
     ],
 
     /**
@@ -136,7 +134,7 @@ return [
          */
         'log' => [
             'driver' => 'log',
-            'channel' => null,
+            'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL'),
         ],
 
         /**
@@ -144,7 +142,7 @@ return [
          */
         'mail' => [
             'driver' => 'mail',
-            'mailer' => null,
+            'mailer' => env('EXCEPTION_NOTIFY_MAIL_MAILER'),
             'class' => ReportExceptionMail::class,
             'title' => TemplateContract::TITLE,
             'content' => TemplateContract::CONTENT,

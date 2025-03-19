@@ -75,6 +75,11 @@ class Channel implements ChannelContract
         self::$skipCallbacks[] = $callback;
     }
 
+    public static function flush(): void
+    {
+        self::$skipCallbacks = [];
+    }
+
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);

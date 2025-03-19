@@ -17,14 +17,16 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
-        (fn (): array => self::$skipCallbacks = [])->call(ExceptionNotify::driver());
+        Channel::flush();
+        File::delete(glob(storage_path('logs/*.log')));
     })
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})
