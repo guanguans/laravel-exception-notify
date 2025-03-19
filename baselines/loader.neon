@@ -1,3 +1,6 @@
+# total 5 errors
 includes:
+    - callable.nonCallable.neon
+    - disallowed.function.neon
     - nullCoalesce.variable.neon
-    - return.type.neon
+    - offsetAccess.nonArray.neon

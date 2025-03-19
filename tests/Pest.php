@@ -17,7 +17,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
@@ -25,12 +24,15 @@ use Illuminate\Support\Collection;
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
-        // (fn (): array => self::$skipCallbacks = [])->call(app(ExceptionNotifyManager::class));
         (fn (): array => self::$skipCallbacks = [])->call(ExceptionNotify::driver());
     })
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})
-    ->in(__DIR__);
+    ->in(
+        __DIR__,
+        // __DIR__.'/Feature',
+        // __DIR__.'/Unit'
+    );
 
 /*
 |--------------------------------------------------------------------------

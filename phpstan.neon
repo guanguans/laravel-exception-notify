@@ -27,19 +27,18 @@ includes:
 
 parameters:
     paths:
-        - config/
         - src/
     excludePaths:
         - tests/Fixtures/
-#    level: max
-    level: 6
+    level: max
+#    level: 10
     tmpDir: .build/phpstan
-    errorFormat: symplify
-#    errorFormat: friendly
-#    friendly:
-#        lineBefore: 3
-#        lineAfter: 3
-#        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+#    errorFormat: symplify
+    errorFormat: friendly
+    friendly:
+        lineBefore: 3
+        lineAfter: 3
+        editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
     type_coverage:
         declare: 100
         param_type: 100
@@ -50,9 +49,9 @@ parameters:
         narrow_param: true
         narrow_return: true
         null_over_false: true
-        no_mixed: false
+        no_mixed: true
         no_mixed_property: true
-        no_mixed_caller: false
+        no_mixed_caller: true
     disallowedFunctionCalls:
         -
             function: 'env()'
@@ -67,24 +66,14 @@ parameters:
             function: 'hydrate_pipe()'
             message: 'use Pipe::with() instead'
     ignoreErrors:
-#        - '#^Unable to resolve the template type T(Key|Value) in call to function collect$#'
-#        - identifier: logicalOr.resultUnused
-#        - identifier: new.static
-#        - identifier: trait.unused
         - identifier: argument.templateType
+        - identifier: argument.type
+        - identifier: binaryOp.invalid
+        - identifier: cast.string
         - identifier: method.nonObject
         - identifier: missingType.generics
         - identifier: missingType.iterableValue
+        - identifier: return.type
         - identifier: return.void
         - identifier: symplify.noDynamicName
-        -
-            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
-            path: ./config/exception-notify.php
-
-        -
-            message: '#^Calling sha1\(\) is forbidden, use hash\(\) with at least SHA\-256 for secure hash, or password_hash\(\) for passwords\.$#'
-            path: ./src/Channels/Channel.php
-
-        -
-            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
-            path: ./src/Support/helpers.php
+        - identifier: typePerfect.noMixedMethodCaller

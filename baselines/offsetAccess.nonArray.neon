@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cannot use array destructuring on mixed\.$#'
+            count: 1
+            path: ../src/Commands/TestCommand.php

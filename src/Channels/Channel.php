@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Event;
 class Channel implements ChannelContract
 {
     use AggregationTrait;
+
+    /** @var list<callable> */
     private static array $skipCallbacks = [];
 
     public function __construct(

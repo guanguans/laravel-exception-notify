@@ -130,7 +130,8 @@
         "symplify/phpstan-rules": "^14.4",
         "symplify/vendor-patches": "^11.4",
         "tomasvotruba/class-leak": "^2.0",
-        "tomasvotruba/type-coverage": "^2.0"
+        "tomasvotruba/type-coverage": "^2.0",
+        "yamadashy/phpstan-friendly-formatter": "^1.2"
     },
     "repositories": {
         "facade-documenter": {

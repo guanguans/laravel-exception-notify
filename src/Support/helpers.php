@@ -96,6 +96,8 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\env_explode')) {
 
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_encode')) {
     /**
+     * @param int<1, 4194304> $depth
+     *
      * @throws \JsonException
      */
     function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string

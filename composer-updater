@@ -144,6 +144,9 @@ $status = (new SingleCommandApplication)
                 return $this;
             }
 
+            /**
+             * @noinspection PhpUnusedPrivateMethodInspection
+             */
             private function normalizeComposerJson(): self
             {
                 $this->mustRunCommand("$this->composerBinary normalize --diff --ansi");
