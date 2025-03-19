@@ -251,7 +251,7 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ScalarValueToConstFetchRector::class => [
-            __DIR__.'/src/Contracts/TemplateContract.php',
+            __DIR__.'/src/Template.php',
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests',

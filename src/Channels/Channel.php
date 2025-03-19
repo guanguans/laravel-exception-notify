@@ -20,6 +20,7 @@ use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
+use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @see \Illuminate\Log\Logger
@@ -40,7 +41,7 @@ class Channel implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        \Guanguans\LaravelExceptionNotify\Support\rescue(function () use ($throwable): void {
+        rescue(function () use ($throwable): void {
             if ($this->shouldntReport($throwable)) {
                 return;
             }
@@ -51,7 +52,7 @@ class Channel implements ChannelContract
 
     public function reportContent(string $content): mixed
     {
-        return \Guanguans\LaravelExceptionNotify\Support\rescue(function () use ($content): mixed {
+        return rescue(function () use ($content): mixed {
             Event::dispatch(new ReportingEvent($this->channelContract, $content));
             $result = $this->channelContract->reportContent($content);
             Event::dispatch(new ReportedEvent($this->channelContract, $result));

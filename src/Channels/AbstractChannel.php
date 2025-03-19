@@ -173,8 +173,11 @@ abstract class AbstractChannel implements ChannelContract
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
         return $this->applyConfigurationToObject(
-            new (config('exception-notify.job.class'))($this->getChannel(), $this->getContent($throwable)),
-            config('exception-notify.job')
+            make($configuration = config('exception-notify.job') + [
+                'channel' => $this->getChannel(),
+                'content' => $this->getContent($throwable),
+            ]),
+            $configuration
         );
     }
 
@@ -194,10 +197,10 @@ abstract class AbstractChannel implements ChannelContract
      */
     private function getCollectors(\Throwable $throwable): Collection
     {
-        return collect(array_merge(
-            config('exception-notify.collectors', []),
-            $this->configRepository->get('collectors', [])
-        ))->mapWithKeys(static function (array|string $parameters, int|string $class) use ($throwable): array {
+        return collect([
+            ...config('exception-notify.collectors', []),
+            ...$this->configRepository->get('collectors', []),
+        ])->mapWithKeys(static function (array|string $parameters, int|string $class) use ($throwable): array {
             if (!\is_array($parameters)) {
                 [$parameters, $class] = [(array) $class, $parameters];
             }

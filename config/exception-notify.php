@@ -53,7 +53,7 @@ return [
      */
     'rate_limiter' => [
         'cache_store' => env('EXCEPTION_NOTIFY_RATE_LIMITER_CACHE_STORE'),
-        'key_prefix' => env('EXCEPTION_NOTIFY_RATE_LIMITER_KEY_PREFIX', 'exception-notify:rate-limit:'),
+        'key_prefix' => env('EXCEPTION_NOTIFY_RATE_LIMITER_KEY_PREFIX', 'exception-notify:rate-limiter:'),
         'max_attempts' => (int) env('EXCEPTION_NOTIFY_RATE_LIMITER_MAX_ATTEMPTS', config('app.debug') ? \PHP_INT_MAX : 1),
         'decay_seconds' => (int) env('EXCEPTION_NOTIFY_RATE_LIMITER_DECAY_SECONDS', 300),
     ],
