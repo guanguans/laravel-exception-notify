@@ -8,14 +8,32 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.0.0-rc1"></a>
+## [5.0.0-rc1] - 2025-03-19
+### Bug Fixes
+- **rectors:** Update exception handling and logging
+
+### CI
+- **chglog:** Update configuration for commit message filters
+- **gitattributes:** Update export-ignore rules for builds
+
+### Code Refactoring
+- **config:** Remove RequestServerCollector and update config
+- **config:** Replace AbstractChannel templates with TemplateContract
+- **tests:** Remove ReplaceStrPipe and update tests
+
+
 <a name="5.0.0-beta2"></a>
 ## [5.0.0-beta2] - 2025-03-17
-### Fix
+### Bug Fixes
 - **config:** Refactor message options in exception-notify config
 - **config:** Update rate limit key prefix format
 - **support:** Improve error handling with rescue function
 
-### Refactor
+### Build
+- **dependencies:** Remove unused files and update version constraints
+
+### Code Refactoring
 - **channel:** replace CHANNEL_CONFIGURATION_KEY with __channel
 - **channels:** Improve method readability and type hints
 - **collector:** Simplify naming and exception handling
@@ -23,12 +41,22 @@ All notable changes to this project will be documented in this file.
 - **config:** Rename rate_limit to rate_limiter
 - **exception-notify:** Simplify exception reporting logic
 
-### Test
+### Tests
 - **channels:** Add tests for exception reporting functionality
 
 
 <a name="5.0.0-beta1"></a>
 ## [5.0.0-beta1] - 2025-03-10
+### Bug Fixes
+- **Channel:** Pass throwable to job and collectors
+- **abstract-channel:** Remove unset of pending dispatch job
+- **config:** Add mail reporting support for exceptions
+- **dependencies:** Remove Carbon from ignored packages
+- **tests:** Add ExceptionNotifyManagerTest for exception fingerprints
+
+### Build
+- **dependencies:** Add new development dependencies
+
 ### CI
 - improve type safety and add type perfect settings
 - **baselines:** Remove deprecated baseline files and update configs
@@ -41,28 +69,7 @@ All notable changes to this project will be documented in this file.
 - **dependencies:** Add facade-documenter and ai-commit packages
 - **rector:** Add class visibility change configuration and utility function
 
-### Feat
-- Refactor hydrate_pipe function to static call and update checks
-- **channels:** Introduce AbstractChannel and Refactor Channels
-- **channels:** Refactor report methods to improve exception handling
-- **channels:** Add StackChannel for handling reports
-- **commands:** Add Configureable trait for dynamic options
-- **exception-notify:** Add conditional reporting to exception handler
-- **naming:** Add Naming trait for dynamic channel names
-- **tests:** Refactor namespace and classmap for tests
-- **trait:** Enhance configuration handling with extender support
-- **traits:** Add MakeStaticable, SetStateable, and WithPipeArgs
-- **workflows:** Update Laravel and PHP dependencies configuration
-- **workflows:** upgrade PHP version to 8.0
-
-### Fix
-- **Channel:** Pass throwable to job and collectors
-- **abstract-channel:** Remove unset of pending dispatch job
-- **config:** Add mail reporting support for exceptions
-- **dependencies:** Remove Carbon from ignored packages
-- **tests:** Add ExceptionNotifyManagerTest for exception fingerprints
-
-### Refactor
+### Code Refactoring
 - Refactor function calls to use global scope
 - Update types and improve PHP version compatibility
 - Update type hinting to use mixed type for parameters
@@ -116,6 +123,20 @@ All notable changes to this project will be documented in this file.
 - **support:** Integrate AggregationTrait into Channel and Manager
 - **support:** Improve exception handling with line number
 
+### Features
+- Refactor hydrate_pipe function to static call and update checks
+- **channels:** Introduce AbstractChannel and Refactor Channels
+- **channels:** Refactor report methods to improve exception handling
+- **channels:** Add StackChannel for handling reports
+- **commands:** Add Configureable trait for dynamic options
+- **exception-notify:** Add conditional reporting to exception handler
+- **naming:** Add Naming trait for dynamic channel names
+- **tests:** Refactor namespace and classmap for tests
+- **trait:** Enhance configuration handling with extender support
+- **traits:** Add MakeStaticable, SetStateable, and WithPipeArgs
+- **workflows:** Update Laravel and PHP dependencies configuration
+- **workflows:** upgrade PHP version to 8.0
+
 
 <a name="4.7.0"></a>
 ## [4.7.0] - 2025-03-01
@@ -126,11 +147,11 @@ All notable changes to this project will be documented in this file.
 ### Docs
 - update copyright year to 2025 in multiple files
 
-### Feat
+### Features
 - **composer:** Update framework dependency
 - **composer:** update dependencies and improve scripts
 
-### Test
+### Tests
 - **LogChannelTest:** Skip test for specific Laravel versions
 
 ### Pull Requests
@@ -144,10 +165,10 @@ All notable changes to this project will be documented in this file.
 ### CI
 - **rector:** add static arrow and closure rectors
 
-### Feat
+### Features
 - **dependencies:** update package versions in composer.json
 
-### Perf
+### Performance Improvements
 - Use fully qualified sprintf function in multiple files
 
 ### Pull Requests
@@ -156,39 +177,17 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.5.1"></a>
 ## [4.5.1] - 2024-05-17
-### Refactor
+### Code Refactoring
 - **config:** remove PhpInfoCollector from exception-notify config
 
 
 <a name="4.5.0"></a>
 ## [4.5.0] - 2024-05-17
-### Docs
-- **README:** update supported notification channels in English README
-- **README:** Add caution for 4.x version
-- **mail:** Update mail.jpg
-- **readme:** update list of available features
-- **readme:** Update README.md with more descriptive content
-- **readme:** update supported notification channels
-
-### Feat
-- **Channel:** add Channel base class and extend other channel classes
-- **ExceptionNotify:** Add skipWhen method
-- **ExceptionNotifyManager:** Add skipWhen method
-- **ToInternalExceptionRector:** Add ToInternalExceptionRector for internal exceptions
-- **collectors:** Add time field to ApplicationCollector
-- **composer-require-checker:** Add configuration file for composer-require-checker
-- **config:** Add environment configuration for exception notification
-- **config:** Add new notification channels
-- **config:** add aggregate channel configuration
-- **config:** add mail configuration
-- **config:** Add WithLogMiddlewareClientTapper class for exception-notify config
-- **laravel:** Add Laravel 8.0 set list and related rules
-
-### Fix
+### Bug Fixes
 - Optimized the email sending logic and added pipeline handling in the exception notification feature
 - **command:** Fix condition check for driver in TestCommand.php
 
-### Refactor
+### Code Refactoring
 - Replace ExceptionNotifyManager with ExceptionNotify facade
 - change visibility of Request properties to private
 - Fix exception handling and enhance type safety
@@ -247,7 +246,29 @@ All notable changes to this project will be documented in this file.
 - **testcommand:** refactor TestCommand handle method
 - **tests:** refactor ExceptionNotifyManagerTest.php and Support/HeplersTest.php
 
-### Test
+### Docs
+- **README:** update supported notification channels in English README
+- **README:** Add caution for 4.x version
+- **mail:** Update mail.jpg
+- **readme:** update list of available features
+- **readme:** Update README.md with more descriptive content
+- **readme:** update supported notification channels
+
+### Features
+- **Channel:** add Channel base class and extend other channel classes
+- **ExceptionNotify:** Add skipWhen method
+- **ExceptionNotifyManager:** Add skipWhen method
+- **ToInternalExceptionRector:** Add ToInternalExceptionRector for internal exceptions
+- **collectors:** Add time field to ApplicationCollector
+- **composer-require-checker:** Add configuration file for composer-require-checker
+- **config:** Add environment configuration for exception notification
+- **config:** Add new notification channels
+- **config:** add aggregate channel configuration
+- **config:** add mail configuration
+- **config:** Add WithLogMiddlewareClientTapper class for exception-notify config
+- **laravel:** Add Laravel 8.0 set list and related rules
+
+### Tests
 - Update tests and refactor code
 - Remove useless files, change exception class names, adjust configuration settings, and refactor notification methods.
 - **Channels:** Update mail channel configuration
@@ -273,24 +294,24 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.4.1"></a>
 ## [4.4.1] - 2024-05-12
-### Fix
+### Bug Fixes
 - **command:** Fix condition check for driver in TestCommand.php
 
-### Refactor
+### Code Refactoring
 - **collectors:** remove unnecessary properties from ExceptionBasicCollector
 - **pipes:** Add LimitLengthPipe to CollectorManager
 
 
 <a name="4.4.0"></a>
 ## [4.4.0] - 2024-05-11
-### Refactor
+### Code Refactoring
 - Replace ExceptionNotifyManager with ExceptionNotify facade
 - **FuncCallToStaticCall:** refactor static calls to function calls
 - **StaticCallToFuncCall:** refactor Str::of to str
 - **composer:** remove guanguans/ai-commit dependency
 - **config:** update exception-notify extender function
 
-### Test
+### Tests
 - **Channels:** Update mail channel configuration
 
 ### Pull Requests
@@ -299,19 +320,19 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.3.3"></a>
 ## [4.3.3] - 2024-05-10
-### Docs
-- **mail:** Update mail.jpg
-
-### Refactor
+### Code Refactoring
 - **command:** update TestCommand signature and handle method
 - **config:** remove unnecessary code in exception-notify configuration
 - **test:** Improve env_explode test case
 - **testcommand:** refactor TestCommand handle method
 
+### Docs
+- **mail:** Update mail.jpg
+
 
 <a name="4.3.2"></a>
 ## [4.3.2] - 2024-05-09
-### Refactor
+### Code Refactoring
 - **commands:** improve readability of TestCommand.php
 
 ### Pull Requests
@@ -321,21 +342,14 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.3.1"></a>
 ## [4.3.1] - 2024-05-09
-### Refactor
+### Code Refactoring
 - **DefaultNotifyClientExtender:** Improve channel parameter handling
 - **config:** update exception-notify configuration
 
 
 <a name="4.3.0"></a>
 ## [4.3.0] - 2024-05-09
-### Docs
-- **readme:** Update README.md with more descriptive content
-
-### Feat
-- **ExceptionNotify:** Add skipWhen method
-- **ExceptionNotifyManager:** Add skipWhen method
-
-### Refactor
+### Code Refactoring
 - **app:** Modify boot method in AppServiceProvider.php
 - **collector:** update rejected headers list
 - **config:** remove 'report_using_creator' from exception-notify.php
@@ -343,10 +357,17 @@ All notable changes to this project will be documented in this file.
 - **src:** Update static variable references to use self
 - **tests:** refactor ExceptionNotifyManagerTest.php and Support/HeplersTest.php
 
+### Docs
+- **readme:** Update README.md with more descriptive content
+
+### Features
+- **ExceptionNotify:** Add skipWhen method
+- **ExceptionNotifyManager:** Add skipWhen method
+
 
 <a name="4.2.0"></a>
 ## [4.2.0] - 2024-05-08
-### Refactor
+### Code Refactoring
 - **Channel:** refactor string replacement method
 - **Naming:** improve name generation logic
 - **collect:** Improve RequestHeaderCollector to handle header array
@@ -357,7 +378,7 @@ All notable changes to this project will be documented in this file.
 - **service provider:** remove DeferrableProvider interface implementation
 - **serviceprovider:** comment out unnecessary mixin calls
 
-### Test
+### Tests
 - Update tests and refactor code
 - **Channels:** add tests for mail and notify channels
 - **Commands:** update TestCommandTest.php and PipeTest.php
@@ -367,11 +388,7 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.1.0"></a>
 ## [4.1.0] - 2024-05-07
-### Feat
-- **collectors:** Add time field to ApplicationCollector
-- **laravel:** Add Laravel 8.0 set list and related rules
-
-### Refactor
+### Code Refactoring
 - change visibility of Request properties to private
 - **Channels:** Improve readability of MailChannel and NotifyChannel
 - **MailChannel:** simplify createMail method
@@ -383,28 +400,32 @@ All notable changes to this project will be documented in this file.
 - **mail:** Improve mail channel configuration and method handling
 - **mail:** Improve mail channel configuration handling
 
+### Features
+- **collectors:** Add time field to ApplicationCollector
+- **laravel:** Add Laravel 8.0 set list and related rules
+
 
 <a name="4.0.0"></a>
 ## [4.0.0] - 2024-05-06
+### Code Refactoring
+- **collector:** Improve exception trace collection
+
 ### Docs
 - **README:** update supported notification channels in English README
 
-### Feat
+### Features
 - **config:** Add new notification channels
-
-### Refactor
-- **collector:** Improve exception trace collection
 
 
 <a name="4.0.0-beta3"></a>
 ## [4.0.0-beta3] - 2024-05-06
+### Code Refactoring
+- **config:** update Lark configuration and rename client tapper
+
 ### Docs
 - **readme:** update supported notification channels
 
-### Refactor
-- **config:** update Lark configuration and rename client tapper
-
-### Test
+### Tests
 - **MailChannelTest:** add throws method in test
 
 ### Pull Requests
@@ -413,27 +434,16 @@ All notable changes to this project will be documented in this file.
 
 <a name="4.0.0-beta2"></a>
 ## [4.0.0-beta2] - 2024-04-23
-### Fix
+### Bug Fixes
 - Optimized the email sending logic and added pipeline handling in the exception notification feature
 
-### Test
+### Tests
 - Remove useless files, change exception class names, adjust configuration settings, and refactor notification methods.
 
 
 <a name="4.0.0-beta1"></a>
 ## [4.0.0-beta1] - 2024-04-23
-### Docs
-- **README:** Add caution for 4.x version
-
-### Feat
-- **Channel:** add Channel base class and extend other channel classes
-- **ToInternalExceptionRector:** Add ToInternalExceptionRector for internal exceptions
-- **composer-require-checker:** Add configuration file for composer-require-checker
-- **config:** add aggregate channel configuration
-- **config:** add mail configuration
-- **config:** Add WithLogMiddlewareClientTapper class for exception-notify config
-
-### Refactor
+### Code Refactoring
 - Fix exception handling and enhance type safety
 - Fix exception handling and enhance type safety
 - update contract names in classes
@@ -446,41 +456,52 @@ All notable changes to this project will be documented in this file.
 - **log:** Simplify LogChannel constructor and report method
 - **mail:** update mail classes names
 
-### Test
+### Docs
+- **README:** Add caution for 4.x version
+
+### Features
+- **Channel:** add Channel base class and extend other channel classes
+- **ToInternalExceptionRector:** Add ToInternalExceptionRector for internal exceptions
+- **composer-require-checker:** Add configuration file for composer-require-checker
+- **config:** add aggregate channel configuration
+- **config:** add mail configuration
+- **config:** Add WithLogMiddlewareClientTapper class for exception-notify config
+
+### Tests
 - **skip:** skip test that throws InvalidArgumentException
 
 
 <a name="3.8.3"></a>
 ## [3.8.3] - 2024-04-18
-### Refactor
+### Code Refactoring
 - Removed `str` function and related code from helpers.php.
 
 
 <a name="3.8.2"></a>
 ## [3.8.2] - 2024-04-01
-### Refactor
+### Code Refactoring
 - **CollectionMacro:** Remove unnecessary method and comments
 - **macro:** Remove lcfirst method from StrMacro and StringableMacro classes
 
 
 <a name="3.8.1"></a>
 ## [3.8.1] - 2024-03-31
-### Refactor
+### Code Refactoring
 - **ReportUsingCreator:** optimize error reporting logic
 
 
 <a name="3.8.0"></a>
 ## [3.8.0] - 2024-03-31
+### Code Refactoring
+- **src:** Improve extendExceptionHandler method in ExceptionNotifyServiceProvider
+
 ### Docs
 - **readme:** Remove unnecessary Chinese translation and code snippets
-
-### Refactor
-- **src:** Improve extendExceptionHandler method in ExceptionNotifyServiceProvider
 
 
 <a name="3.7.0"></a>
 ## [3.7.0] - 2024-03-31
-### Refactor
+### Code Refactoring
 - **composer:** Remove unnecessary packages and update dependencies
 
 
@@ -493,11 +514,11 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.6.0"></a>
 ## [3.6.0] - 2024-03-13
-### Feat
-- **composer-updater:** add dry-run option
-
-### Refactor
+### Code Refactoring
 - **composer-updater:** Improve diff formatting
+
+### Features
+- **composer-updater:** add dry-run option
 
 ### Pull Requests
 - Merge pull request [#57](https://github.com/guanguans/laravel-exception-notify/issues/57) from guanguans/dependabot/composer/rector/rector-tw-0.19or-tw-1.0
@@ -505,7 +526,7 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.5.3"></a>
 ## [3.5.3] - 2024-02-01
-### Refactor
+### Code Refactoring
 - **composer-fixer:** Update composer-fixer script
 - **composer-updater:** Improve handling of multiple and single version dependencies
 
@@ -515,13 +536,13 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.5.2"></a>
 ## [3.5.2] - 2024-01-11
-### Refactor
+### Code Refactoring
 - **collectors:** improve exception handling
 
 
 <a name="3.5.1"></a>
 ## [3.5.1] - 2024-01-09
-### Refactor
+### Code Refactoring
 - **coding-style:** Remove unused Rectors
 - **monorepo-builder:** update release workers
 
@@ -532,12 +553,12 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.5.0"></a>
 ## [3.5.0] - 2023-10-18
-### Feat
-- **config:** Add php_unit_data_provider_name and php_unit_data_provider_return_type in .php-cs-fixer.php
-
-### Refactor
+### Code Refactoring
 - **pipes:** rename ToMarkdownPipe to SprintfMarkdownPipe
 - **pipes:** rename ToHtmlPipe to SprintfHtmlPipe
+
+### Features
+- **config:** Add php_unit_data_provider_name and php_unit_data_provider_return_type in .php-cs-fixer.php
 
 ### Pull Requests
 - Merge pull request [#51](https://github.com/guanguans/laravel-exception-notify/issues/51) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-5
@@ -546,35 +567,35 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.4.2"></a>
 ## [3.4.2] - 2023-08-29
-### Feat
-- **facade:** Add facade.php file
-
-### Fix
+### Bug Fixes
 - **facades:** Return string in getDefaultDriver method
 
-### Refactor
+### Code Refactoring
 - **StringableMacro:** Remove unused squish and toString methods
 - **bin:** remove unused code in facades.php
+
+### Features
+- **facade:** Add facade.php file
 
 
 <a name="3.4.1"></a>
 ## [3.4.1] - 2023-08-20
-### Fix
+### Bug Fixes
 - **src:** fix reportUsingCreator callable
 
-### Test
+### Tests
 - **Channels:** update BarkChannel
 
 
 <a name="3.4.0"></a>
 ## [3.4.0] - 2023-08-20
-### Feat
-- **ReportUsingCreator:** add class
-
-### Refactor
+### Code Refactoring
 - add return type declaration to getDefaultDriver method
 
-### Test
+### Features
+- **ReportUsingCreator:** add class
+
+### Tests
 - **TestCase:** Update setUp and tearDown methods
 
 ### Pull Requests
@@ -583,36 +604,39 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.3.2"></a>
 ## [3.3.2] - 2023-08-17
-### Refactor
+### Code Refactoring
 - **AddChorePipe:** optimize handle method
 - **pipes:** update FixPrettyJsonPipe
 
-### Test
+### Tests
 - **tests:** Add MockeryPHPUnitIntegration trait
 
 
 <a name="3.3.1"></a>
 ## [3.3.1] - 2023-08-14
-### Refactor
+### Code Refactoring
 - update TestCommand handle method
 
 
 <a name="3.3.0"></a>
 ## [3.3.0] - 2023-08-14
-### Docs
-- **psalm:** Update psalm-baseline.xml
-
-### Feat
-- **collectors:** add Naming trait
-- **collectors:** Add ExceptionCollector class
-
-### Fix
+### Bug Fixes
 - **ReportExceptionJob:** Change ExceptionNotify facade to ExceptionNotifyManager
 
-### Refactor
+### Code Refactoring
 - **collectors:** improve PhpInfoCollector
 - **service-provider:** Reorder service providers
 - **src:** Update ExceptionNotifyManager.php
+
+### Docs
+- **psalm:** Update psalm-baseline.xml
+
+### Features
+- **collectors:** add Naming trait
+- **collectors:** Add ExceptionCollector class
+
+### Style
+- **CollectorManager:** fix typo
 
 
 <a name="3.2.3"></a>
@@ -620,88 +644,85 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.2.2"></a>
 ## [3.2.2] - 2023-08-13
-### Docs
-- **ExceptionNotify:** Add shouldReport method
-
-### Fix
+### Bug Fixes
 - **serviceprovider:** fix class name replacement
 
-### Refactor
+### Code Refactoring
 - **command:** Change error variable to warning in TestCommand
 - **serviceprovider:** Refactor alias method
 
-### Test
+### Docs
+- **ExceptionNotify:** Add shouldReport method
+
+### Tests
 - **CollectorTest:** update test for collecting request basic
 
 
 <a name="3.2.1"></a>
 ## [3.2.1] - 2023-08-13
+### Code Refactoring
+- **config:** Update .php-cs-fixer.php
+- **support:** update helpers.php
+
 ### Docs
 - **README:** Update README file
 - **readme:** Fix typo
 
-### Feat
+### Features
 - **TestCommandTest.php:** Add test for exception-notify
 - **helper:** Add human_bytes function
 - **helpers:** add precision parameter to human_milliseconds function
 - **helpers:** Add human_milliseconds function
 - **support:** add array_is_list helper function
 
-### Refactor
-- **config:** Update .php-cs-fixer.php
-- **support:** update helpers.php
-
-### Test
+### Tests
 - **ExceptionNotifyManagerTest:** refactor test cases
 
 
 <a name="3.2.0"></a>
 ## [3.2.0] - 2023-08-12
+### Bug Fixes
+- **composer:** Remove --clear-cache option from rector command
+
+### Code Refactoring
+- **serviceprovider:** reorganize register method
+
 ### Docs
 - **readme:** Update README.md
 
-### Feat
+### Features
 - **commands:** Add TestCommand
-
-### Fix
-- **composer:** Remove --clear-cache option from rector command
-
-### Refactor
-- **serviceprovider:** reorganize register method
 
 
 <a name="3.1.4"></a>
 ## [3.1.4] - 2023-08-11
-### Fix
+### Bug Fixes
 - **collectors:** Fix typo in ExceptionBasicCollector.php
 - **job:** Handle exceptions in job
 
-### Refactor
+### Code Refactoring
 - **src:** remove unnecessary code
 
-### Test
+### Tests
 - **ExceptionNotifyManagerTest:** Add test for reporting exceptions
 - **Support:** update JsonFixer test
 
 
 <a name="3.1.3"></a>
 ## [3.1.3] - 2023-08-10
-### Feat
-- **ReportExceptionJob:** Add retry functionality
-
-### Fix
+### Bug Fixes
 - **Jobs:** Fix ReportExceptionJob timeout and retryAfter values
+
+### Features
+- **ReportExceptionJob:** Add retry functionality
 
 
 <a name="3.1.2"></a>
 ## [3.1.2] - 2023-08-10
-### Docs
-- **readme:** Update README.md
-
-### Fix
+### Bug Fixes
 - **CollectorManager:** Fix collector mapping
 
-### Refactor
+### Code Refactoring
 - **Pipes:** refactor ExceptKeysPipe
 - **ReportExceptionJob:** improve type hinting
 - **collectors:** update ChoreCollector
@@ -709,16 +730,19 @@ All notable changes to this project will be documented in this file.
 - **collectors:** Use getMarked method to get exception context
 - **pipes:** rename AddValuePipe to AddChorePipe
 
+### Docs
+- **readme:** Update README.md
+
 
 <a name="3.1.1"></a>
 ## [3.1.1] - 2023-08-10
-### Fix
+### Bug Fixes
 - **src:** unset dispatch in ExceptionNotifyManager
 
-### Refactor
+### Code Refactoring
 - **ExceptionNotifyManager:** remove unused callback parameter
 
-### Test
+### Tests
 - **ExceptionNotifyManagerTest:** spy runningInConsole method
 - **FeatureTest:** Improve exception reporting
 
@@ -728,45 +752,42 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.1.0"></a>
 ## [3.1.0] - 2023-08-09
-### Feat
-- **src:** Add ExceptionNotifyServiceProvider.php
-
-### Refactor
+### Code Refactoring
 - **DdChannel:** remove DdChannel
+
+### Features
+- **src:** Add ExceptionNotifyServiceProvider.php
 
 
 <a name="3.0.2"></a>
 ## [3.0.2] - 2023-08-09
-### Docs
-- **README.md:** update README.md
-
-### Feat
-- **helper functions:** add env_explode helper function
-
-### Fix
+### Bug Fixes
 - **ExceptionNotifyManager:** fix return value when callback returns null
 - **helper:** Fix env_explode function
 
-### Refactor
+### Code Refactoring
 - **config:** update exception-notify.php
+
+### Docs
+- **README.md:** update README.md
+
+### Features
+- **helper functions:** add env_explode helper function
 
 
 <a name="3.0.1"></a>
 ## [3.0.1] - 2023-08-08
-### Feat
-- **ExceptionNotifyManager:** add attempt method
-
-### Refactor
+### Code Refactoring
 - **ExceptionNotifyManager:** add getChannels method
 - **config:** update default reported channels
+
+### Features
+- **ExceptionNotifyManager:** add attempt method
 
 
 <a name="3.0.0"></a>
 ## [3.0.0] - 2023-08-08
-### Feat
-- **tests:** add PHPMock trait
-
-### Refactor
+### Code Refactoring
 - **ExceptionContext:** simplify code and fix method name
 - **ExceptionNotify:** improve getFacadeAccessor method
 - **ExceptionNotifyManager:** simplify rate limiting logic
@@ -776,7 +797,10 @@ All notable changes to this project will be documented in this file.
 - **naming:** Rename variable to match method call return type
 - **src:** Refactor ExceptionNotifyManager
 
-### Test
+### Features
+- **tests:** add PHPMock trait
+
+### Tests
 - **Channels:** Remove redundant test files
 - **CollectorManagerTest:** remove unnecessary test
 - **FeatureTest:** report exception with file upload
@@ -785,45 +809,37 @@ All notable changes to this project will be documented in this file.
 
 <a name="3.0.0-rc2"></a>
 ## [3.0.0-rc2] - 2023-08-06
-### Docs
-- **readme:** update PHP and Laravel requirements
-
-### Feat
-- **Jobs:** Improve exception reporting
-- **Pipes:** Add RemoveKeysPipe
-- **collectors:** Add RequestRawFileCollector
-- **pipes:** add OnlyKeysPipe class
-
-### Fix
+### Bug Fixes
 - **channels:** Update LogChannel constructor
 - **collector:** fix Collector::name method
 - **collectors:** Rename ExceptionPreviewCollector to ExceptionContextCollector
 - **psalm:** fix undefined interface method in ExceptionNotifyManager
 - **src:** Add hydrate_pipe helper function to helpers.php
 
-### Refactor
+### Code Refactoring
 - **collectors:** Update ExceptionPreviewCollector and ExceptionTraceCollector
 - **config:** update exception-notify.php
 - **exceptions:** remove BadMethodCallException class
 - **pipes:** update AddValuePipe
 - **src:** remove unused code
 
+### Docs
+- **readme:** update PHP and Laravel requirements
+
+### Features
+- **Jobs:** Improve exception reporting
+- **Pipes:** Add RemoveKeysPipe
+- **collectors:** Add RequestRawFileCollector
+- **pipes:** add OnlyKeysPipe class
+
 
 <a name="3.0.0-rc1"></a>
 ## [3.0.0-rc1] - 2023-08-05
-### Docs
-- **_ide_helper:** Remove unused methods
-
-### Feat
-- **ExceptionNotifyManager:** add optional channels parameter to reportIf method
-- **JsonFixer:** Update fix method
-- **exception-notify:** Add ExceptionPreviewCollector
-
-### Fix
+### Bug Fixes
 - **ExceptionNotifyManager:** Fix queue connection config key
 - **collectors:** fix Illuminate\Container\Container import
 
-### Refactor
+### Code Refactoring
 - **DdChannel:** remove return type declaration
 - **SanitizerContract:** remove unused interface
 - **StringableMacro:** Remove beforeLast method
@@ -840,22 +856,25 @@ All notable changes to this project will be documented in this file.
 - **src:** update ReportExceptionJob.php
 - **src:** remove unused code
 
+### Docs
+- **_ide_helper:** Remove unused methods
+
+### Features
+- **ExceptionNotifyManager:** add optional channels parameter to reportIf method
+- **JsonFixer:** Update fix method
+- **exception-notify:** Add ExceptionPreviewCollector
+
+### Style
+- **serviceprovider:** Fix indentation in toAlias method
+
 
 <a name="3.0.0-beta1"></a>
 ## [3.0.0-beta1] - 2023-08-02
-### Docs
-- **changelog:** Add changelog template file
-
-### Feat
-- **ExceptionNotifyServiceProvider:** Add StringableMacro to mixins
-- **deps:** add laravel/lumen-framework dependency
-- **monorepo-builder.php:** add monorepo-builder.php file
-
-### Fix
+### Bug Fixes
 - **StrMacro:** Fix squish function
 - **contracts:** Rename ExceptionAware interface to ExceptionAwareContract
 
-### Refactor
+### Code Refactoring
 - **.php-cs-fixer.php:** optimize file inclusion
 - **Channel:** change getName method to name
 - **ChannelContract:** Rename interface Channel to ChannelContract
@@ -875,6 +894,14 @@ All notable changes to this project will be documented in this file.
 - **options:** remove OptionsProperty trait
 - **php-cs-fixer:** use glob and update directory permissions
 - **service-provider:** Update service provider aliases
+
+### Docs
+- **changelog:** Add changelog template file
+
+### Features
+- **ExceptionNotifyServiceProvider:** Add StringableMacro to mixins
+- **deps:** add laravel/lumen-framework dependency
+- **monorepo-builder.php:** add monorepo-builder.php file
 
 ### Pull Requests
 - Merge pull request [#42](https://github.com/guanguans/laravel-exception-notify/issues/42) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-1.6.0
@@ -1136,7 +1163,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...HEAD
+[5.0.0-rc1]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...5.0.0-rc1
 [5.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...5.0.0-beta2
 [5.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...5.0.0-beta1
 [4.7.0]: https://github.com/guanguans/laravel-exception-notify/compare/4.6.0...4.7.0
