@@ -13,14 +13,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Illuminate\Support\Str;
-
 class ExceptionTraceCollector extends AbstractExceptionCollector
 {
     public function collect(): array
     {
         return collect(explode(\PHP_EOL, $this->exception->getTraceAsString()))
-            ->reject(static fn (string $trace): bool => Str::contains($trace, 'vendor'))
+            ->reject(static fn (string $trace): bool => str($trace)->contains('vendor'))
             ->map(static fn (string $trace): string => (string) str($trace)->replaceFirst(base_path(), ''))
             ->all();
     }

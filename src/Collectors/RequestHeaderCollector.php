@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends AbstractCollector
 {
-    private array $rejects = [
+    private array $except = [
         'Authorization',
         'Cookie',
     ];
@@ -27,7 +27,7 @@ class RequestHeaderCollector extends AbstractCollector
     public function collect(): array
     {
         return collect($this->request->header())
-            ->reject(fn (array $header, string $key): bool => \in_array($key, $this->rejects, true))
+            ->reject(fn (array $header, string $key): bool => str($key)->is($this->except))
             ->map(static fn (array $header): string => $header[0])
             ->all();
     }

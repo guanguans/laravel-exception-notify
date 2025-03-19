@@ -24,10 +24,6 @@ class ExceptionContextCollector extends AbstractExceptionCollector
 
     public function collect(): array
     {
-        return ExceptionContext::getMarked(
-            $this->exception,
-            $this->mark,
-            $this->number
-        );
+        return ExceptionContext::getMarked($this->exception, $this->mark, $this->number);
     }
 }

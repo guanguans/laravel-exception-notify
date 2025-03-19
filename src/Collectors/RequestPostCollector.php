@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class RequestPostCollector extends AbstractCollector
 {
-    private array $hiddenPatterns = [
+    private array $masks = [
         'password',
         '*password',
         'password*',
@@ -29,8 +29,8 @@ class RequestPostCollector extends AbstractCollector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->transform(function (mixed $value, string $key) {
-                if (str($key)->is($this->hiddenPatterns)) {
+            ->map(function (mixed $value, string $key) {
+                if (str($key)->is($this->masks)) {
                     return '******';
                 }
 
