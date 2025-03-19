@@ -121,14 +121,14 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_bytes')) {
      */
     function human_bytes(int $bytes, int $decimals = 2): string
     {
-        $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $factor = (int) floor((\strlen((string) $bytes) - 1) / 3);
 
         if (0 === $factor) {
             $decimals = 0;
         }
 
-        return \sprintf("%.{$decimals}f%s", $bytes / (1024 ** $factor), $size[$factor]);
+        return \sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
     }
 }
 
@@ -136,13 +136,13 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_millisecon
     function human_milliseconds(float $milliseconds, int $precision = 2): string
     {
         if (1 > $milliseconds) {
-            return \sprintf('%sμs', round($milliseconds * 1000, $precision));
+            return \sprintf('%s μs', round($milliseconds * 1000, $precision));
         }
 
         if (1000 > $milliseconds) {
-            return \sprintf('%sms', round($milliseconds, $precision));
+            return \sprintf('%s ms', round($milliseconds, $precision));
         }
 
-        return \sprintf('%ss', round($milliseconds / 1000, $precision));
+        return \sprintf('%s s', round($milliseconds / 1000, $precision));
     }
 }

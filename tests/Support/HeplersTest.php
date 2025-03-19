@@ -53,10 +53,10 @@ it('can human bytes', function (): void {
         human_bytes(10000),
         human_bytes(10000000),
     ])->sequence(
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('0B'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('10B'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.77kB'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.54MB')
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('0 B'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('10 B'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.77 KB'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.54 MB')
     );
 })->group(__DIR__, __FILE__);
 
@@ -67,9 +67,9 @@ it('can human milliseconds', function (): void {
         human_milliseconds(500),
         human_milliseconds(500000),
     ])->sequence(
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('0μs'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500μs'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500ms'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500s')
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('0 μs'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 μs'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 ms'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 s')
     );
 })->group(__DIR__, __FILE__);

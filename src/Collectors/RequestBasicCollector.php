@@ -23,7 +23,6 @@ class RequestBasicCollector extends AbstractCollector
     public function collect(): array
     {
         return [
-            // 'url' => $this->request->url(),
             'path' => $this->request->decodedPath(),
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
