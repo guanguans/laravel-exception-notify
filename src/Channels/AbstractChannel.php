@@ -60,7 +60,7 @@ abstract class AbstractChannel implements ChannelContract
         $pendingDispatch = dispatch($this->makeJob($throwable));
 
         if (
-            'sync' === config('exception-notify.job.connection', config('queue.default'))
+            'sync' === (config('exception-notify.job.connection') ?? config('queue.default'))
             && !app()->runningInConsole()
         ) {
             $pendingDispatch->afterResponse();
