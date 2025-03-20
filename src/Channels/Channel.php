@@ -91,7 +91,9 @@ class Channel implements ChannelContract
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
-        return $this->shouldSkip($throwable) || !$this->attempt($throwable);
+        return !app()->environment(config('exception-notify.environments'))
+            || $this->shouldSkip($throwable)
+            || !$this->attempt($throwable);
     }
 
     private function shouldSkip(\Throwable $throwable): bool

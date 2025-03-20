@@ -34,22 +34,22 @@ use function Guanguans\LaravelExceptionNotify\Support\env_explode;
 
 return [
     /**
-     * Enable or disable auto exception notify.
+     * The switch of auto report exception.
      */
     'enabled' => (bool) env('EXCEPTION_NOTIFY_ENABLED', true),
 
     /**
-     * The list of environments that should be reported.
+     * The list of environment that report exception.
      */
     'environments' => env_explode('EXCEPTION_NOTIFY_ENVIRONMENTS', [
-        // 'production',
         // 'local',
+        // 'production',
         // 'testing',
         '*',
     ]),
 
     /**
-     * The rate limit of same exception.
+     * The rate limiter of report same exception.
      */
     'rate_limiter' => [
         'cache_store' => env('EXCEPTION_NOTIFY_RATE_LIMITER_CACHE_STORE'),
@@ -59,7 +59,7 @@ return [
     ],
 
     /**
-     * The options of report exception job.
+     * The job of report exception.
      */
     'job' => [
         'class' => ReportExceptionJob::class,
@@ -68,12 +68,12 @@ return [
     ],
 
     /**
-     * The title of exception notification report.
+     * The title of report exception.
      */
     'title' => env('EXCEPTION_NOTIFY_TITLE', \sprintf('The %s application exception report', config('app.name'))),
 
     /**
-     * The list of collector.
+     * The list of collector that report exception.
      */
     'collectors' => [
         ApplicationCollector::class,
@@ -92,12 +92,12 @@ return [
     ],
 
     /**
-     * The default reported channels.
+     * The default channel of report exception.
      */
-    'default' => env('EXCEPTION_NOTIFY_DEFAULT', 'stack'),
+    'default' => env('EXCEPTION_NOTIFY_CHANNEL', 'stack'),
 
     /**
-     * The list of channels.
+     * The list of channel that report exception.
      */
     'channels' => [
         /**
@@ -127,6 +127,7 @@ return [
          */
         'dump' => [
             'driver' => 'dump',
+            'exit' => env('EXCEPTION_NOTIFY_DUMP_EXIT', false),
         ],
 
         /**
@@ -135,6 +136,7 @@ return [
         'log' => [
             'driver' => 'log',
             'channel' => env('EXCEPTION_NOTIFY_LOG_CHANNEL'),
+            'level' => env('EXCEPTION_NOTIFY_LOG_LEVEL', 'error'),
         ],
 
         /**
@@ -158,7 +160,7 @@ return [
 
         /**
          * @see \Guanguans\LaravelExceptionNotify\Channels\NotifyChannel
-         * @see https://github.com/guanguans/notify#platform-support
+         * @see https://github.com/guanguans/notify
          */
         // 'foo' => [
         //     'driver' => 'notify',

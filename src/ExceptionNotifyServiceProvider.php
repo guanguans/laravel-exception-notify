@@ -91,7 +91,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         if (
             config('exception-notify.enabled')
-            && $this->app->environment(config('exception-notify.environments'))
             && method_exists($exceptionHandler = $this->app->make(ExceptionHandler::class), 'reportable')
         ) {
             $exceptionHandler->reportable(static function (\Throwable $throwable): void {
