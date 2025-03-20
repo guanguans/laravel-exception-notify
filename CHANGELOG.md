@@ -8,6 +8,29 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.0.0"></a>
+## [5.0.0] - 2025-03-20
+### Bug Fixes
+- **channels:** Ensure default connection is used in job dispatch
+- **collector:** Remove unused URL from data collection
+
+### Code Refactoring
+- **channels:** Improve error handling and configuration usage
+- **collectors:** Simplify collection methods and variable names
+- **command:** Improve exception-notify test output
+- **config:** Improve exception notify configuration comments
+- **template:** Rename TemplateContract to Template
+
+### Docs
+- **README:** Update notification channels and descriptions
+
+### Features
+- **TestCommand:** Refactor anonymous function to improve clarity
+
+### Tests
+- **collector:** Add php-mock-phpunit dependency for testing
+
+
 <a name="5.0.0-rc1"></a>
 ## [5.0.0-rc1] - 2025-03-19
 ### Bug Fixes
@@ -1163,7 +1186,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...HEAD
+[5.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...5.0.0
 [5.0.0-rc1]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...5.0.0-rc1
 [5.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...5.0.0-beta2
 [5.0.0-beta1]: https://github.com/guanguans/laravel-exception-notify/compare/4.7.0...5.0.0-beta1
