@@ -32,45 +32,26 @@ class TestCommand extends Command
     }
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
-    protected $signature = <<<'SIGNATURE'
-        exception-notify:test
-        {--c|channel= : Specify channel to test}
-        SIGNATURE;
+    protected $signature = 'exception-notify:test {--c|channel= : The channel of report exception}';
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
-    protected $description = 'Test for exception-notify';
+    protected $description = 'Testing for exception-notify';
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int
     {
-        $this->output->info('Test for exception-notify start.');
+        $this->output->info('Testing for exception-notify start.');
 
         if (!config($configurationKey = 'exception-notify.enabled')) {
-            $this->output->warning("The configuration [$configurationKey] is false. Please configure it to true.");
+            $this->output->warning("The value of this configuration [$configurationKey] is false, please configure it to true.");
 
             return self::INVALID;
         }
 
-        if (!app()->environment($environments = config('exception-notify.environments'))) {
-            $this->output->warning(\sprintf(
-                <<<'warning'
-                    The current environment is [%s], which is not in the configuration [%s].
-                    Please check the configuration.
-                    warning,
-                app()->environment(),
-                implode('、', $environments)
-            ));
-
-            return self::INVALID;
-        }
-
-        $runtimeException = new RuntimeException('Test for exception-notify.');
+        $runtimeException = new RuntimeException('Testing for exception-notify.');
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
             $this->output->warning(\sprintf(
-                <<<'warning'
-                    The exception [%s] should not be reported.
-                    Please check the configuration.
-                    warning,
+                'The exception [%s] should not be reported, please check the configuration.',
                 $runtimeException::class
             ));
 
@@ -80,18 +61,17 @@ class TestCommand extends Command
         try {
             throw $runtimeException;
         } finally {
-            $this->laravel->terminating(function (): void {
-                $this->output->section(\sprintf('The current channel: %s', $default = config('exception-notify.default')));
-                $this->output->section(\sprintf('The current job : %s', config('exception-notify.job.connection')));
+            $this->laravel->terminating(function () use ($runtimeException): void {
                 $this->output->warning(\sprintf(
                     <<<'warning'
-                        An exception has been thrown to trigger the exception notification monitor.
-                        Please check whether your channel [%s] received the exception notification reports.
-                        If not, please find reason in the default log.
+                        The exception [%s] has been thrown.
+                        Please check whether the channel [%s] has received an exception report.
+                        If not, please find the reason in the default log channel.
                         warning,
-                    $default
+                    $runtimeException::class,
+                    config('exception-notify.default'),
                 ));
-                $this->output->success('Test for exception-notify done.');
+                $this->output->success('Testing for exception-notify done.');
             });
         }
     }

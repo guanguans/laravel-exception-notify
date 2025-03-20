@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotifyTests;
 
+use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
@@ -39,7 +40,9 @@ use Guanguans\Notify\Foundation\Client;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
@@ -80,6 +83,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment($app): void
     {
+        Channel::flush();
+        File::delete(glob(storage_path('logs/*.log')));
+        Mail::fake();
+
+        config()->set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
+
         config()->set('exception-notify.collectors', [
             ApplicationCollector::class,
             ChoreCollector::class,

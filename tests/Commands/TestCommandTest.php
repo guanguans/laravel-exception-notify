@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Symfony\Component\Console\Command\Command;
 use function Pest\Laravel\artisan;
@@ -23,17 +24,12 @@ afterEach(function (): void {
     app()->terminate();
 });
 
-it('can test for exception-notify when is not enabled', function (): void {
+it('can testing for exception-notify when is not enabled', function (): void {
     config()->set('exception-notify.enabled', false);
     artisan(TestCommand::class)->assertExitCode(Command::INVALID);
 })->group(__DIR__, __FILE__);
 
-it('can test for exception-notify when environments is empty', function (): void {
-    config()->set('exception-notify.environments', []);
-    artisan(TestCommand::class)->assertExitCode(Command::INVALID);
-})->group(__DIR__, __FILE__);
-
-it('can test for exception-notify when should not report', function (): void {
+it('can testing for exception-notify when should not report', function (): void {
     ExceptionNotify::skipWhen(
         static fn (Throwable $throwable): bool => $throwable instanceof RuntimeException
     );
@@ -43,6 +39,7 @@ it('can test for exception-notify when should not report', function (): void {
 it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class, [
         '--channel' => 'stack',
-        '--config' => 'app.env=dev',
+        '--config' => "app.name={$this->faker()->name()}",
+        '--verbose' => true,
     ]);
-})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Test for exception-notify.');
+})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Testing for exception-notify.');

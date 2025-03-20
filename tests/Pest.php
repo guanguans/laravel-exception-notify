@@ -17,19 +17,15 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Mail;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
-        Channel::flush();
-        config()->set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
-        File::delete(glob(storage_path('logs/*.log')));
-        Mail::fake();
+        /** @var TestCase $this */
+        $this->defineEnvironment(app());
     })
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})
