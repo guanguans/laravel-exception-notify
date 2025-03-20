@@ -27,7 +27,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
@@ -101,7 +100,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             RequestHeaderCollector::class,
             RequestPostCollector::class,
             RequestQueryCollector::class,
-            RequestRawFileCollector::class,
         ]);
 
         config()->set('exception-notify.channels.mail.pipes', [

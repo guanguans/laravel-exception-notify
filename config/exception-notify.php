@@ -22,7 +22,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\RequestRawFileCollector;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
@@ -88,7 +87,6 @@ return [
         // RequestQueryCollector::class,
         // RequestPostCollector::class,
         // RequestFileCollector::class,
-        // RequestRawFileCollector::class,
     ],
 
     /**
