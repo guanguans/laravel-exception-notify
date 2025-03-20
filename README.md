@@ -1,6 +1,6 @@
 # laravel-exception-notify
 
-> Monitor exception and report it to notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
+> Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
 [![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -9,14 +9,6 @@
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/guanguans/laravel-exception-notify)](https://github.com/guanguans/laravel-exception-notify/releases)
 [![Total Downloads](https://poser.pugx.org/guanguans/laravel-exception-notify/downloads)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 [![License](https://poser.pugx.org/guanguans/laravel-exception-notify/license)](https://packagist.org/packages/guanguans/laravel-exception-notify)
-
-## Features
-
-* Monitor exception and report it to notification channels
-* Support for extending customized channels
-* Support for notification rate limiting
-* Support for customized data pipe
-* Support for customized data collector
 
 ## Related Links
 
@@ -41,17 +33,17 @@ composer require guanguans/laravel-exception-notify --ansi -v
 php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider" --ansi -v
 ```
 
-### Apply for channel authentication and other information
+### Apply for channel authentication information
 
-* [Notify](https://github.com/guanguans/notify#platform-support)
-* Dump(For debugging exception messages)
+* [Notify(30+)](https://github.com/guanguans/notify)
+* Dump(for debugging exception report)
 * Log
 * Mail
 
 ### Configure channels in the `config/exception-notify.php` and `.env` file
 
 ```dotenv
-# EXCEPTION_NOTIFY_STACK_CHANNELS=dingTalk,lark,mail,slack,telegram,...
+EXCEPTION_NOTIFY_CHANNEL=stack
 EXCEPTION_NOTIFY_STACK_CHANNELS=log,slack,weWork
 EXCEPTION_NOTIFY_SLACK_WEBHOOK=https://hooks.slack.com/services/TPU9A9/B038KNUC0GY/6pKH3vfa3mjlUPcgLSjzR
 EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
@@ -59,7 +51,7 @@ EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 
 ## Usage
 
-### Test for exception notify
+### Testing for exception notify
 
 ```shell
 php artisan exception-notify:test --ansi -v
@@ -93,7 +85,7 @@ public function boot(): void
 }
 ```
 
-### Custom channel
+### Extend channel
 
 Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
 
@@ -107,7 +99,7 @@ use Illuminate\Container\Container;
 public function boot(): void
 {
     ExceptionNotify::extend('YourChannelName', function (Container $container): ChannelContract {
-        return 'Instance of the `\Guanguans\LaravelExceptionNotify\Contracts\Channel`.';
+        return 'Instance of the `Guanguans\LaravelExceptionNotify\Contracts\ChannelContract`.';
     });
 }
 ```
