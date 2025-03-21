@@ -26,7 +26,7 @@ class RequestBasicCollector extends AbstractCollector
             'path' => $this->request->decodedPath(),
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
-            'action' => $this->request->route()?->getActionName(),
+            'controller action' => $this->request->route()?->getActionName(),
             'duration' => blank($startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT'))
                 ? 'Unknown'
                 : human_milliseconds((microtime(true) - $startTime) * 1000),

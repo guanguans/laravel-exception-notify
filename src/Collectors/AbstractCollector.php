@@ -15,6 +15,10 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 
+/**
+ * @see https://github.com/laravel/telescope/tree/5.x/src/Watchers
+ * @see https://github.com/spatie/laravel-ray/tree/main/src/Watchers
+ */
 abstract class AbstractCollector implements CollectorContract
 {
     public function name(): string
