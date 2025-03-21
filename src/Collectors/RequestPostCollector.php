@@ -34,13 +34,7 @@ class RequestPostCollector extends AbstractCollector
     public function collect(): array
     {
         return collect($this->request->post())
-            ->map(function (mixed $value, string $key) {
-                if (str($key)->is($this->masks)) {
-                    return '******';
-                }
-
-                return $value;
-            })
+            ->map(fn (mixed $value, string $key): mixed => str($key)->is($this->masks) ? '******' : $value)
             ->all();
     }
 }

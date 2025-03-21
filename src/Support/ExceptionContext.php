@@ -54,7 +54,7 @@ class ExceptionContext
 
     public static function get(\Throwable $throwable, int $number = 5): array
     {
-        return self::getEval($throwable) ?: self::getFile($throwable, $number);
+        return self::getEval($throwable) ?? self::getFile($throwable, $number);
     }
 
     /**
@@ -62,11 +62,7 @@ class ExceptionContext
      */
     private static function getEval(\Throwable $throwable): ?array
     {
-        if (Str::contains($throwable->getFile(), $row = "eval()'d code")) {
-            return [$throwable->getLine() => $row];
-        }
-
-        return null;
+        return Str::contains($throwable->getFile(), $row = "eval()'d code") ? [$throwable->getLine() => $row] : null;
     }
 
     private static function getFile(\Throwable $throwable, int $number = 5): array
