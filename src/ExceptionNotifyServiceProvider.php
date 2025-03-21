@@ -13,9 +13,12 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify;
 
+use Composer\InstalledVersions;
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Foundation\Console\AboutCommand;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
 
@@ -103,9 +106,38 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands(TestCommand::class);
+            $this->addSectionToAboutCommand();
         }
 
         return $this;
+    }
+
+    private function addSectionToAboutCommand(): void
+    {
+        if (!class_exists(InstalledVersions::class)) {
+            return;
+        }
+
+        AboutCommand::add('Laravel Exception Notify', static function (): array {
+            $package = 'guanguans/laravel-exception-notify';
+
+            $installedVersions = collect(InstalledVersions::getAllRawData())
+                ->pluck('versions')
+                ->first(static fn (array $installedVersions): bool => isset($installedVersions[$package]), []);
+
+            $composerJson = json_decode(File::get(base_path("vendor/$package/composer.json")), true, 512, \JSON_THROW_ON_ERROR);
+
+            return collect($composerJson + ($installedVersions[$package] ?? []))
+                ->filter(static fn (mixed $value): bool => \is_string($value))
+                ->except([
+                    '$schema',
+                    'install_path',
+                    'readme',
+                    'reference',
+                ])
+                ->mapWithKeys(static fn (string $value, string $key): array => [str($key)->headline()->toString() => $value])
+                ->all();
+        });
     }
 
     /**
