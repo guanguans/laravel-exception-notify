@@ -5,4 +5,4 @@ parameters:
         -
             message: '#^Trying to invoke mixed but it''s not a callable\.$#'
             count: 1
-            path: ../src/Channels/AbstractChannel.php
+            path: ../src/Support/Utils.php

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
 use Guanguans\Notify\Foundation\Contracts\Client;
 use Guanguans\Notify\Foundation\Message;
@@ -52,7 +53,7 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeClient(): Client
     {
-        return $this->applyConfigurationToObject(
+        return Utils::applyConfigurationToObject(
             make($configuration = $this->configRepository->get('client') + [
                 'authenticator' => $this->makeAuthenticator(),
             ]),
@@ -65,7 +66,7 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeAuthenticator(): Authenticator
     {
-        return $this->applyConfigurationToObject(
+        return Utils::applyConfigurationToObject(
             make($configuration = $this->configRepository->get('authenticator')),
             $configuration
         );
@@ -76,8 +77,8 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeMessage(string $content): Message
     {
-        return $this->applyConfigurationToObject(
-            make($configuration = $this->applyContentToConfiguration($this->configRepository->get('message'), $content)),
+        return Utils::applyConfigurationToObject(
+            make($configuration = Utils::applyContentToConfiguration($this->configRepository->get('message'), $content)),
             $configuration
         );
     }

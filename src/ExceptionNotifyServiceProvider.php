@@ -41,9 +41,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this
-            // ->registerReportUsing()
-            ->registerCommands();
+        $this->registerCommands();
     }
 
     /**
@@ -104,9 +102,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     private function registerCommands(): self
     {
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                TestCommand::class,
-            ]);
+            $this->commands(TestCommand::class);
         }
 
         return $this;
