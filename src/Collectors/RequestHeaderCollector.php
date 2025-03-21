@@ -17,12 +17,17 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends AbstractCollector
 {
-    private array $except = [
-        'Authorization',
-        'Cookie',
-    ];
+    private array $except;
 
-    public function __construct(private Request $request) {}
+    public function __construct(
+        private Request $request,
+        ?array $except = null
+    ) {
+        $this->except = $except ?? [
+            'Authorization',
+            'Cookie',
+        ];
+    }
 
     public function collect(): array
     {

@@ -17,14 +17,19 @@ use Illuminate\Http\Request;
 
 class RequestPostCollector extends AbstractCollector
 {
-    private array $masks = [
-        'password',
-        '*password',
-        'password*',
-        '*password*',
-    ];
+    private array $masks;
 
-    public function __construct(private Request $request) {}
+    public function __construct(
+        private Request $request,
+        ?array $masks = null
+    ) {
+        $this->masks = $masks ?? [
+            'password',
+            '*password',
+            'password*',
+            '*password*',
+        ];
+    }
 
     public function collect(): array
     {
