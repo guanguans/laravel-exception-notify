@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Trying to invoke mixed but it''s not a callable\.$#'
-            count: 1
-            path: ../src/Support/Utils.php

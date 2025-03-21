@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpClassHasTooManyDeclaredMembersInspection */
+
 declare(strict_types=1);
 
 /**

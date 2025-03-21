@@ -33,7 +33,7 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
         }
 
         foreach (
-            $keys ??= [
+            $keys = [
                 '__abstract',
                 '__class',
                 '__name',
@@ -112,11 +112,6 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_enco
 
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_bytes')) {
     /**
-     * Convert bytes to human readable format.
-     *
-     * @param int $bytes the amount of bytes to convert to human readable format
-     * @param int $decimals the number of decimals to use in the resulting string
-     *
      * @see https://stackoverflow.com/a/23888858/1580028
      */
     function human_bytes(int $bytes, int $decimals = 2): string

@@ -218,6 +218,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(
         RenameFunctionRector::class,
         [
+            // 'app' => 'resolve',
             'faker' => 'fake',
             'Guanguans\Notify\Foundation\Support\rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
             'Pest\Faker\fake' => 'fake',

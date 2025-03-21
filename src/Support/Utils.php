@@ -85,6 +85,7 @@ class Utils
                 }
 
                 if (!\is_callable($extender)) {
+                    /** @var callable $extender */
                     $extender = make($extender);
                 }
 

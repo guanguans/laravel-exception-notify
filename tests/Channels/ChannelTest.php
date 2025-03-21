@@ -47,7 +47,7 @@ it('can listen reporting and reported event', function (): void {
 it('can attempt Exception', function (): void {
     config()->set('exception-notify.rate_limiter.max_attempts', 3);
     expect(fn () => $this->attempt(new RuntimeException(microtime())))
-        ->call($logChannel = app(ExceptionNotifyManager::class)->channel('log'))->toBeTrue()
+        ->call($logChannel = resolve(ExceptionNotifyManager::class)->channel('log'))->toBeTrue()
         ->call($logChannel)->toBeTrue()
         ->call($logChannel)->toBeTrue()
         ->call($logChannel)->toBeFalse();

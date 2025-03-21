@@ -49,7 +49,7 @@ trait Configureable
             ->mapWithKeys(static function (string $config): array {
                 \assert(str_contains($config, '='), "The configureable option [$config] must be formatted as key=value.");
 
-                [$key, $value] = str($config)->explode('=', 2)->all();
+                [$key, $value] = explode('=', $config, 2);
 
                 return [$key => $value];
             })

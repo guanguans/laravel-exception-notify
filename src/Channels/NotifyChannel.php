@@ -22,9 +22,9 @@ use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
 /**
+ * @see \Guanguans\Notify\Foundation\Authenticators
  * @see \Guanguans\Notify\Foundation\Client
  * @see \Guanguans\Notify\Foundation\Message
- * @see \Guanguans\Notify\Foundation\Authenticators
  */
 class NotifyChannel extends AbstractChannel
 {

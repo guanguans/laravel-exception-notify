@@ -27,6 +27,6 @@ it('can collect request basic', function (): void {
         ->once()
         ->andReturnNull();
 
-    expect(app(RequestBasicCollector::class))
+    expect(resolve(RequestBasicCollector::class))
         ->collect()->toBeArray();
 })->group(__DIR__, __FILE__);

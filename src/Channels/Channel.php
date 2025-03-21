@@ -44,11 +44,7 @@ class Channel implements ChannelContract
     public function report(\Throwable $throwable): void
     {
         rescue(function () use ($throwable): void {
-            if ($this->shouldntReport($throwable)) {
-                return;
-            }
-
-            $this->channelContract->report($throwable);
+            $this->shouldReport($throwable) and $this->channelContract->report($throwable);
         });
     }
 
@@ -122,17 +118,20 @@ class Channel implements ChannelContract
      */
     private function attempt(\Throwable $throwable): bool
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = config('exception-notify.rate_limiter') + [
-                'class' => RateLimiter::class,
-                'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
-            ]),
-            $configuration
-        )->attempt(
-            $this->fingerprintFor($throwable),
-            config('exception-notify.rate_limiter.max_attempts'),
-            static fn (): bool => true,
-            config('exception-notify.rate_limiter.decay_seconds')
+        return value(
+            fn (RateLimiter $rateLimiter): bool => $rateLimiter->attempt(
+                $this->fingerprintFor($throwable),
+                config('exception-notify.rate_limiter.max_attempts'),
+                static fn (): bool => true,
+                config('exception-notify.rate_limiter.decay_seconds')
+            ),
+            Utils::applyConfigurationToObject(
+                make($configuration = config('exception-notify.rate_limiter') + [
+                    'class' => RateLimiter::class,
+                    'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
+                ]),
+                $configuration
+            ),
         );
     }
 

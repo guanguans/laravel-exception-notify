@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnusedAliasInspection */
+
 declare(strict_types=1);
 
 /**
@@ -64,11 +66,6 @@ return [
     ],
 
     /**
-     * The title of report exception.
-     */
-    'title' => env('EXCEPTION_NOTIFY_TITLE', \sprintf('The %s application exception report', config('app.name'))),
-
-    /**
      * The list of collector that report exception.
      */
     'collectors' => [
@@ -85,6 +82,11 @@ return [
         // RequestPostCollector::class,
         // RequestFileCollector::class,
     ],
+
+    /**
+     * The title of report exception.
+     */
+    'title' => env('EXCEPTION_NOTIFY_TITLE', \sprintf('The %s application exception report', config('app.name'))),
 
     /**
      * The default channel of report exception.

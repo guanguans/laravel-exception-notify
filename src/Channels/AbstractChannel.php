@@ -120,21 +120,18 @@ abstract class AbstractChannel implements ChannelContract
             ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     private function getCollectors(\Throwable $throwable): Collection
     {
         return collect([
-            ...config('exception-notify.collectors', []),
-            ...$this->configRepository->get('collectors', []),
+            ...(array) config('exception-notify.collectors'),
+            ...(array) $this->configRepository->get('collectors'),
         ])->mapWithKeys(static function (array|string $parameters, int|string $class) use ($throwable): array {
             if (!\is_array($parameters)) {
                 [$parameters, $class] = [(array) $class, $parameters];
             }
 
             /** @var CollectorContract $collectorContract */
-            $collectorContract = app()->make($class, $parameters);
+            $collectorContract = resolve($class, $parameters);
             $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
 
             return [$collectorContract->name() => $collectorContract->collect()];
@@ -143,6 +140,6 @@ abstract class AbstractChannel implements ChannelContract
 
     private function getPipes(): array
     {
-        return collect($this->configRepository->get('pipes', []))->prepend(FixPrettyJsonPipe::class)->all();
+        return collect($this->configRepository->get('pipes'))->prepend(FixPrettyJsonPipe::class)->all();
     }
 }

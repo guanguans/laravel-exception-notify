@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Call to an undefined method object\:\:attempt\(\)\.$#'
-            count: 1
-            path: ../src/Channels/Channel.php
