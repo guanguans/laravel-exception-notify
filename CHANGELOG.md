@@ -8,6 +8,23 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.0"></a>
+## [5.1.0] - 2025-03-21
+### Code Refactoring
+- **Channel:** Improve error handling and structure
+- **baselines:** Remove obsolete baseline error files
+- **channels:** Replace method calls with Utils functions
+- **collector:** Improve request header exclusion handling
+- **collectors:** Remove PhpInfoCollector and update ApplicationCollector
+- **collectors:** Improve exception trace filtering and naming
+
+### Style
+- Refactor code for improved readability and simplicity
+
+### Tests
+- Add inspections for null pointer and void function usage
+
+
 <a name="5.0.0"></a>
 ## [5.0.0] - 2025-03-20
 ### Bug Fixes
@@ -1186,7 +1203,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...5.0.0
 [5.0.0-rc1]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...5.0.0-rc1
 [5.0.0-beta2]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta1...5.0.0-beta2
