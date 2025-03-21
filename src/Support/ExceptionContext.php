@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Support;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * @see https://github.com/laravel/telescope/blob/4.x/src/ExceptionContext.php
@@ -62,7 +61,7 @@ class ExceptionContext
      */
     private static function getEval(\Throwable $throwable): ?array
     {
-        return Str::contains($throwable->getFile(), $row = "eval()'d code") ? [$throwable->getLine() => $row] : null;
+        return str($throwable->getFile())->contains($row = "eval()'d code") ? [$throwable->getLine() => $row] : null;
     }
 
     private static function getFile(\Throwable $throwable, int $number = 5): array

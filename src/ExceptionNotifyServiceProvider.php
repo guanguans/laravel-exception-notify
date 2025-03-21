@@ -17,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
@@ -128,7 +128,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             ->start('\\'.class_basename(ExceptionNotify::class))
             ->replaceFirst('\\', '')
             ->explode('\\')
-            ->map(static fn (string $name): string => Str::snake($name, '-'))
+            ->map(static fn (string $name): Stringable => str($name)->snake('-'))
             ->implode('.');
     }
 }

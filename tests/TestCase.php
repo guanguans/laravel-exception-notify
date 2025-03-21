@@ -21,7 +21,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
@@ -94,7 +93,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             ExceptionBasicCollector::class,
             ExceptionContextCollector::class,
             ExceptionTraceCollector::class,
-            PhpInfoCollector::class,
             RequestBasicCollector::class,
             RequestFileCollector::class,
             RequestHeaderCollector::class,

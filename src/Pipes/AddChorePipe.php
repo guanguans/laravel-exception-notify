@@ -17,7 +17,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 class AddChorePipe
@@ -31,7 +30,7 @@ class AddChorePipe
     {
         return $next(collect(Arr::add(
             $collectors->all(),
-            Str::start($key, ChoreCollector::fallbackName().'.'),
+            str($key)->start(ChoreCollector::fallbackName().'.')->toString(),
             $value
         )));
     }

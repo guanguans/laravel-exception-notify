@@ -79,9 +79,6 @@ class Channel implements ChannelContract
         self::$skipCallbacks = [];
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);
@@ -89,8 +86,6 @@ class Channel implements ChannelContract
 
     /**
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
@@ -113,8 +108,6 @@ class Channel implements ChannelContract
     /**
      * @see \Illuminate\Cache\RateLimiting\Limit
      * @see RateLimiter::attempt()
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function attempt(\Throwable $throwable): bool
     {

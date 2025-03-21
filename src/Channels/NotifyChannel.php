@@ -17,7 +17,6 @@ use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Guanguans\Notify\Foundation\Contracts\Authenticator;
 use Guanguans\Notify\Foundation\Contracts\Client;
 use Guanguans\Notify\Foundation\Message;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Http\Message\ResponseInterface;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
@@ -28,9 +27,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class NotifyChannel extends AbstractChannel
 {
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function reportContent(string $content): ResponseInterface
     {
         return $this->makeClient()->send($this->makeMessage($content));
@@ -48,9 +44,6 @@ class NotifyChannel extends AbstractChannel
         ] + parent::rules();
     }
 
-    /**
-     * @throws BindingResolutionException
-     */
     private function makeClient(): Client
     {
         return Utils::applyConfigurationToObject(
@@ -61,9 +54,6 @@ class NotifyChannel extends AbstractChannel
         );
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     private function makeAuthenticator(): Authenticator
     {
         return Utils::applyConfigurationToObject(
@@ -72,9 +62,6 @@ class NotifyChannel extends AbstractChannel
         );
     }
 
-    /**
-     * @throws BindingResolutionException
-     */
     private function makeMessage(string $content): Message
     {
         return Utils::applyConfigurationToObject(

@@ -70,6 +70,7 @@ parameters:
         - identifier: argument.type
         - identifier: binaryOp.invalid
         - identifier: cast.string
+        - identifier: encapsedStringPart.nonString
         - identifier: method.nonObject
         - identifier: missingType.generics
         - identifier: missingType.iterableValue

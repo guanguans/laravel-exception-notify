@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support\Rectors;
 
-use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
@@ -78,9 +77,9 @@ final class ToInternalExceptionRector extends AbstractRector implements Configur
 
         if (
             !$class instanceof Name
-            || Str::is($this->except, $class->toString())
             || str_starts_with($class->toString(), 'Guanguans\\LaravelExceptionNotify\\Exceptions\\')
             || !str_ends_with($class->toString(), 'Exception')
+            || str($class->toString())->is($this->except)
         ) {
             return null;
         }

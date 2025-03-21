@@ -37,9 +37,6 @@ class TestCommand extends Command
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
     protected $description = 'Testing for exception-notify';
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int
     {
         $this->output->info('Testing for exception-notify start.');

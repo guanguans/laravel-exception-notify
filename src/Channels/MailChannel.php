@@ -27,9 +27,6 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class MailChannel extends AbstractChannel
 {
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function reportContent(string $content): ?SentMessage
     {
         return Mail::mailer($this->configRepository->get('mailer'))->send($this->makeMail($content));
@@ -43,9 +40,6 @@ class MailChannel extends AbstractChannel
         ] + parent::rules();
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     private function makeMail(string $content): Mailable
     {
         return Utils::applyConfigurationToObject(

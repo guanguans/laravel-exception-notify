@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\PhpInfoCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
@@ -70,7 +69,6 @@ return [
      */
     'collectors' => [
         ApplicationCollector::class,
-        // PhpInfoCollector::class,
         ChoreCollector::class,
         RequestBasicCollector::class,
         ExceptionBasicCollector::class,

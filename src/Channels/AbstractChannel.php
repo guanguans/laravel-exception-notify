@@ -52,9 +52,6 @@ abstract class AbstractChannel implements ChannelContract
         throw_if($validator->fails(), InvalidConfigurationException::fromValidator($validator));
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function report(\Throwable $throwable): void
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
@@ -94,9 +91,6 @@ abstract class AbstractChannel implements ChannelContract
         return $this->configRepository->get('__channel');
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
         return Utils::applyConfigurationToObject(
@@ -109,9 +103,6 @@ abstract class AbstractChannel implements ChannelContract
         );
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     private function getContent(\Throwable $throwable): string
     {
         return (string) (new Pipeline(app()))

@@ -24,7 +24,8 @@ class ExceptionTraceCollector extends AbstractExceptionCollector
 
     public function collect(): array
     {
-        return collect(explode(\PHP_EOL, $this->exception->getTraceAsString()))
+        return str($this->exception->getTraceAsString())
+            ->explode(\PHP_EOL)
             ->reject(fn (string $trace): bool => str($trace)->contains($this->except))
             ->map(static fn (string $trace): string => (string) str($trace)->replaceFirst(base_path(), ''))
             ->all();

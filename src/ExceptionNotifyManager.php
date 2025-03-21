@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpUnused */
-/** @noinspection PhpUnusedPrivateMethodInspection */
 
 declare(strict_types=1);
 
@@ -22,7 +21,6 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
-use Illuminate\Support\Str;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
@@ -90,7 +88,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
             static fn (Repository $configRepository): mixed => $configRepository->set('__channel', $driver)
         );
 
-        $studlyName = Str::studly($configRepository->get('driver', $driver));
+        $studlyName = str($configRepository->get('driver', $driver))->studly();
 
         if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);

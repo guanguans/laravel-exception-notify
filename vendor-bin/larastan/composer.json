@@ -1,5 +1,4 @@
 {
     "require-dev": {
-        "larastan/larastan": "^2.0"
     }
 }
