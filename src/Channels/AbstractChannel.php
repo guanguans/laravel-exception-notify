@@ -17,6 +17,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
+use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
 use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Config\Repository;
@@ -100,6 +101,7 @@ abstract class AbstractChannel implements ChannelContract
     {
         return Utils::applyConfigurationToObject(
             make($configuration = config('exception-notify.job') + [
+                'class' => ReportExceptionJob::class,
                 'channel' => $this->getChannel(),
                 'content' => $this->getContent($throwable),
             ]),

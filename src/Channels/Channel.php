@@ -17,9 +17,11 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
+use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
+use function Guanguans\LaravelExceptionNotify\Support\make;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
@@ -81,6 +83,9 @@ class Channel implements ChannelContract
         self::$skipCallbacks = [];
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);
@@ -88,6 +93,8 @@ class Channel implements ChannelContract
 
     /**
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function shouldntReport(\Throwable $throwable): bool
     {
@@ -108,12 +115,20 @@ class Channel implements ChannelContract
     }
 
     /**
-     * @see RateLimiter::attempt()
      * @see \Illuminate\Cache\RateLimiting\Limit
+     * @see RateLimiter::attempt()
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function attempt(\Throwable $throwable): bool
     {
-        return with(new RateLimiter(Cache::store(config('exception-notify.rate_limiter.cache_store'))))->attempt(
+        return Utils::applyConfigurationToObject(
+            make($configuration = config('exception-notify.rate_limiter') + [
+                'class' => RateLimiter::class,
+                'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
+            ]),
+            $configuration
+        )->attempt(
             $this->fingerprintFor($throwable),
             config('exception-notify.rate_limiter.max_attempts'),
             static fn (): bool => true,

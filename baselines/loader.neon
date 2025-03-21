@@ -1,7 +1,8 @@
-# total 7 errors
+# total 8 errors
 includes:
     - arrayUnpacking.nonIterable.neon
     - callable.nonCallable.neon
     - disallowed.function.neon
+    - method.notFound.neon
     - nullCoalesce.variable.neon
     - offsetAccess.nonArray.neon

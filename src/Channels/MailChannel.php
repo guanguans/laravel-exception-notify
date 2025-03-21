@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
+use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\SentMessage;
@@ -38,7 +39,6 @@ class MailChannel extends AbstractChannel
     {
         return [
             'mailer' => 'nullable|string',
-            'class' => 'required|string',
             'to' => 'required|array',
         ] + parent::rules();
     }
@@ -49,7 +49,10 @@ class MailChannel extends AbstractChannel
     private function makeMail(string $content): Mailable
     {
         return Utils::applyConfigurationToObject(
-            make($configuration = Utils::applyContentToConfiguration($this->configRepository->all(), $content)),
+            make($configuration = Utils::applyContentToConfiguration(
+                $this->configRepository->all() + ['class' => ReportExceptionMail::class],
+                $content
+            )),
             $configuration
         );
     }

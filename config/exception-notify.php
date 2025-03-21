@@ -22,8 +22,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
-use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
-use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
@@ -61,7 +59,6 @@ return [
      * The job of report exception.
      */
     'job' => [
-        'class' => ReportExceptionJob::class,
         'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION'),
         'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
@@ -143,7 +140,6 @@ return [
         'mail' => [
             'driver' => 'mail',
             'mailer' => env('EXCEPTION_NOTIFY_MAIL_MAILER'),
-            'class' => ReportExceptionMail::class,
             'title' => Template::TITLE,
             'content' => Template::CONTENT,
             'to' => [
