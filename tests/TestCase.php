@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpMissingParentCallCommonInspection */
 
 declare(strict_types=1);

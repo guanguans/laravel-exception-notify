@@ -1,10 +1,13 @@
 <?php
 
 /** @noinspection AnonymousFunctionStaticInspection */
-/** @noinspection PhpInconsistentReturnPointsInspection */
-/** @noinspection PhpUndefinedClassInspection */
-/** @noinspection PhpUnused */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
+
+/** @noinspection PhpInconsistentReturnPointsInspection */
 
 declare(strict_types=1);
 
@@ -17,9 +20,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Composer\Autoload\ClassLoader;
+use Faker\Factory;
 use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
+use Pest\Expectation;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
