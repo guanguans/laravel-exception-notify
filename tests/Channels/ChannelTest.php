@@ -57,7 +57,11 @@ it('can attempt Exception', function (): void {
 
 it('are same fingerprints for exceptions of throw in the same position', function (): void {
     collect(range(1, 10))
-        ->map(fn (): string => (fn () => $this->fingerprintFor(new RuntimeException(microtime())))->call(ExceptionNotify::driver('log')))
+        ->map(
+            fn (): string => (
+                fn () => $this->fingerprintFor(new RuntimeException(microtime()))
+            )->call(ExceptionNotify::driver('log'))
+        )
         ->reduce(static function (?string $previousFingerprint, string $fingerprint): string {
             $previousFingerprint and expect($previousFingerprint)->toBe($fingerprint);
 

@@ -28,6 +28,8 @@ includes:
 parameters:
     paths:
         - src/
+    scanFiles:
+        - vendor/composer/InstalledVersions.php
     excludePaths:
         - tests/Fixtures/
     level: max

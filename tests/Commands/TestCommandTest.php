@@ -21,6 +21,8 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Guanguans\Notify\Foundation\Client;
+use GuzzleHttp\Psr7\Response;
 use Symfony\Component\Console\Command\Command;
 use function Pest\Laravel\artisan;
 
@@ -41,9 +43,28 @@ it('can testing for exception-notify when should not report', function (): void 
 })->group(__DIR__, __FILE__);
 
 it('will throws RuntimeException', function (): void {
-    artisan(TestCommand::class, [
-        '--channel' => 'stack',
-        '--config' => "app.name={$this->faker()->name()}",
-        '--verbose' => true,
-    ]);
+    artisan(TestCommand::class);
 })->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Testing for exception-notify.');
+
+it('will catch RuntimeException and can report it', function (): void {
+    try {
+        artisan(TestCommand::class, [
+            '--channel' => $channel = 'bark',
+            '--config' => "app.name={$this->faker()->name()}",
+            '--verbose' => true,
+        ]);
+    } catch (RuntimeException $runtimeException) {
+        ExceptionNotify::forgetDrivers();
+
+        $extender = config($configurationKey = "exception-notify.channels.$channel.client.extender");
+
+        config()->set(
+            $configurationKey,
+            static fn (Client $client): Client => $extender($client)->mock([
+                new Response(body: \sprintf('{"code":200,"message":"%s","timestamp":1708331409}', fake()->text())),
+            ])
+        );
+
+        expect(ExceptionNotify::report($runtimeException))->toBeNull();
+    }
+})->group(__DIR__, __FILE__);

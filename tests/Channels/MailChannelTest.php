@@ -21,15 +21,9 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
-use Guanguans\LaravelExceptionNotifyTests\Fixtures\MailableExtender;
 use Illuminate\Support\Facades\Mail;
 
 it('can report', function (): void {
-    config([
-        'exception-notify.channels.mail.render' => 'value',
-        'exception-notify.channels.mail.extender' => MailableExtender::class,
-    ]);
-
     expect(resolve(ExceptionNotifyManager::class)->driver('mail'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();

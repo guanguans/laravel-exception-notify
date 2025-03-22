@@ -18,8 +18,20 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
+use Guanguans\LaravelExceptionNotifyTests\Fixtures\MailableExtender;
 use Pest\Expectation;
+
+it('can apply configuration to object', function (): void {
+    expect(Utils::applyConfigurationToObject(
+        new ReportExceptionMail($this->faker()->title(), $this->faker()->text()),
+        [
+            'render' => 'value',
+            'extender' => MailableExtender::class,
+        ]
+    ))->toBeInstanceOf(ReportExceptionMail::class);
+})->group(__DIR__, __FILE__);
 
 it('can human bytes', function (): void {
     expect([

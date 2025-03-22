@@ -1,0 +1,69 @@
+{
+    "Application": {
+        "time": "2025-03-22 08:20:39",
+        "name": "Laravel",
+        "version": "9.52.20",
+        "php version": "8.0.30",
+        "environment": "testing",
+        "debug": false,
+        "locale": "en",
+        "in console": true,
+        "memory": "52.50 MB"
+    },
+    "Chore": {},
+    "Exception Basic": {
+        "message": "What happened?",
+        "code": 0,
+        "class": "Guanguans\\LaravelExceptionNotify\\Exceptions\\RuntimeException",
+        "file": "\/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/TestCase.php",
+        "line": 171
+    },
+    "Exception Context": {
+        "  167": "                            assertMatchesJsonSnapshot($reportingEvent->content);\n",
+        "  168": "                        }\n",
+        "  169": "                    });\n",
+        "  170": "\n",
+        "\u27a4 171": "                    ExceptionNotify::report(new RuntimeException('What happened?'));\n",
+        "  172": "                }\n",
+        "  173": "            )\n",
+        "  174": "        );\n",
+        "  175": "\n"
+    },
+    "Exception Trace": {
+        "1": "#1 \/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/TestCase.php(172): tap(Object(Illuminate\\Http\\Response), Object(Closure))",
+        "29": "#29 \/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/FeatureTest.php(28): Orchestra\\Testbench\\TestCase->post('proactive-repor...', Array)",
+        "30": "#30 [internal function]: P\\Tests\\FeatureTest->{closure}()",
+        "32": "#32 [internal function]: P\\Tests\\FeatureTest->Pest\\Factories\\{closure}()",
+        "49": "#49 {main}"
+    },
+    "Request Basic": {
+        "path": "proactive-report-exception",
+        "ip": "127.0.0.1",
+        "method": "POST",
+        "controller action": "Closure",
+        "duration": "15.69 ms"
+    },
+    "Request File": {
+        "file": {
+            "name": "FeatureTest.php",
+            "type": "text\/x-php",
+            "error": 0,
+            "size": "1.27 KB"
+        }
+    },
+    "Request Header": {
+        "host": "localhost",
+        "user-agent": "Symfony",
+        "accept": "text\/html,application\/xhtml+xml,application\/xml;q=0.9,*\/*;q=0.8",
+        "accept-language": "en-us,en;q=0.5",
+        "accept-charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+        "content-type": "application\/x-www-form-urlencoded"
+    },
+    "Request Post": {
+        "bar": "baz",
+        "password": "******"
+    },
+    "Request Query": {
+        "foo": "bar"
+    }
+}

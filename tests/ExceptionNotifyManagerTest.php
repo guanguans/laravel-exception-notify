@@ -52,14 +52,17 @@ it('will throw `InvalidArgumentException`', function (): void {
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can create custom driver', function (): void {
-    resolve(ExceptionNotifyManager::class)->extend('foo', static fn (): ChannelContract => new class implements ChannelContract {
-        public function report(Throwable $throwable): void {}
+    resolve(ExceptionNotifyManager::class)->extend(
+        'foo',
+        static fn (): ChannelContract => new class implements ChannelContract {
+            public function report(Throwable $throwable): void {}
 
-        public function reportContent(string $content): mixed
-        {
-            return null;
+            public function reportContent(string $content): mixed
+            {
+                return null;
+            }
         }
-    });
+    );
 
     expect(resolve(ExceptionNotifyManager::class))->driver('foo')->toBeInstanceOf(ChannelContract::class);
 })->group(__DIR__, __FILE__);
