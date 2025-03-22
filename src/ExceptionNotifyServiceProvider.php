@@ -18,6 +18,7 @@ use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Console\AboutCommand;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
@@ -121,13 +122,10 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         AboutCommand::add('Laravel Exception Notify', static function (): array {
             $package = 'guanguans/laravel-exception-notify';
 
-            $installedVersions = collect(InstalledVersions::getAllRawData())
-                ->pluck('versions')
-                ->first(static fn (array $installedVersions): bool => isset($installedVersions[$package]), []);
-
-            $composerJson = json_decode(File::get(base_path("vendor/$package/composer.json")), true, 512, \JSON_THROW_ON_ERROR);
-
-            return collect($composerJson + ($installedVersions[$package] ?? []))
+            return collect(
+                json_decode(File::get(base_path("vendor/$package/composer.json")), true, 512, \JSON_THROW_ON_ERROR)
+                + Arr::get(InstalledVersions::getAllRawData(), "0.versions.$package", [])
+            )
                 ->filter(static fn (mixed $value): bool => \is_string($value))
                 ->except([
                     '$schema',
