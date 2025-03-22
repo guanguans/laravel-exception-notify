@@ -115,10 +115,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     private function addSectionToAboutCommand(): void
     {
-        if (!class_exists(InstalledVersions::class)) {
-            return;
-        }
-
         AboutCommand::add('Laravel Exception Notify', static function (): array {
             $package = 'guanguans/laravel-exception-notify';
 

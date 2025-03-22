@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Call to static method getAllRawData\(\) on an unknown class Composer\\InstalledVersions\.$#'
-            count: 1
-            path: ../src/ExceptionNotifyServiceProvider.php
