@@ -18,10 +18,8 @@ declare(strict_types=1);
 use Carbon\Carbon;
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
-use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Guanguans\LaravelExceptionNotify\Template;
 use Illuminate\Support\Carbon as IlluminateCarbon;
 use Illuminate\Support\Collection;
@@ -47,12 +45,8 @@ use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
-use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
-use Rector\Transform\Rector\MethodCall\MethodCallToStaticCallRector;
 use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
-use Rector\Transform\ValueObject\MethodCallToStaticCall;
 use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\ValueObject\PhpVersion;
@@ -153,21 +147,12 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    // ->withConfiguredRule(MethodCallToStaticCallRector::class, [
-    //     new MethodCallToStaticCall(AbstractChannel::class, 'applyContentToConfiguration', Utils::class, 'applyContentToConfiguration'),
-    //     new MethodCallToStaticCall(AbstractChannel::class, 'applyConfigurationToObject', Utils::class, 'applyConfigurationToObject'),
-    // ])
     ->withConfiguredRule(RenameClassRector::class, [
         Carbon::class => IlluminateCarbon::class,
     ])
     ->withConfiguredRule(StaticCallToFuncCallRector::class, [
         new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
-    // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-    //     // new FuncCallToStaticCall('str', Str::class, 'of'),
-    //     new FuncCallToStaticCall('Guanguans\\LaravelExceptionNotify\\Support\\human_bytes', Utils::class, 'humanBytes'),
-    //     new FuncCallToStaticCall('Guanguans\\LaravelExceptionNotify\\Support\\human_milliseconds', Utils::class, 'humanMilliseconds'),
-    // ])
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
         collect([

@@ -59,9 +59,11 @@ php artisan exception-notify:test --ansi -v
 
 ### Notification examples
 
-|           discord            |          lark          |          mail          |
-|:----------------------------:|:----------------------:|:----------------------:|
-| ![discord](docs/discord.jpg) | ![lark](docs/lark.jpg) | ![mail](docs/mail.jpg) |
+|           discord            |          slack           |            telegram            |
+|:----------------------------:|:------------------------:|:------------------------------:|
+| ![discord](docs/discord.jpg) | ![slack](docs/slack.jpg) | ![telegram](docs/telegram.jpg) |
+|             lark             |           mail           |             weWork             |
+|    ![lark](docs/lark.jpg)    |  ![mail](docs/mail.jpg)  |   ![weWork](docs/weWork.jpg)   |
 
 ### Skip report
 

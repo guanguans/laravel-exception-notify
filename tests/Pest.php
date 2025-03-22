@@ -31,7 +31,7 @@ uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
         links([
-            __DIR__.'/../'.basename($originalPath = __DIR__.'/../vendor/orchestra/testbench-core/laravel') => $originalPath,
+            __DIR__.'/../'.basename($target = __DIR__.'/../vendor/orchestra/testbench-core/laravel') => $target,
         ]);
 
         /** @var TestCase $this */
