@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Log;
 
 it('can not report', function (): void {
     config()->set('exception-notify.rate_limiter.max_attempts', 0);
-    expect($this->app->make(ExceptionNotifyManager::class))
+    expect(resolve(ExceptionNotifyManager::class))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);
@@ -41,7 +41,7 @@ it('can listen reporting and reported event', function (): void {
         Log::info($reportedEvent::class);
     });
 
-    expect($this->app->make(ExceptionNotifyManager::class))
+    expect(resolve(ExceptionNotifyManager::class))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);

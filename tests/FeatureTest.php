@@ -37,5 +37,5 @@ it('can automatic report exception', function (): void {
             'password' => 'password',
             'file' => new UploadedFile(__FILE__, basename(__FILE__)),
         ])
-        ->assertStatus(500);
+        ->assertServerError();
 })->group(__DIR__, __FILE__);

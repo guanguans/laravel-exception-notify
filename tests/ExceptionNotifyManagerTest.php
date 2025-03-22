@@ -36,13 +36,13 @@ it('can return Channel', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can report', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class))
+    expect(resolve(ExceptionNotifyManager::class))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can report content', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class))
+    expect(resolve(ExceptionNotifyManager::class))
         ->reportContent('testing')
         ->toBeArray();
 })->group(__DIR__, __FILE__);

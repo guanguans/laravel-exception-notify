@@ -23,7 +23,7 @@ use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 
 it('can report', function (): void {
     (fn (): bool => $this->isRunningInConsole = false)->call(app());
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('dump'))
+    expect(resolve(ExceptionNotifyManager::class)->driver('dump'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);

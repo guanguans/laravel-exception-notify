@@ -22,13 +22,13 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 
 it('can report', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('stack'))
+    expect(resolve(ExceptionNotifyManager::class)->driver('stack'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can report content', function (): void {
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('stack'))
+    expect(resolve(ExceptionNotifyManager::class)->driver('stack'))
         ->reportContent('testing')
         ->toBeArray();
 })->group(__DIR__, __FILE__);

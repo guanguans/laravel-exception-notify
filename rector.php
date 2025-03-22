@@ -153,10 +153,10 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(MethodCallToStaticCallRector::class, [
-        new MethodCallToStaticCall(AbstractChannel::class, 'applyContentToConfiguration', Utils::class, 'applyContentToConfiguration'),
-        new MethodCallToStaticCall(AbstractChannel::class, 'applyConfigurationToObject', Utils::class, 'applyConfigurationToObject'),
-    ])
+    // ->withConfiguredRule(MethodCallToStaticCallRector::class, [
+    //     new MethodCallToStaticCall(AbstractChannel::class, 'applyContentToConfiguration', Utils::class, 'applyContentToConfiguration'),
+    //     new MethodCallToStaticCall(AbstractChannel::class, 'applyConfigurationToObject', Utils::class, 'applyConfigurationToObject'),
+    // ])
     ->withConfiguredRule(RenameClassRector::class, [
         Carbon::class => IlluminateCarbon::class,
     ])
@@ -164,7 +164,9 @@ return RectorConfig::configure()
         new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
     // ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-    //     new FuncCallToStaticCall('str', Str::class, 'of'),
+    //     // new FuncCallToStaticCall('str', Str::class, 'of'),
+    //     new FuncCallToStaticCall('Guanguans\\LaravelExceptionNotify\\Support\\human_bytes', Utils::class, 'humanBytes'),
+    //     new FuncCallToStaticCall('Guanguans\\LaravelExceptionNotify\\Support\\human_milliseconds', Utils::class, 'humanMilliseconds'),
     // ])
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
@@ -225,16 +227,13 @@ return RectorConfig::configure()
             'Guanguans\Notify\Foundation\Support\rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
             'Pest\Faker\fake' => 'fake',
             'Pest\Faker\faker' => 'faker',
-            'rescue' => 'Guanguans\LaravelExceptionNotify\Support\rescue',
             'test' => 'it',
         ] + array_reduce(
             [
-                'make',
                 'env_explode',
                 'json_pretty_encode',
-                'hydrate_pipe',
-                'human_bytes',
-                'human_milliseconds',
+                'make',
+                'rescue',
             ],
             static function (array $carry, string $func): array {
                 /** @see https://github.com/laravel/framework/blob/11.x/src/Illuminate/Support/functions.php */

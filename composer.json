@@ -102,7 +102,6 @@
         "guanguans/ai-commit": "dev-main",
         "guanguans/monorepo-builder-worker": "^1.4",
         "laravel/facade-documenter": "dev-main",
-        "maglnet/composer-require-checker": "^4.4",
         "mockery/mockery": "^1.6",
         "nette/utils": "^4.0",
         "orchestra/testbench": "^7.53 || ^8.0 || ^9.0 || ^10.0",

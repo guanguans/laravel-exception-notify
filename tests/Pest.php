@@ -24,11 +24,16 @@ use Composer\Autoload\ClassLoader;
 use Faker\Factory;
 use Guanguans\LaravelExceptionNotifyTests\TestCase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Pest\Expectation;
 
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {
+        links([
+            __DIR__.'/../'.basename($originalPath = __DIR__.'/../vendor/orchestra/testbench-core/laravel') => $originalPath,
+        ]);
+
         /** @var TestCase $this */
         $this->defineEnvironment(app());
     })
@@ -66,6 +71,19 @@ expect()->extend('toBetween', fn (int $min, int $max): Expectation => expect($th
 |
  */
 
+function classes(): Collection
+{
+    return collect(spl_autoload_functions())
+        ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
+            $splAutoloadFunctions
+                ->firstOrFail(
+                    static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
+                )[0]
+                ->getClassMap()
+        ))
+        ->keys();
+}
+
 /**
  * @throws ReflectionException
  */
@@ -91,15 +109,23 @@ function faker(string $locale = Factory::DEFAULT_LOCALE): Generator
 //     return Factory::create($locale);
 // }
 
-function classes(): Collection
+/**
+ * @see \Illuminate\Foundation\Console\StorageLinkCommand
+ */
+function links(array $links, array $parameters = []): int
 {
-    return collect(spl_autoload_functions())
-        ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
-            $splAutoloadFunctions
-                ->firstOrFail(
-                    static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
-                )[0]
-                ->getClassMap()
-        ))
-        ->keys();
+    $originalLinks = config('filesystems.links', []);
+
+    config()->set('filesystems.links', $links);
+
+    $status = Artisan::call('storage:link', $parameters + [
+        '--ansi' => true,
+        '--verbose' => true,
+    ]);
+
+    config()->set('filesystems.links', $originalLinks);
+
+    // echo Artisan::output();
+
+    return $status;
 }

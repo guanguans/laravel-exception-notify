@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Container\Container;
 use Illuminate\Support\Carbon;
-use function Guanguans\LaravelExceptionNotify\Support\human_bytes;
 
 class ApplicationCollector extends AbstractCollector
 {
@@ -35,7 +35,7 @@ class ApplicationCollector extends AbstractCollector
             'debug' => $this->container->hasDebugModeEnabled(),
             'locale' => $this->container->getLocale(),
             'in console' => $this->container->runningInConsole(),
-            'memory' => human_bytes(memory_get_peak_usage(true)),
+            'memory' => Utils::humanBytes(memory_get_peak_usage(true)),
         ];
     }
 }

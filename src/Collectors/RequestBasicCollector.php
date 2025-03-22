@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Http\Request;
-use function Guanguans\LaravelExceptionNotify\Support\human_milliseconds;
 
 class RequestBasicCollector extends AbstractCollector
 {
@@ -29,7 +29,7 @@ class RequestBasicCollector extends AbstractCollector
             'controller action' => $this->request->route()?->getActionName(),
             'duration' => blank($startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT'))
                 ? 'Unknown'
-                : human_milliseconds((microtime(true) - $startTime) * 1000),
+                : Utils::humanMilliseconds((microtime(true) - $startTime) * 1000),
         ];
     }
 }

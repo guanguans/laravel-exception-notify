@@ -19,19 +19,6 @@ use Illuminate\Support\Str;
 
 class Utils
 {
-    public static function applyContentToConfiguration(array $configuration, string $content): array
-    {
-        array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
-            \is_string($value) and $value = str_replace(
-                [Template::TITLE, Template::CONTENT],
-                [config('exception-notify.title'), $content],
-                $value
-            );
-        });
-
-        return $configuration;
-    }
-
     public static function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
     {
         return collect($configuration)
@@ -91,5 +78,46 @@ class Utils
 
                 return $extender($object);
             });
+    }
+
+    public static function applyContentToConfiguration(array $configuration, string $content): array
+    {
+        array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
+            \is_string($value) and $value = str_replace(
+                [Template::TITLE, Template::CONTENT],
+                [config('exception-notify.title'), $content],
+                $value
+            );
+        });
+
+        return $configuration;
+    }
+
+    /**
+     * @see https://stackoverflow.com/a/23888858/1580028
+     */
+    public static function humanBytes(int $bytes, int $decimals = 2): string
+    {
+        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $factor = (int) floor((\strlen((string) $bytes) - 1) / 3);
+
+        if (0 === $factor) {
+            $decimals = 0;
+        }
+
+        return \sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
+    }
+
+    public static function humanMilliseconds(float $milliseconds, int $precision = 2): string
+    {
+        if (1 > $milliseconds) {
+            return \sprintf('%s μs', round($milliseconds * 1000, $precision));
+        }
+
+        if (1000 > $milliseconds) {
+            return \sprintf('%s ms', round($milliseconds, $precision));
+        }
+
+        return \sprintf('%s s', round($milliseconds / 1000, $precision));
     }
 }

@@ -30,7 +30,7 @@ it('can report', function (): void {
         'exception-notify.channels.mail.extender' => MailableExtender::class,
     ]);
 
-    expect($this->app->make(ExceptionNotifyManager::class)->driver('mail'))
+    expect(resolve(ExceptionNotifyManager::class)->driver('mail'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
     Mail::assertSent(ReportExceptionMail::class);

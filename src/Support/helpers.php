@@ -17,6 +17,38 @@ use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\env_explode')) {
+    /**
+     * @noinspection LaravelFunctionsInspection
+     */
+    function env_explode(string $key, mixed $default = null, string $delimiter = ',', int $limit = \PHP_INT_MAX): mixed
+    {
+        $env = env($key, $default);
+
+        if (\is_string($env)) {
+            return $env ? explode($delimiter, $env, $limit) : [];
+        }
+
+        return $env;
+    }
+}
+
+if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_encode')) {
+    /**
+     * @param int<1, 4194304> $depth
+     *
+     * @throws \JsonException
+     */
+    function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string
+    {
+        return json_encode(
+            $value,
+            \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT | $options,
+            $depth
+        );
+    }
+}
+
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
     /**
      * @see https://github.com/laravel/framework/blob/12.x/src/Illuminate/Foundation/helpers.php
@@ -78,69 +110,5 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\rescue')) {
 
             return value($rescue, $throwable);
         }
-    }
-}
-
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\env_explode')) {
-    /**
-     * @noinspection LaravelFunctionsInspection
-     */
-    function env_explode(string $key, mixed $default = null, string $delimiter = ',', int $limit = \PHP_INT_MAX): mixed
-    {
-        $env = env($key, $default);
-
-        if (\is_string($env)) {
-            return $env ? explode($delimiter, $env, $limit) : [];
-        }
-
-        return $env;
-    }
-}
-
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_encode')) {
-    /**
-     * @param int<1, 4194304> $depth
-     *
-     * @throws \JsonException
-     */
-    function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string
-    {
-        return json_encode(
-            $value,
-            \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT | $options,
-            $depth
-        );
-    }
-}
-
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_bytes')) {
-    /**
-     * @see https://stackoverflow.com/a/23888858/1580028
-     */
-    function human_bytes(int $bytes, int $decimals = 2): string
-    {
-        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        $factor = (int) floor((\strlen((string) $bytes) - 1) / 3);
-
-        if (0 === $factor) {
-            $decimals = 0;
-        }
-
-        return \sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
-    }
-}
-
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\human_milliseconds')) {
-    function human_milliseconds(float $milliseconds, int $precision = 2): string
-    {
-        if (1 > $milliseconds) {
-            return \sprintf('%s μs', round($milliseconds * 1000, $precision));
-        }
-
-        if (1000 > $milliseconds) {
-            return \sprintf('%s ms', round($milliseconds, $precision));
-        }
-
-        return \sprintf('%s s', round($milliseconds / 1000, $precision));
     }
 }
