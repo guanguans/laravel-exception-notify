@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.1"></a>
+## [5.1.1] - 2025-03-22
+### Bug Fixes
+- **ExceptionNotifyServiceProvider:** Remove unused notFound baseline
+- **SprintfMarkdownPipe:** Correct format string syntax
+
+### Code Refactoring
+- **collectors:** Replace function calls with Utils methods
+
+### Features
+- **ExceptionNotify:** Add section to AboutCommand for package info
+
+### Performance Improvements
+- **ExceptionNotifyServiceProvider:** Optimize version retrieval
+
+### Tests
+- **MailChannel:** Refactor mail reporting tests
+
+
 <a name="5.1.0"></a>
 ## [5.1.0] - 2025-03-21
 ### Code Refactoring
@@ -1203,7 +1222,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.1...HEAD
+[5.1.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...5.0.0
 [5.0.0-rc1]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-beta2...5.0.0-rc1
