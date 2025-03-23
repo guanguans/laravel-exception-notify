@@ -56,7 +56,10 @@ EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 ### Testing for exception notify
 
 ```shell
+php artisan exception-notify:test --channel=dump --queue-connection=sync --ansi -v
+php artisan exception-notify:test --queue-connection=sync --ansi -v
 php artisan exception-notify:test --ansi -v
+php artisan exception-notify:test --ansi
 ```
 
 ### :camera_flash: Notification examples
