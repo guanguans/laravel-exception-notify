@@ -24,6 +24,8 @@ class RequestFileCollector extends AbstractCollector
     /**
      * @noinspection CallableParameterUseCaseInTypeContextInspection
      *
+     * @see tests/FeatureTest.php
+     *
      * ```json
      * {
      *     "name": "images.jpeg",
@@ -41,10 +43,12 @@ class RequestFileCollector extends AbstractCollector
 
         array_walk_recursive($files, static function (UploadedFile &$uploadedFile): void {
             $uploadedFile = [
-                'Name' => $uploadedFile->getClientOriginalName(),
-                'Type' => $uploadedFile->getMimeType(),
-                'Error' => $uploadedFile->getError(),
-                'Size' => Utils::humanBytes($uploadedFile->getSize()),
+                'name' => $uploadedFile->getClientOriginalName(),
+                'type' => $uploadedFile->getMimeType(),
+                'tmp_name' => $uploadedFile->getPathname(),
+                // 'error' => $uploadedFile->getError(),
+                'error' => $uploadedFile->getErrorMessage(),
+                'size' => Utils::humanBytes($uploadedFile->getSize()),
             ];
         });
 

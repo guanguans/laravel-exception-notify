@@ -21,61 +21,31 @@ declare(strict_types=1);
 use Illuminate\Http\UploadedFile;
 
 it('can proactive report exception', function (): void {
-    $jpgFile = UploadedFile::fake()->image('jpg.jpg');
-    $pngFile = UploadedFile::fake()->image('png.png');
     $this
         ->post('proactive-report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
-            'image' => new UploadedFile(
-                path: $jpgFile->path(),
-                originalName: $jpgFile->getBasename(),
-                mimeType: $jpgFile->getMimeType(),
-                error: null,
-                test: true
-            ),
-            'images_list' => [
-                new UploadedFile(
-                    path: $jpgFile->path(),
-                    originalName: $jpgFile->getBasename(),
-                    mimeType: $jpgFile->getMimeType(),
-                    error: \UPLOAD_ERR_INI_SIZE,
-                    test: true
-                ),
-                new UploadedFile(
-                    path: $pngFile->path(),
-                    originalName: $pngFile->getBasename(),
-                    mimeType: $pngFile->getMimeType(),
-                    error: \UPLOAD_ERR_PARTIAL,
-                    test: true
-                ),
-            ],
-            'images_map' => [
-                'jpg' => new UploadedFile(
-                    path: $jpgFile->path(),
-                    originalName: $jpgFile->getBasename(),
-                    mimeType: $jpgFile->getMimeType(),
-                    error: \UPLOAD_ERR_CANT_WRITE,
-                    test: true
-                ),
-                'png' => new UploadedFile(
-                    path: $pngFile->path(),
-                    originalName: $pngFile->getBasename(),
-                    mimeType: $pngFile->getMimeType(),
-                    error: \UPLOAD_ERR_EXTENSION,
-                    test: true
-                ),
-            ],
         ])
         ->assertOk();
 })->group(__DIR__, __FILE__);
 
 it('can automatic report exception', function (): void {
+    $jpgFile = UploadedFile::fake()->image($jpgName = 'image.jpg');
+    $pngFile = UploadedFile::fake()->image($pngName = 'image.png');
+
     $this
         ->post('automatic-report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
-            // 'file' => new UploadedFile(__FILE__, basename(__FILE__)),
+            'image' => new UploadedFile($jpgFile->path(), $jpgName, $jpgFile->getMimeType(), null, true),
+            'images_list' => [
+                new UploadedFile($jpgFile->path(), $jpgName, $jpgFile->getMimeType(), \UPLOAD_ERR_INI_SIZE, true),
+                new UploadedFile($pngFile->path(), $pngName, $pngFile->getMimeType(), \UPLOAD_ERR_PARTIAL, true),
+            ],
+            'images_map' => [
+                'jpg' => new UploadedFile($jpgFile->path(), $jpgName, $jpgFile->getMimeType(), \UPLOAD_ERR_CANT_WRITE, true),
+                'png' => new UploadedFile($pngFile->path(), $pngName, $pngFile->getMimeType(), \UPLOAD_ERR_EXTENSION, true),
+            ],
         ])
         ->assertServerError();
 })->group(__DIR__, __FILE__);

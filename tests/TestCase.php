@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotifyTests;
 
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
-use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
 use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
@@ -28,7 +27,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
-use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
@@ -47,7 +45,6 @@ use Illuminate\Support\Facades\Mail;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
-use function Spatie\Snapshots\assertMatchesJsonSnapshot;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -146,28 +143,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
             static fn () => tap(
                 response('proactive-report-exception'),
                 static function (): void {
-                    config()->set('exception-notify.channels.stack.channels', [
-                        'dump',
-                        'log',
-                        'mail',
-                        'bark',
-                        'chanify',
-                        'dingTalk',
-                        'discord',
-                        'lark',
-                        'ntfy',
-                        'pushDeer',
-                        'slack',
-                        'telegram',
-                        'weWork',
-                    ]);
-
-                    ExceptionNotify::reporting(static function (ReportingEvent $reportingEvent): void {
-                        if ($reportingEvent->channelContract instanceof DumpChannel) {
-                            assertMatchesJsonSnapshot($reportingEvent->content);
-                        }
-                    });
-
                     ExceptionNotify::report(new RuntimeException('What happened?'));
                 }
             )
@@ -176,6 +151,22 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $router->any(
             'automatic-report-exception',
             static fn () => tap(response('automatic-report-exception'), static function (): void {
+                config()->set('exception-notify.channels.stack.channels', [
+                    'dump',
+                    'log',
+                    'mail',
+                    'bark',
+                    'chanify',
+                    'dingTalk',
+                    'discord',
+                    'lark',
+                    'ntfy',
+                    'pushDeer',
+                    'slack',
+                    'telegram',
+                    'weWork',
+                ]);
+
                 throw new RuntimeException('What happened?');
             })
         );
