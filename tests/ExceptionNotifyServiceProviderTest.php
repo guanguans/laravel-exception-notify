@@ -19,12 +19,11 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use function Pest\Laravel\artisan;
 
 it('can add section to about command', function (): void {
-    artisan('about');
-})->group(__DIR__, __FILE__)->throws(FileNotFoundException::class);
+    artisan('about')->assertOk();
+})->group(__DIR__, __FILE__);
 
 it('can get provides', function (): void {
     expect(new ExceptionNotifyServiceProvider(app()))
