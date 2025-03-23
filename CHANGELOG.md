@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.7"></a>
+## [5.1.7] - 2025-03-23
+### Bug Fixes
+- **ExceptionNotifyServiceProvider:** simplify command metadata retrieval
+
+
 <a name="5.1.6"></a>
 ## [5.1.6] - 2025-03-23
 ### Bug Fixes
@@ -1272,7 +1278,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.6...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.7...HEAD
+[5.1.7]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.6...5.1.7
 [5.1.6]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.5...5.1.6
 [5.1.5]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.4...5.1.5
 [5.1.4]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.3...5.1.4
