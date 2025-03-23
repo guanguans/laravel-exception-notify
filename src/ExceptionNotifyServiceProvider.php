@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Console\AboutCommand;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
@@ -117,22 +116,14 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         AboutCommand::add(
             str($package = 'guanguans/laravel-exception-notify')->headline()->toString(),
-            static fn (): array => collect()
+            static fn (): array => collect(['Homepage' => "https://github.com/$package"])
                 ->when(
                     class_exists(InstalledVersions::class),
-                    static fn (Collection $data): Collection => $data
-                        ->replace(Arr::get(InstalledVersions::getAllRawData(), "0.versions.$package", []))
-                        ->only([
-                            'pretty_version',
-                            'version',
-                        ])
+                    static fn (Collection $data): Collection => $data->put(
+                        'Version',
+                        InstalledVersions::getPrettyVersion($package)
+                    )
                 )
-                ->replace([
-                    'homepage' => "https://github.com/$package",
-                ])
-                ->mapWithKeys(static fn (string $value, string $key): array => [
-                    str($key)->headline()->toString() => $value,
-                ])
                 ->all()
         );
     }
