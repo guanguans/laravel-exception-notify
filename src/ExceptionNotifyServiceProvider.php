@@ -20,7 +20,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Stringable;
 
@@ -116,32 +115,26 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
 
     private function addSectionToAboutCommand(): void
     {
-        AboutCommand::add('Laravel Exception Notify', static function (): array {
-            $package = 'guanguans/laravel-exception-notify';
-
-            return collect()
-                ->when(
-                    is_file($path = base_path("vendor/$package/composer.json")),
-                    static fn (Collection $data): Collection => $data->replace(
-                        json_decode(File::get($path), true, 512, \JSON_THROW_ON_ERROR)
-                    )
-                )
+        AboutCommand::add(
+            str($package = 'guanguans/laravel-exception-notify')->headline()->toString(),
+            static fn (): array => collect()
                 ->when(
                     class_exists(InstalledVersions::class),
-                    static fn (Collection $data): Collection => $data->replace(
-                        Arr::get(InstalledVersions::getAllRawData(), "0.versions.$package", [])
-                    )
+                    static fn (Collection $data): Collection => $data
+                        ->replace(Arr::get(InstalledVersions::getAllRawData(), "0.versions.$package", []))
+                        ->only([
+                            'pretty_version',
+                            'version',
+                        ])
                 )
-                ->filter(static fn (mixed $value): bool => \is_string($value))
-                ->except([
-                    '$schema',
-                    'install_path',
-                    'readme',
-                    'reference',
+                ->replace([
+                    'homepage' => "https://github.com/$package",
                 ])
-                ->mapWithKeys(static fn (string $value, string $key): array => [str($key)->headline()->toString() => $value])
-                ->all();
-        });
+                ->mapWithKeys(static fn (string $value, string $key): array => [
+                    str($key)->headline()->toString() => $value,
+                ])
+                ->all()
+        );
     }
 
     /**

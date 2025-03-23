@@ -23,6 +23,9 @@ class ApplicationCollector extends AbstractCollector
         private Container $container
     ) {}
 
+    /**
+     * @see \Illuminate\Foundation\Console\AboutCommand::gatherApplicationInformation()
+     */
     public function collect(): array
     {
         return [
