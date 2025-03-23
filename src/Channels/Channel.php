@@ -79,12 +79,17 @@ class Channel implements ChannelContract
         self::$skipCallbacks = [];
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function shouldReport(\Throwable $throwable): bool
     {
         return !$this->shouldntReport($throwable);
     }
 
     /**
+     * @throws \ReflectionException
+     *
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
      */
     private function shouldntReport(\Throwable $throwable): bool
@@ -106,25 +111,32 @@ class Channel implements ChannelContract
     }
 
     /**
-     * @see \Illuminate\Cache\RateLimiting\Limit
      * @see RateLimiter::attempt()
+     * @see \Illuminate\Cache\RateLimiting\Limit
+     *
+     * @throws \ReflectionException
      */
     private function attempt(\Throwable $throwable): bool
     {
-        return value(
-            fn (RateLimiter $rateLimiter): bool => $rateLimiter->attempt(
-                $this->fingerprintFor($throwable),
-                config('exception-notify.rate_limiter.max_attempts'),
-                static fn (): bool => true,
-                config('exception-notify.rate_limiter.decay_seconds')
-            ),
-            Utils::applyConfigurationToObject(
-                make($configuration = config('exception-notify.rate_limiter') + [
-                    'class' => RateLimiter::class,
-                    'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
-                ]),
-                $configuration
-            ),
+        return $this->makeRateLimiter()->attempt(
+            $this->fingerprintFor($throwable),
+            config('exception-notify.rate_limiter.max_attempts'),
+            static fn (): bool => true,
+            config('exception-notify.rate_limiter.decay_seconds')
+        );
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    private function makeRateLimiter(): RateLimiter
+    {
+        return Utils::applyConfigurationToObject(
+            make($configuration = config('exception-notify.rate_limiter') + [
+                'class' => RateLimiter::class,
+                'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
+            ]),
+            $configuration
         );
     }
 
