@@ -21,7 +21,7 @@ class AddKeywordChorePipe extends AddChorePipe
 {
     use WithPipeArgs;
 
-    public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key = 'keyword'): Stringable
+    public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key = 'Keyword'): Stringable
     {
         return parent::handle($collectors, $next, $value, $key);
     }

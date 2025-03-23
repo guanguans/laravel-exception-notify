@@ -30,10 +30,10 @@ class RequestFileCollector extends AbstractCollector
 
         array_walk_recursive($files, static function (UploadedFile &$uploadedFile): void {
             $uploadedFile = [
-                'name' => $uploadedFile->getClientOriginalName(),
-                'type' => $uploadedFile->getMimeType(),
-                'error' => $uploadedFile->getError(),
-                'size' => Utils::humanBytes($uploadedFile->getSize()),
+                'Name' => $uploadedFile->getClientOriginalName(),
+                'Type' => $uploadedFile->getMimeType(),
+                'Error' => $uploadedFile->getError(),
+                'Size' => Utils::humanBytes($uploadedFile->getSize()),
             ];
         });
 

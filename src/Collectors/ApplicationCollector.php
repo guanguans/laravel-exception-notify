@@ -29,13 +29,14 @@ class ApplicationCollector extends AbstractCollector
     public function collect(): array
     {
         return [
-            'time' => Carbon::now()->format('Y-m-d H:i:s'),
-            'name' => config('app.name'),
-            'version' => $this->container->version(),
-            'php version' => \PHP_VERSION,
-            'environment' => $this->container->environment(),
-            'debug' => $this->container->hasDebugModeEnabled(),
-            'in console' => $this->container->runningInConsole(),
+            'Time' => Carbon::now()->format('Y-m-d H:i:s'),
+            'Name' => config('app.name'),
+            'Version' => $this->container->version(),
+            'PHP Version' => \PHP_VERSION,
+            'Environment' => $this->container->environment(),
+            'In Console' => $this->container->runningInConsole(),
+            'Debug Mode' => $this->container->hasDebugModeEnabled(),
+            'Maintenance Mode' => $this->container->isDownForMaintenance(),
         ];
     }
 }

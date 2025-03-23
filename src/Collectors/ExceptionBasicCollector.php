@@ -21,11 +21,11 @@ class ExceptionBasicCollector extends AbstractExceptionCollector
     public function collect(): array
     {
         return [
-            'message' => $this->exception->getMessage(),
-            'code' => $this->exception->getCode(),
-            'class' => $this->exception::class,
-            'file' => $this->exception->getFile(),
-            'line' => $this->exception->getLine(),
+            'Message' => $this->exception->getMessage(),
+            'Code' => $this->exception->getCode(),
+            'Class' => $this->exception::class,
+            'File' => $this->exception->getFile(),
+            'Line' => $this->exception->getLine(),
         ];
     }
 }

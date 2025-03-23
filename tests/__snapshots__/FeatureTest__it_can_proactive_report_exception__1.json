@@ -1,20 +1,21 @@
 {
     "Application": {
-        "time": "2025-03-23 06:28:50",
-        "name": "Laravel",
-        "version": "9.52.20",
-        "php version": "8.0.30",
-        "environment": "testing",
-        "debug": false,
-        "in console": true
+        "Time": "2025-03-23 10:07:18",
+        "Name": "Laravel",
+        "Version": "9.52.20",
+        "PHP Version": "8.0.30",
+        "Environment": "testing",
+        "In Console": true,
+        "Debug Mode": false,
+        "Maintenance Mode": false
     },
     "Chore": {},
     "Exception Basic": {
-        "message": "What happened?",
-        "code": 0,
-        "class": "Guanguans\\LaravelExceptionNotify\\Exceptions\\RuntimeException",
-        "file": "\/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/TestCase.php",
-        "line": 171
+        "Message": "What happened?",
+        "Code": 0,
+        "Class": "Guanguans\\LaravelExceptionNotify\\Exceptions\\RuntimeException",
+        "File": "\/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/TestCase.php",
+        "Line": 171
     },
     "Exception Context": {
         "  167": "                            assertMatchesJsonSnapshot($reportingEvent->content);\n",
@@ -35,19 +36,19 @@
         "49": "#49 {main}"
     },
     "Request Basic": {
-        "url": "http:\/\/localhost\/proactive-report-exception",
-        "ip": "127.0.0.1",
-        "method": "POST",
-        "controller action": "Closure",
-        "memory": "50.50 MB",
-        "duration": "13.81 ms"
+        "URL": "http:\/\/localhost\/proactive-report-exception",
+        "IP": "127.0.0.1",
+        "Method": "POST",
+        "Controller Action": "Closure",
+        "Memory": "52.50 MB",
+        "Duration": "19.94 ms"
     },
     "Request File": {
         "file": {
-            "name": "FeatureTest.php",
-            "type": "text\/x-php",
-            "error": 0,
-            "size": "1.27 KB"
+            "Name": "FeatureTest.php",
+            "Type": "text\/x-php",
+            "Error": 0,
+            "Size": "1.27 KB"
         }
     },
     "Request Header": {
