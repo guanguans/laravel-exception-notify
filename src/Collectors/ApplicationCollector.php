@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Container\Container;
 use Illuminate\Support\Carbon;
 
@@ -33,9 +32,7 @@ class ApplicationCollector extends AbstractCollector
             'php version' => \PHP_VERSION,
             'environment' => $this->container->environment(),
             'debug' => $this->container->hasDebugModeEnabled(),
-            'locale' => $this->container->getLocale(),
             'in console' => $this->container->runningInConsole(),
-            'memory' => Utils::humanBytes(memory_get_peak_usage(true)),
         ];
     }
 }

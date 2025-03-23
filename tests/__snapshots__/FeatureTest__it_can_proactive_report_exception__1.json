@@ -1,14 +1,12 @@
 {
     "Application": {
-        "time": "2025-03-22 08:20:39",
+        "time": "2025-03-23 06:28:50",
         "name": "Laravel",
         "version": "9.52.20",
         "php version": "8.0.30",
         "environment": "testing",
         "debug": false,
-        "locale": "en",
-        "in console": true,
-        "memory": "52.50 MB"
+        "in console": true
     },
     "Chore": {},
     "Exception Basic": {
@@ -37,11 +35,12 @@
         "49": "#49 {main}"
     },
     "Request Basic": {
-        "path": "proactive-report-exception",
+        "url": "http:\/\/localhost\/proactive-report-exception",
         "ip": "127.0.0.1",
         "method": "POST",
         "controller action": "Closure",
-        "duration": "15.69 ms"
+        "memory": "50.50 MB",
+        "duration": "13.81 ms"
     },
     "Request File": {
         "file": {

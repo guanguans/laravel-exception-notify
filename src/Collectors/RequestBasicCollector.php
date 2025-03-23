@@ -23,10 +23,11 @@ class RequestBasicCollector extends AbstractCollector
     public function collect(): array
     {
         return [
-            'path' => $this->request->decodedPath(),
+            'url' => $this->request->url(),
             'ip' => $this->request->ip(),
             'method' => $this->request->method(),
             'controller action' => $this->request->route()?->getActionName(),
+            'memory' => Utils::humanBytes(memory_get_peak_usage(true)),
             'duration' => blank($startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT'))
                 ? 'Unknown'
                 : Utils::humanMilliseconds((microtime(true) - $startTime) * 1000),
