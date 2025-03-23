@@ -85,7 +85,7 @@ return RectorConfig::configure()
     ->withSkip([
         '**/__snapshots__/*',
         '**/Fixtures/*',
-        __DIR__.'/src/Channels/Channel.php',
+        __DIR__.'/src/Support/Utils.php',
         __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')

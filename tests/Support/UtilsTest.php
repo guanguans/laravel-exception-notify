@@ -28,6 +28,7 @@ it('can apply configuration to object', function (): void {
         new ReportExceptionMail($this->faker()->title(), $this->faker()->text()),
         [
             'render' => 'value',
+            'theme' => 'default',
             'extender' => MailableExtender::class,
         ]
     ))->toBeInstanceOf(ReportExceptionMail::class);

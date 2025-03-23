@@ -1,5 +1,7 @@
 # laravel-exception-notify
 
+<p align="center"><img src="docs/ntfy.jpg" width="61.8%" alt="usage" title="usage"></p>
+
 > Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
@@ -57,10 +59,10 @@ EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 php artisan exception-notify:test --ansi -v
 ```
 
-### Notification examples
+### :camera_flash: Notification examples
 
 <details>
-<summary>details</summary>
+<summary>:monocle_face: details</summary>
 
 |           discord            |          slack           |            telegram            |
 |:----------------------------:|:------------------------:|:------------------------------:|

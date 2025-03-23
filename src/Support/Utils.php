@@ -40,6 +40,9 @@ class Utils
                     ->all()
             )
             ->each(static function (mixed $value, string $key) use ($object): void {
+                $hasApplied = false;
+
+                // Apply configuration to object by method
                 foreach (
                     [
                         static fn (string $key): string => $key,
@@ -56,6 +59,28 @@ class Utils
                         }
 
                         1 === $numberOfParameters ? $object->{$method}($value) : app()->call([$object, $method], $value);
+                        $hasApplied = true;
+
+                        break;
+                    }
+                }
+
+                if ($hasApplied) {
+                    return;
+                }
+
+                // Apply configuration to object by property
+                foreach (
+                    [
+                        static fn (string $key): string => $key,
+                        static fn (string $key): string => Str::camel($key),
+                    ] as $caster
+                ) {
+                    if (
+                        property_exists($object, $property = $caster($key))
+                        && with(new \ReflectionProperty($object, $property))->isPublic()
+                    ) {
+                        $object->{$key} = $value;
 
                         return;
                     }
