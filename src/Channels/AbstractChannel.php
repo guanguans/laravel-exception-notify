@@ -52,6 +52,9 @@ abstract class AbstractChannel implements ChannelContract
         throw_if($validator->fails(), InvalidConfigurationException::fromValidator($validator));
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function report(\Throwable $throwable): void
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
@@ -91,6 +94,9 @@ abstract class AbstractChannel implements ChannelContract
         return $this->configRepository->get('__channel');
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
         return Utils::applyConfigurationToObject(

@@ -20,13 +20,7 @@ use Illuminate\Support\Str;
 class Utils
 {
     /**
-     * @template TObject of object
-     *
-     * @param object|TObject $object
-     *
      * @throws \ReflectionException
-     *
-     * @return object|TObject
      */
     public static function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
     {

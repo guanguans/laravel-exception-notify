@@ -27,6 +27,9 @@ use function Guanguans\LaravelExceptionNotify\Support\make;
  */
 class NotifyChannel extends AbstractChannel
 {
+    /**
+     * @throws \ReflectionException
+     */
     public function reportContent(string $content): ResponseInterface
     {
         return $this->makeClient()->send($this->makeMessage($content));
@@ -44,6 +47,9 @@ class NotifyChannel extends AbstractChannel
         ] + parent::rules();
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function makeClient(): Client
     {
         return Utils::applyConfigurationToObject(
@@ -54,6 +60,9 @@ class NotifyChannel extends AbstractChannel
         );
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function makeAuthenticator(): Authenticator
     {
         return Utils::applyConfigurationToObject(
@@ -62,6 +71,9 @@ class NotifyChannel extends AbstractChannel
         );
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     private function makeMessage(string $content): Message
     {
         return Utils::applyConfigurationToObject(
