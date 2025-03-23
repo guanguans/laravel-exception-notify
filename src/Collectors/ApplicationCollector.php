@@ -37,6 +37,8 @@ class ApplicationCollector extends AbstractCollector
             'In Console' => $this->container->runningInConsole(),
             'Debug Mode' => $this->container->hasDebugModeEnabled(),
             'Maintenance Mode' => $this->container->isDownForMaintenance(),
+            'Timezone' => config('app.timezone'),
+            'Locale' => config('app.locale'),
         ];
     }
 }

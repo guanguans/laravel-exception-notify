@@ -1,13 +1,15 @@
 {
     "Application": {
-        "Time": "2025-03-23 10:07:18",
+        "Time": "2025-03-23 11:38:11",
         "Name": "Laravel",
         "Version": "9.52.20",
         "PHP Version": "8.0.30",
         "Environment": "testing",
         "In Console": true,
         "Debug Mode": false,
-        "Maintenance Mode": false
+        "Maintenance Mode": false,
+        "Timezone": "UTC",
+        "Locale": "en"
     },
     "Chore": {},
     "Exception Basic": {
@@ -30,7 +32,7 @@
     },
     "Exception Trace": {
         "1": "#1 \/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/TestCase.php(172): tap(Object(Illuminate\\Http\\Response), Object(Closure))",
-        "29": "#29 \/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/FeatureTest.php(28): Orchestra\\Testbench\\TestCase->post('proactive-repor...', Array)",
+        "29": "#29 \/Users\/yaozm\/Documents\/develop\/laravel-exception-notify\/tests\/FeatureTest.php(66): Orchestra\\Testbench\\TestCase->post('proactive-repor...', Array)",
         "30": "#30 [internal function]: P\\Tests\\FeatureTest->{closure}()",
         "32": "#32 [internal function]: P\\Tests\\FeatureTest->Pest\\Factories\\{closure}()",
         "49": "#49 {main}"
@@ -41,14 +43,42 @@
         "Method": "POST",
         "Controller Action": "Closure",
         "Memory": "52.50 MB",
-        "Duration": "19.94 ms"
+        "Duration": "17.2 ms"
     },
     "Request File": {
-        "file": {
-            "Name": "FeatureTest.php",
-            "Type": "text\/x-php",
+        "image": {
+            "Name": "phpYPUAYe",
+            "Type": "image\/jpeg",
             "Error": 0,
-            "Size": "1.27 KB"
+            "Size": "695 B"
+        },
+        "images_list": {
+            "0": {
+                "Name": "phpYPUAYe",
+                "Type": "image\/jpeg",
+                "Error": 1,
+                "Size": "695 B"
+            },
+            "1": {
+                "Name": "phpFLSHcG",
+                "Type": "image\/png",
+                "Error": 3,
+                "Size": "91 B"
+            }
+        },
+        "images_map": {
+            "jpg": {
+                "Name": "phpYPUAYe",
+                "Type": "image\/jpeg",
+                "Error": 7,
+                "Size": "695 B"
+            },
+            "png": {
+                "Name": "phpFLSHcG",
+                "Type": "image\/png",
+                "Error": 8,
+                "Size": "91 B"
+            }
         }
     },
     "Request Header": {
@@ -61,7 +91,9 @@
     },
     "Request Post": {
         "bar": "baz",
-        "password": "******"
+        "password": "******",
+        "images_list": {},
+        "images_map": {}
     },
     "Request Query": {
         "foo": "bar"

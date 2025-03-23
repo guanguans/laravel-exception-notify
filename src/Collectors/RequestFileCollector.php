@@ -23,6 +23,17 @@ class RequestFileCollector extends AbstractCollector
 
     /**
      * @noinspection CallableParameterUseCaseInTypeContextInspection
+     *
+     * ```json
+     * {
+     *     "name": "images.jpeg",
+     *     "full_path": "images.jpeg",
+     *     "type": "image/jpeg",
+     *     "tmp_name": "/private/var/tmp/phpz7mx94",
+     *     "error": 0,
+     *     "size": 2075
+     * }
+     * ```
      */
     public function collect(): array
     {
