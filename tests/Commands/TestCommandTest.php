@@ -30,12 +30,12 @@ afterEach(function (): void {
     app()->terminate();
 });
 
-it('can testing for exception-notify when is not enabled', function (): void {
+it('can testing for when is not enabled', function (): void {
     config()->set('exception-notify.enabled', false);
     artisan(TestCommand::class)->assertExitCode(Command::INVALID);
 })->group(__DIR__, __FILE__);
 
-it('can testing for exception-notify when should not report', function (): void {
+it('can testing for when should not report', function (): void {
     ExceptionNotify::skipWhen(
         static fn (Throwable $throwable): bool => $throwable instanceof RuntimeException
     );
@@ -44,7 +44,7 @@ it('can testing for exception-notify when should not report', function (): void 
 
 it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class);
-})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Testing for exception-notify.');
+})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Testing');
 
 it('will catch RuntimeException and can report it', function (): void {
     try {

@@ -74,7 +74,6 @@ return [
         ExceptionBasicCollector::class,
         ExceptionContextCollector::class,
         ExceptionTraceCollector::class,
-
         // RequestHeaderCollector::class,
         // RequestQueryCollector::class,
         // RequestPostCollector::class,

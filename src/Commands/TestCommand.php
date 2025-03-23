@@ -35,22 +35,20 @@ class TestCommand extends Command
     protected $signature = 'exception-notify:test {--c|channel= : The channel of report exception}';
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
-    protected $description = 'Testing for exception-notify';
+    protected $description = 'Testing';
 
     /**
      * @throws \ReflectionException
      */
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int
     {
-        $this->output->info('Testing for exception-notify start.');
-
         if (!config($configurationKey = 'exception-notify.enabled')) {
             $this->output->warning("The value of this configuration [$configurationKey] is false, please configure it to true.");
 
             return self::INVALID;
         }
 
-        $runtimeException = new RuntimeException('Testing for exception-notify.');
+        $runtimeException = new RuntimeException('Testing');
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
             $this->output->warning(\sprintf(
@@ -74,7 +72,7 @@ class TestCommand extends Command
                     $runtimeException::class,
                     config('exception-notify.default'),
                 ));
-                $this->output->success('Testing for exception-notify done.');
+                $this->output->success('Testing done.');
             });
         }
     }
