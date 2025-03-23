@@ -48,20 +48,14 @@ class Utils
                         static fn (string $key): string => 'on'.Str::studly($key),
                     ] as $caster
                 ) {
-                    if (method_exists($object, $method = $caster($key))) {
+                    if (method_exists($object, $method = $caster($key)) && \is_callable([$object, $method])) {
                         $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
 
                         if (0 === $numberOfParameters) {
                             continue;
                         }
 
-                        if (1 === $numberOfParameters) {
-                            $object->{$method}($value);
-
-                            return;
-                        }
-
-                        app()->call([$object, $method], $value);
+                        1 === $numberOfParameters ? $object->{$method}($value) : app()->call([$object, $method], $value);
 
                         return;
                     }
