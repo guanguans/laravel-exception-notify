@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.2"></a>
+## [5.1.2] - 2025-03-23
+### Code Refactoring
+- **Channel:** Simplify rate limiting logic and update docs
+- **commands:** Simplify test command descriptions
+
+### Docs
+- **readme:** Add collapsible section for notification examples
+
+### Features
+- **rate-limiter:** Add RateLimiter implementation and contract
+
+
 <a name="5.1.1"></a>
 ## [5.1.1] - 2025-03-22
 ### Bug Fixes
@@ -1222,7 +1235,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.2...HEAD
+[5.1.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...5.1.0
 [5.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0-rc1...5.0.0
