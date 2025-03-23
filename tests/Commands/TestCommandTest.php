@@ -44,7 +44,7 @@ it('can testing for when should not report', function (): void {
 
 it('will throws RuntimeException', function (): void {
     artisan(TestCommand::class);
-})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'Testing');
+})->group(__DIR__, __FILE__)->throws(RuntimeException::class, 'This is a test.');
 
 it('will catch RuntimeException and can report it', function (): void {
     try {

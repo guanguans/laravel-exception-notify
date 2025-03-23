@@ -32,7 +32,11 @@ class TestCommand extends Command
     }
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
-    protected $signature = 'exception-notify:test {--c|channel= : The channel of report exception}';
+    protected $signature = <<<'SIGNATURE'
+        exception-notify:test
+        {--c|channel= : The channel of report exception}
+        {--queue-connection= : The queue connection of report exception}
+        SIGNATURE;
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
     protected $description = 'Testing';
@@ -43,17 +47,20 @@ class TestCommand extends Command
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int
     {
         if (!config($configurationKey = 'exception-notify.enabled')) {
-            $this->output->warning("The value of this configuration [$configurationKey] is false, please configure it to true.");
+            $this->components->warn(\sprintf(
+                'The value of this configuration [%s] is false, please configure it to true.',
+                $this->warned($configurationKey)
+            ));
 
             return self::INVALID;
         }
 
-        $runtimeException = new RuntimeException('Testing');
+        $runtimeException = new RuntimeException('This is a test.');
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
-            $this->output->warning(\sprintf(
+            $this->components->warn(\sprintf(
                 'The exception [%s] should not be reported, please check the configuration.',
-                $runtimeException::class
+                $this->warned($runtimeException::class),
             ));
 
             return self::INVALID;
@@ -63,16 +70,19 @@ class TestCommand extends Command
             throw $runtimeException;
         } finally {
             $this->laravel->terminating(function () use ($runtimeException): void {
-                $this->output->warning(\sprintf(
-                    <<<'warning'
-                        The exception [%s] has been thrown.
-                        Please check whether the channel [%s] has received an exception report.
-                        If not, please find the reason in the default log channel.
-                        warning,
-                    $runtimeException::class,
-                    config('exception-notify.default'),
+                $this->components->warn(\sprintf(
+                    'The exception [%s] has been thrown.',
+                    $this->warned($runtimeException::class)
                 ));
-                $this->output->success('Testing done.');
+                $this->components->warn(\sprintf(
+                    'Please check whether the exception-notify channel [%s] has received an exception report.',
+                    $this->warned(config('exception-notify.default'))
+                ));
+                $this->components->warn(\sprintf(
+                    'If not, please find the reason in the default log channel [%s].',
+                    $this->warned(config('logging.default'))
+                ));
+                $this->components->info('Testing done.');
             });
         }
     }
@@ -86,6 +96,7 @@ class TestCommand extends Command
         $this->configureableInitialize($input, $output);
 
         $channel = $this->option('channel') and config()->set('exception-notify.default', $channel);
+        $connection = $this->option('queue-connection') and config()->set('queue.default', $connection);
 
         collect(config('exception-notify.channels'))->each(function (array $configuration, string $name): void {
             if ('notify' === ($configuration['driver'] ?? $name)) {
@@ -106,5 +117,10 @@ class TestCommand extends Command
                 );
             }
         });
+    }
+
+    private function warned(string $string): string
+    {
+        return "<fg=yellow;options=bold>$string</>";
     }
 }
