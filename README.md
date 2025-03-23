@@ -1,6 +1,6 @@
 # laravel-exception-notify
 
-<p align="center"><img src="docs/ntfy.jpg" width="61.8%" alt="usage" title="usage"></p>
+<p align="center"><img src="docs/ntfy.jpg" width="100%" alt="usage" title="usage"></p>
 
 > Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
 
