@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.3"></a>
+## [5.1.3] - 2025-03-23
+### Bug Fixes
+- **Utils:** Improve method callable check for parameter handling
+
+### Features
+- **Utils:** Enhance configuration application logic
+
+
 <a name="5.1.2"></a>
 ## [5.1.2] - 2025-03-23
 ### Code Refactoring
@@ -1235,7 +1244,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.3...HEAD
+[5.1.3]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.0.0...5.1.0
