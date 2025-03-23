@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.6"></a>
+## [5.1.6] - 2025-03-23
+### Bug Fixes
+- **Collector:** Improve file upload error handling
+
+### Code Refactoring
+- **ExceptionNotifyServiceProvider:** streamline version retrieval
+- **collectors:** Standardize keys in collector arrays
+
+### Tests
+- **FeatureTest:** Add image upload tests with timezone and locale
+
+
 <a name="5.1.5"></a>
 ## [5.1.5] - 2025-03-23
 ### Bug Fixes
@@ -1259,7 +1272,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.5...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.6...HEAD
+[5.1.6]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.5...5.1.6
 [5.1.5]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.4...5.1.5
 [5.1.4]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.2...5.1.3
