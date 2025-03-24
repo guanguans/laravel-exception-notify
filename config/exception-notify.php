@@ -153,6 +153,9 @@ return [
 
         /**
          * @see \Guanguans\LaravelExceptionNotify\Channels\NotifyChannel
+         * @see \Guanguans\Notify\Foundation\Authenticators
+         * @see \Guanguans\Notify\Foundation\Client
+         * @see \Guanguans\Notify\Foundation\Message
          * @see https://github.com/guanguans/notify
          */
         // 'foo' => [
@@ -164,6 +167,7 @@ return [
         //     ],
         //     'client' => [
         //         'class' => Guanguans\Notify\Foo\Client::class,
+        //         /** @see \GuzzleHttp\RequestOptions */
         //         'http_options' => [],
         //         'extender' => static fn (Guanguans\Notify\Foundation\Client $client) => $client->push(
         //             GuzzleHttp\Middleware::log(
@@ -176,8 +180,8 @@ return [
         //     'message' => [
         //         'class' => Guanguans\Notify\Foo\Messages\Message::class,
         //         'options' => [
-        //             'title' => Template::CONTENT,
-        //             'content' => Template::CONTENT,
+        //             'option1' => Template::TITLE,
+        //             'option2' => Template::CONTENT,
         //         ],
         //     ],
         //     'pipes' => [
