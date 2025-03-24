@@ -82,6 +82,14 @@ class TestCommand extends Command
                     'If not, please find the reason in the default log channel [%s].',
                     $this->warned(config('logging.default'))
                 ));
+
+                if (!$this->isSyncJobConnection()) {
+                    $this->components->warn(\sprintf(
+                        'Or please ensure that the queue [%s] is working.',
+                        $this->warned("php artisan queue:work {$this->jobConnection()} --queue={$this->jobQueue()}")
+                    ));
+                }
+
                 $this->components->info('Testing done.');
             });
         }
@@ -122,5 +130,20 @@ class TestCommand extends Command
     private function warned(string $string): string
     {
         return "<fg=yellow;options=bold>$string</>";
+    }
+
+    private function isSyncJobConnection(): bool
+    {
+        return 'sync' === $this->jobConnection();
+    }
+
+    private function jobConnection(): string
+    {
+        return config('exception-notify.job.connection') ?? config('queue.default');
+    }
+
+    private function jobQueue(): ?string
+    {
+        return config('exception-notify.job.queue') ?? config("queue.connections.{$this->jobConnection()}.queue");
     }
 }
