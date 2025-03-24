@@ -105,7 +105,7 @@ class TestCommand extends Command
         $this->configureableInitialize($input, $output);
 
         $channel = $this->option('channel') and config()->set('exception-notify.default', $channel);
-        $connection = $this->option('queue-connection') and config()->set('queue.default', $connection);
+        $connection = $this->option('queue-connection') and config()->set('exception-notify.job.connection', $connection);
 
         collect(config('exception-notify.channels'))->each(function (array $configuration, string $name): void {
             if ('notify' === ($configuration['driver'] ?? $name)) {

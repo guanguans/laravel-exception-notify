@@ -136,9 +136,4 @@ abstract class AbstractChannel implements ChannelContract
     {
         return collect($this->configRepository->get('pipes'))->prepend(FixPrettyJsonPipe::class)->all();
     }
-
-    private function isSyncQueueConnection(): bool
-    {
-        return 'sync' === (config('exception-notify.job.connection') ?? config('queue.default'));
-    }
 }

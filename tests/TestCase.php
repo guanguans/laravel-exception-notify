@@ -42,6 +42,7 @@ use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
@@ -85,7 +86,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
         Channel::flush();
         File::delete(glob(storage_path('logs/*.log')));
         Mail::fake();
+        // Queue::fake();
 
+        config()->set('database.default', 'testing');
+        config()->set('exception-notify.job.connection', 'sync');
         config()->set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
 
         config()->set('exception-notify.collectors', [
