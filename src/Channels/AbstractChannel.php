@@ -59,10 +59,7 @@ abstract class AbstractChannel implements ChannelContract
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
 
-        if (
-            'sync' === (config('exception-notify.job.connection') ?? config('queue.default'))
-            && !app()->runningInConsole()
-        ) {
+        if ($this->isSyncQueueConnection() && !app()->runningInConsole()) {
             $pendingDispatch->afterResponse();
         }
 
@@ -138,5 +135,10 @@ abstract class AbstractChannel implements ChannelContract
     private function getPipes(): array
     {
         return collect($this->configRepository->get('pipes'))->prepend(FixPrettyJsonPipe::class)->all();
+    }
+
+    private function isSyncQueueConnection(): bool
+    {
+        return 'sync' === (config('exception-notify.job.connection') ?? config('queue.default'));
     }
 }
