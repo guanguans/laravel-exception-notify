@@ -142,4 +142,19 @@ class Utils
 
         return \sprintf('%s s', round($milliseconds / 1000, $precision));
     }
+
+    public static function isSyncJobConnection(): bool
+    {
+        return 'sync' === self::jobConnection();
+    }
+
+    public static function jobConnection(): string
+    {
+        return config('exception-notify.job.connection') ?? config('queue.default');
+    }
+
+    public static function jobQueue(): ?string
+    {
+        return config('exception-notify.job.queue') ?? config(\sprintf('queue.connections.%s.queue', self::jobConnection()));
+    }
 }

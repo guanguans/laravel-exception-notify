@@ -16,6 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Commands;
 use Guanguans\LaravelExceptionNotify\Commands\Concerns\Configureable;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
+use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Guanguans\Notify\Foundation\Client;
 use Guanguans\Notify\Foundation\Response;
 use GuzzleHttp\MessageFormatter;
@@ -83,10 +84,10 @@ class TestCommand extends Command
                     $this->warned(config('logging.default'))
                 ));
 
-                if (!$this->isSyncJobConnection()) {
+                if (!Utils::isSyncJobConnection()) {
                     $this->components->warn(\sprintf(
-                        'Or please ensure that the queue [%s] is working.',
-                        $this->warned("php artisan queue:work {$this->jobConnection()} --queue={$this->jobQueue()}")
+                        'Or please ensure that the queue is working [%s].',
+                        $this->warned(\sprintf('php artisan queue:work %s --queue=%s', Utils::jobConnection(), Utils::jobQueue()))
                     ));
                 }
 
@@ -130,20 +131,5 @@ class TestCommand extends Command
     private function warned(string $string): string
     {
         return "<fg=yellow;options=bold>$string</>";
-    }
-
-    private function isSyncJobConnection(): bool
-    {
-        return 'sync' === $this->jobConnection();
-    }
-
-    private function jobConnection(): string
-    {
-        return config('exception-notify.job.connection') ?? config('queue.default');
-    }
-
-    private function jobQueue(): ?string
-    {
-        return config('exception-notify.job.queue') ?? config("queue.connections.{$this->jobConnection()}.queue");
     }
 }
