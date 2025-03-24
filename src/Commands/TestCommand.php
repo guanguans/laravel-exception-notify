@@ -36,7 +36,7 @@ class TestCommand extends Command
     protected $signature = <<<'SIGNATURE'
         exception-notify:test
         {--c|channel= : The channel of report exception}
-        {--queue-connection= : The queue connection of report exception}
+        {--job-connection= : The connection of report exception job}
         SIGNATURE;
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
@@ -105,7 +105,7 @@ class TestCommand extends Command
         $this->configureableInitialize($input, $output);
 
         $channel = $this->option('channel') and config()->set('exception-notify.default', $channel);
-        $connection = $this->option('queue-connection') and config()->set('exception-notify.job.connection', $connection);
+        $connection = $this->option('job-connection') and config()->set('exception-notify.job.connection', $connection);
 
         collect(config('exception-notify.channels'))->each(function (array $configuration, string $name): void {
             if ('notify' === ($configuration['driver'] ?? $name)) {
