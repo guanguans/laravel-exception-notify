@@ -40,7 +40,7 @@ class TestCommand extends Command
         SIGNATURE;
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
-    protected $description = 'Testing';
+    protected $description = 'Test whether exception can be monitored and reported to notification channel';
 
     /**
      * @throws \ReflectionException

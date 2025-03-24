@@ -12,7 +12,7 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/laravel-exception-notify/downloads)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 [![License](https://poser.pugx.org/guanguans/laravel-exception-notify/license)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 
-## Related Links
+## Related repositories
 
 * [https://github.com/guanguans/notify](https://github.com/guanguans/notify)
 * [https://github.com/guanguans/yii-log-target](https://github.com/guanguans/yii-log-target)
@@ -53,7 +53,7 @@ EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 
 ## Usage
 
-### Testing for exception notify
+### Test whether exception can be monitored and reported to notification channel
 
 ```shell
 php artisan exception-notify:test --channel=dump --job-connection=sync
@@ -76,7 +76,7 @@ php artisan exception-notify:test -v
 
 ### Skip report
 
-Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
+`app/Providers/AppServiceProvider.php`
 
 ```php
 <?php
@@ -98,7 +98,7 @@ public function boot(): void
 
 ### Extend channel
 
-Modify the `boot` method in the `app/Providers/AppServiceProvider.php` file
+`app/Providers/AppServiceProvider.php`
 
 ```php
 <?php
