@@ -56,9 +56,7 @@ EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 ### Testing for exception notify
 
 ```shell
-php artisan exception-notify:test --channel=dump --queue-connection=sync
-php artisan exception-notify:test --channel=mail --config=mail.default=log --queue-connection=sync
-php artisan exception-notify:test --queue-connection=sync
+php artisan exception-notify:test --channel=dump --job-connection=sync
 php artisan exception-notify:test
 php artisan exception-notify:test -v
 ```
