@@ -26,6 +26,7 @@ return (new Configuration)
         __DIR__.'/tests',
         __DIR__.'/src/Support/Rectors',
     ])
+    /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
     ->ignoreErrorsOnExtensions(
         [
             'ext-mbstring',
