@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.1.11"></a>
+## [5.1.11] - 2025-03-26
+### Bug Fixes
+- **dependencies:** Update guanguans/notify version to ^3.2
+
+
 <a name="5.1.10"></a>
 ## [5.1.10] - 2025-03-24
 ### Docs
@@ -1313,7 +1319,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.10...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.11...HEAD
+[5.1.11]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.10...5.1.11
 [5.1.10]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.9...5.1.10
 [5.1.9]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.8...5.1.9
 [5.1.8]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.7...5.1.8
