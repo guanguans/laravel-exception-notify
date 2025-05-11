@@ -30,11 +30,10 @@ trait Configureable
     {
         return tap(parent::getDefinition(), static function (InputDefinition $inputDefinition): void {
             $inputDefinition->addOption(new InputOption(
-                'config',
-                // 'c',
+                'configuration',
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-                'Configure able (e.g. `--config=app.name=guanguans` or `--config app.name=guanguans` or `-c app.name=guanguans`)',
+                'Used to dynamically pass one or more configuration key-value pairs(e.g. `--configuration=app.name=guanguans` or `--configuration app.name=guanguans`).',
             ));
         });
     }
@@ -43,17 +42,18 @@ trait Configureable
     {
         parent::initialize($input, $output);
 
-        collect($this->option('config'))
+        collect($this->option('configuration'))
             // ->dump()
-            ->mapWithKeys(static function (string $config): array {
-                \assert(str_contains($config, '='), "The configureable option [$config] must be formatted as key=value.");
+            ->mapWithKeys(static function (string $configuration): array {
+                \assert(
+                    str_contains($configuration, '='),
+                    "The configureable option [$configuration] must be formatted as key=value."
+                );
 
-                [$key, $value] = explode('=', $config, 2);
+                [$key, $value] = explode('=', $configuration, 2);
 
                 return [$key => $value];
             })
-            ->tap(static function (Collection $config): void {
-                config($config->all());
-            });
+            ->tap(static fn (Collection $configuration) => config($configuration->all()));
     }
 }
