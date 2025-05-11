@@ -50,14 +50,14 @@ it('can human bytes', function (): void {
 
 it('can human milliseconds', function (): void {
     expect([
-        Utils::humanMilliseconds(0),
-        Utils::humanMilliseconds(0.5),
-        Utils::humanMilliseconds(500),
-        Utils::humanMilliseconds(500000),
+        Utils::humanMilliseconds(0.05),
+        Utils::humanMilliseconds(50),
+        Utils::humanMilliseconds(50000),
+        Utils::humanMilliseconds(50000000),
     ])->sequence(
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('0 μs'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 μs'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 ms'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('500 s')
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('50µs'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('50ms'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('50s'),
+        static fn (Expectation $expectation): Expectation => $expectation->toBe('13h, 53m, 20s')
     );
 })->group(__DIR__, __FILE__);

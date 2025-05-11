@@ -66,6 +66,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::tearDown();
     }
 
+    protected function getApplicationTimezone($app): string
+    {
+        return 'Asia/Shanghai';
+    }
+
     protected function getPackageProviders($app): array
     {
         return [

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Support;
 
+use Carbon\CarbonInterval;
 use Guanguans\LaravelExceptionNotify\Template;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -130,17 +131,22 @@ class Utils
         return \sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
     }
 
-    public static function humanMilliseconds(float $milliseconds, int $precision = 2): string
+    /**
+     * @noinspection PhpUnhandledExceptionInspection
+     */
+    public static function humanMilliseconds(float|int $milliseconds, array $syntax = []): string
     {
-        if (1 > $milliseconds) {
-            return \sprintf('%s μs', round($milliseconds * 1000, $precision));
-        }
+        \assert(0 < $milliseconds, 'The milliseconds must be greater than 0.');
 
-        if (1000 > $milliseconds) {
-            return \sprintf('%s ms', round($milliseconds, $precision));
-        }
-
-        return \sprintf('%s s', round($milliseconds / 1000, $precision));
+        return CarbonInterval::microseconds($milliseconds * 1000)
+            ->cascade()
+            ->forHumans($syntax + [
+                'join' => ', ',
+                'locale' => 'en',
+                // 'locale' => 'zh_CN',
+                'minimumUnit' => 'us',
+                'short' => true,
+            ]);
     }
 
     public static function isSyncJobConnection(): bool
