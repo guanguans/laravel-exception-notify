@@ -60,9 +60,14 @@ class TestCommand extends Command
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
             $this->components->warn(\sprintf(
-                'The exception [%s] should not be reported, please check the configuration.',
+                'The exception [%s] should not be reported, please check the related configuration:',
                 $this->warned($runtimeException::class),
             ));
+
+            $this->components->bulletList([
+                'exception-notify.environments',
+                'exception-notify.rate_limiter',
+            ]);
 
             return self::INVALID;
         }
@@ -87,7 +92,11 @@ class TestCommand extends Command
                 if (!Utils::isSyncJobConnection()) {
                     $this->components->warn(\sprintf(
                         'Or please ensure that the queue is working [%s].',
-                        $this->warned(\sprintf('php artisan queue:work %s --queue=%s', Utils::jobConnection(), Utils::jobQueue()))
+                        $this->warned(\sprintf(
+                            'php artisan queue:work %s --queue=%s --ansi -v',
+                            Utils::jobConnection(),
+                            Utils::jobQueue()
+                        ))
                     ));
                 }
 
