@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.2.2"></a>
+## [5.2.2] - 2025-05-12
+### 🐞 Bug Fixes
+- **utils:** enhance humanMilliseconds method for better precision ([ccb01a1](https://github.com/guanguans/laravel-exception-notify/commit/ccb01a1))
+
+
 <a name="5.2.1"></a>
 ## [5.2.1] - 2025-05-11
 ### 🐞 Bug Fixes
@@ -1252,7 +1258,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...HEAD
+[5.2.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.1...5.2.2
 [5.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.11...5.2.0
 [5.1.11]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.10...5.1.11
