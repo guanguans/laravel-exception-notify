@@ -46,7 +46,7 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
-            'guanguans/ai-commit',
+            // 'guanguans/ai-commit',
         ],
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     );
