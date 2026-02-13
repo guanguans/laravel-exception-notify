@@ -19,7 +19,7 @@ use Ergebnis\License\Year;
 use Ergebnis\PhpCsFixer\Config\Factory;
 use Ergebnis\PhpCsFixer\Config\Fixers;
 use Ergebnis\PhpCsFixer\Config\Rules;
-use Ergebnis\PhpCsFixer\Config\RuleSet\Php80;
+use Ergebnis\PhpCsFixer\Config\RuleSet\Php81;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Fixer\DeprecatedFixerInterface;
 use PhpCsFixerCustomFixers\Fixer\AbstractFixer;
@@ -36,7 +36,7 @@ $license = MIT::text(
 
 $license->save();
 
-$ruleSet = Php80::create()
+$ruleSet = Php81::create()
     ->withHeader($license->header())
     ->withRules(Rules::fromArray([
         '@PHP70Migration' => true,
@@ -46,9 +46,9 @@ $ruleSet = Php80::create()
         '@PHP73Migration' => true,
         '@PHP74Migration' => true,
         '@PHP74Migration:risky' => true,
-        '@PHP80Migration' => true,
-        '@PHP80Migration:risky' => true,
-        // '@PHP81Migration' => true,
+        // '@PHP80Migration' => true,
+        // '@PHP80Migration:risky' => true,
+        '@PHP81Migration' => true,
         // '@PHP82Migration' => true,
         // '@PHP83Migration' => true,
         // '@PHPUnit75Migration:risky' => true,
