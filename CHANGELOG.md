@@ -8,6 +8,44 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="5.3.0"></a>
+## [5.3.0] - 2026-02-13
+### 🐞 Bug Fixes
+- **config:** Update Notify namespace in exception-notify configuration ([5637cb6](https://github.com/guanguans/laravel-exception-notify/commit/5637cb6))
+
+### 📦 Builds
+- **composer:** Update package version constraints ([98c12f2](https://github.com/guanguans/laravel-exception-notify/commit/98c12f2))
+- **dependencies:** Update ai-commit configuration and dependencies ([0401412](https://github.com/guanguans/laravel-exception-notify/commit/0401412))
+- **deps:** bump stefanzweifel/git-auto-commit-action from 6 to 7 ([ea080d9](https://github.com/guanguans/laravel-exception-notify/commit/ea080d9))
+- **deps:** bump actions/cache from 4 to 5 ([c1e40bc](https://github.com/guanguans/laravel-exception-notify/commit/c1e40bc))
+- **deps:** bump actions/checkout from 5 to 6 ([29687a6](https://github.com/guanguans/laravel-exception-notify/commit/29687a6))
+- **deps:** bump actions/setup-node from 5 to 6 ([202eee2](https://github.com/guanguans/laravel-exception-notify/commit/202eee2))
+- **deps:** bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 ([c3a0a24](https://github.com/guanguans/laravel-exception-notify/commit/c3a0a24))
+- **deps:** bump actions/stale from 9 to 10 ([3f073b1](https://github.com/guanguans/laravel-exception-notify/commit/3f073b1))
+- **deps:** bump actions/labeler from 5 to 6 ([52cf28e](https://github.com/guanguans/laravel-exception-notify/commit/52cf28e))
+- **deps:** bump actions/setup-node from 4 to 5 ([ee7d2b1](https://github.com/guanguans/laravel-exception-notify/commit/ee7d2b1))
+- **deps:** bump actions/checkout from 4 to 5 ([6a149d5](https://github.com/guanguans/laravel-exception-notify/commit/6a149d5))
+- **deps:** bump stefanzweifel/git-auto-commit-action from 5 to 6 ([3290274](https://github.com/guanguans/laravel-exception-notify/commit/3290274))
+- **deps:** bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 ([b6b67f8](https://github.com/guanguans/laravel-exception-notify/commit/b6b67f8))
+- **license:** Update copyright year to 2026 ([663b544](https://github.com/guanguans/laravel-exception-notify/commit/663b544))
+
+### 🤖 Continuous Integrations
+- **config:** Update CI config files ([02e1b1a](https://github.com/guanguans/laravel-exception-notify/commit/02e1b1a))
+
+### Pull Requests
+- Merge pull request [#87](https://github.com/guanguans/laravel-exception-notify/issues/87) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.5.0
+- Merge pull request [#86](https://github.com/guanguans/laravel-exception-notify/issues/86) from guanguans/dependabot/github_actions/actions/cache-5
+- Merge pull request [#85](https://github.com/guanguans/laravel-exception-notify/issues/85) from guanguans/dependabot/github_actions/actions/checkout-6
+- Merge pull request [#84](https://github.com/guanguans/laravel-exception-notify/issues/84) from guanguans/dependabot/github_actions/actions/setup-node-6
+- Merge pull request [#83](https://github.com/guanguans/laravel-exception-notify/issues/83) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-7
+- Merge pull request [#79](https://github.com/guanguans/laravel-exception-notify/issues/79) from guanguans/dependabot/github_actions/actions/setup-node-5
+- Merge pull request [#80](https://github.com/guanguans/laravel-exception-notify/issues/80) from guanguans/dependabot/github_actions/actions/labeler-6
+- Merge pull request [#81](https://github.com/guanguans/laravel-exception-notify/issues/81) from guanguans/dependabot/github_actions/actions/stale-10
+- Merge pull request [#78](https://github.com/guanguans/laravel-exception-notify/issues/78) from guanguans/dependabot/github_actions/actions/checkout-5
+- Merge pull request [#76](https://github.com/guanguans/laravel-exception-notify/issues/76) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-6
+- Merge pull request [#75](https://github.com/guanguans/laravel-exception-notify/issues/75) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.4.0
+
+
 <a name="5.2.2"></a>
 ## [5.2.2] - 2025-05-12
 ### 🐞 Bug Fixes
@@ -1258,7 +1296,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...HEAD
+[5.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...5.3.0
 [5.2.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.1...5.2.2
 [5.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.1.11...5.2.0
