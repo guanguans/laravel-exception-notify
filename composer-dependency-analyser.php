@@ -15,16 +15,10 @@ use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
 use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 
 return (new Configuration)
-    ->addPathsToScan(
-        [
-            __DIR__.'/config',
-            __DIR__.'/src',
-        ],
-        false
-    )
+    ->addPathsToScan([__DIR__.'/config/'], false)
     ->addPathsToExclude([
-        __DIR__.'/tests',
-        __DIR__.'/src/Support/Rectors',
+        __DIR__.'/src/Support/Rectors/',
+        __DIR__.'/tests/',
     ])
     /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
     ->ignoreErrorsOnExtensions(
@@ -46,7 +40,6 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
-            // 'guanguans/ai-commit',
         ],
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     );

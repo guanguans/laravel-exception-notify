@@ -49,8 +49,8 @@ parameters:
     scanFiles:
 #        - vendor/composer/InstalledVersions.php
     excludePaths:
-        - src/Foundation/Rectors/
-        - src/Foundation/Support/ComposerScripts.php
+        - src/Support/Rectors/
+#        - src/Support/ComposerScripts.php
         - tests/Fixtures/
         - *.blade.php
     tmpDir: .build/phpstan/
@@ -71,9 +71,9 @@ parameters:
     ergebnis:
     guanguans:
         exceptionMustImplementNativeThrowable:
-            nativeThrowable: Guanguans\Notify\Foundation\Contracts\Throwable
+            nativeThrowable: Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract
 #    sidzIgnoreNumericStrings: true
-    sidzIgnoreMagicNumbers: [-1, 0, 1, 2, 10, 16, 100, 512, 0o755, 1000, 1024, 200, 201, 202, 204, 300, 301, 302, 304, 400, 401, 402, 403, 404, 408, 409, 422, 429, 500, 600, 9999999999]
+    sidzIgnoreMagicNumbers: [0.9, 1, 2, 3, 5, 100, 600, 512, 1024, 1000, 0o755]
     cognitive_complexity:
         class: 42
         function: 8
@@ -108,6 +108,9 @@ parameters:
         -
             function: 'env_explode()'
             message: 'use config() instead'
+        -
+            function: 'hydrate_pipe()'
+            message: 'use Pipe::with() instead'
     ignoreErrors:
 #        - identifier: argument.templateType
 #        - identifier: argument.type
@@ -147,65 +150,109 @@ parameters:
 #        - identifier: typePerfect.noMixedMethodCaller
 #        - message: '#^Unused Guanguans\\Notify\\Rector\\.*\\.*\:\:__construct$#'
 
+#        - identifier: ergebnis.final
+#        - identifier: ergebnis.finalInAbstractClass
+#        - identifier: ergebnis.noAssignByReference
+#        - identifier: ergebnis.noConstructorParameterWithDefaultValue
+#        - identifier: ergebnis.noExtends
+#        - identifier: ergebnis.noIsset
+#        - identifier: ergebnis.noNamedArgument
+#        - identifier: ergebnis.noNullableReturnTypeDeclaration
+#        - identifier: ergebnis.noParameterPassedByReference
+#        - identifier: ergebnis.noParameterWithNullableTypeDeclaration
+#        - identifier: ergebnis.noParameterWithNullDefaultValue
+#        - identifier: shipmonk.binaryOperationWithNull
+#        - identifier: shipmonk.checkedExceptionInCallable
+#        - identifier: shipmonk.forbiddenCast
+#        - identifier: shipmonk.iteratorToArrayWithoutPreserveKeys
+#        - identifier: shipmonk.nonNormalizedType
+#        - identifier: shipmonk.variableTypeOverwritten
+#        - identifier: symplify.explicitInterfaceSuffixName
+#        - identifier: symplify.explicitTraitSuffixName
+#        - identifier: symplify.forbiddenExtendOfNonAbstractClass
+#        - identifier: symplify.forbiddenFuncCall
+#        - identifier: symplify.forbiddenNode
+#        - identifier: symplify.forbiddenStaticClassConstFetch
+#        - identifier: symplify.noDynamicName
+#        - identifier: symplify.noGlobalConst
+#        - identifier: symplify.noReference
+#        - identifier: symplify.noReturnSetterMethod
+#        - identifier: symplify.requireExceptionNamespace
+#
+#        - identifier: argument.type
+#        - identifier: arrayFilter.strict
+#        - identifier: cast.int
+#        - identifier: disallowed.function
+#        - identifier: encapsedStringPart.nonString
+#        - identifier: foreach.valueOverwrite
+#        - identifier: guanguans.forbiddenSideEffects
+#        - identifier: logicalAnd.resultUnused
+#        - identifier: method.childParameterType
+#        - identifier: method.dynamicName
+#        - identifier: return.type
+#        - identifier: trait.unused
+
+
+
+        - identifier: argument.templateType
+        - identifier: argument.type
+        - identifier: binaryOp.invalid
+        - identifier: cast.string
+        - identifier: encapsedStringPart.nonString
+        - identifier: method.nonObject
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
+        - identifier: return.type
+        - identifier: return.void
+        - identifier: symplify.noDynamicName
+#        - identifier: typePerfect.noMixedMethodCaller
+        - identifier: offsetAccess.invalidOffset
+
+
+
+#        - identifier: booleanAnd.leftNotBoolean
+#        - identifier: booleanAnd.rightNotBoolean
+#        - identifier: booleanNot.exprNotBoolean
+        - identifier: complexity.classLike
+        - identifier: complexity.functionLike
+        - identifier: empty.notAllowed
         - identifier: ergebnis.final
         - identifier: ergebnis.finalInAbstractClass
-        - identifier: ergebnis.noAssignByReference
         - identifier: ergebnis.noConstructorParameterWithDefaultValue
         - identifier: ergebnis.noExtends
         - identifier: ergebnis.noIsset
-        - identifier: ergebnis.noNamedArgument
         - identifier: ergebnis.noNullableReturnTypeDeclaration
         - identifier: ergebnis.noParameterPassedByReference
+        - identifier: ergebnis.noParameterWithContainerTypeDeclaration
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: guanguans.forbiddenSideEffects
+#        - identifier: if.condNotBoolean
+#        - identifier: logicalAnd.leftNotBoolean
+#        - identifier: logicalAnd.rightNotBoolean
+#        - identifier: method.childParameterType
+        - identifier: method.dynamicName
+        - identifier: property.dynamicName
+        - identifier: public.method.unused
+        - identifier: public.property.unused
+        - identifier: shipmonk.arithmeticOnNonNumber
         - identifier: shipmonk.binaryOperationWithNull
         - identifier: shipmonk.checkedExceptionInCallable
+        - identifier: shipmonk.deadMethod
         - identifier: shipmonk.forbiddenCast
-        - identifier: shipmonk.iteratorToArrayWithoutPreserveKeys
-        - identifier: shipmonk.nonNormalizedType
+        - identifier: shipmonk.publicPropertyNotReadonly
+        - identifier: shipmonk.returnListNotUsed
+        - identifier: shipmonk.stringInterpolationWithNull
+        - identifier: shipmonk.unsafeArrayKey
         - identifier: shipmonk.variableTypeOverwritten
-        - identifier: symplify.explicitInterfaceSuffixName
-        - identifier: symplify.explicitTraitSuffixName
-        - identifier: symplify.forbiddenExtendOfNonAbstractClass
-        - identifier: symplify.forbiddenFuncCall
-        - identifier: symplify.forbiddenNode
+        - identifier: staticMethod.dynamicCall
+#        - identifier: ternary.condNotBoolean
+#        - identifier: ternary.shortNotAllowed
         - identifier: symplify.forbiddenStaticClassConstFetch
-        - identifier: symplify.noDynamicName
-        - identifier: symplify.noGlobalConst
-        - identifier: symplify.noReference
-        - identifier: symplify.noReturnSetterMethod
+        - identifier: symplify.forbiddenNode
+        - identifier: symplify.forbiddenFuncCall
+        - identifier: symplify.explicitInterfaceSuffixName
+        - identifier: symplify.forbiddenExtendOfNonAbstractClass
         - identifier: symplify.requireExceptionNamespace
-
-        - identifier: argument.type
-        - identifier: arrayFilter.strict
-        - identifier: cast.int
-        - identifier: disallowed.function
-        - identifier: encapsedStringPart.nonString
-        - identifier: foreach.valueOverwrite
-        - identifier: guanguans.forbiddenSideEffects
-        - identifier: logicalAnd.resultUnused
-        - identifier: method.childParameterType
-        - identifier: method.dynamicName
-        - identifier: return.type
-        - identifier: trait.unused
-        - message: '#^Call to an undefined method Symfony\\Component\\OptionsResolver\\OptionsResolver\:\:setOptions\(\)\.$#'
-        - message: '#^Cannot call method (setDefault|setOptions|setAllowedTypes)\(\) on mixed\.$#'
-        - message: '#^Class Guanguans\\Notify\\.*\\Messages\\.*Message has PHPDoc tag @method for method .*\(\) parameter \#1 \$.* with no value type specified in iterable type array\.$#'
-        - message: '#^Cognitive complexity for "Guanguans\\Notify\\Foundation\\Support\\Arr\:\:forget\(\)" is (\d|1\d), keep it under 8$#'
-        - message: '#^Cognitive complexity for "Guanguans\\Notify\\Foundation\\Support\\Arr\:\:get\(\)" is (\d|1\d), keep it under 8$#'
-        - message: '#^Cognitive complexity for "Guanguans\\Notify\\Foundation\\Support\\Utils\:\:multipartFor\(\)" is (\d|1\d), keep it under 8$#'
-        - message: '#^Trait Guanguans\\Notify\\Foundation\\Concerns\\HasHttpClient has PHPDoc tag @method for method .*\(\) parameter \#1 \$.* with no value type specified in iterable type array\.$#'
-        -
-            identifier: symplify.explicitAbstractPrefixName
-            path: src/Foundation/Message.php
-        -
-            identifier: paramOut.type
-            path: src/Foundation/Support/Arr.php
-        -
-            identifier: shipmonk.deadMethod
-            path: src/Foundation/Concerns/
-        -
-            identifier: offsetAccess.nonOffsetAccessible
-            paths:
-                - src/*/Messages/*Message.php
-                - src/Foundation/Support/Arr.php
+        - identifier: symplify.explicitTraitSuffixName
+        - identifier: symplify.requiredInterfaceContractNamespace

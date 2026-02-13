@@ -18,9 +18,6 @@ use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
 use Guanguans\Notify\Foundation\Concerns\AsJson;
 use Guanguans\Notify\Foundation\Concerns\AsPost;
-use Guanguans\Notify\Foundation\Rectors\AddSensitiveParameterAttributeRector;
-use Guanguans\Notify\Foundation\Rectors\HasHttpClientDocCommentRector;
-use Guanguans\Notify\Foundation\Rectors\MessageRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Set\SetList;
@@ -48,14 +45,33 @@ use Rector\Removing\Rector\Class_\RemoveTraitUseRector;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
+use RectorLaravel\Rector\ArrayDimFetch\ArrayToArrGetRector;
+use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
+use RectorLaravel\Rector\FuncCall\ConfigToTypedConfigMethodCallRector;
+use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
+use RectorLaravel\Rector\FuncCall\TypeHintTappableCallRector;
+use RectorLaravel\Rector\If_\ThrowIfRector;
+use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
+use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
-    ->withPaths([__DIR__.'/benchmarks/', __DIR__.'/src/', __DIR__.'/tests/', __DIR__.'/composer-bump'])
+    ->withPaths([
+        // __DIR__.'/config/',
+        __DIR__.'/src/',
+        __DIR__.'/tests/',
+        __DIR__.'/workbench/',
+        __DIR__.'/composer-bump',
+    ])
     ->withRootFiles()
-    ->withSkip(['*/Fixtures/*', __DIR__.'/tests.php'])
+    ->withSkip([
+        '*/Fixtures/*',
+        __DIR__.'/src/Support/Utils.php',
+        __DIR__.'/tests.php',
+    ])
     ->withCache(__DIR__.'/.build/rector/')
     // ->withoutParallel()
     ->withParallel()
@@ -66,6 +82,7 @@ return RectorConfig::configure()
     ->withTreatClassesAsFinal()
     ->withAttributesSets(phpunit: true, all: true)
     ->withComposerBased(phpunit: true, laravel: true)
+    ->withSetProviders(LaravelSetProvider::class)
     ->withPhpVersion(PhpVersion::PHP_81)
     ->withDowngradeSets(php81: true)
     ->withPhpSets(php81: true)
@@ -80,7 +97,7 @@ return RectorConfig::configure()
         instanceOf: true,
         earlyReturn: true,
         // strictBooleans: true,
-        // carbon: true,
+        carbon: true,
         rectorPreset: true,
         phpunitCodeQuality: true,
     )
@@ -88,9 +105,7 @@ return RectorConfig::configure()
         SetList::ALL,
     ])
     ->withRules([
-        AddSensitiveParameterAttributeRector::class,
-        HasHttpClientDocCommentRector::class,
-        MessageRector::class,
+        HydratePipeFuncCallToStaticCallRector::class,
 
         ArraySpreadInsteadOfArrayMergeRector::class,
         EnumCaseToPascalCaseRector::class,
@@ -110,16 +125,44 @@ return RectorConfig::configure()
             'PhpUndefinedClassInspection',
             'PhpUnhandledExceptionInspection',
             'PhpVoidFunctionResultUsedInspection',
+            // 'SqlResolve',
             'StaticClosureCanBeUsedInspection',
         ],
     ])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['beforeEach', 'MIT', 'PDO'])
+    ->withConfiguredRule(
+        ScalarValueToConstFetchRector::class,
+        collect([
+            Template::class,
+        ])
+            ->map(static fn (string $class) => collect((new ReflectionClass($class))->getConstants(ReflectionClassConstant::IS_PUBLIC))
+                ->reduce(
+                    static function (array $carry, mixed $value, string $name) use ($class): array {
+                        $classConstFetch = new ClassConstFetch(new FullyQualified($class), new Identifier($name));
+
+                        $scalarValueToConstFetch = match (true) {
+                            \is_string($value) => new ScalarValueToConstFetch(new String_($value), $classConstFetch),
+                            \is_int($value) => new ScalarValueToConstFetch(new Int_($value), $classConstFetch),
+                            \is_float($value) => new ScalarValueToConstFetch(new Float_($value), $classConstFetch),
+                            default => null,
+                        };
+
+                        $scalarValueToConstFetch and $carry[] = $scalarValueToConstFetch;
+
+                        return $carry;
+                    },
+                    []
+                ))
+            ->flatten()
+            // ->dd()
+            ->all()
+    )
     ->withConfiguredRule(RemoveTraitUseRector::class, [AsJson::class, AsPost::class])
     ->withConfiguredRule(
         RenameFunctionRector::class,
-        collect(['base64_encode_file', 'tap', 'value'])
-            ->mapWithKeys(static fn (string $func): array => [$func => "Guanguans\\Notify\\Foundation\\Support\\$func"])
+        collect(['env_explode', 'json_pretty_encode', 'make', 'rescue'])
+            ->mapWithKeys(static fn (string $func): array => [$func => "Guanguans\\LaravelExceptionNotify\\Support\\$func"])
             ->all()
     )
     ->withConfiguredRule(RenameClassRector::class, [
@@ -127,6 +170,10 @@ return RectorConfig::configure()
         Str::class => Guanguans\Notify\Foundation\Support\Str::class,
     ])
     ->withSkip([
+        // ArrayToFirstClassCallableRector::class,
+        // ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
+        // ScalarValueToConstFetchRector::class,
+
         ChangeOrIfContinueToMultiContinueRector::class,
         DisallowedEmptyRuleFixerRector::class,
         EncapsedStringsToSprintfRector::class,
@@ -137,6 +184,22 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        ConfigToTypedConfigMethodCallRector::class,
+        TypeHintTappableCallRector::class,
+
+        ArrayToArrGetRector::class,
+        DispatchToHelperFunctionsRector::class,
+        EmptyToBlankAndFilledFuncRector::class,
+        HelperFuncCallToFacadeClassRector::class,
+        ThrowIfRector::class,
+    ])
+    ->withSkip([
+        // ApplyDefaultInsteadOfNullCoalesceRector::class => [
+        //     __DIR__.'/src/Channels/AbstractChannel.php',
+        // ],
+        // ScalarValueToConstFetchRector::class => [
+        //     __DIR__.'/src/Template.php',
+        // ],
         ArrowFunctionDelegatingCallToFirstClassCallableRector::class => [
             __DIR__.'/tests/Foundation/MessageTest.php',
         ],

@@ -20,13 +20,5 @@ namespace {
 }
 
 namespace Illuminate\Support {
-    /**
-     * @mixin  \Illuminate\Support\Str
-     */
-    class Str {}
-
-    /**
-     * @mixin \Illuminate\Support\Stringable
-     */
-    class Stringable {}
+    class NullClass {}
 }

@@ -2,10 +2,10 @@
 
 <p align="center"><img src="docs/ntfy.jpg" width="100%" alt="usage" title="usage"></p>
 
-> Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、Zulip).
+> Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、ZohoCliq、ZohoCliqWebHook、Zulip).
 
-[![tests](https://github.com/guanguans/laravel-exception-notify/workflows/tests/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
-[![check & fix styling](https://github.com/guanguans/laravel-exception-notify/workflows/check%20&%20fix%20styling/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions)
+[![tests](https://github.com/guanguans/laravel-exception-notify/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions/workflows/tests.yml)
+[![php-cs-fixer](https://github.com/guanguans/laravel-exception-notify/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions/workflows/php-cs-fixer.yml)
 [![codecov](https://codecov.io/gh/guanguans/laravel-exception-notify/branch/main/graph/badge.svg?token=URGFAWS6S4)](https://codecov.io/gh/guanguans/laravel-exception-notify)
 [![Latest Stable Version](https://poser.pugx.org/guanguans/laravel-exception-notify/v)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 [![GitHub release (with filter)](https://img.shields.io/github/v/release/guanguans/laravel-exception-notify)](https://github.com/guanguans/laravel-exception-notify/releases)
@@ -23,7 +23,7 @@
 
 ## Installation
 
-```bash
+```shell
 composer require guanguans/laravel-exception-notify --ansi -v
 ```
 
@@ -31,7 +31,7 @@ composer require guanguans/laravel-exception-notify --ansi -v
 
 ### Publish files(optional)
 
-```bash
+```shell
 php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\ExceptionNotifyServiceProvider" --ansi -v
 ```
 
@@ -82,17 +82,13 @@ php artisan exception-notify:test -v
 <?php
 
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
-use Illuminate\Support\Arr;
 
 public function boot(): void
 {
-    ExceptionNotify::skipWhen(static fn (\Throwable $throwable) => Arr::first(
-        [
-            \Symfony\Component\HttpKernel\Exception\HttpException::class,
-            \Illuminate\Http\Exceptions\HttpResponseException::class,
-        ],
-        static fn (string $exception): bool => $throwable instanceof $exception
-    ));
+    ExceptionNotify::skipWhen(static fn (\Throwable $throwable) => collect([
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Http\Exceptions\HttpResponseException::class,
+    ])->contains(static fn (string $exception): bool => $throwable instanceof $exception));
 }
 ```
 
@@ -115,9 +111,11 @@ public function boot(): void
 }
 ```
 
-## Testing
+## Composer scripts
 
-```bash
+```shell
+composer checks:required
+composer php-cs-fixer:fix
 composer test
 ```
 
