@@ -101,7 +101,6 @@
         "ergebnis/php-cs-fixer-config": "^6.59",
         "ergebnis/phpstan-rules": "^2.13",
         "ergebnis/rector-rules": "^1.9",
-        "fakerphp/faker": "^1.24",
         "guanguans/php-cs-fixer-custom-fixers": "^1.1",
         "guanguans/phpstan-rules": "^1.0",
         "guanguans/rector-rules": "^1.6",
@@ -167,7 +166,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Guanguans\\LaravelExceptionNotifyTests\\": "tests/"
+            "Guanguans\\LaravelExceptionNotifyTests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
         }
     },
     "config": {
@@ -222,6 +224,10 @@
             "@cghooks:upsert",
             "@composer:normalize"
         ],
+        "post-autoload-dump": [
+            "@testbench:clear",
+            "@testbench:prepare"
+        ],
         "actionlint": "actionlint -ignore=SC2035 -ignore=SC2086 -color -oneline -verbose",
         "argtyper": "@php vendor/bin/argtyper --ansi -vv",
         "argtyper:add-types": "@argtyper add-types .",
@@ -244,11 +250,10 @@
             "@composer-dependency-analyser",
             "@composer:normalize-dry-run",
             "@detect-collisions",
+            "@facade:lint",
             "@jack:breakpoint",
             "@jack:open-versions-dry-run",
             "@jack:raise-to-installed-dry-run",
-            "@notify:generate-ide-json",
-            "@notify:platform-lint",
             "@phpmnd",
             "@phpstan:analyse",
             "@rector:process-dry-run",
@@ -259,6 +264,7 @@
             "@sk:privatize-constants",
             "@sk:spot-lazy-traits",
             "@todo-lint",
+            "@yaml-lint",
             "@actionlint",
             "@gitleaks",
             "@lint-md",
@@ -274,7 +280,7 @@
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
-        "class-leak:check": "@class-leak check src/ --skip-suffix=Message --skip-suffix=Client --skip-suffix=Authenticator --skip-suffix=Rector --skip-suffix=Cache --skip-suffix=Exception --skip-suffix=ComposerScripts --skip-path=Foundation/Concerns/",
+        "class-leak:check": "@class-leak check config/ src/ --skip-suffix=Channel --skip-suffix=Collector --skip-suffix=Rector",
         "composer-bump": [
             "@putenv:php",
             "@composer-config:disable-process-timeout",
@@ -305,9 +311,9 @@
         "composer:normalize-dry-run": "@composer:normalize --dry-run",
         "composer:unlink": "@php -r \"@unlink('vendor/bin/composer');\"",
         "composer:validate": "@composer validate --check-lock --strict --ansi -vv",
-        "detect-collisions": "@php vendor/bin/detect-collisions benchmarks/ src/",
+        "detect-collisions": "@php vendor/bin/detect-collisions config/ src/",
         "facade:lint": "@facade:update --lint",
-        "facade:update": "@php -f vendor/bin/facade.php -- Guanguans\\\\Notify\\\\Facades\\\\ApiResponseFacade",
+        "facade:update": "@php -f vendor/bin/facade.php -- Guanguans\\\\LaravelExceptionNotify\\\\Facades\\\\ExceptionNotify",
         "git-chglog": "git-chglog $(git describe --tags $(git rev-list --tags --max-count=1))",
         "gitleaks": "gitleaks git --report-path=.build/gitleaks-report.json -v",
         "gitleaks:generate-baseline": "gitleaks git --report-path=gitleaks-baseline.json -v",
@@ -325,6 +331,16 @@
         "jack:raise-to-installed": "@jack raise-to-installed",
         "jack:raise-to-installed-dry-run": "@jack:raise-to-installed --dry-run",
         "jsonlint": "@php vendor/bin/jsonlint *.json .*rc",
+        "laravel-exception-notify": "@php laravel-exception-notify --ansi -vv",
+        "laravel-exception-notify:app-build": [
+            "@composer install --no-dev --no-scripts --ansi -vv",
+            "@php laravel-exception-notify app:build laravel-exception-notify.phar --build-version=master --ansi",
+            "@php builds/laravel-exception-notify.phar list --ansi -vv",
+            "ls -lh builds/laravel-exception-notify.phar",
+            "ls -lr builds/laravel-exception-notify.phar"
+        ],
+        "laravel-exception-notify:generate-gitleaks-ignore": "Guanguans\\Notify\\Foundation\\Support\\ComposerScripts::generateGitleaksIgnore",
+        "laravel-exception-notify:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "lint-md": [
             "if ! command -v lint-md >/dev/null 2>&1; then echo 'lint-md not found, installing...'; npm install -g @lint-md/cli; fi",
             "@lint-md:prototype"
@@ -357,18 +373,6 @@
         "monorepo-builder:release-patch": "@monorepo-builder:release patch",
         "monorepo-builder:release-patch-dry-run": "@monorepo-builder:release-patch --dry-run",
         "neon-lint": "@php vendor/bin/neon-lint *.neon",
-        "notify": "@php notify --ansi -vv",
-        "notify:app-build": [
-            "@composer install --no-dev --no-scripts --ansi -vv",
-            "@php notify app:build notify.phar --build-version=master --ansi",
-            "@php builds/notify.phar list --ansi -vv",
-            "ls -lh builds/notify.phar",
-            "ls -lr builds/notify.phar"
-        ],
-        "notify:generate-gitleaks-ignore": "Guanguans\\Notify\\Foundation\\Support\\ComposerScripts::generateGitleaksIgnore",
-        "notify:generate-ide-json": "Guanguans\\Notify\\Foundation\\Support\\ComposerScripts::generateIdeJson",
-        "notify:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
-        "notify:platform-lint": "Guanguans\\Notify\\Foundation\\Support\\ComposerScripts::platformLint",
         "peck": [
             "@putenv:php",
             "$PHP82 vendor/bin/peck check --path=src/ --config=../../peck.json --ansi -vv"
@@ -404,7 +408,7 @@
         "php-cs-fixer:custom-list-files": "@php-cs-fixer:custom list-files",
         "php-cs-fixer:custom-ln-config": [
             "ln -f vendor/guanguans/php-cs-fixer-custom-fixers/.php-cs-fixer-custom.php .php-cs-fixer-custom.php",
-            "YEAR=$(date +%Y); sed -i '' -e 's|guanguans/php-cs-fixer-custom-fixers|guanguans/notify|g' -e \"s|2025-$YEAR|2021-$YEAR|g\" .php-cs-fixer-custom.php"
+            "YEAR=$(date +%Y); sed -i '' -e 's|guanguans/php-cs-fixer-custom-fixers|guanguans/laravel-exception-notify|g' -e \"s|2025-$YEAR|2021-$YEAR|g\" .php-cs-fixer-custom.php"
         ],
         "php-cs-fixer:fix": "@php-cs-fixer fix --show-progress=dots --diff",
         "php-cs-fixer:fix-dry-run": "@php-cs-fixer:fix --dry-run",
@@ -417,7 +421,7 @@
             "for DIR in src/ tests/; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP81 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
         ],
         "phpbench": "@php vendor/bin/phpbench run --report=aggregate --ansi -vv",
-        "phpmnd": "@php vendor/bin/phpmnd src/ --exclude-path=Support/helpers.phpp --ignore-numbers=-1,2,200,201,202,300,301,302,304,400,401,402,403,404,408,409,422,429,500,9999999999 --hint --progress --ansi -vv",
+        "phpmnd": "@php vendor/bin/phpmnd src/ --exclude-path=Support/helpers.phpp --ignore-numbers=-1,2 --hint --progress --ansi -vv",
         "phpstan": "@php vendor/bin/phpstan --ansi -vv",
         "phpstan:analyse": "@phpstan analyse",
         "phpstan:analyse-error-format-annotate-pull-request": "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
@@ -468,7 +472,7 @@
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
         "rector:process-dry-run-output-format-github": "@rector:process-dry-run --output-format=github",
-        "rector:process-only": "@rector:process-clear-cache src/ --only=Guanguans\\Notify\\Foundation\\Rectors\\MessageRector",
+        "rector:process-only": "@rector:process-clear-cache src/ --only=Guanguans\\LaravelExceptionNotify\\Foundation\\Rectors\\MessageRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "roave-backward-compatibility-check": [
             "@putenv:php",
@@ -484,21 +488,21 @@
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
         "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=6",
-        "sk:check-conflicts": "@sk check-conflicts benchmarks/ src/",
+        "sk:check-conflicts": "@sk check-conflicts config/ src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
-        "sk:finalize-classes": "@sk finalize-classes benchmarks/ src/",
+        "sk:finalize-classes": "@sk finalize-classes config/ src/",
         "sk:finalize-classes-dry-run": "@sk:finalize-classes --dry-run",
-        "sk:find-multi-classes": "@sk find-multi-classes benchmarks/ src/",
+        "sk:find-multi-classes": "@sk find-multi-classes config/ src/",
         "sk:generate-symfony-config-builders": "@sk generate-symfony-config-builders --help",
         "sk:namespace-to-psr-4": [
             "@sk:namespace-to-psr-4-src",
             "@sk:namespace-to-psr-4-tests"
         ],
-        "sk:namespace-to-psr-4-src": "@sk namespace-to-psr-4 src/ --namespace-root=Guanguans\\Notify\\",
-        "sk:namespace-to-psr-4-tests": "@sk namespace-to-psr-4 tests/ --namespace-root=Guanguans\\NotifyTests\\",
+        "sk:namespace-to-psr-4-src": "@sk namespace-to-psr-4 src/ --namespace-root=Guanguans\\LaravelExceptionNotify\\",
+        "sk:namespace-to-psr-4-tests": "@sk namespace-to-psr-4 tests/ --namespace-root=Guanguans\\LaravelExceptionNotifyTests\\",
         "sk:pretty-json": "@sk pretty-json .lintmdrc",
         "sk:pretty-json-dry-run": "@sk:pretty-json --dry-run",
-        "sk:privatize-constants": "@sk privatize-constants benchmarks/ src/ --exclude-path=src/ZohoCliq/DataCenter.php",
+        "sk:privatize-constants": "@sk privatize-constants config/ src/",
         "sk:search-regex": "@sk search-regex 'Guanguans.*ValetDrivers'",
         "sk:split-config-per-package": "@sk split-config-per-package monorepo-builder.php",
         "sk:spot-lazy-traits": "@sk spot-lazy-traits src/ --max-used=2",
@@ -520,7 +524,7 @@
         "testbench:workbench:install": "@testbench workbench:install",
         "todo-lint": "! git --no-pager grep --extended-regexp --ignore-case 'todo|fixme' -- '*.php' ':!*.blade.php' ':(exclude)src/Foundation/Concerns/HasOptions.php'",
         "touch:database-sqlite": "@php -r \"file_exists('vendor/orchestra/testbench-core/laravel/database/database.sqlite') || touch('vendor/orchestra/testbench-core/laravel/database/database.sqlite');\"",
-        "trufflehog": "trufflehog git https://github.com/guanguans/notify --only-verified",
+        "trufflehog": "trufflehog git https://github.com/guanguans/laravel-exception-notify --only-verified",
         "typos": "typos --color=always --sort --verbose",
         "typos:write-changes": "@typos --write-changes",
         "var-dump-server:cli": "@php vendor/bin/var-dump-server --ansi -vv",
@@ -532,7 +536,7 @@
             "@php vendor/bin/var-dump-server --ansi -v --format=html > .build/dump.html"
         ],
         "vendor-patches": "@php vendor/bin/vendor-patches generate --ansi -vv",
-        "vhs": "vhs < notify.tape",
+        "vhs": "vhs < laravel-exception-notify.tape",
         "yaml-lint": "@php vendor/bin/yaml-lint .github/ *.yaml --ansi -vv",
         "zhlint": [
             "if ! command -v zhlint >/dev/null 2>&1; then echo 'zhlint not found, installing...'; npm install -g zhlint; fi",

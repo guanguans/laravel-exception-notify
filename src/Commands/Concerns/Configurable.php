@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @mixin \Illuminate\Console\Command
  */
-trait Configureable
+trait Configurable
 {
     public function getDefinition(): InputDefinition
     {
@@ -47,7 +47,7 @@ trait Configureable
             ->mapWithKeys(static function (string $configuration): array {
                 \assert(
                     str_contains($configuration, '='),
-                    "The configureable option [$configuration] must be formatted as key=value."
+                    "The configurable option [$configuration] must be formatted as key=value."
                 );
 
                 [$key, $value] = explode('=', $configuration, 2);

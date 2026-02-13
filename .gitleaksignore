@@ -1,0 +1,20 @@
+# https://github.com/gitleaks/gitleaks/blob/master/.gitleaksignore
+README.md:generic-api-key:57
+README.md:generic-api-key:79
+README-zh_CN.md:generic-api-key:78
+README-zh_CN.md:generic-api-key:79
+README-EN.md:generic-api-key:73
+README-EN.md:generic-api-key:74
+README.md:generic-api-key:75
+README.md:generic-api-key:76
+README.md:generic-api-key:62
+README.md:generic-api-key:63
+README_en.md:generic-api-key:60
+README_en.md:generic-api-key:61
+config/exception-notify.php:generic-api-key:42
+config/exception-notify.php:generic-api-key:21
+config/exception-notify.php:generic-api-key:22
+config/exception-notify.php:generic-api-key:28
+config/exception-notify.php:generic-api-key:29
+config/exception-notify.php:generic-api-key:34
+config/exception-notify.php:generic-api-key:39

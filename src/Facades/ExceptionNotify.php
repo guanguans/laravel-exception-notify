@@ -17,10 +17,10 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static string getDefaultDriver()
  * @method static \Guanguans\LaravelExceptionNotify\Channels\Channel channel(string|null $channel = null)
  * @method static void report(\Throwable $throwable)
  * @method static mixed reportContent(string $content)
- * @method static string getDefaultDriver()
  * @method static mixed driver(string|null $driver = null)
  * @method static \Guanguans\LaravelExceptionNotify\ExceptionNotifyManager extend(string $driver, \Closure $callback)
  * @method static array getDrivers()

@@ -1,0 +1,15 @@
+{
+    "preset": "laravel",
+    "ignore": {
+        "words": [
+            "sprintf",
+            "func",
+            "args",
+            "utils"
+        ],
+        "paths": [
+            "vendor/",
+            "vendor-bin/"
+        ]
+    }
+}

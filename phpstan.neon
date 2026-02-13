@@ -41,6 +41,8 @@ parameters:
         lineBefore: 3
         lineAfter: 3
         editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+#    sidzIgnoreNumericStrings: true
+    sidzIgnoreMagicNumbers: [0.9, 1, 2, 3, 5, 100, 600, 512, 1024, 1000, 0o755]
     type_coverage:
         declare: 100
         param_type: 100
@@ -81,3 +83,44 @@ parameters:
         - identifier: symplify.noDynamicName
         - identifier: typePerfect.noMixedMethodCaller
         - identifier: offsetAccess.invalidOffset
+
+
+
+        - identifier: booleanAnd.leftNotBoolean
+        - identifier: booleanAnd.rightNotBoolean
+        - identifier: booleanNot.exprNotBoolean
+        - identifier: complexity.classLike
+        - identifier: complexity.functionLike
+        - identifier: empty.notAllowed
+        - identifier: ergebnis.final
+        - identifier: ergebnis.finalInAbstractClass
+        - identifier: ergebnis.noConstructorParameterWithDefaultValue
+        - identifier: ergebnis.noExtends
+        - identifier: ergebnis.noIsset
+        - identifier: ergebnis.noNullableReturnTypeDeclaration
+        - identifier: ergebnis.noParameterPassedByReference
+        - identifier: ergebnis.noParameterWithContainerTypeDeclaration
+        - identifier: ergebnis.noParameterWithNullableTypeDeclaration
+        - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: guanguans.forbiddenSideEffects
+        - identifier: if.condNotBoolean
+        - identifier: logicalAnd.leftNotBoolean
+        - identifier: logicalAnd.rightNotBoolean
+        - identifier: method.childParameterType
+        - identifier: method.dynamicName
+        - identifier: property.dynamicName
+        - identifier: public.method.unused
+        - identifier: public.property.unused
+        - identifier: shipmonk.arithmeticOnNonNumber
+        - identifier: shipmonk.binaryOperationWithNull
+        - identifier: shipmonk.checkedExceptionInCallable
+        - identifier: shipmonk.deadMethod
+        - identifier: shipmonk.forbiddenCast
+        - identifier: shipmonk.publicPropertyNotReadonly
+        - identifier: shipmonk.returnListNotUsed
+        - identifier: shipmonk.stringInterpolationWithNull
+        - identifier: shipmonk.unsafeArrayKey
+        - identifier: shipmonk.variableTypeOverwritten
+        - identifier: staticMethod.dynamicCall
+        - identifier: ternary.condNotBoolean
+        - identifier: ternary.shortNotAllowed

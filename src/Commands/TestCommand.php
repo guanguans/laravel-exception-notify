@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Commands;
 
-use Guanguans\LaravelExceptionNotify\Commands\Concerns\Configureable;
+use Guanguans\LaravelExceptionNotify\Commands\Concerns\Configurable;
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
@@ -28,8 +28,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TestCommand extends Command
 {
-    use Configureable {
-        Configureable::initialize as configureableInitialize;
+    use Configurable {
+        Configurable::initialize as configurableInitialize;
     }
 
     /** @noinspection ClassOverridesFieldOfSuperClassInspection */
@@ -111,7 +111,7 @@ class TestCommand extends Command
      */
     protected function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->configureableInitialize($input, $output);
+        $this->configurableInitialize($input, $output);
 
         $channel = $this->option('channel') and config()->set('exception-notify.default', $channel);
         $connection = $this->option('job-connection') and config()->set('exception-notify.job.connection', $connection);
