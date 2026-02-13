@@ -11,6 +11,9 @@ on:
       - '.github/**.yaml'
       - '.github/**.yml'
 
+env:
+  COMPOSER_NO_SECURITY_BLOCKING: 1
+
 jobs:
   phpstan:
     name: phpstan

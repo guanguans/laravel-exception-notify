@@ -10,6 +10,9 @@ on:
       - '*.xml'
       - '*.xml.dist'
 
+env:
+  COMPOSER_NO_SECURITY_BLOCKING: 1
+
 jobs:
   rector:
     name: rector

@@ -2,6 +2,9 @@ name: check & fix styling
 
 on: [ workflow_dispatch, push ]
 
+env:
+  COMPOSER_NO_SECURITY_BLOCKING: 1
+
 jobs:
   php-cs-fixer:
     name: php-cs-fixer

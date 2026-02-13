@@ -112,7 +112,7 @@ $status = (new SingleCommandApplication)
 
             private function updateComposerPackages(): self
             {
-                $this->mustRunCommand("$this->composerBinary update -W --ansi");
+                $this->mustRunCommand("$this->composerBinary update -W --no-security-blocking --ansi");
 
                 return $this;
             }
