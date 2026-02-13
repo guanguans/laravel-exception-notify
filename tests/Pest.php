@@ -34,7 +34,7 @@ uses(TestCase::class)
             __DIR__.'/../'.basename($target = __DIR__.'/../vendor/orchestra/testbench-core/laravel') => $target,
         ]);
 
-        /** @var TestCase $this */
+        /** @var \Guanguans\LaravelExceptionNotifyTests\TestCase $this */
         $this->defineEnvironment(app());
     })
     ->afterEach(function (): void {})

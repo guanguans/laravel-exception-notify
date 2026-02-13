@@ -94,10 +94,10 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
 
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\rescue')) {
     /**
+     * @see rescue()
+     *
      * @param null|\Closure $rescue
      * @param bool|\Closure $log
-     *
-     * @see rescue()
      */
     function rescue(callable $callback, mixed $rescue = null, mixed $log = true): mixed
     {

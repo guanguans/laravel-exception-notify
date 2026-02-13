@@ -18,8 +18,8 @@ use Illuminate\Mail\Mailable;
 class ReportExceptionMail extends Mailable
 {
     public function __construct(
-        private string $title,
-        private string $content
+        private readonly string $title,
+        private readonly string $content
     ) {}
 
     public function build(): self

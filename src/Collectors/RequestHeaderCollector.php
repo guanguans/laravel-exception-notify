@@ -17,10 +17,10 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends AbstractCollector
 {
-    private array $except;
+    private readonly array $except;
 
     public function __construct(
-        private Request $request,
+        private readonly Request $request,
         ?array $except = null
     ) {
         $this->except = $except ?? [

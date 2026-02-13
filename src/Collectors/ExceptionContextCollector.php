@@ -18,8 +18,8 @@ use Guanguans\LaravelExceptionNotify\Support\ExceptionContext;
 class ExceptionContextCollector extends AbstractExceptionCollector
 {
     public function __construct(
-        private string $mark = '➤',
-        private int $number = 5
+        private readonly string $mark = '➤',
+        private readonly int $number = 5
     ) {}
 
     public function collect(): array

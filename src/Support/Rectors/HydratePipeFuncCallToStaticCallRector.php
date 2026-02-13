@@ -27,7 +27,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
  */
 final class HydratePipeFuncCallToStaticCallRector extends AbstractRector
 {
-    public function __construct(private ValueResolver $valueResolver) {}
+    public function __construct(private readonly ValueResolver $valueResolver) {}
 
     /**
      * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException

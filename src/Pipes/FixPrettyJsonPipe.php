@@ -23,7 +23,7 @@ class FixPrettyJsonPipe
 {
     use WithPipeArgs;
 
-    public function __construct(private JsonFixer $jsonFixer) {}
+    public function __construct(private readonly JsonFixer $jsonFixer) {}
 
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): Stringable
     {

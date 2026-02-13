@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class RequestBasicCollector extends AbstractCollector
 {
-    public function __construct(private Request $request) {}
+    public function __construct(private readonly Request $request) {}
 
     public function collect(): array
     {

@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 class ExceptionTraceCollector extends AbstractExceptionCollector
 {
-    private array $except;
+    private readonly array $except;
 
     public function __construct(?array $except = null)
     {

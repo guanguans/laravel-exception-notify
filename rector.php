@@ -19,7 +19,6 @@ use Carbon\Carbon;
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\LaravelExceptionNotify\Support\Rectors\HydratePipeFuncCallToStaticCallRector;
-use Guanguans\LaravelExceptionNotify\Support\Rectors\ToInternalExceptionRector;
 use Guanguans\LaravelExceptionNotify\Template;
 use Illuminate\Support\Carbon as IlluminateCarbon;
 use Illuminate\Support\Collection;
@@ -82,7 +81,6 @@ return RectorConfig::configure()
         __DIR__.'/src',
         __DIR__.'/tests',
         ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
-        __DIR__.'/composer-updater',
     ])
     ->withRootFiles()
     // ->withSkipPath(__DIR__.'/tests.php')
@@ -137,7 +135,6 @@ return RectorConfig::configure()
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
         HydratePipeFuncCallToStaticCallRector::class,
-        ToInternalExceptionRector::class,
         ...$classes
             ->filter(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
             ->filter(static fn (string $class): bool => (new ReflectionClass($class))->isInstantiable())

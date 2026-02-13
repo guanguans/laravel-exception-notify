@@ -30,9 +30,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     ];
 
     /**
-     * @noinspection PhpMissingParentCallCommonInspection
-     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     public function register(): void
     {
@@ -84,9 +84,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     }
 
     /**
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
-     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     private function registerReportUsing(): self
     {

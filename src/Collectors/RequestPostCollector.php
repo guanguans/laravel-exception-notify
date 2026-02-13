@@ -17,10 +17,10 @@ use Illuminate\Http\Request;
 
 class RequestPostCollector extends AbstractCollector
 {
-    private array $masks;
+    private readonly array $masks;
 
     public function __construct(
-        private Request $request,
+        private readonly Request $request,
         ?array $masks = null
     ) {
         $this->masks = $masks ?? [

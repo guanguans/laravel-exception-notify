@@ -26,8 +26,8 @@ class ReportExceptionJob implements ShouldQueue
     use Queueable;
 
     public function __construct(
-        private string $channel,
-        private string $content
+        private readonly string $channel,
+        private readonly string $content
     ) {}
 
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void

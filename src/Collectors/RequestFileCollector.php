@@ -19,11 +19,9 @@ use Illuminate\Http\UploadedFile;
 
 class RequestFileCollector extends AbstractCollector
 {
-    public function __construct(private Request $request) {}
+    public function __construct(private readonly Request $request) {}
 
     /**
-     * @noinspection CallableParameterUseCaseInTypeContextInspection
-     *
      * @see tests/FeatureTest.php
      *
      * ```json
@@ -36,6 +34,8 @@ class RequestFileCollector extends AbstractCollector
      *     "size": 2075
      * }
      * ```
+     *
+     * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
     public function collect(): array
     {

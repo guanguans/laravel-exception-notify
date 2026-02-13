@@ -43,6 +43,11 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
             : parent::__call($method, $parameters);
     }
 
+    public function getDefaultDriver(): string
+    {
+        return config('exception-notify.default');
+    }
+
     public function channel(?string $channel = null): Channel
     {
         return $this->driver($channel);
@@ -58,11 +63,6 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
     public function reportContent(string $content): mixed
     {
         return rescue(fn (): mixed => $this->driver()->reportContent($content));
-    }
-
-    public function getDefaultDriver(): string
-    {
-        return config('exception-notify.default');
     }
 
     /**

@@ -38,7 +38,7 @@ class Channel implements ChannelContract
     private static array $skipCallbacks = [];
 
     public function __construct(
-        private ChannelContract $channelContract
+        private readonly ChannelContract $channelContract
     ) {}
 
     public function report(\Throwable $throwable): void
@@ -88,9 +88,9 @@ class Channel implements ChannelContract
     }
 
     /**
-     * @throws \ReflectionException
-     *
      * @see \Illuminate\Foundation\Exceptions\Handler::shouldntReport()
+     *
+     * @throws \ReflectionException
      */
     private function shouldntReport(\Throwable $throwable): bool
     {

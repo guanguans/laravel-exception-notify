@@ -18,7 +18,7 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 class ReportedEvent
 {
     public function __construct(
-        public ChannelContract $channelContract,
-        public mixed $result
+        public readonly ChannelContract $channelContract,
+        public readonly mixed $result
     ) {}
 }

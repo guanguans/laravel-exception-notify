@@ -22,9 +22,9 @@ class LimitLengthPipe
     use WithPipeArgs;
 
     /**
-     * @noinspection RedundantDocCommentTagInspection
-     *
      * @param \Closure(\Illuminate\Support\Collection): \Illuminate\Support\Stringable $next
+     *
+     * @noinspection RedundantDocCommentTagInspection
      */
     public function handle(Collection $collectors, \Closure $next, int $length, float $percentage = 0.9): Stringable
     {

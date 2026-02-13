@@ -35,7 +35,7 @@ abstract class AbstractChannel implements ChannelContract
     /**
      * @throws \Throwable
      */
-    public function __construct(protected Repository $configRepository)
+    public function __construct(protected readonly Repository $configRepository)
     {
         $validator = Validator::make(
             $this->configRepository->all(),
@@ -124,8 +124,8 @@ abstract class AbstractChannel implements ChannelContract
                 [$parameters, $class] = [(array) $class, $parameters];
             }
 
-            /** @var CollectorContract $collectorContract */
             $collectorContract = resolve($class, $parameters);
+            \assert($collectorContract instanceof CollectorContract);
             $collectorContract instanceof ExceptionAwareContract and $collectorContract->setException($throwable);
 
             return [$collectorContract->name() => $collectorContract->collect()];

@@ -95,8 +95,8 @@ class Utils
                 }
 
                 if (!\is_callable($extender)) {
-                    /** @var callable $extender */
                     $extender = make($extender);
+                    \assert(\is_callable($extender));
                 }
 
                 return $extender($object);

@@ -71,18 +71,18 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return 'Asia/Shanghai';
     }
 
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'ExceptionNotify' => ExceptionNotify::class,
+        ];
+    }
+
     protected function getPackageProviders($app): array
     {
         return [
             ExceptionNotifyServiceProvider::class,
             ...parent::getPackageProviders($app),
-        ];
-    }
-
-    protected function getPackageAliases($app): array
-    {
-        return [
-            'ExceptionNotify' => ExceptionNotify::class,
         ];
     }
 

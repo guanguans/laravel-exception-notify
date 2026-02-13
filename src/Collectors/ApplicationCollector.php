@@ -20,7 +20,7 @@ class ApplicationCollector extends AbstractCollector
 {
     public function __construct(
         /** @var \Illuminate\Foundation\Application */
-        private Container $container
+        private readonly Container $container
     ) {}
 
     /**
