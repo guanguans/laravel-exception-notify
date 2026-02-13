@@ -16,7 +16,7 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 class ExceptionBasicCollector extends AbstractExceptionCollector
 {
     /**
-     * @@see https://github.com/symfony/symfony/blob/7.1/src/Symfony/Component/Messenger/Transport/Serialization/Normalizer/FlattenExceptionNormalizer.php
+     * @see https://github.com/symfony/symfony/blob/7.1/src/Symfony/Component/Messenger/Transport/Serialization/Normalizer/FlattenExceptionNormalizer.php
      */
     public function collect(): array
     {

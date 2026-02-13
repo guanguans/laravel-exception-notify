@@ -34,7 +34,7 @@ it('can automatic report exception', function (): void {
     $pngFile = UploadedFile::fake()->image($pngName = 'image.png');
 
     $this
-        ->post('automatic-report-exception?foo=bar', [
+        ->post('auto-report-exception?foo=bar', [
             'bar' => 'baz',
             'password' => 'password',
             'image' => new UploadedFile($jpgFile->path(), $jpgName, $jpgFile->getMimeType(), null, true),

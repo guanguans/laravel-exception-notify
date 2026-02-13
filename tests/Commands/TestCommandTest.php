@@ -53,7 +53,7 @@ it('will catch RuntimeException and can report it', function (): void {
         artisan(TestCommand::class, [
             '--channel' => $channel = 'bark',
             '--job-connection' => 'sync',
-            '--configuration' => "app.name={$this->faker()->name()}",
+            '--configuration' => 'app.name='.fake()->name(),
             '--verbose' => true,
         ]);
     } catch (RuntimeException $runtimeException) {

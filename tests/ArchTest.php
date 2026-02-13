@@ -2,11 +2,11 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
-/** @noinspection SenselessProxyMethodInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 declare(strict_types=1);
 
@@ -19,25 +19,31 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-namespace Workbench\App\Http\Resources;
+use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
-
-/**
- * @see \Workbench\App\Models\User
- */
-class UserCollection extends ResourceCollection
-{
-    /**
-     * @noinspection PhpMissingReturnTypeInspection
-     * @noinspection MissingReturnTypeInspection
-     */
-    public function toArray(mixed $request)
-    {
-        // return [
-        //     'data' => $this->collection,
-        // ];
-
-        return parent::toArray($request);
-    }
-}
+arch('will not use debugging functions')
+    // ->throwsNoExceptions()
+    ->group(__DIR__, __FILE__)
+    ->expect([
+        'dd',
+        'die',
+        'dump',
+        'echo',
+        'env',
+        'env_explode',
+        'env_getcsv',
+        'exit',
+        'print',
+        'print_r',
+        'printf',
+        'ray',
+        'trap',
+        'var_dump',
+        'var_export',
+        'vprintf',
+    ])
+    // ->each
+    ->not->toBeUsed()
+    ->ignoring([
+        DumpChannel::class,
+    ]);

@@ -12,6 +12,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +29,36 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', static fn () => view('welcome'));
+
+Route::any(
+    'proactive-report-exception',
+    static fn () => tap(
+        response('proactive-report-exception'),
+        static function (): void {
+            ExceptionNotify::report(new RuntimeException('What happened?'));
+        }
+    )
+);
+
+Route::any(
+    'auto-report-exception',
+    static function (Repository $repository): void {
+        $repository->set('exception-notify.channels.stack.channels', [
+            'dump',
+            'log',
+            'mail',
+            'bark',
+            'chanify',
+            'dingTalk',
+            'discord',
+            'lark',
+            'ntfy',
+            'pushDeer',
+            'slack',
+            'telegram',
+            'weWork',
+        ]);
+
+        throw new RuntimeException('What happened?');
+    }
+);

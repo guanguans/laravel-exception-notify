@@ -10,6 +10,7 @@ dont-discover:
 
 env:
   APP_NAME: "Testbench"
+  APP_KEY: base64:UZ5sDPZSB7DSLKY+DYlU8G/V1e/qW+Ag0WF03VNxiSg=
   # DB_CONNECTION: sqlite
   # DB_DATABASE: ":memory:"
   # SOAR_ENABLED: (true)
@@ -26,9 +27,9 @@ workbench:
   install: true
   discovers:
     config: false
-    web: false
-    api: true
-    commands: false
+    web: true
+    api: false
+    commands: true
     components: false
     factories: false
     views: false

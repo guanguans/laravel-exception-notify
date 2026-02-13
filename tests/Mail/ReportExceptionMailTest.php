@@ -21,6 +21,6 @@ declare(strict_types=1);
 use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 
 it('can build self', function (): void {
-    expect(new ReportExceptionMail($this->faker()->title(), $this->faker()->text()))
+    expect(new ReportExceptionMail(fake()->title(), fake()->text()))
         ->build()->toBeInstanceOf(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);

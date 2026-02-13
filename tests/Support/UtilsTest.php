@@ -25,7 +25,7 @@ use Pest\Expectation;
 
 it('can apply configuration to object', function (): void {
     expect(Utils::applyConfigurationToObject(
-        new ReportExceptionMail($this->faker()->title(), $this->faker()->text()),
+        new ReportExceptionMail(fake()->title(), fake()->text()),
         [
             'render' => 'value',
             'theme' => 'default',
