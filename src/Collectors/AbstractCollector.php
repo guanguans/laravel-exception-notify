@@ -21,12 +21,12 @@ use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
  */
 abstract class AbstractCollector implements CollectorContract
 {
-    public function name(): string
+    final public function name(): string
     {
-        return static::fallbackName();
+        return self::fallbackName();
     }
 
-    public static function fallbackName(): string
+    final public static function fallbackName(): string
     {
         return str(class_basename(static::class))
             ->beforeLast('Collector')

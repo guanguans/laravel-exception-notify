@@ -21,7 +21,7 @@ abstract class AbstractExceptionCollector extends AbstractCollector implements E
     protected \Throwable $exception;
     protected FlattenException $flattenException;
 
-    public function setException(\Throwable $throwable): void
+    final public function setException(\Throwable $throwable): void
     {
         $this->exception = $throwable;
         $this->flattenException = FlattenException::createFromThrowable($throwable);
