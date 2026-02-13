@@ -80,3 +80,4 @@ parameters:
         - identifier: return.void
         - identifier: symplify.noDynamicName
         - identifier: typePerfect.noMixedMethodCaller
+        - identifier: offsetAccess.invalidOffset

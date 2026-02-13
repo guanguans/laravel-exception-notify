@@ -234,6 +234,8 @@ $ruleSet = Php80::create()
             'stick_comment_to_next_continuous_control_statement' => true,
         ],
         'static_lambda' => false, // pest
+        'static_private_method' => false,
+        'no_extra_blank_lines' => false,
     ]));
 
 $ruleSet->withCustomFixers(Fixers::fromFixers(

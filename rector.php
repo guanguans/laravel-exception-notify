@@ -33,6 +33,7 @@ use PhpParser\Node\Scalar\String_;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
+use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
@@ -40,7 +41,7 @@ use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
-use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
+use Rector\DowngradePhp74\Rector\Array_\DowngradeArraySpreadRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
@@ -53,11 +54,14 @@ use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
 use Rector\Visibility\ValueObject\ChangeMethodVisibility;
+use RectorLaravel\Rector\ArrayDimFetch\ArrayToArrGetRector;
 use RectorLaravel\Rector\Class_\ModelCastsPropertyToCastsMethodRector;
 use RectorLaravel\Rector\Coalesce\ApplyDefaultInsteadOfNullCoalesceRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
+use RectorLaravel\Rector\FuncCall\ConfigToTypedConfigMethodCallRector;
 use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
 use RectorLaravel\Rector\FuncCall\TypeHintTappableCallRector;
+use RectorLaravel\Rector\StaticCall\CarbonToDateFacadeRector;
 use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelSetList;
 
@@ -230,7 +234,7 @@ return RectorConfig::configure()
         )
     )
     ->withSkip([
-        DowngradeArraySpreadStringKeyRector::class,
+        DowngradeArraySpreadRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
@@ -239,6 +243,11 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        ArrayToArrGetRector::class,
+        CarbonToDateFacadeRector::class,
+        ConfigToTypedConfigMethodCallRector::class,
+        NewlineBetweenClassLikeStmtsRector::class,
+
         DispatchToHelperFunctionsRector::class,
         EmptyToBlankAndFilledFuncRector::class,
         HelperFuncCallToFacadeClassRector::class,
@@ -260,5 +269,6 @@ return RectorConfig::configure()
             __DIR__.'/config',
             __DIR__.'/src',
             __DIR__.'/tests',
+            __DIR__.'/.php-cs-fixer.php',
         ],
     ]);
