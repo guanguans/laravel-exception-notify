@@ -36,6 +36,10 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
         AggregationTrait::__call as macroCall;
     }
 
+    /**
+     * @param string $method
+     * @param list<mixed> $parameters
+     */
     public function __call(mixed $method, mixed $parameters): mixed
     {
         return self::hasMacro($method)
@@ -48,6 +52,9 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
         return config('exception-notify.default');
     }
 
+    /**
+     * @api
+     */
     public function channel(?string $channel = null): Channel
     {
         return $this->driver($channel);
@@ -88,7 +95,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
             static fn (Repository $configRepository): mixed => $configRepository->set('__channel', $driver)
         );
 
-        $studlyName = str($configRepository->get('driver', $driver))->studly();
+        $studlyName = (string) str($configRepository->get('driver', $driver))->studly();
 
         if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
             return new $class($configRepository);

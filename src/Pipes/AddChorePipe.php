@@ -24,6 +24,9 @@ class AddChorePipe
     use WithPipeArgs;
 
     /**
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
      * @param array-key $key
      */
     public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key): Stringable

@@ -43,6 +43,8 @@ class TestCommand extends Command
     protected $description = 'Test whether exception can be monitored and reported to notification channel';
 
     /**
+     * @api
+     *
      * @throws \ReflectionException
      */
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): int

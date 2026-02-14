@@ -53,7 +53,7 @@ class NotifyChannel extends AbstractChannel
     private function makeClient(): Client
     {
         return Utils::applyConfigurationToObject(
-            make($configuration = $this->configRepository->get('client') + [
+            make($configuration = (array) $this->configRepository->get('client') + [
                 'authenticator' => $this->makeAuthenticator(),
             ]),
             $configuration

@@ -24,7 +24,11 @@ use Illuminate\Support\Stringable;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
-    /** @var array<array-key, string> */
+    /**
+     * @api
+     *
+     * @var array<array-key, string>
+     */
     public array $singletons = [
         ExceptionNotifyManager::class,
         TestCommand::class,
@@ -43,6 +47,9 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
             ->registerReportUsing();
     }
 
+    /**
+     * @api
+     */
     public function boot(): void
     {
         $this->registerCommands();

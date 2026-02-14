@@ -29,6 +29,8 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  * @see \Illuminate\Log\LogManager::createEmergencyLogger()
  * @see \Illuminate\Log\LogManager::get()
  * @see \Illuminate\Log\LogManager::stack()
+ *
+ * @api
  */
 class Channel implements ChannelContract
 {
@@ -41,6 +43,9 @@ class Channel implements ChannelContract
         private readonly ChannelContract $channelContract
     ) {}
 
+    /**
+     * @api
+     */
     public function report(\Throwable $throwable): void
     {
         rescue(function () use ($throwable): void {
@@ -59,21 +64,33 @@ class Channel implements ChannelContract
         });
     }
 
+    /**
+     * @api
+     */
     public function reporting(mixed $listener): void
     {
         Event::listen(ReportingEvent::class, $listener);
     }
 
+    /**
+     * @api
+     */
     public function reported(mixed $listener): void
     {
         Event::listen(ReportedEvent::class, $listener);
     }
 
+    /**
+     * @api
+     */
     public static function skipWhen(\Closure $callback): void
     {
         self::$skipCallbacks[] = $callback;
     }
 
+    /**
+     * @api
+     */
     public static function flush(): void
     {
         self::$skipCallbacks = [];
@@ -132,7 +149,7 @@ class Channel implements ChannelContract
     private function makeRateLimiter(): RateLimiter
     {
         return Utils::applyConfigurationToObject(
-            make($configuration = config('exception-notify.rate_limiter') + [
+            make($configuration = (array) config('exception-notify.rate_limiter') + [
                 'class' => RateLimiter::class,
                 'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
             ]),

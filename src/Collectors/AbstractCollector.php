@@ -26,6 +26,9 @@ abstract class AbstractCollector implements CollectorContract
         return self::fallbackName();
     }
 
+    /**
+     * @api
+     */
     final public static function fallbackName(): string
     {
         return str(class_basename(static::class))

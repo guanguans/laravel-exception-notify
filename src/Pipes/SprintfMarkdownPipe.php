@@ -21,6 +21,11 @@ class SprintfMarkdownPipe extends SprintfPipe
 {
     use WithPipeArgs;
 
+    /**
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
+     */
     public function handle(
         Collection $collectors,
         \Closure $next,

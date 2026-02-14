@@ -17,9 +17,14 @@ use Illuminate\Support\Collection;
 
 /**
  * @see https://github.com/laravel/telescope/blob/4.x/src/ExceptionContext.php
+ *
+ * @api
  */
 class ExceptionContext
 {
+    /**
+     * @return array<string, string>
+     */
     public static function getMarked(\Throwable $throwable, string $mark = '➤', int $number = 5): array
     {
         return collect(self::get($throwable, $number))
@@ -33,7 +38,7 @@ class ExceptionContext
                 $exceptionLine = $throwable->getLine();
                 $markedExceptionLine = "$mark $exceptionLine";
                 $maxLineLen = max(
-                    mb_strlen((string) array_key_last($collection->toArray())),
+                    mb_strlen((string) array_key_last($collection->all())),
                     mb_strlen($markedExceptionLine)
                 );
             })
@@ -51,6 +56,9 @@ class ExceptionContext
             ->all();
     }
 
+    /**
+     * @return array<int, string>
+     */
     public static function get(\Throwable $throwable, int $number = 5): array
     {
         return self::getEval($throwable) ?? self::getFile($throwable, $number);
@@ -64,6 +72,9 @@ class ExceptionContext
         return str($throwable->getFile())->contains($row = "eval()'d code") ? [$throwable->getLine() => $row] : null;
     }
 
+    /**
+     * @return array<int, string>
+     */
     private static function getFile(\Throwable $throwable, int $number = 5): array
     {
         return collect(file($throwable->getFile()))

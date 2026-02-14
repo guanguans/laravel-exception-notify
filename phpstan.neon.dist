@@ -118,8 +118,22 @@ parameters:
 #        - identifier: cast.int
 #        - identifier: cast.string
 #        - identifier: class.extendsFinalByPhpDoc
+#        - identifier: disallowed.function
 #        - identifier: empty.notAllowed
 #        - identifier: encapsedStringPart.nonString
+#        - identifier: ergebnis.final
+#        - identifier: ergebnis.finalInAbstractClass
+#        - identifier: ergebnis.noAssignByReference
+#        - identifier: ergebnis.noConstructorParameterWithDefaultValue
+#        - identifier: ergebnis.noExtends
+#        - identifier: ergebnis.noIsset
+#        - identifier: ergebnis.noNamedArgument
+#        - identifier: ergebnis.noNullableReturnTypeDeclaration
+#        - identifier: ergebnis.noParameterPassedByReference
+#        - identifier: ergebnis.noParameterWithNullableTypeDeclaration
+#        - identifier: ergebnis.noParameterWithNullDefaultValue
+#        - identifier: foreach.valueOverwrite
+#        - identifier: guanguans.forbiddenSideEffects
 #        - identifier: logicalAnd.resultUnused
 #        - identifier: logicalOr.resultUnused
 #        - identifier: method.childParameterType
@@ -133,31 +147,6 @@ parameters:
 #        - identifier: phpstanApi.class
 #        - identifier: return.type
 #        - identifier: return.void
-#        - identifier: symplify.explicitInterfaceSuffixName
-#        - identifier: symplify.explicitTraitSuffixName
-#        - identifier: symplify.forbiddenArrayMethodCall
-#        - identifier: symplify.forbiddenExtendOfNonAbstractClass
-#        - identifier: symplify.forbiddenNode
-#        - identifier: symplify.noArrayMapWithArrayCallable
-#        - identifier: symplify.noDynamicName
-#        - identifier: symplify.noReference
-#        - identifier: symplify.noReturnSetterMethod
-#        - identifier: symplify.requireExceptionNamespace
-#        - identifier: trait.unused
-#        - identifier: typePerfect.noMixedMethodCaller
-#        - message: '#^Unused Guanguans\\Notify\\Rector\\.*\\.*\:\:__construct$#'
-
-#        - identifier: ergebnis.final
-#        - identifier: ergebnis.finalInAbstractClass
-#        - identifier: ergebnis.noAssignByReference
-#        - identifier: ergebnis.noConstructorParameterWithDefaultValue
-#        - identifier: ergebnis.noExtends
-#        - identifier: ergebnis.noIsset
-#        - identifier: ergebnis.noNamedArgument
-#        - identifier: ergebnis.noNullableReturnTypeDeclaration
-#        - identifier: ergebnis.noParameterPassedByReference
-#        - identifier: ergebnis.noParameterWithNullableTypeDeclaration
-#        - identifier: ergebnis.noParameterWithNullDefaultValue
 #        - identifier: shipmonk.binaryOperationWithNull
 #        - identifier: shipmonk.checkedExceptionInCallable
 #        - identifier: shipmonk.forbiddenCast
@@ -166,50 +155,21 @@ parameters:
 #        - identifier: shipmonk.variableTypeOverwritten
 #        - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.explicitTraitSuffixName
+#        - identifier: symplify.forbiddenArrayMethodCall
 #        - identifier: symplify.forbiddenExtendOfNonAbstractClass
 #        - identifier: symplify.forbiddenFuncCall
 #        - identifier: symplify.forbiddenNode
 #        - identifier: symplify.forbiddenStaticClassConstFetch
+#        - identifier: symplify.noArrayMapWithArrayCallable
 #        - identifier: symplify.noDynamicName
 #        - identifier: symplify.noGlobalConst
 #        - identifier: symplify.noReference
 #        - identifier: symplify.noReturnSetterMethod
 #        - identifier: symplify.requireExceptionNamespace
-#
-#        - identifier: argument.type
-#        - identifier: arrayFilter.strict
-#        - identifier: cast.int
-#        - identifier: disallowed.function
-#        - identifier: encapsedStringPart.nonString
-#        - identifier: foreach.valueOverwrite
-#        - identifier: guanguans.forbiddenSideEffects
-#        - identifier: logicalAnd.resultUnused
-#        - identifier: method.childParameterType
-#        - identifier: method.dynamicName
-#        - identifier: return.type
 #        - identifier: trait.unused
-
-
-
-        - identifier: argument.templateType
-        - identifier: argument.type
-        - identifier: binaryOp.invalid
-        - identifier: cast.string
-        - identifier: encapsedStringPart.nonString
-        - identifier: method.nonObject
-        - identifier: missingType.generics
-        - identifier: missingType.iterableValue
-        - identifier: return.type
-        - identifier: return.void
-        - identifier: symplify.noDynamicName
 #        - identifier: typePerfect.noMixedMethodCaller
-        - identifier: offsetAccess.invalidOffset
+#        - message: '#^Unused Guanguans\\Notify\\Rector\\.*\\.*\:\:__construct$#'
 
-
-
-        - identifier: complexity.classLike
-        - identifier: complexity.functionLike
-        - identifier: empty.notAllowed
         - identifier: ergebnis.final
         - identifier: ergebnis.finalInAbstractClass
         - identifier: ergebnis.noConstructorParameterWithDefaultValue
@@ -220,29 +180,48 @@ parameters:
         - identifier: ergebnis.noParameterWithContainerTypeDeclaration
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
-        - identifier: guanguans.forbiddenSideEffects
-#        - identifier: method.childParameterType
-        - identifier: method.dynamicName
-        - identifier: property.dynamicName
-        - identifier: public.method.unused
-        - identifier: public.property.unused
-        - identifier: shipmonk.arithmeticOnNonNumber
         - identifier: shipmonk.binaryOperationWithNull
         - identifier: shipmonk.checkedExceptionInCallable
-        - identifier: shipmonk.deadMethod
         - identifier: shipmonk.forbiddenCast
-        - identifier: shipmonk.publicPropertyNotReadonly
-        - identifier: shipmonk.returnListNotUsed
-        - identifier: shipmonk.stringInterpolationWithNull
-        - identifier: shipmonk.unsafeArrayKey
-        - identifier: shipmonk.variableTypeOverwritten
-        - identifier: staticMethod.dynamicCall
-        - identifier: symplify.forbiddenStaticClassConstFetch
-        - identifier: symplify.forbiddenNode
-        - identifier: symplify.forbiddenFuncCall
-        - identifier: symplify.explicitInterfaceSuffixName
-        - identifier: symplify.forbiddenExtendOfNonAbstractClass
-        - identifier: symplify.requireExceptionNamespace
-        - identifier: symplify.explicitTraitSuffixName
-        - identifier: symplify.requiredInterfaceContractNamespace
         - identifier: shipmonk.nonNormalizedType
+        - identifier: shipmonk.publicPropertyNotReadonly
+        - identifier: shipmonk.stringInterpolationWithNull
+        - identifier: shipmonk.variableTypeOverwritten
+        - identifier: symplify.explicitInterfaceSuffixName
+        - identifier: symplify.explicitTraitSuffixName
+        - identifier: symplify.forbiddenExtendOfNonAbstractClass
+        - identifier: symplify.forbiddenFuncCall
+        - identifier: symplify.forbiddenNode
+        - identifier: symplify.forbiddenStaticClassConstFetch
+        - identifier: symplify.noDynamicName
+        - identifier: symplify.requiredInterfaceContractNamespace
+        - identifier: symplify.requireExceptionNamespace
+
+        - identifier: argument.type
+        - identifier: binaryOp.invalid
+        - identifier: cast.double
+        - identifier: cast.string
+        - identifier: complexity.classLike
+        - identifier: complexity.functionLike
+        - identifier: empty.notAllowed
+        - identifier: guanguans.forbiddenSideEffects
+        - identifier: method.dynamicName
+        - identifier: method.nonObject
+        - identifier: property.dynamicName
+        - identifier: return.type
+        - identifier: return.void
+        - message: '#^Parameter \#2 \$parameters \(list\<mixed\>\) of method Guanguans\\LaravelExceptionNotify\\ExceptionNotifyManager\:\:__call\(\) should be contravariant with parameter \$parameters \(array\) of method Illuminate\\Support\\Manager\:\:__call\(\)$#'
+        - message: '#^Unable to resolve the template type (TKey|TValue) in call to function collect$#'
+        - message: '#^Unused Guanguans\\LaravelExceptionNotify\\Support\\Traits\\WithPipeArgs\:\:with$#'
+        -
+            identifier: missingType.iterableValue
+            path: src/Facades/ExceptionNotify.php
+        -
+            message: '#^Calling sha1\(\) is forbidden, use hash\(\) with at least SHA\-256 for secure hash, or password_hash\(\) for passwords\.$#'
+            path: src/Channels/Channel.php
+        -
+            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
+            path: src/Support/helpers.php
+        -
+            message: '#^Dynamic call to static method Guanguans\\LaravelExceptionNotify\\Channels\\Channel\:\:shouldReport\(\)\.$#'
+            path: src/Commands/TestCommand.php

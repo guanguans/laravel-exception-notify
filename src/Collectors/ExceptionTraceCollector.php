@@ -17,8 +17,12 @@ use Illuminate\Support\Str;
 
 class ExceptionTraceCollector extends AbstractExceptionCollector
 {
+    /** @var list<string> */
     private readonly array $except;
 
+    /**
+     * @param null|list<string> $except
+     */
     public function __construct(?array $except = null)
     {
         $this->except = $except ?? ['vendor'];

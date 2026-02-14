@@ -22,7 +22,10 @@ class LimitLengthPipe
     use WithPipeArgs;
 
     /**
-     * @param \Closure(\Illuminate\Support\Collection): \Illuminate\Support\Stringable $next
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
+     * @param \Closure(\Illuminate\Support\Collection<string, array<string, mixed>>): \Illuminate\Support\Stringable $next
      *
      * @noinspection RedundantDocCommentTagInspection
      */

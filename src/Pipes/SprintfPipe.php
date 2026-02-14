@@ -21,6 +21,11 @@ class SprintfPipe
 {
     use WithPipeArgs;
 
+    /**
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
+     */
     public function handle(Collection $collectors, \Closure $next, string $format): Stringable
     {
         return str(\sprintf($format, $next($collectors)));

@@ -22,6 +22,7 @@ use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
  */
 final class JsonFixer
 {
+    /** @var array<int, string> */
     private array $stack = [];
 
     /** @var bool If current char is within a string */
@@ -89,6 +90,9 @@ final class JsonFixer
     }
 
     /* ------------------------- trait PadsJson ------------------------- */
+    /**
+     * @api
+     */
     public function pad(string $tmpJson): string
     {
         if (!$this->inStr) {
@@ -105,6 +109,9 @@ final class JsonFixer
         return $this->padStack($tmpJson);
     }
 
+    /**
+     * @return list<string>
+     */
     private function trim(string $json): array
     {
         preg_match('/^(\s*)(\S+)(\s*)$/', $json, $match);

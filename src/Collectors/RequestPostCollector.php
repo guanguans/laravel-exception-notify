@@ -17,8 +17,12 @@ use Illuminate\Http\Request;
 
 class RequestPostCollector extends AbstractCollector
 {
+    /** @var list<string> */
     private readonly array $masks;
 
+    /**
+     * @param null|list<string> $masks
+     */
     public function __construct(
         private readonly Request $request,
         ?array $masks = null

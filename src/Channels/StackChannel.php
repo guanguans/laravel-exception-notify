@@ -34,6 +34,9 @@ class StackChannel extends AbstractChannel
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function reportContent(string $content): array
     {
         return collect($this->configRepository->get('channels'))

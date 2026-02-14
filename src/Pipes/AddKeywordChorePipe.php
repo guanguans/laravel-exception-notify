@@ -21,6 +21,11 @@ class AddKeywordChorePipe extends AddChorePipe
 {
     use WithPipeArgs;
 
+    /**
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
+     */
     public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key = 'Keyword'): Stringable
     {
         return parent::handle($collectors, $next, $value, $key);

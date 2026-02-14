@@ -22,6 +22,9 @@ class ReportExceptionMail extends Mailable
         private readonly string $content
     ) {}
 
+    /**
+     * @api
+     */
     public function build(): self
     {
         return $this

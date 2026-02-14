@@ -33,7 +33,7 @@ class RequestBasicCollector extends AbstractCollector
             'Memory' => Utils::humanBytes(memory_get_peak_usage(true)),
             'Duration' => blank(
                 $startTime = \defined('LARAVEL_START') ? LARAVEL_START : $this->request->server('REQUEST_TIME_FLOAT')
-            ) ? 'Unknown' : Utils::humanMilliseconds((microtime(true) - $startTime) * 1000),
+            ) ? 'Unknown' : Utils::humanMilliseconds((microtime(true) - (float) $startTime) * 1000),
         ];
     }
 }

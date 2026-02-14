@@ -15,6 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Events;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 
+/**
+ * @api
+ */
 class ReportingEvent
 {
     public function __construct(

@@ -17,8 +17,12 @@ use Illuminate\Http\Request;
 
 class RequestHeaderCollector extends AbstractCollector
 {
+    /** @var list<string> */
     private readonly array $except;
 
+    /**
+     * @param null|list<string> $except
+     */
     public function __construct(
         private readonly Request $request,
         ?array $except = null

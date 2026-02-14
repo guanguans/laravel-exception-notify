@@ -30,6 +30,9 @@ class ReportExceptionJob implements ShouldQueue
         private readonly string $content
     ) {}
 
+    /**
+     * @api
+     */
     public function handle(ExceptionNotifyManager $exceptionNotifyManager): void
     {
         $exceptionNotifyManager->driver($this->channel)->reportContent($this->content);

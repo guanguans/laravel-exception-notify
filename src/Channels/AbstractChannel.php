@@ -108,7 +108,7 @@ abstract class AbstractChannel implements ChannelContract
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
         return Utils::applyConfigurationToObject(
-            make($configuration = config('exception-notify.job') + [
+            make($configuration = (array) config('exception-notify.job') + [
                 'class' => ReportExceptionJob::class,
                 'channel' => $this->getChannel(),
                 'content' => $this->getContent($throwable),
@@ -125,6 +125,9 @@ abstract class AbstractChannel implements ChannelContract
             ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<string, array<string, mixed>>
+     */
     private function getCollectors(\Throwable $throwable): Collection
     {
         return collect([
@@ -143,6 +146,9 @@ abstract class AbstractChannel implements ChannelContract
         });
     }
 
+    /**
+     * @return list<mixed>
+     */
     private function getPipes(): array
     {
         return collect($this->configRepository->get('pipes'))->prepend(FixPrettyJsonPipe::class)->all();

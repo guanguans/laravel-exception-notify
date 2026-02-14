@@ -25,6 +25,11 @@ class FixPrettyJsonPipe
 
     public function __construct(private readonly JsonFixer $jsonFixer) {}
 
+    /**
+     * @api
+     *
+     * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
+     */
     public function handle(Collection $collectors, \Closure $next, string $missingValue = '"..."'): Stringable
     {
         $content = $next($collectors);

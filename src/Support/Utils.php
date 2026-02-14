@@ -21,6 +21,9 @@ use Illuminate\Support\Str;
 class Utils
 {
     /**
+     * @param array<string, mixed> $configuration
+     * @param null|list<string> $except
+     *
      * @throws \ReflectionException
      */
     public static function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
@@ -103,6 +106,11 @@ class Utils
             });
     }
 
+    /**
+     * @param array<string, mixed> $configuration
+     *
+     * @return array<string, mixed>
+     */
     public static function applyContentToConfiguration(array $configuration, string $content): array
     {
         array_walk_recursive($configuration, static function (mixed &$value) use ($content): void {
@@ -132,6 +140,10 @@ class Utils
     }
 
     /**
+     * @param array<string, mixed> $syntax
+     *
+     * @throws \Exception
+     *
      * @noinspection PhpUnhandledExceptionInspection
      */
     public static function humanMilliseconds(float|int $milliseconds, array $syntax = []): string
