@@ -38,7 +38,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
     public function __call(mixed $method, mixed $parameters): mixed
     {
-        return static::hasMacro($method)
+        return self::hasMacro($method)
             ? $this->macroCall($method, $parameters)
             : parent::__call($method, $parameters);
     }

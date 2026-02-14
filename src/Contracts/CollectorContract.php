@@ -17,5 +17,8 @@ interface CollectorContract
 {
     public function name(): string;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function collect(): array;
 }

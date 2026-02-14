@@ -32,7 +32,7 @@ class RequestHeaderCollector extends AbstractCollector
     public function collect(): array
     {
         return collect($this->request->header())
-            ->reject(fn (array $header, string $key): bool => str($key)->is($this->except))
+            ->reject(fn (array $_, string $key): bool => str($key)->is($this->except))
             ->map(static fn (array $header): string => $header[0])
             ->all();
     }

@@ -49,7 +49,7 @@ parameters:
     scanFiles:
 #        - vendor/composer/InstalledVersions.php
     excludePaths:
-        - src/Support/Rectors/
+#        - src/Support/Rectors/
 #        - src/Support/ComposerScripts.php
         - tests/Fixtures/
         - *.blade.php
@@ -108,9 +108,6 @@ parameters:
         -
             function: 'env_explode()'
             message: 'use config() instead'
-        -
-            function: 'hydrate_pipe()'
-            message: 'use Pipe::with() instead'
     ignoreErrors:
 #        - identifier: argument.templateType
 #        - identifier: argument.type
@@ -210,9 +207,6 @@ parameters:
 
 
 
-#        - identifier: booleanAnd.leftNotBoolean
-#        - identifier: booleanAnd.rightNotBoolean
-#        - identifier: booleanNot.exprNotBoolean
         - identifier: complexity.classLike
         - identifier: complexity.functionLike
         - identifier: empty.notAllowed
@@ -227,9 +221,6 @@ parameters:
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
         - identifier: guanguans.forbiddenSideEffects
-#        - identifier: if.condNotBoolean
-#        - identifier: logicalAnd.leftNotBoolean
-#        - identifier: logicalAnd.rightNotBoolean
 #        - identifier: method.childParameterType
         - identifier: method.dynamicName
         - identifier: property.dynamicName
@@ -246,8 +237,6 @@ parameters:
         - identifier: shipmonk.unsafeArrayKey
         - identifier: shipmonk.variableTypeOverwritten
         - identifier: staticMethod.dynamicCall
-#        - identifier: ternary.condNotBoolean
-#        - identifier: ternary.shortNotAllowed
         - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: symplify.forbiddenNode
         - identifier: symplify.forbiddenFuncCall
@@ -256,3 +245,4 @@ parameters:
         - identifier: symplify.requireExceptionNamespace
         - identifier: symplify.explicitTraitSuffixName
         - identifier: symplify.requiredInterfaceContractNamespace
+        - identifier: shipmonk.nonNormalizedType

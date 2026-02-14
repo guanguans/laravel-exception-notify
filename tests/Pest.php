@@ -2,13 +2,14 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
-/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
-
 /** @noinspection PhpInconsistentReturnPointsInspection */
-
+/** @noinspection PhpInternalEntityUsedInspection */
 declare(strict_types=1);
 
 /**

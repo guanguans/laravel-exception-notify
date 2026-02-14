@@ -26,7 +26,7 @@ workbench:
   start: '/'
   install: true
   discovers:
-    config: false
+    config: true
     web: true
     api: false
     commands: true

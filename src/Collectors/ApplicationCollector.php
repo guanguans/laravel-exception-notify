@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class ApplicationCollector extends AbstractCollector
 {
@@ -25,11 +25,13 @@ class ApplicationCollector extends AbstractCollector
 
     /**
      * @see \Illuminate\Foundation\Console\AboutCommand::gatherApplicationInformation()
+     *
+     * @return array<string, mixed>
      */
     public function collect(): array
     {
         return [
-            'Time' => Carbon::now()->format('Y-m-d H:i:s'),
+            'Time' => Date::now()->format('Y-m-d H:i:s'),
             'Name' => config('app.name'),
             'Version' => $this->container->version(),
             'PHP Version' => \PHP_VERSION,

@@ -24,6 +24,7 @@ use Illuminate\Support\Stringable;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
+    /** @var array<array-key, string> */
     public array $singletons = [
         ExceptionNotifyManager::class,
         TestCommand::class,
@@ -48,6 +49,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     }
 
     /**
+     * @return list<string>
+     *
      * @noinspection PhpMissingParentCallCommonInspection
      */
     public function provides(): array

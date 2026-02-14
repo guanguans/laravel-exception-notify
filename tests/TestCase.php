@@ -1,8 +1,15 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpMissingParentCallCommonInspection */
-
 declare(strict_types=1);
 
 /**
@@ -78,7 +85,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment(mixed $app): void
     {
-        tap($app, static function (Application $application): void {
+        tap($app, static function (Application $_): void {
             Channel::flush();
             File::delete(glob(storage_path('logs/*.log')));
             Mail::fake();

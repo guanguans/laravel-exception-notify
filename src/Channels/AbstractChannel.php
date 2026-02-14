@@ -66,6 +66,11 @@ abstract class AbstractChannel implements ChannelContract
         // unset($pendingDispatch);
     }
 
+    /**
+     * @see \Illuminate\Foundation\Http\FormRequest
+     *
+     * @return array<string, list<mixed>|mixed>
+     */
     protected function rules(): array
     {
         return [
@@ -76,11 +81,17 @@ abstract class AbstractChannel implements ChannelContract
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function messages(): array
     {
         return [];
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function attributes(): array
     {
         return [];

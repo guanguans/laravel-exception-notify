@@ -20,6 +20,9 @@ class RequestBasicCollector extends AbstractCollector
 {
     public function __construct(private readonly Request $request) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function collect(): array
     {
         return [

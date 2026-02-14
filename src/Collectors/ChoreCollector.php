@@ -15,6 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class ChoreCollector extends AbstractCollector
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function collect(): array
     {
         return [];
