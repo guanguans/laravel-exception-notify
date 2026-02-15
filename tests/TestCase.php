@@ -10,6 +10,7 @@
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpMissingParentCallCommonInspection */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -45,7 +46,6 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -85,7 +85,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function defineEnvironment(mixed $app): void
     {
-        tap($app, static function (Application $_): void {
+        tap($app, static function (): void {
             Channel::flush();
             File::delete(glob(storage_path('logs/*.log')));
             Mail::fake();

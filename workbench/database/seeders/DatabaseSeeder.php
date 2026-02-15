@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @noinspection PhpStaticAsDynamicMethodCallInspection
      */
     public function run(): void
     {

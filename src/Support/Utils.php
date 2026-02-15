@@ -143,8 +143,6 @@ class Utils
      * @param array<string, mixed> $syntax
      *
      * @throws \Exception
-     *
-     * @noinspection PhpUnhandledExceptionInspection
      */
     public static function humanMilliseconds(float|int $milliseconds, array $syntax = []): string
     {

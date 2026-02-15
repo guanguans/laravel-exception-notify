@@ -124,9 +124,6 @@ final class JsonFixer
         return $match;
     }
 
-    /**
-     * @noinspection JsonEncodingApiUsageInspection
-     */
     private function isValid(string $json): bool
     {
         json_decode($json);

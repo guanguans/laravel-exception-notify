@@ -2,7 +2,6 @@
 
 /** @noinspection ClassNameCollisionInspection */
 /** @noinspection EmptyClassInspection */
-/** @noinspection PhpMultipleClassDeclarationsInspection */
 
 declare(strict_types=1);
 

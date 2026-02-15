@@ -1,6 +1,5 @@
 <?php
 
-/** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUnusedAliasInspection */
 

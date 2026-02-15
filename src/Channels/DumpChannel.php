@@ -21,6 +21,7 @@ class DumpChannel extends AbstractChannel
     /**
      * @noinspection ForgottenDebugOutputInspection
      * @noinspection DebugFunctionUsageInspection
+     * @noinspection PhpVoidFunctionResultUsedInspection
      */
     public function reportContent(string $content): mixed
     {

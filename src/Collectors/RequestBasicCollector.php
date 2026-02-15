@@ -21,6 +21,8 @@ class RequestBasicCollector extends AbstractCollector
     public function __construct(private readonly Request $request) {}
 
     /**
+     * @throws \Exception
+     *
      * @return array<string, mixed>
      */
     public function collect(): array
