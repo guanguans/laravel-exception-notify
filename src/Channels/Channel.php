@@ -145,6 +145,8 @@ class Channel implements ChannelContract
 
     /**
      * @throws \ReflectionException
+     *
+     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeRateLimiter(): RateLimiter
     {

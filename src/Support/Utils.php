@@ -21,10 +21,14 @@ use Illuminate\Support\Str;
 class Utils
 {
     /**
+     * @template TObject of object
+     *
      * @param array<string, mixed> $configuration
      * @param null|list<string> $except
      *
      * @throws \ReflectionException
+     *
+     * @return TObject
      */
     public static function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
     {

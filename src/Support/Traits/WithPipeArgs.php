@@ -15,6 +15,9 @@ namespace Guanguans\LaravelExceptionNotify\Support\Traits;
 
 trait WithPipeArgs
 {
+    /**
+     * @param null|scalar ...$args
+     */
     public static function with(mixed ...$args): string
     {
         return [] === $args ? static::class : static::class.':'.implode(',', $args);

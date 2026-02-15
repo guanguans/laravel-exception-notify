@@ -45,6 +45,8 @@ class MailChannel extends AbstractChannel
 
     /**
      * @throws \ReflectionException
+     *
+     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeMail(string $content): Mailable
     {

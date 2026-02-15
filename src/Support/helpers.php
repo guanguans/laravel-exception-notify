@@ -69,15 +69,9 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
 
         foreach (
             $keys = [
-                '__abstract',
-                '__class',
-                '__name',
-                '_abstract',
-                '_class',
-                '_name',
-                'abstract',
-                'class',
-                'name',
+                '__abstract', '__class', '__name',
+                '_abstract', '_class', '_name',
+                'abstract', 'class', 'name',
             ] as $key
         ) {
             if (isset($name[$key])) {
@@ -85,10 +79,9 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
             }
         }
 
-        throw new InvalidArgumentException(\sprintf(
-            'The argument of abstract must be an array containing a `%s` element.',
-            implode('` or `', $keys)
-        ));
+        throw new InvalidArgumentException(
+            \sprintf('The argument of abstract must be an array containing a `%s` element.', implode('` or `', $keys))
+        );
     }
 }
 
