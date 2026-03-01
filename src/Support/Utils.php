@@ -23,6 +23,7 @@ class Utils
     /**
      * @template TObject of object
      *
+     * @param TObject $object
      * @param array<string, mixed> $configuration
      * @param null|list<string> $except
      *

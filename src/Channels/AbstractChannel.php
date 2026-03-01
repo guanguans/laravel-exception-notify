@@ -104,8 +104,6 @@ abstract class AbstractChannel implements ChannelContract
 
     /**
      * @throws \ReflectionException
-     *
-     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeJob(\Throwable $throwable): ShouldQueue
     {

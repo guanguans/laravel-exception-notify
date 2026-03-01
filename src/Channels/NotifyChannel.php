@@ -49,8 +49,6 @@ class NotifyChannel extends AbstractChannel
 
     /**
      * @throws \ReflectionException
-     *
-     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeClient(): Client
     {
@@ -64,8 +62,6 @@ class NotifyChannel extends AbstractChannel
 
     /**
      * @throws \ReflectionException
-     *
-     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeAuthenticator(): Authenticator
     {
@@ -77,8 +73,6 @@ class NotifyChannel extends AbstractChannel
 
     /**
      * @throws \ReflectionException
-     *
-     * @noinspection PhpIncompatibleReturnTypeInspection
      */
     private function makeMessage(string $content): Message
     {

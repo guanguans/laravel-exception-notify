@@ -212,6 +212,7 @@ parameters:
         - identifier: return.void
         - message: '#^Parameter \#2 \$parameters \(list\<mixed\>\) of method Guanguans\\LaravelExceptionNotify\\ExceptionNotifyManager\:\:__call\(\) should be contravariant with parameter \$parameters \(array\) of method Illuminate\\Support\\Manager\:\:__call\(\)$#'
         - message: '#^Unable to resolve the template type (TKey|TValue) in call to function collect$#'
+        - message: '#^Unable to resolve the template type TObject in call to static method Guanguans\\LaravelExceptionNotify\\Support\\Utils\:\:applyConfigurationToObject\(\)$#'
         - message: '#^Unused Guanguans\\LaravelExceptionNotify\\Support\\Traits\\WithPipeArgs\:\:with$#'
         -
             identifier: missingType.iterableValue
