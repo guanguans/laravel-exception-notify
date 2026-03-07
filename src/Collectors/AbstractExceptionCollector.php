@@ -19,6 +19,8 @@ use Symfony\Component\ErrorHandler\Exception\FlattenException;
 abstract class AbstractExceptionCollector extends AbstractCollector implements ExceptionAwareContract
 {
     protected \Throwable $exception;
+
+    /** @api */
     protected FlattenException $flattenException;
 
     final public function setException(\Throwable $throwable): void
