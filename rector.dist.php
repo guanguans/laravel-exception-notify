@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
+use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\LaravelExceptionNotify\Template;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
@@ -129,6 +130,11 @@ return RectorConfig::configure()
             ->mapWithKeys(static fn (string $func): array => [$func => "Guanguans\\LaravelExceptionNotify\\Support\\$func"])
             ->all()
     )
+    ->withConfiguredRule(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
+        'namespacePrefixes' => [
+            // 'Guanguans\\LaravelExceptionNotify',
+        ],
+    ])
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
         collect([Template::class])

@@ -4,7 +4,7 @@
         "canvural/larastan-strict-rules": "^3.0",
         "ergebnis/composer-normalize": "^2.50",
         "guanguans/monorepo-builder-worker": "^3.1",
-        "illuminate/support": "^12.53",
+        "illuminate/support": "^12.55 || ^13.0",
         "larastan/larastan": "^3.9",
         "mrpunyapal/peststan": "^0.0",
         "mrpunyapal/rector-pest": "^0.2",
@@ -14,6 +14,10 @@
         "phpstan/phpstan": "^2.1",
         "roave/backward-compatibility-check": "^8.14",
         "roave/no-floaters": "^1.13"
+    },
+    "suggest": {
+        "php-standard-library/php-standard-library": "Required to use the php-standard-library/php-standard-library.",
+        "php-standard-library/phpstan-extension": "Required to use the php-standard-library/phpstan-extension."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

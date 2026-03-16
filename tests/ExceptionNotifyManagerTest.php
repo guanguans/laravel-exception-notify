@@ -55,7 +55,7 @@ it('will throw `InvalidArgumentException`', function (): void {
 it('can create custom driver', function (): void {
     resolve(ExceptionNotifyManager::class)->extend(
         'foo',
-        static fn (): ChannelContract => new class implements ChannelContract {
+        fn (): ChannelContract => new class implements ChannelContract {
             public function report(Throwable $throwable): void {}
 
             public function reportContent(string $content): mixed
