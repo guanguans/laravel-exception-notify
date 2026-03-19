@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Pipes;
 
-use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
+use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
 use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -28,12 +28,18 @@ class AddChorePipe
      *
      * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
      * @param array-key $key
+     * @param class-string<\Guanguans\LaravelExceptionNotify\Collectors\AbstractCollector> $collectorClass
      */
-    public function handle(Collection $collectors, \Closure $next, mixed $value, mixed $key): Stringable
-    {
+    public function handle(
+        Collection $collectors,
+        \Closure $next,
+        mixed $value,
+        mixed $key,
+        string $collectorClass = ApplicationCollector::class
+    ): Stringable {
         return $next(collect(Arr::add(
             $collectors->all(),
-            str($key)->start(ChoreCollector::fallbackName().'.')->toString(),
+            str($key)->start($collectorClass::fallbackName().'.')->toString(),
             $value
         )));
     }

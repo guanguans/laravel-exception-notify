@@ -29,7 +29,7 @@ class RequestFileCollector extends AbstractCollector
      *     "name": "images.jpeg",
      *     "full_path": "images.jpeg",
      *     "type": "image/jpeg",
-     *     "tmp_name": "/private/var/tmp/phpz7mx94",
+     *     "tmp_name": "/private/var/tmp/php7mx94",
      *     "error": 0,
      *     "size": 2075
      * }

@@ -26,7 +26,6 @@ namespace Guanguans\LaravelExceptionNotifyTests;
 
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Collectors\ApplicationCollector;
-use Guanguans\LaravelExceptionNotify\Collectors\ChoreCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionBasicCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionContextCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\ExceptionTraceCollector;
@@ -105,7 +104,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
             $repository->set('exception-notify.collectors', [
                 ApplicationCollector::class,
-                ChoreCollector::class,
                 ExceptionBasicCollector::class,
                 ExceptionContextCollector::class,
                 ExceptionTraceCollector::class,

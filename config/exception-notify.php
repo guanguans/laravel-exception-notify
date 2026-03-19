@@ -59,7 +59,6 @@ return [
      */
     'collectors' => [
         Collectors\ApplicationCollector::class,
-        Collectors\ChoreCollector::class,
         Collectors\RequestBasicCollector::class,
         Collectors\ExceptionBasicCollector::class,
         Collectors\ExceptionContextCollector::class,
