@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Number;
 
 class RequestFileCollector extends AbstractCollector
 {
@@ -48,7 +48,7 @@ class RequestFileCollector extends AbstractCollector
                 'tmp_name' => $uploadedFile->getPathname(),
                 // 'error' => $uploadedFile->getError(),
                 'error' => $uploadedFile->getErrorMessage(),
-                'size' => Utils::humanBytes($uploadedFile->getSize()),
+                'size' => Number::fileSize($uploadedFile->getSize()),
             ];
         });
 

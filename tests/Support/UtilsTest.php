@@ -35,20 +35,6 @@ it('can apply configuration to object', function (): void {
     ))->toBeInstanceOf(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);
 
-it('can human bytes', function (): void {
-    expect([
-        Utils::humanBytes(0),
-        Utils::humanBytes(10),
-        Utils::humanBytes(10000),
-        Utils::humanBytes(10000000),
-    ])->sequence(
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('0 B'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('10 B'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.77 KB'),
-        static fn (Expectation $expectation): Expectation => $expectation->toBe('9.54 MB')
-    );
-})->group(__DIR__, __FILE__);
-
 it('can human milliseconds', function (): void {
     expect([
         Utils::humanMilliseconds(0.05),

@@ -130,29 +130,12 @@ class Utils
     }
 
     /**
-     * @see https://stackoverflow.com/a/23888858/1580028
-     */
-    public static function humanBytes(int $bytes, int $decimals = 2): string
-    {
-        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        $factor = (int) floor((\strlen((string) $bytes) - 1) / 3);
-
-        if (0 === $factor) {
-            $decimals = 0;
-        }
-
-        return \sprintf("%.{$decimals}f %s", $bytes / (1024 ** $factor), $size[$factor]);
-    }
-
-    /**
      * @param array<string, mixed> $syntax
      *
      * @throws \Exception
      */
     public static function humanMilliseconds(float|int $milliseconds, array $syntax = []): string
     {
-        \assert(0 < $milliseconds, 'The milliseconds must be greater than 0.');
-
         return CarbonInterval::microseconds($milliseconds * 1000)
             ->cascade()
             ->forHumans($syntax + [
