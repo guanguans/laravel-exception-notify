@@ -20,7 +20,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Stringable;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider
 {
@@ -43,10 +42,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this
-            ->setupConfig()
-            ->registerAliases()
-            ->registerReportUsing();
+        $this->setupConfig();
+        $this->registerReportUsing();
     }
 
     /**
@@ -65,14 +62,12 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
-            $this->toAlias(ExceptionNotifyManager::class),
-            $this->toAlias(TestCommand::class),
             ExceptionNotifyManager::class,
             TestCommand::class,
         ];
     }
 
-    private function setupConfig(): self
+    private function setupConfig(): void
     {
         /** @noinspection RealpathInStreamContextInspection */
         $source = realpath($raw = __DIR__.'/../config/exception-notify.php') ?: $raw;
@@ -82,17 +77,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom($source, 'exception-notify');
-
-        return $this;
-    }
-
-    private function registerAliases(): self
-    {
-        foreach ($this->singletons as $singleton) {
-            $this->alias($singleton);
-        }
-
-        return $this;
     }
 
     /**
@@ -100,7 +84,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      *
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
-    private function registerReportUsing(): self
+    private function registerReportUsing(): void
     {
         if (
             config('exception-notify.enabled')
@@ -110,18 +94,14 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
                 ExceptionNotify::report($throwable);
             });
         }
-
-        return $this;
     }
 
-    private function registerCommands(): self
+    private function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands(TestCommand::class);
             $this->addSectionToAboutCommand();
         }
-
-        return $this;
     }
 
     private function addSectionToAboutCommand(): void
@@ -138,29 +118,5 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
                 )
                 ->all()
         );
-    }
-
-    /**
-     * @param class-string $class
-     */
-    private function alias(string $class): self
-    {
-        $this->app->alias($class, $this->toAlias($class));
-
-        return $this;
-    }
-
-    /**
-     * @param class-string $class
-     */
-    private function toAlias(string $class): string
-    {
-        return str($class)
-            ->replaceFirst(__NAMESPACE__, '')
-            ->start('\\'.class_basename(ExceptionNotify::class))
-            ->replaceFirst('\\', '')
-            ->explode('\\')
-            ->map(static fn (string $name): Stringable => str($name)->snake('-'))
-            ->implode('.');
     }
 }
