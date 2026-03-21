@@ -52,6 +52,8 @@ use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
 use RectorLaravel\Rector\ArrayDimFetch\ArrayToArrGetRector;
+use RectorLaravel\Rector\Class_\FillablePropertyToFillableAttributeRector;
+use RectorLaravel\Rector\Class_\HiddenPropertyToHiddenAttributeRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\ConfigToTypedConfigMethodCallRector;
 use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
@@ -167,6 +169,8 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ConfigToTypedConfigMethodCallRector::class,
+        FillablePropertyToFillableAttributeRector::class,
+        HiddenPropertyToHiddenAttributeRector::class,
         TypeHintTappableCallRector::class,
 
         ArrayToArrGetRector::class,

@@ -6,7 +6,7 @@
         "guanguans/monorepo-builder-worker": "^3.1",
         "illuminate/support": "^12.55 || ^13.0",
         "larastan/larastan": "^3.9",
-        "mrpunyapal/peststan": "^0.0",
+        "mrpunyapal/peststan": "^0.1",
         "mrpunyapal/rector-pest": "^0.2",
         "peckphp/peck": "^0.2",
         "phiki/phiki": "^2.1",
