@@ -36,7 +36,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
-use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfHtmlPipe;
 use Guanguans\LaravelExceptionNotify\Pipes\SprintfMarkdownPipe;
@@ -118,7 +117,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 AddKeywordChorePipe::with('keyword'),
                 SprintfHtmlPipe::class,
                 SprintfMarkdownPipe::class,
-                FixPrettyJsonPipe::class,
                 LimitLengthPipe::with(512),
             ]);
 

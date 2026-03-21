@@ -18,7 +18,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\CollectorContract;
 use Guanguans\LaravelExceptionNotify\Contracts\ExceptionAwareContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidConfigurationException;
 use Guanguans\LaravelExceptionNotify\Jobs\ReportExceptionJob;
-use Guanguans\LaravelExceptionNotify\Pipes\FixPrettyJsonPipe;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,7 +26,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Stringable;
-use function Guanguans\LaravelExceptionNotify\Support\json_pretty_encode;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 
 abstract class AbstractChannel implements ChannelContract
@@ -122,7 +120,9 @@ abstract class AbstractChannel implements ChannelContract
         return (string) (new Pipeline(app()))
             ->send($this->getCollectors($throwable))
             ->through($this->getPipes())
-            ->then(static fn (Collection $collectors): Stringable => str(json_pretty_encode($collectors->jsonSerialize())));
+            ->then(static fn (Collection $collectors): Stringable => str($collectors->toJson(
+                \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT
+            )));
     }
 
     /**
@@ -151,6 +151,6 @@ abstract class AbstractChannel implements ChannelContract
      */
     private function getPipes(): array
     {
-        return collect($this->configRepository->get('pipes'))->prepend(FixPrettyJsonPipe::class)->all();
+        return collect($this->configRepository->get('pipes'))->all();
     }
 }

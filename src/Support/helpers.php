@@ -33,22 +33,6 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\env_explode')) {
     }
 }
 
-if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\json_pretty_encode')) {
-    /**
-     * @param int<1, 4194304> $depth
-     *
-     * @throws \JsonException
-     */
-    function json_pretty_encode(mixed $value, int $options = 0, int $depth = 512): string
-    {
-        return json_encode(
-            $value,
-            \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR | \JSON_FORCE_OBJECT | $options,
-            $depth
-        );
-    }
-}
-
 if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
     /**
      * @see https://github.com/laravel/framework/blob/12.x/src/Illuminate/Foundation/helpers.php
