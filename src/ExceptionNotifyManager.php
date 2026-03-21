@@ -18,7 +18,6 @@ namespace Guanguans\LaravelExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
-use Guanguans\LaravelExceptionNotify\Support\Traits\AggregationTrait;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
@@ -32,21 +31,6 @@ use function Guanguans\LaravelExceptionNotify\Support\rescue;
  */
 class ExceptionNotifyManager extends Manager implements ChannelContract
 {
-    use AggregationTrait {
-        AggregationTrait::__call as macroCall;
-    }
-
-    /**
-     * @param string $method
-     * @param list<mixed> $parameters
-     */
-    public function __call(mixed $method, mixed $parameters): mixed
-    {
-        return self::hasMacro($method)
-            ? $this->macroCall($method, $parameters)
-            : parent::__call($method, $parameters);
-    }
-
     public function getDefaultDriver(): string
     {
         return config('exception-notify.default');
@@ -95,9 +79,9 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
             static fn (Repository $configRepository): mixed => $configRepository->set('__channel', $driver)
         );
 
-        $studlyName = (string) str($configRepository->get('driver', $driver))->studly();
+        $studlyDriverName = (string) str($configRepository->get('driver', $driver))->studly();
 
-        if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyName}Channel")) {
+        if (class_exists($class = "\\Guanguans\\LaravelExceptionNotify\\Channels\\{$studlyDriverName}Channel")) {
             return new $class($configRepository);
         }
 

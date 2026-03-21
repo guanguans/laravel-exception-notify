@@ -28,6 +28,8 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      * @api
      *
      * @var array<array-key, string>
+     *
+     * @noinspection ClassOverridesFieldOfSuperClassInspection
      */
     public array $singletons = [
         ExceptionNotifyManager::class,

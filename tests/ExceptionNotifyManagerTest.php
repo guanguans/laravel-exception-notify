@@ -25,12 +25,6 @@ use Guanguans\LaravelExceptionNotify\ExceptionNotifyManager;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Guanguans\LaravelExceptionNotify\Exceptions\RuntimeException;
 
-it('can call', function (): void {
-    ExceptionNotifyManager::macro('foo', fn ($param) => $param);
-    expect(resolve(ExceptionNotifyManager::class))
-        ->foo('foo')->toBe('foo');
-})->group(__DIR__, __FILE__);
-
 it('can return Channel', function (): void {
     expect(resolve(ExceptionNotifyManager::class)->channel('log'))
         ->toBeInstanceOf(Channel::class);
