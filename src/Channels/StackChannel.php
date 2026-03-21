@@ -48,10 +48,15 @@ class StackChannel extends AbstractChannel
             ->all();
     }
 
+    /**
+     * @return array<string, string>
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     protected function rules(): array
     {
         return [
             'channels' => 'array',
-        ] + parent::rules();
+        ];
     }
 }

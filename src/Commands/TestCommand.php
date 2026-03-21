@@ -119,23 +119,25 @@ class TestCommand extends Command
         $connection = $this->option('job-connection') and config()->set('exception-notify.job.connection', $connection);
 
         collect(config('exception-notify.channels'))->each(function (array $configuration, string $name): void {
-            if ('notify' === ($configuration['driver'] ?? $name)) {
-                config()->set(
-                    "exception-notify.channels.$name.client.extender",
-                    function (Client $client): Client {
-                        $client->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'));
-
-                        if ($this->output->isVerbose()) {
-                            $client->before(
-                                \Guanguans\Notify\Foundation\Middleware\Response::class,
-                                Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
-                            );
-                        }
-
-                        return $client;
-                    }
-                );
+            if ('notify' !== ($configuration['driver'] ?? $name)) {
+                return;
             }
+
+            config()->set(
+                "exception-notify.channels.$name.client.extender",
+                function (Client $client): Client {
+                    $client->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'));
+
+                    if ($this->output->isVerbose()) {
+                        $client->before(
+                            \Guanguans\Notify\Foundation\Middleware\Response::class,
+                            Middleware::mapResponse(static fn (Response $response): Response => $response->dump()),
+                        );
+                    }
+
+                    return $client;
+                }
+            );
         });
     }
 

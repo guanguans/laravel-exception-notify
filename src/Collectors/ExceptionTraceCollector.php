@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
-use Illuminate\Support\Str;
-
 class ExceptionTraceCollector extends AbstractExceptionCollector
 {
     /** @var list<string> */
@@ -33,8 +31,8 @@ class ExceptionTraceCollector extends AbstractExceptionCollector
         return str($this->exception->getTraceAsString())
             ->explode(\PHP_EOL)
             ->reject(fn (string $trace): bool => str($trace)->contains($this->except))
-            ->map(static fn (string $trace): string => Str::replaceFirst(base_path().\DIRECTORY_SEPARATOR, '', $trace))
-            ->unique(static fn (string $trace, int $index): string => Str::replaceFirst("#$index ", '', $trace))
+            ->map(static fn (string $trace): string => str($trace)->replaceFirst(base_path().\DIRECTORY_SEPARATOR, '')->toString())
+            ->unique(static fn (string $trace, int $index): string => str($trace)->replaceFirst("#$index ", '')->toString())
             ->all();
     }
 }

@@ -39,7 +39,12 @@ abstract class AbstractChannel implements ChannelContract
     {
         $validator = Validator::make(
             $this->configRepository->all(),
-            $rules = $this->rules(),
+            $rules = $this->rules() + [
+                '__channel' => 'required|string',
+                'driver' => 'required|string',
+                'collectors' => 'array',
+                'pipes' => 'array',
+            ],
             $this->messages(),
             $this->attributes() + collect(Arr::dot($rules))
                 ->keys()
@@ -73,12 +78,7 @@ abstract class AbstractChannel implements ChannelContract
      */
     protected function rules(): array
     {
-        return [
-            '__channel' => 'required|string',
-            'driver' => 'required|string',
-            'collectors' => 'array',
-            'pipes' => 'array',
-        ];
+        return [];
     }
 
     /**

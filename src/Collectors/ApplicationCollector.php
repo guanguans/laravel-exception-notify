@@ -36,7 +36,7 @@ class ApplicationCollector extends AbstractCollector
             'Version' => $this->container->version(),
             'PHP Version' => \PHP_VERSION,
             'Environment' => $this->container->environment(),
-            'In Console' => $this->container->runningInConsole(),
+            'Running In Console' => $this->container->runningInConsole(),
             'Debug Mode' => $this->container->hasDebugModeEnabled(),
             'Maintenance Mode' => $this->container->isDownForMaintenance(),
             'Timezone' => config('app.timezone'),

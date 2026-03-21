@@ -28,10 +28,15 @@ class DumpChannel extends AbstractChannel
         return $this->configRepository->get('exit', false) ? dd($content) : dump($content);
     }
 
+    /**
+     * @return array<string, string>
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     protected function rules(): array
     {
         return [
             'exit' => 'bool',
-        ] + parent::rules();
+        ];
     }
 }

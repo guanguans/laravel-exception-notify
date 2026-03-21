@@ -31,12 +31,17 @@ class LogChannel extends AbstractChannel
         return null;
     }
 
+    /**
+     * @return array<string, string>
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     protected function rules(): array
     {
         return [
             'channel' => 'nullable|string',
             'level' => 'string',
             'context' => 'array',
-        ] + parent::rules();
+        ];
     }
 }

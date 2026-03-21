@@ -31,7 +31,8 @@ abstract class AbstractCollector implements CollectorContract
      */
     final public static function fallbackName(): string
     {
-        return str(class_basename(static::class))
+        return str(static::class)
+            ->classBasename()
             ->beforeLast('Collector')
             ->headline()
             ->toString();

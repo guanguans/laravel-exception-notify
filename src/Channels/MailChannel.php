@@ -35,12 +35,17 @@ class MailChannel extends AbstractChannel
         return Mail::mailer($this->configRepository->get('mailer'))->send($this->makeMail($content));
     }
 
+    /**
+     * @return array<string, string>
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     protected function rules(): array
     {
         return [
             'mailer' => 'nullable|string',
             'to' => 'required|array',
-        ] + parent::rules();
+        ];
     }
 
     /**

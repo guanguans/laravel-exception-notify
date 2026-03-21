@@ -35,6 +35,11 @@ class NotifyChannel extends AbstractChannel
         return $this->makeClient()->send($this->makeMessage($content));
     }
 
+    /**
+     * @return array<string, string>
+     *
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     protected function rules(): array
     {
         return [
@@ -44,7 +49,7 @@ class NotifyChannel extends AbstractChannel
             'client.class' => 'required|string',
             'message' => 'required|array',
             'message.class' => 'required|string',
-        ] + parent::rules();
+        ];
     }
 
     /**

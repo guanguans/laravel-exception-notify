@@ -47,9 +47,7 @@ class ExceptionContext
                 $markedExceptionLine,
                 $maxLineLen
             ): array {
-                if ($line === $exceptionLine) {
-                    $line = $markedExceptionLine;
-                }
+                $line === $exceptionLine and $line = $markedExceptionLine;
 
                 return [\sprintf("%{$maxLineLen}s", $line) => $code];
             })
