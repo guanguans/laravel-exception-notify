@@ -16,7 +16,6 @@ namespace Guanguans\LaravelExceptionNotify\Channels;
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
 use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
-use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
@@ -145,13 +144,10 @@ class Channel implements ChannelContract
      */
     private function makeRateLimiter(): RateLimiter
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = (array) config('exception-notify.rate_limiter') + [
-                'class' => RateLimiter::class,
-                'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
-            ]),
-            $configuration
-        );
+        return make((array) config('exception-notify.rate_limiter') + [
+            'class' => RateLimiter::class,
+            'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
+        ]);
     }
 
     /**

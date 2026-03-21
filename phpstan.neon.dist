@@ -203,7 +203,7 @@ parameters:
         - identifier: cast.string
 #        - identifier: complexity.classLike
         - identifier: complexity.functionLike
-#        - identifier: empty.notAllowed
+        - identifier: empty.notAllowed
         - identifier: guanguans.forbiddenSideEffects
         - identifier: logicalAnd.resultUnused
         - identifier: method.dynamicName

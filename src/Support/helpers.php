@@ -43,6 +43,8 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
      * @param array<string, mixed>|class-string<TClass>|string $name
      * @param array<string, mixed> $parameters
      *
+     * @throws \ReflectionException
+     *
      * @return ($name is class-string<TClass> ? TClass : mixed)
      */
     function make(array|string $name, array $parameters = []): mixed
@@ -59,7 +61,10 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
             ] as $key
         ) {
             if (isset($name[$key])) {
-                return make($name[$key], $parameters + Arr::except($name, $key));
+                return Utils::applyConfigurationToObject(
+                    make($name[$key], $parameters + ($configuration = Arr::except($name, $key))),
+                    $configuration
+                );
             }
         }
 

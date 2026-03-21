@@ -105,14 +105,11 @@ abstract class AbstractChannel implements ChannelContract
      */
     private function makeJob(\Throwable $throwable): ShouldQueue
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = (array) config('exception-notify.job') + [
-                'class' => ReportExceptionJob::class,
-                'channel' => $this->getChannel(),
-                'content' => $this->getContent($throwable),
-            ]),
-            $configuration
-        );
+        return make((array) config('exception-notify.job') + [
+            'class' => ReportExceptionJob::class,
+            'channel' => $this->getChannel(),
+            'content' => $this->getContent($throwable),
+        ]);
     }
 
     private function getContent(\Throwable $throwable): string

@@ -53,12 +53,9 @@ class MailChannel extends AbstractChannel
      */
     private function makeMail(string $content): Mailable
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = Utils::applyContentToConfiguration(
-                $this->configRepository->all() + ['class' => ReportExceptionMail::class],
-                $content
-            )),
-            $configuration
-        );
+        return make(Utils::applyContentToConfiguration(
+            $this->configRepository->all() + ['class' => ReportExceptionMail::class],
+            $content
+        ));
     }
 }

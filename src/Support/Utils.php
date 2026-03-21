@@ -25,80 +25,45 @@ class Utils
      *
      * @param TObject $object
      * @param array<string, mixed> $configuration
-     * @param null|list<string> $except
      *
      * @throws \ReflectionException
      *
      * @return TObject
      */
-    public static function applyConfigurationToObject(object $object, array $configuration, ?array $except = null): object
+    public static function applyConfigurationToObject(object $object, array $configuration): object
     {
         return collect($configuration)
-            ->except(
-                $except ?? collect((new \ReflectionObject($object))->getConstructor()?->getParameters())
-                    ->map(static fn (\ReflectionParameter $reflectionParameter): string => $reflectionParameter->getName())
-                    ->push(
-                        '__channel',
-                        '__abstract',
-                        '__class',
-                        '__name',
-                        '_abstract',
-                        '_class',
-                        '_name',
-                    )
-                    ->all()
-            )
             ->each(static function (mixed $value, string $key) use ($object): void {
-                $hasApplied = false;
+                // Apply configuration to object by property
+                foreach ([$key, Str::camel($key)] as $property) {
+                    if (
+                        property_exists($object, $property)
+                        && (new \ReflectionProperty($object, $property))->isPublic()
+                    ) {
+                        $object->{$property} = $value;
 
-                // Apply configuration to object by method
-                foreach (
-                    [
-                        static fn (string $key): string => $key,
-                        static fn (string $key): string => Str::camel($key),
-                        static fn (string $key): string => 'set'.Str::studly($key),
-                        static fn (string $key): string => 'on'.Str::studly($key),
-                    ] as $caster
-                ) {
-                    if (method_exists($object, $method = $caster($key)) && \is_callable([$object, $method])) {
-                        $numberOfParameters = (new \ReflectionMethod($object, $method))->getNumberOfParameters();
-
-                        if (0 === $numberOfParameters) {
-                            continue;
-                        }
-
-                        1 === $numberOfParameters ? $object->{$method}($value) : app()->call([$object, $method], $value);
-                        $hasApplied = true;
-
-                        break;
+                        return;
                     }
                 }
 
-                if ($hasApplied) {
-                    return;
-                }
-
-                // Apply configuration to object by property
-                foreach (
-                    [
-                        static fn (string $key): string => $key,
-                        static fn (string $key): string => Str::camel($key),
-                    ] as $caster
-                ) {
+                // Apply configuration to object by method
+                foreach ([$key, Str::camel($key), 'set'.Str::studly($key), 'on'.Str::studly($key)] as $method) {
                     if (
-                        property_exists($object, $property = $caster($key))
-                        && with(new \ReflectionProperty($object, $property))->isPublic()
+                        method_exists($object, $method)
+                        && ($reflectionMethod = new \ReflectionMethod($object, $method))->isPublic()
+                        && 0 < ($numberOfParameters = $reflectionMethod->getNumberOfParameters())
                     ) {
-                        $object->{$key} = $value;
+                        1 === $numberOfParameters ? $object->{$method}($value) : app()->call([$object, $method], $value);
 
                         return;
                     }
                 }
             })
             ->pipe(static function (Collection $configuration) use ($object): object {
+                /** @var null|array<string, mixed>|(callable(object): object)|string $extender */
                 $extender = $configuration->get('extender');
 
-                if (!$extender) {
+                if (empty($extender)) {
                     return $object;
                 }
 

@@ -57,12 +57,9 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeClient(): Client
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = (array) $this->configRepository->get('client') + [
-                'authenticator' => $this->makeAuthenticator(),
-            ]),
-            $configuration
-        );
+        return make((array) $this->configRepository->get('client') + [
+            'authenticator' => $this->makeAuthenticator(),
+        ]);
     }
 
     /**
@@ -70,10 +67,7 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeAuthenticator(): Authenticator
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = $this->configRepository->get('authenticator')),
-            $configuration
-        );
+        return make($this->configRepository->get('authenticator'));
     }
 
     /**
@@ -81,9 +75,6 @@ class NotifyChannel extends AbstractChannel
      */
     private function makeMessage(string $content): Message
     {
-        return Utils::applyConfigurationToObject(
-            make($configuration = Utils::applyContentToConfiguration($this->configRepository->get('message'), $content)),
-            $configuration
-        );
+        return make(Utils::applyContentToConfiguration($this->configRepository->get('message'), $content));
     }
 }
