@@ -34,18 +34,6 @@ class Utils
     {
         return collect($configuration)
             ->each(static function (mixed $value, string $key) use ($object): void {
-                // Apply configuration to object by property
-                foreach ([$key, Str::camel($key)] as $property) {
-                    if (
-                        property_exists($object, $property)
-                        && (new \ReflectionProperty($object, $property))->isPublic()
-                    ) {
-                        $object->{$property} = $value;
-
-                        return;
-                    }
-                }
-
                 // Apply configuration to object by method
                 foreach ([$key, Str::camel($key), 'set'.Str::studly($key), 'on'.Str::studly($key)] as $method) {
                     if (
@@ -54,6 +42,18 @@ class Utils
                         && 0 < ($numberOfParameters = $reflectionMethod->getNumberOfParameters())
                     ) {
                         1 === $numberOfParameters ? $object->{$method}($value) : app()->call([$object, $method], $value);
+
+                        return;
+                    }
+                }
+
+                // Apply configuration to object by property
+                foreach ([$key, Str::camel($key)] as $property) {
+                    if (
+                        property_exists($object, $property)
+                        && (new \ReflectionProperty($object, $property))->isPublic()
+                    ) {
+                        $object->{$property} = $value;
 
                         return;
                     }

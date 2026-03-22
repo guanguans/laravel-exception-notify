@@ -17,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
-class SprintfHtmlPipe extends SprintfPipe
+class SprintfHtmlPipe
 {
     use WithPipeArgs;
 
@@ -31,6 +31,6 @@ class SprintfHtmlPipe extends SprintfPipe
         \Closure $next,
         string $format = '<pre style="overflow: auto;">%s</pre>'
     ): Stringable {
-        return parent::handle($collectors, $next, $format);
+        return str(\sprintf($format, $next($collectors)));
     }
 }

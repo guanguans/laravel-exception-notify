@@ -76,7 +76,29 @@ php artisan exception-notify:test -v
 
 ### Skip report
 
-`app/Providers/AppServiceProvider.php`
+`bootstrap/app.php`
+
+```php
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+
+return Application::configure(basePath: \dirname(__DIR__))
+    ->withExceptions(static function (Exceptions $exceptions): void {
+        $exceptions
+            // ->dontReportWhen(static fn (Throwable $throwable) => collect([
+            //     \Symfony\Component\HttpKernel\Exception\HttpException::class,
+            //     \Illuminate\Http\Exceptions\HttpResponseException::class,
+            // ])->contains(static fn (string $exception): bool => $throwable instanceof $exception))
+            ->dontReport([
+                \Symfony\Component\HttpKernel\Exception\HttpException::class,
+                \Illuminate\Http\Exceptions\HttpResponseException::class,
+            ]);
+    })->create();
+```
+
+Or `app/Providers/AppServiceProvider.php`
 
 ```php
 <?php

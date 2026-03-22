@@ -17,7 +17,7 @@ use Guanguans\LaravelExceptionNotify\Support\Traits\WithPipeArgs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Stringable;
 
-class SprintfMarkdownPipe extends SprintfPipe
+class SprintfMarkdownPipe extends SprintfHtmlPipe
 {
     use WithPipeArgs;
 

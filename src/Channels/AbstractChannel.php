@@ -61,7 +61,7 @@ abstract class AbstractChannel implements ChannelContract
     public function report(\Throwable $throwable): void
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
-        // Utils::isSyncJobConnection() and $pendingDispatch->afterResponse();
+        Utils::isSyncJobConnection() and $pendingDispatch->afterResponse();
         // unset($pendingDispatch);
     }
 

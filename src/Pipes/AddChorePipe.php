@@ -27,7 +27,6 @@ class AddChorePipe
      * @api
      *
      * @param \Illuminate\Support\Collection<string, array<string, mixed>> $collectors
-     * @param array-key $key
      * @param class-string<\Guanguans\LaravelExceptionNotify\Collectors\AbstractCollector> $collectorClass
      */
     public function handle(

@@ -128,7 +128,7 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['afterEach', 'beforeEach', 'MIT', 'PDO'])
     ->withConfiguredRule(
         RenameFunctionRector::class,
-        collect(['env_explode', 'json_pretty_encode', 'make', 'rescue'])
+        collect(['env_explode', 'make', 'rescue'])
             ->mapWithKeys(static fn (string $func): array => [$func => "Guanguans\\LaravelExceptionNotify\\Support\\$func"])
             ->all()
     )
@@ -156,8 +156,8 @@ return RectorConfig::configure()
             ->all()
     )
     ->withSkip([
-        // ArrayToFirstClassCallableRector::class,
-        // ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
+        ArrayToFirstClassCallableRector::class,
+        ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
         ChangeOrIfContinueToMultiContinueRector::class,
         DisallowedEmptyRuleFixerRector::class,
         EncapsedStringsToSprintfRector::class,
