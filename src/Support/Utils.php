@@ -119,11 +119,11 @@ class Utils
 
     public static function jobQueue(): ?string
     {
-        return config('exception-notify.job.queue', config(\sprintf('queue.connections.%s.queue', self::jobConnection())));
+        return config('exception-notify.job.queue') ?? config(\sprintf('queue.connections.%s.queue', self::jobConnection()));
     }
 
     public static function jobConnection(): string
     {
-        return config('exception-notify.job.connection', config('queue.default'));
+        return config('exception-notify.job.connection') ?? config('queue.default');
     }
 }
