@@ -12,6 +12,11 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/laravel-exception-notify/downloads)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 [![License](https://poser.pugx.org/guanguans/laravel-exception-notify/license)](https://packagist.org/packages/guanguans/laravel-exception-notify)
 
+## Why?
+
+When an exception occurs, we want to be notified immediately, so that we can fix the problem as soon as possible.
+This package provides a simple and flexible way to monitor exceptions and report them to the notification channels.
+
 ## Related repositories
 
 * [https://github.com/guanguans/notify](https://github.com/guanguans/notify)
@@ -45,10 +50,10 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 ### Configure channels in the `config/exception-notify.php` and `.env` file
 
 ```dotenv
-EXCEPTION_NOTIFY_CHANNEL=stack
-EXCEPTION_NOTIFY_STACK_CHANNELS=log,slack,weWork
+#EXCEPTION_NOTIFY_CHANNEL=stack
+EXCEPTION_NOTIFY_STACK_CHANNELS=log,mail,slack
+EXCEPTION_NOTIFY_MAIL_TO_ADDRESS=developer1@example.mail,developer2@example.mail
 EXCEPTION_NOTIFY_SLACK_WEBHOOK=https://hooks.slack.com/services/TPU9A9/B038KNUC0GY/6pKH3vfa3mjlUPcgLSjzR
-EXCEPTION_NOTIFY_WEWORK_TOKEN=73a3d5a3-ceff-4da8-bcf3-ff5891778
 ```
 
 ## Usage
@@ -71,12 +76,12 @@ php artisan exception-notify:test -v
 | ![discord](docs/discord.jpg) | ![slack](docs/slack.jpg) | ![telegram](docs/telegram.jpg) |
 |             lark             |           mail           |             weWork             |
 |    ![lark](docs/lark.jpg)    |  ![mail](docs/mail.jpg)  |   ![weWork](docs/weWork.jpg)   |
-
 </details>
 
 ### Skip report
 
-`bootstrap/app.php`
+<details>
+<summary>bootstrap/app.php</summary>
 
 ```php
 <?php
@@ -97,8 +102,10 @@ return Application::configure(basePath: \dirname(__DIR__))
             ]);
     })->create();
 ```
+</details>
 
-Or `app/Providers/AppServiceProvider.php`
+<details>
+<summary>Or app/Providers/AppServiceProvider.php</summary>
 
 ```php
 <?php
@@ -113,10 +120,12 @@ public function boot(): void
     ])->contains(static fn (string $exception): bool => $throwable instanceof $exception));
 }
 ```
+</details>
 
 ### Extend channel
 
-`app/Providers/AppServiceProvider.php`
+<details>
+<summary>app/Providers/AppServiceProvider.php</summary>
 
 ```php
 <?php
@@ -132,6 +141,7 @@ public function boot(): void
     });
 }
 ```
+</details>
 
 ## Composer scripts
 

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Illuminate\Support\Str;
+
 class ExceptionBasicCollector extends AbstractExceptionCollector
 {
     /**
@@ -26,7 +28,7 @@ class ExceptionBasicCollector extends AbstractExceptionCollector
             'Message' => $this->exception->getMessage(),
             'Code' => $this->exception->getCode(),
             'Class' => $this->exception::class,
-            'File' => $this->exception->getFile(),
+            'File' => Str::replaceFirst(base_path().\DIRECTORY_SEPARATOR, '', $this->exception->getFile()),
             'Line' => $this->exception->getLine(),
         ];
     }
