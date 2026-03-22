@@ -8,6 +8,45 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.0.0"></a>
+## [6.0.0] - 2026-03-22
+### 💅 Code Refactorings
+- remove unnecessary inspection annotations ([46a3c1c](https://github.com/guanguans/laravel-exception-notify/commit/46a3c1c))
+- apply rector ([3f58345](https://github.com/guanguans/laravel-exception-notify/commit/3f58345))
+- apply rector ([c09f8e8](https://github.com/guanguans/laravel-exception-notify/commit/c09f8e8))
+- apply phpstan ([217d1c2](https://github.com/guanguans/laravel-exception-notify/commit/217d1c2))
+- apply inspection ([3658ba5](https://github.com/guanguans/laravel-exception-notify/commit/3658ba5))
+- apply inspection ([c9398d7](https://github.com/guanguans/laravel-exception-notify/commit/c9398d7))
+- **abstract-classes:** Make setException and fallbackName methods final and improve method calls ([1304cff](https://github.com/guanguans/laravel-exception-notify/commit/1304cff))
+- **channel:** Simplify report method and restore getChannel ([9cc898e](https://github.com/guanguans/laravel-exception-notify/commit/9cc898e))
+- **channels:** Simplify configuration application in channel methods ([99ff32d](https://github.com/guanguans/laravel-exception-notify/commit/99ff32d))
+- **channels:** Simplify validation rules in channel classes ([62aa602](https://github.com/guanguans/laravel-exception-notify/commit/62aa602))
+- **channels:** Remove AggregationTrait from Channel and ExceptionNotifyManager ([70681a6](https://github.com/guanguans/laravel-exception-notify/commit/70681a6))
+- **collectors:** Remove ChoreCollector and update references ([7ed1bd2](https://github.com/guanguans/laravel-exception-notify/commit/7ed1bd2))
+- **collectors:** Replace Utils::humanBytes with Number::fileSize ([b61d66d](https://github.com/guanguans/laravel-exception-notify/commit/b61d66d))
+- **composer:** Update package versions in composer.json ([d3d577c](https://github.com/guanguans/laravel-exception-notify/commit/d3d577c))
+- **pipe:** Remove inheritance from SprintfPipe in SprintfHtmlPipe ([1b32a08](https://github.com/guanguans/laravel-exception-notify/commit/1b32a08))
+- **pipes:** Remove FixPrettyJsonPipe from channel processing ([074a3c3](https://github.com/guanguans/laravel-exception-notify/commit/074a3c3))
+- **provider:** Remove unused alias registration methods ([47a89f5](https://github.com/guanguans/laravel-exception-notify/commit/47a89f5))
+- **test:** Simplify configuration settings in TestCase ([969a673](https://github.com/guanguans/laravel-exception-notify/commit/969a673))
+
+### 📦 Builds
+- **deps:** update illuminate/support and ergebnis packages ([1deeea9](https://github.com/guanguans/laravel-exception-notify/commit/1deeea9))
+- **deps:** upgrade PHP version to 8.1 in configuration files ([06ca19c](https://github.com/guanguans/laravel-exception-notify/commit/06ca19c))
+- **deps-dev:** update shipmonk/dead-code-detector requirement || ^0.15 ([d0c2692](https://github.com/guanguans/laravel-exception-notify/commit/d0c2692))
+
+### 🤖 Continuous Integrations
+- update PHP and Laravel versions in CI configuration ([a7194f1](https://github.com/guanguans/laravel-exception-notify/commit/a7194f1))
+- **config:** Update CI config files ([d223adb](https://github.com/guanguans/laravel-exception-notify/commit/d223adb))
+- **config:** Update github config files ([44ddeeb](https://github.com/guanguans/laravel-exception-notify/commit/44ddeeb))
+- **config:** Update CI config files ([0dd8555](https://github.com/guanguans/laravel-exception-notify/commit/0dd8555))
+- **config:** Update CI config files ([2313c6b](https://github.com/guanguans/laravel-exception-notify/commit/2313c6b))
+
+### Pull Requests
+- Merge pull request [#88](https://github.com/guanguans/laravel-exception-notify/issues/88) from laravel-shift/l13-compatibility
+- Merge pull request [#89](https://github.com/guanguans/laravel-exception-notify/issues/89) from guanguans/dependabot/composer/shipmonk/dead-code-detector-tw-0.14or-tw-0.15
+
+
 <a name="5.3.0"></a>
 ## [5.3.0] - 2026-02-13
 ### 🐞 Bug Fixes
@@ -1296,7 +1335,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...HEAD
+[6.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...5.3.0
 [5.2.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.1...5.2.2
 [5.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.0...5.2.1
