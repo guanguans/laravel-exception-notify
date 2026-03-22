@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.0.1"></a>
+## [6.0.1] - 2026-03-22
+### 🐞 Bug Fixes
+- **utils:** Simplify job queue and connection retrieval ([e133694](https://github.com/guanguans/laravel-exception-notify/commit/e133694))
+
+### 💅 Code Refactorings
+- **collector:** Simplify file path in exception details ([58e83d6](https://github.com/guanguans/laravel-exception-notify/commit/58e83d6))
+
+
 <a name="6.0.0"></a>
 ## [6.0.0] - 2026-03-22
 ### 💅 Code Refactorings
@@ -1335,7 +1344,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...HEAD
+[6.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...5.3.0
 [5.2.2]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.1...5.2.2
