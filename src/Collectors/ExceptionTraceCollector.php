@@ -15,16 +15,10 @@ namespace Guanguans\LaravelExceptionNotify\Collectors;
 
 class ExceptionTraceCollector extends AbstractExceptionCollector
 {
-    /** @var list<string> */
-    private readonly array $except;
-
     /**
-     * @param null|list<string> $except
+     * @param list<string> $except
      */
-    public function __construct(?array $except = null)
-    {
-        $this->except = $except ?? ['vendor'];
-    }
+    public function __construct(private readonly array $except = ['vendor']) {}
 
     public function collect(): array
     {

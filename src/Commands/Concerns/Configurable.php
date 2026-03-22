@@ -45,11 +45,7 @@ trait Configurable
         collect($this->option('configuration'))
             // ->dump()
             ->mapWithKeys(static function (string $configuration): array {
-                \assert(
-                    str_contains($configuration, '='),
-                    "The configurable option [$configuration] must be formatted as key=value."
-                );
-
+                \assert(str_contains($configuration, '='), "The configurable option [$configuration] must be formatted as key=value.");
                 [$key, $value] = explode('=', $configuration, 2);
 
                 return [$key => $value];

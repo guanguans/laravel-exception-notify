@@ -61,11 +61,7 @@ abstract class AbstractChannel implements ChannelContract
     public function report(\Throwable $throwable): void
     {
         $pendingDispatch = dispatch($this->makeJob($throwable));
-
-        if (Utils::isSyncJobConnection() && !app()->runningInConsole()) {
-            $pendingDispatch->afterResponse();
-        }
-
+        // Utils::isSyncJobConnection() and $pendingDispatch->afterResponse();
         // unset($pendingDispatch);
     }
 
@@ -95,11 +91,6 @@ abstract class AbstractChannel implements ChannelContract
         return [];
     }
 
-    private function getChannel(): string
-    {
-        return $this->configRepository->get('__channel');
-    }
-
     /**
      * @throws \ReflectionException
      */
@@ -110,6 +101,11 @@ abstract class AbstractChannel implements ChannelContract
             'channel' => $this->getChannel(),
             'content' => $this->getContent($throwable),
         ]);
+    }
+
+    private function getChannel(): string
+    {
+        return $this->configRepository->get('__channel');
     }
 
     private function getContent(\Throwable $throwable): string

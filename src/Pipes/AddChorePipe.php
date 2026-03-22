@@ -34,7 +34,7 @@ class AddChorePipe
         Collection $collectors,
         \Closure $next,
         mixed $value,
-        mixed $key,
+        string $key,
         string $collectorClass = ApplicationCollector::class
     ): Stringable {
         return $next(collect(Arr::add(

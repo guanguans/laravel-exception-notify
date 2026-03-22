@@ -31,7 +31,7 @@ class AddKeywordChorePipe extends AddChorePipe
         Collection $collectors,
         \Closure $next,
         mixed $value,
-        mixed $key = 'Keyword',
+        string $key = 'Keyword',
         string $collectorClass = ApplicationCollector::class
     ): Stringable {
         return parent::handle($collectors, $next, $value, $key);
