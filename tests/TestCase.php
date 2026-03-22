@@ -94,13 +94,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $repository->set('app.key', 'base64:UZ5sDPZSB7DSLKY+DYlU8G/V1e/qW+Ag0WF03VNxiSg=');
             $repository->set('database.default', 'sqlite');
             $repository->set('database.connections.sqlite.database', ':memory:');
-            // $repository->set('mail.default', 'log');
+            $repository->set('mail.default', 'log');
         });
 
         tap($app->make(Repository::class), static function (Repository $repository): void {
             $repository->set('exception-notify.job.connection', 'sync');
             $repository->set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
-
             $repository->set('exception-notify.collectors', [
                 ApplicationCollector::class,
                 ExceptionBasicCollector::class,
@@ -112,14 +111,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 RequestPostCollector::class,
                 RequestQueryCollector::class,
             ]);
-
             $repository->set('exception-notify.channels.mail.pipes', [
                 AddKeywordChorePipe::with('keyword'),
                 SprintfHtmlPipe::class,
                 SprintfMarkdownPipe::class,
                 LimitLengthPipe::with(512),
             ]);
-
             $repository->set([
                 'exception-notify.channels.bark.authenticator.token' => fake()->uuid(),
                 'exception-notify.channels.chanify.authenticator.token' => fake()->uuid(),
@@ -132,7 +129,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
                 'exception-notify.channels.telegram.authenticator.token' => fake()->uuid(),
                 'exception-notify.channels.weWork.authenticator.token' => fake()->uuid(),
             ]);
-
             collect($repository->get('exception-notify.channels'))->each(
                 static function (array $configuration, string $name) use ($repository): void {
                     if ('notify' === ($configuration['driver'] ?? $name)) {
@@ -140,7 +136,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
                             "exception-notify.channels.$name.client.extender",
                             static fn (Client $client): Client => $client
                                 ->mock([new Response(body: $name)])
-                                ->push(Middleware::log(Log::channel(), new MessageFormatter(MessageFormatter::DEBUG), 'debug'))
+                                ->push(Middleware::log(
+                                    Log::channel(),
+                                    new MessageFormatter(MessageFormatter::DEBUG),
+                                    'debug'
+                                ))
                         );
                     }
                 }

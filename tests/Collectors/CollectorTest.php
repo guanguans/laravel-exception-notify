@@ -23,9 +23,6 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestBasicCollector;
 use Illuminate\Support\Facades\Request;
 
 it('can collect request basic', function (): void {
-    // $defined = $this->getFunctionMock(class_namespace(RequestBasicCollector::class), 'defined');
-    // $defined->expects($this->once())->willReturn(false);
-
     Request::spy()
         ->allows('server')
         ->withArgs(['REQUEST_TIME_FLOAT'])

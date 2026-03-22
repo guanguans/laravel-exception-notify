@@ -28,5 +28,6 @@ it('can report', function (): void {
     expect(resolve(ExceptionNotifyManager::class)->driver('mail'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
-    // Mail::assertSent(ReportExceptionMail::class);
+    app()->terminate();
+    Mail::assertSent(ReportExceptionMail::class);
 })->group(__DIR__, __FILE__);

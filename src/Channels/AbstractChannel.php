@@ -70,10 +70,7 @@ abstract class AbstractChannel implements ChannelContract
      *
      * @return array<string, list<mixed>|mixed>
      */
-    protected function rules(): array
-    {
-        return [];
-    }
+    abstract protected function rules(): array;
 
     /**
      * @return array<string, string>

@@ -30,8 +30,6 @@ class DumpChannel extends AbstractChannel
 
     /**
      * @return array<string, string>
-     *
-     * @noinspection PhpMissingParentCallCommonInspection
      */
     protected function rules(): array
     {
