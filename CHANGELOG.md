@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.1.0"></a>
+## [6.1.0] - 2026-03-23
+### 💅 Code Refactorings
+- **exception-notify:** Remove unused dump channel references ([f396f77](https://github.com/guanguans/laravel-exception-notify/commit/f396f77))
+
+
 <a name="6.0.1"></a>
 ## [6.0.1] - 2026-03-22
 ### 🐞 Bug Fixes
@@ -1344,7 +1350,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...HEAD
+[6.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.2.2...5.3.0
