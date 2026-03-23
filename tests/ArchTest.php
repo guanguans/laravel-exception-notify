@@ -19,7 +19,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Guanguans\LaravelExceptionNotify\Channels\DumpChannel;
+use Workbench\App\Providers\WorkbenchServiceProvider;
 
 arch('will not use debugging functions')
     // ->throwsNoExceptions()
@@ -45,5 +45,5 @@ arch('will not use debugging functions')
     // ->each
     ->not->toBeUsed()
     ->ignoring([
-        DumpChannel::class,
+        WorkbenchServiceProvider::class,
     ]);

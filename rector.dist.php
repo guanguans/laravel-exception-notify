@@ -196,6 +196,7 @@ return RectorConfig::configure()
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
             __DIR__.'/tests/*Test.php',
             __DIR__.'/tests/Pest.php',
+            __DIR__.'/workbench/app/Providers/WorkbenchServiceProvider.php',
         ],
         StaticClosureRector::class => $staticClosureSkipPaths,
         StringToClassConstantRector::class => [

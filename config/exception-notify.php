@@ -89,7 +89,6 @@ return [
         'stack' => [
             'driver' => 'stack',
             'channels' => env_explode('EXCEPTION_NOTIFY_STACK_CHANNELS', [
-                // 'dump',
                 'log',
                 // 'mail',
                 // 'bark',
@@ -103,14 +102,6 @@ return [
                 // 'telegram',
                 // 'weWork',
             ]),
-        ],
-
-        /**
-         * @see \Guanguans\LaravelExceptionNotify\Channels\DumpChannel
-         */
-        'dump' => [
-            'driver' => 'dump',
-            'exit' => env('EXCEPTION_NOTIFY_DUMP_EXIT', false),
         ],
 
         /**

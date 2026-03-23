@@ -2,7 +2,7 @@
 
 <p align="center"><img src="docs/ntfy.jpg" width="100%" alt="usage" title="usage"></p>
 
-> Monitor exception and report to the notification channels(Dump、Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、ZohoCliq、ZohoCliqWebHook、Zulip).
+> Monitor exception and report to the notification channels(Log、Mail、AnPush、Bark、Chanify、DingTalk、Discord、Gitter、GoogleChat、IGot、Lark、Mattermost、MicrosoftTeams、NowPush、Ntfy、Push、Pushback、PushBullet、PushDeer、PushMe、Pushover、PushPlus、QQ、RocketChat、ServerChan、ShowdocPush、SimplePush、Slack、Telegram、WeWork、WPush、XiZhi、YiFengChuanHua、ZohoCliq、ZohoCliqWebHook、Zulip).
 
 [![tests](https://github.com/guanguans/laravel-exception-notify/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions/workflows/tests.yml)
 [![php-cs-fixer](https://github.com/guanguans/laravel-exception-notify/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/laravel-exception-notify/actions/workflows/php-cs-fixer.yml)
@@ -43,9 +43,9 @@ php artisan vendor:publish --provider="Guanguans\\LaravelExceptionNotify\\Except
 ### Apply for channel authentication information
 
 * [Notify(30+)](https://github.com/guanguans/notify)
-* Dump(for debugging exception report)
 * Log
 * Mail
+* Stack
 
 ### Configure channels in the `config/exception-notify.php` and `.env` file
 
@@ -61,7 +61,7 @@ EXCEPTION_NOTIFY_SLACK_WEBHOOK=https://hooks.slack.com/services/TPU9A9/B038KNUC0
 ### Test whether exception can be monitored and reported to notification channel
 
 ```shell
-php artisan exception-notify:test --channel=dump --job-connection=sync
+php artisan exception-notify:test --channel=log --job-connection=sync
 php artisan exception-notify:test
 php artisan exception-notify:test -v
 ```

@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Workbench\App\Providers;
 
+use Guanguans\LaravelExceptionNotify\Channels\AbstractChannel;
+use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Illuminate\Config\Repository;
 use Illuminate\Support\ServiceProvider;
 
 class WorkbenchServiceProvider extends ServiceProvider
@@ -29,9 +32,34 @@ class WorkbenchServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
+     *
+     * @noinspection StaticClosureCanBeUsedInspection
      */
     public function boot(): void
     {
-        // ...
+        ExceptionNotify::extend(
+            'dump',
+            fn (): AbstractChannel => new class(tap(
+                new Repository(config('exception-notify.channels.dump', ['driver' => 'dump'])),
+                static fn (Repository $configRepository): mixed => $configRepository->set('__channel', 'dump')
+            )) extends AbstractChannel {
+                /**
+                 * @noinspection ForgottenDebugOutputInspection
+                 * @noinspection DebugFunctionUsageInspection
+                 */
+                public function reportContent(string $content): string
+                {
+                    return dump($content);
+                }
+
+                /**
+                 * @return array<string, mixed>
+                 */
+                protected function rules(): array
+                {
+                    return [];
+                }
+            }
+        );
     }
 }
