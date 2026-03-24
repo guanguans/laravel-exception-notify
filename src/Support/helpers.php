@@ -38,14 +38,10 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
      * @see https://github.com/laravel/framework/blob/12.x/src/Illuminate/Foundation/helpers.php
      * @see https://github.com/yiisoft/yii2/blob/master/framework/BaseYii.php
      *
-     * @template TClass of object
-     *
-     * @param array<string, mixed>|class-string<TClass>|string $name
+     * @param array<string, mixed>|string $name
      * @param array<string, mixed> $parameters
      *
      * @throws \ReflectionException
-     *
-     * @return ($name is class-string<TClass> ? TClass : mixed)
      */
     function make(array|string $name, array $parameters = []): mixed
     {
@@ -69,7 +65,7 @@ if (!\function_exists('Guanguans\LaravelExceptionNotify\Support\make')) {
         }
 
         throw new InvalidArgumentException(
-            \sprintf('The argument of abstract must be an array containing a `%s` element.', implode('` or `', $keys))
+            \sprintf('The argument of name must be an array containing a `%s` element.', implode('` or `', $keys))
         );
     }
 }
