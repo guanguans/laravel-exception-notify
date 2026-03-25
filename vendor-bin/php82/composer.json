@@ -1,30 +1,29 @@
 {
     "require-dev": {
         "php": ">=8.2",
-        "canvural/larastan-strict-rules": "^3.0",
         "ergebnis/composer-normalize": "^2.50",
         "guanguans/monorepo-builder-worker": "^3.1",
         "illuminate/support": "^12.55 || ^13.0",
-        "larastan/larastan": "^3.9",
-        "mrpunyapal/peststan": "^0.1",
-        "mrpunyapal/rector-pest": "^0.2",
-        "peckphp/peck": "^0.2",
-        "phiki/phiki": "^2.1",
-        "phpro/grumphp-shim": "^2.19",
-        "phpstan/phpstan": "^2.1",
-        "roave/backward-compatibility-check": "^8.14",
-        "roave/no-floaters": "^1.13"
+        "peckphp/peck": "^0.2"
     },
     "suggest": {
-        "php-standard-library/php-standard-library": "Required to use the php-standard-library/php-standard-library.",
-        "php-standard-library/phpstan-extension": "Required to use the php-standard-library/phpstan-extension."
+        "canvural/larastan-strict-rules": "php > 8.1",
+        "larastan/larastan": "php > 8.1",
+        "mrpunyapal/peststan": "php > 8.1",
+        "mrpunyapal/rector-pest": "php > 8.1",
+        "php-standard-library/php-standard-library": "php > 8.1",
+        "php-standard-library/phpstan-extension": "php > 8.1",
+        "rector/mockstan": "php > 8.1",
+        "roave/backward-compatibility-check": "php > 8.1",
+        "roave/no-floaters": "php > 8.1",
+        "symplify/coding-standard": "php > 8.1",
+        "symplify/easy-coding-standard": "php > 8.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
-            "phpro/grumphp-shim": false,
             "theofidry/composer-inheritance-plugin": false,
             "wikimedia/composer-merge-plugin": false
         },

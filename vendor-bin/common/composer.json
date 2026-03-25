@@ -4,6 +4,8 @@
         "ergebnis/composer-normalize": "^2.50",
         "symplify/rule-doc-generator": "^12.2"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,

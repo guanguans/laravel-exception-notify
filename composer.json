@@ -91,7 +91,6 @@
     },
     "require-dev": {
         "adamwojs/php-cs-fixer-phpdoc-force-fqcn": "^2.0",
-        "adhocore/json-fixer": "^1.0",
         "bamarni/composer-bin-plugin": "^1.9",
         "brainmaestro/composer-git-hooks": "^3.0",
         "driftingly/rector-laravel": "^2.2",
@@ -115,7 +114,6 @@
         "pestphp/pest-plugin-profanity": "^1.7 || ^2.0 || ^3.0 || ^4.0",
         "php-mock/php-mock-phpunit": "^2.15",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-mockery": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
@@ -124,7 +122,6 @@
         "povils/phpmnd": "^3.6",
         "rector/argtyper": "^0.6",
         "rector/jack": "^0.5",
-        "rector/rector": "^2.3",
         "rector/swiss-knife": "^2.3",
         "rector/type-perfect": "^2.1",
         "shipmonk/composer-dependency-analyser": "^1.8",
@@ -331,14 +328,6 @@
         "jack:raise-to-installed": "@jack raise-to-installed",
         "jack:raise-to-installed-dry-run": "@jack:raise-to-installed --dry-run",
         "jsonlint": "@php vendor/bin/jsonlint *.json .*rc",
-        "laravel-exception-notify": "@php laravel-exception-notify --ansi -vv",
-        "laravel-exception-notify:app-build": [
-            "@composer install --no-dev --no-scripts --ansi -vv",
-            "@php laravel-exception-notify app:build laravel-exception-notify.phar --build-version=master --ansi",
-            "@php builds/laravel-exception-notify.phar list --ansi -vv",
-            "ls -lh builds/laravel-exception-notify.phar",
-            "ls -lr builds/laravel-exception-notify.phar"
-        ],
         "laravel-exception-notify:generate-gitleaks-ignore": "Guanguans\\Notify\\Foundation\\Support\\ComposerScripts::generateGitleaksIgnore",
         "laravel-exception-notify:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "lint-md": [

@@ -29,7 +29,7 @@ body:
     attributes:
       label: Package Version
       description: What version of our Package are you running? Please be as specific as possible
-      placeholder: 2.0.0
+      placeholder: 6.0.0
     validations:
       required: true
   - type: input
