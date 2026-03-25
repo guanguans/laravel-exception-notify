@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.2.1"></a>
+## [6.2.1] - 2026-03-25
+### 🤖 Continuous Integrations
+- **config:** Update CI config files ([6c68921](https://github.com/guanguans/laravel-exception-notify/commit/6c68921))
+
+### ⏪️ Reverts
+- **4152c34:** Implement report method for exception handling ([0e9dfe0](https://github.com/guanguans/laravel-exception-notify/commit/0e9dfe0))
+
+
 <a name="6.2.0"></a>
 ## [6.2.0] - 2026-03-25
 ### 💅 Code Refactorings
@@ -1358,7 +1367,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.1...HEAD
+[6.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...6.2.0
 [6.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...6.0.1
