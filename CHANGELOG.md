@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.2.0"></a>
+## [6.2.0] - 2026-03-25
+### 💅 Code Refactorings
+- **channel:** Simplify reportContent method and remove events ([7bc5dec](https://github.com/guanguans/laravel-exception-notify/commit/7bc5dec))
+- **helpers:** Simplify parameter type in make function ([b20e8b3](https://github.com/guanguans/laravel-exception-notify/commit/b20e8b3))
+- **stack-channel:** Remove unused report method ([4152c34](https://github.com/guanguans/laravel-exception-notify/commit/4152c34))
+
+
 <a name="6.1.0"></a>
 ## [6.1.0] - 2026-03-23
 ### 💅 Code Refactorings
@@ -1350,7 +1358,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...HEAD
+[6.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...6.2.0
 [6.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/5.3.0...6.0.0
