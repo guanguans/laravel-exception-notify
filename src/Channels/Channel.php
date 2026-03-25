@@ -14,11 +14,8 @@ declare(strict_types=1);
 namespace Guanguans\LaravelExceptionNotify\Channels;
 
 use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
-use Guanguans\LaravelExceptionNotify\Events\ReportedEvent;
-use Guanguans\LaravelExceptionNotify\Events\ReportingEvent;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Event;
 use function Guanguans\LaravelExceptionNotify\Support\make;
 use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
@@ -51,29 +48,7 @@ class Channel implements ChannelContract
 
     public function reportContent(string $content): mixed
     {
-        return rescue(function () use ($content): mixed {
-            Event::dispatch(new ReportingEvent($this->channelContract, $content));
-            $result = $this->channelContract->reportContent($content);
-            Event::dispatch(new ReportedEvent($this->channelContract, $result));
-
-            return $result;
-        });
-    }
-
-    /**
-     * @api
-     */
-    public function reporting(mixed $listener): void
-    {
-        Event::listen(ReportingEvent::class, $listener);
-    }
-
-    /**
-     * @api
-     */
-    public function reported(mixed $listener): void
-    {
-        Event::listen(ReportedEvent::class, $listener);
+        return rescue(fn (): mixed => $this->channelContract->reportContent($content));
     }
 
     /**

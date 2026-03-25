@@ -20,7 +20,6 @@ use Guanguans\LaravelExceptionNotify\Contracts\ChannelContract;
 use Guanguans\LaravelExceptionNotify\Exceptions\InvalidArgumentException;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Manager;
-use function Guanguans\LaravelExceptionNotify\Support\rescue;
 
 /**
  * @property \Illuminate\Foundation\Application $container
@@ -46,14 +45,12 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
     public function report(\Throwable $throwable): void
     {
-        rescue(function () use ($throwable): void {
-            $this->driver()->report($throwable);
-        });
+        $this->driver()->report($throwable);
     }
 
     public function reportContent(string $content): mixed
     {
-        return rescue(fn (): mixed => $this->driver()->reportContent($content));
+        return $this->driver()->reportContent($content);
     }
 
     /**
