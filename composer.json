@@ -86,7 +86,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "guanguans/notify": "^4.1",
+        "guanguans/notify": "^4.1 || ^5.0",
         "laravel/framework": "^10.50 || ^11.0 || ^12.0 || ^13.0"
     },
     "require-dev": {
@@ -139,7 +139,7 @@
         "symfony/thanks": "^1.4",
         "symplify/phpstan-rules": "^14.9",
         "tomasvotruba/class-leak": "^2.1",
-        "tomasvotruba/cognitive-complexity": "^1.0",
+        "tomasvotruba/cognitive-complexity": "^1.1",
         "tomasvotruba/ctor": "^2.2",
         "tomasvotruba/type-coverage": "^2.1",
         "tomasvotruba/unused-public": "^2.2",
@@ -319,7 +319,7 @@
             "$PHP82 vendor/bin/grumphp run --ansi -vv"
         ],
         "jack": "@php vendor/bin/jack",
-        "jack:breakpoint": "@jack breakpoint --limit=8",
+        "jack:breakpoint": "@jack breakpoint --limit=9",
         "jack:breakpoint-dev": "@jack:breakpoint --dev",
         "jack:open-versions": "@jack open-versions --limit=99",
         "jack:open-versions-dev": "@jack:open-versions --dev",
