@@ -69,6 +69,23 @@ class TestCase extends \Orchestra\Testbench\TestCase
     // use RefreshDatabase;
     use WithWorkbench;
 
+    /**
+     * Performs assertions shared by all tests of a test case.
+     *
+     * This method is called between setUp() and test.
+     */
+    protected function assertPreConditions(): void {}
+
+    /**
+     * Performs assertions shared by all tests of a test case.
+     *
+     * This method is called between test and tearDown().
+     *
+     * @see \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegrationAssertPostConditions::assertPostConditions()
+     * @see \Mockery\Adapter\Phpunit\MockeryTestCase
+     */
+    protected function assertPostConditions(): void {}
+
     protected function getApplicationTimezone(mixed $app): string
     {
         return 'Asia/Shanghai';
@@ -92,8 +109,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
         tap($app->make(Repository::class), static function (Repository $repository): void {
             $repository->set('app.key', 'base64:UZ5sDPZSB7DSLKY+DYlU8G/V1e/qW+Ag0WF03VNxiSg=');
+            $repository->set('app.debug', false);
+
             $repository->set('database.default', 'sqlite');
             $repository->set('database.connections.sqlite.database', ':memory:');
+
             $repository->set('mail.default', 'log');
         });
 

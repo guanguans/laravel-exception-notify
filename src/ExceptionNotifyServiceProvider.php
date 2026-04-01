@@ -17,11 +17,12 @@ use Composer\InstalledVersions;
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
-class ExceptionNotifyServiceProvider extends ServiceProvider
+class ExceptionNotifyServiceProvider extends ServiceProvider /* implements DeferrableProvider */
 {
     /**
      * @api
@@ -32,7 +33,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
      */
     public array $singletons = [
         ExceptionNotifyManager::class,
-        TestCommand::class,
     ];
 
     /**
@@ -63,7 +63,6 @@ class ExceptionNotifyServiceProvider extends ServiceProvider
     {
         return [
             ExceptionNotifyManager::class,
-            TestCommand::class,
         ];
     }
 

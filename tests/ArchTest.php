@@ -19,31 +19,57 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
+use Guanguans\LaravelExceptionNotify\Channels\Channel;
 use Workbench\App\Providers\WorkbenchServiceProvider;
 
-arch('will not use debugging functions')
-    // ->throwsNoExceptions()
+arch()
     ->group(__DIR__, __FILE__)
+    // ->skip()
+    ->preset()->php()->ignoring([
+        WorkbenchServiceProvider::class,
+    ]);
+
+arch()
+    ->group(__DIR__, __FILE__)
+    // ->skip()
+    ->preset()->laravel()->ignoring([
+        WorkbenchServiceProvider::class,
+    ]);
+
+arch()
+    ->group(__DIR__, __FILE__)
+    // ->skip()
+    ->preset()->security()->ignoring([
+        'assert',
+        Channel::class,
+    ]);
+
+arch()
+    ->group(__DIR__, __FILE__)
+    ->skip()
+    ->preset()->strict()->ignoring([
+    ]);
+
+arch()
+    ->group(__DIR__, __FILE__)
+    ->skip()
+    ->preset()->relaxed()->ignoring([
+    ]);
+
+arch('will not use debugging functions')
+    ->group(__DIR__, __FILE__)
+    // ->throwsNoExceptions()
+    // ->skip()
     ->expect([
-        'dd',
-        'die',
-        'dump',
-        'echo',
+        // 'dd',
         'env',
         'env_explode',
         'env_getcsv',
         'exit',
-        'print',
-        'print_r',
         'printf',
-        'ray',
-        'trap',
-        'var_dump',
-        'var_export',
         'vprintf',
     ])
     // ->each
     ->not->toBeUsed()
     ->ignoring([
-        WorkbenchServiceProvider::class,
     ]);
