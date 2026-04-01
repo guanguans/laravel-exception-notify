@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
  */
 class LogChannel extends AbstractChannel
 {
-    public function reportContent(string $content): mixed
+    public function reportContent(string $content): null
     {
         Log::channel($this->configRepository->get('channel'))->log(
             $this->configRepository->get('level', 'error'),

@@ -46,9 +46,7 @@ abstract class AbstractChannel implements ChannelContract
             $this->messages(),
             $this->attributes() + collect(Arr::dot($rules))
                 ->keys()
-                ->mapWithKeys(fn (string $attribute): array => [
-                    $attribute => str($this->getChannel())->append('.', $attribute)->toString(),
-                ])
+                ->mapWithKeys(fn (string $attribute): array => [$attribute => $this->getChannel().'.'.$attribute])
                 ->all()
         );
 

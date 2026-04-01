@@ -52,7 +52,7 @@ it('can create custom driver', function (): void {
         fn (): ChannelContract => new class implements ChannelContract {
             public function report(Throwable $throwable): void {}
 
-            public function reportContent(string $content): mixed
+            public function reportContent(string $content): null
             {
                 return null;
             }

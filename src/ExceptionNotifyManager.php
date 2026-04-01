@@ -73,7 +73,7 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
 
         $configRepository = tap(
             new Repository($this->config->get("exception-notify.channels.$driver", [])),
-            static fn (Repository $configRepository): mixed => $configRepository->set('__channel', $driver)
+            static fn (Repository $configRepository): null => $configRepository->set('__channel', $driver)
         );
 
         $studlyDriverName = (string) str($configRepository->get('driver', $driver))->studly();

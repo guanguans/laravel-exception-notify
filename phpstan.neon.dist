@@ -216,7 +216,6 @@ parameters:
         - identifier: method.nonObject
         - identifier: property.dynamicName
         - identifier: return.type
-        - identifier: return.void
         - message: '#^Unable to resolve the template type (TKey|TValue) in call to function collect$#'
         - message: '#^Unable to resolve the template type TObject in call to static method Guanguans\\LaravelExceptionNotify\\Support\\Utils\:\:applyConfigurationToObject\(\)$#'
         -

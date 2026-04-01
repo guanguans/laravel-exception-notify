@@ -28,7 +28,7 @@ class ExceptionBasicCollector extends AbstractExceptionCollector
             'Message' => $this->exception->getMessage(),
             'Code' => $this->exception->getCode(),
             'Class' => $this->exception::class,
-            'File' => Str::replaceFirst(base_path().\DIRECTORY_SEPARATOR, '', $this->exception->getFile()),
+            'File' => Str::chopStart($this->exception->getFile(), base_path().\DIRECTORY_SEPARATOR),
             'Line' => $this->exception->getLine(),
         ];
     }

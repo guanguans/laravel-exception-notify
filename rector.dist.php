@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/laravel-exception-notify
  */
 
-use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
+use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
 use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\LaravelExceptionNotify\Template;

@@ -41,7 +41,7 @@ class WorkbenchServiceProvider extends ServiceProvider
             'dump',
             fn (): AbstractChannel => new class(tap(
                 new Repository(config('exception-notify.channels.dump', ['driver' => 'dump'])),
-                static fn (Repository $configRepository): mixed => $configRepository->set('__channel', 'dump')
+                static fn (Repository $configRepository): null => $configRepository->set('__channel', 'dump')
             )) extends AbstractChannel {
                 /**
                  * @noinspection ForgottenDebugOutputInspection
