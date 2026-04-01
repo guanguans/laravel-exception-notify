@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="6.3.0"></a>
+## [6.3.0] - 2026-03-30
+### 📦 Builds
+- **deps:** update guanguans/notify requirement || ^5.0 ([d91f766](https://github.com/guanguans/laravel-exception-notify/commit/d91f766))
+- **deps:** bump codecov/codecov-action from 5 to 6 ([d50764b](https://github.com/guanguans/laravel-exception-notify/commit/d50764b))
+
+
 <a name="6.2.1"></a>
 ## [6.2.1] - 2026-03-25
 ### 🤖 Continuous Integrations
@@ -1367,7 +1374,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.3.0...HEAD
+[6.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...6.2.0
 [6.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.0.1...6.1.0
