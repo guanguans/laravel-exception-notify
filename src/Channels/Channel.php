@@ -119,7 +119,7 @@ class Channel implements ChannelContract
      */
     private function makeRateLimiter(): RateLimiter
     {
-        return make((array) config('exception-notify.rate_limiter') + [
+        return make(config()->array('exception-notify.rate_limiter') + [
             'class' => RateLimiter::class,
             'cache' => Cache::store(config('exception-notify.rate_limiter.cache_store')),
         ]);
