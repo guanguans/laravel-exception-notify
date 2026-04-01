@@ -19,12 +19,12 @@ use Ergebnis\License\Year;
 use Ergebnis\PhpCsFixer\Config\Factory;
 use Ergebnis\PhpCsFixer\Config\Fixers;
 use Ergebnis\PhpCsFixer\Config\Rules;
-use Ergebnis\PhpCsFixer\Config\RuleSet\Php81;
+use Ergebnis\PhpCsFixer\Config\RuleSet\Php82;
 use PhpCsFixer\Finder;
 
 require __DIR__.'/vendor/autoload.php';
 
-return Factory::fromRuleSet(Php81::create()
+return Factory::fromRuleSet(Php82::create()
     ->withHeader(
         (static function (): string {
             $mit = MIT::text(
@@ -61,7 +61,6 @@ return Factory::fromRuleSet(Php81::create()
             ])
             ->notPath([
                 // '/lang\/.*\.json$/',
-                'Foundation/Caches/FileCacheTest.php',
             ])
             ->notName([
                 '/\.blade\.php$/',

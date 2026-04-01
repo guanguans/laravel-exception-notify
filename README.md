@@ -24,7 +24,7 @@ This package provides a simple and flexible way to monitor exceptions and report
 
 ## Requirement
 
-* PHP >= 8.1
+* PHP >= 8.2
 
 ## Installation
 
