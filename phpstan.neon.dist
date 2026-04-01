@@ -8,9 +8,10 @@ includes:
     - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 #    - vendor/spaze/phpstan-disallowed-calls/extension.neon
 
-#    - vendor-bin/larastan/vendor/larastan/larastan/extension.neon
 #    - vendor/ekino/phpstan-banned-code/extension.neon
 #    - vendor/ergebnis/phpstan-rules/rules.neon
+    - vendor/canvural/larastan-strict-rules/rules.neon
+#    - vendor/larastan/vendor/larastan/larastan/extension.neon
 #    - vendor/phpstan/phpstan-strict-rules/rules.neon
 #    - vendor/roave/no-floaters/rules.neon
 #    - vendor/shipmonk/dead-code-detector/rules.neon
@@ -26,9 +27,10 @@ includes:
     - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
 #    - vendor/symplify/phpstan-rules/config/rector-rules.neon
 #    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
+#    - vendor/symplify/phpstan-rules/config/symfony-config-rules.neon
 
 services:
-    # https://github.com/guanguans/notify/security/code-scanning
+    # https://github.com/guanguans/laravel-exception-notify/security/code-scanning
     # https://github.com/jbelien/phpstan-sarif-formatter
     errorFormatter.sarif:
         class: PHPStanSarifErrorFormatter\SarifErrorFormatter
@@ -43,6 +45,7 @@ services:
 
 parameters:
     paths:
+        - config/
         - src/
     scanDirectories:
 #        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/
@@ -74,6 +77,12 @@ parameters:
             nativeThrowable: Guanguans\LaravelExceptionNotify\Contracts\ThrowableContract
 #    sidzIgnoreNumericStrings: true
     sidzIgnoreMagicNumbers: [0.9, 1, 2, 3, 5, 100, 600, 512, 1024, 1000, 0o755]
+    # larastan
+    configDirectories:
+        - config/
+    checkOctaneCompatibility: true
+    listenerPaths:
+        - src/Listeners/
     cognitive_complexity:
         class: 42
         function: 8
@@ -102,9 +111,6 @@ parameters:
         template_paths:
 #            - resources/views/
     disallowedFunctionCalls:
-        -
-            function: 'env()'
-            message: 'use config() instead'
         -
             function: 'env_explode()'
             message: 'use config() instead'
@@ -180,6 +186,8 @@ parameters:
         - identifier: ergebnis.noParameterWithContainerTypeDeclaration
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: larastanStrictRules.noFacadeRule
+        - identifier: larastanStrictRules.noGlobalLaravelFunction
         - identifier: shipmonk.binaryOperationWithNull
         - identifier: shipmonk.checkedExceptionInCallable
         - identifier: shipmonk.forbiddenCast
@@ -199,9 +207,7 @@ parameters:
 
         - identifier: argument.type
         - identifier: binaryOp.invalid
-        - identifier: cast.double
         - identifier: cast.string
-#        - identifier: complexity.classLike
         - identifier: complexity.functionLike
         - identifier: empty.notAllowed
         - identifier: guanguans.forbiddenSideEffects
@@ -213,7 +219,9 @@ parameters:
         - identifier: return.void
         - message: '#^Unable to resolve the template type (TKey|TValue) in call to function collect$#'
         - message: '#^Unable to resolve the template type TObject in call to static method Guanguans\\LaravelExceptionNotify\\Support\\Utils\:\:applyConfigurationToObject\(\)$#'
-        - message: '#^Unused Guanguans\\LaravelExceptionNotify\\Support\\Traits\\WithPipeArgs\:\:with$#'
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: src/Support/helpers.php
         -
             identifier: missingType.iterableValue
             path: src/Facades/ExceptionNotify.php
@@ -221,5 +229,5 @@ parameters:
             message: '#^Calling sha1\(\) is forbidden, use hash\(\) with at least SHA\-256 for secure hash, or password_hash\(\) for passwords\.$#'
             path: src/Channels/Channel.php
         -
-            message: '#^Calling env\(\) is forbidden, use config\(\) instead\.$#'
-            path: src/Support/helpers.php
+            message: '#^Do not use magic number as a function argument\. Move to constant with a suitable name\.$#'
+            path: config/exception-notify.php

@@ -1,3 +1,4 @@
-# total 0 errors
+# total 1 error
 
-includes: []
+includes:
+    - staticMethod.dynamicCall.neon

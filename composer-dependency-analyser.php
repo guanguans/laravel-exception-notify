@@ -36,9 +36,4 @@ return (new Configuration)
             'symfony/var-dumper',
         ],
         [ErrorType::SHADOW_DEPENDENCY]
-    )
-    ->ignoreErrorsOnPackages(
-        [
-        ],
-        [ErrorType::DEV_DEPENDENCY_IN_PROD]
     );
