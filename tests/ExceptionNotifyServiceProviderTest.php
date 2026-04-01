@@ -20,6 +20,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use function Pest\Laravel\artisan;
 
 it('can add section to about command', function (): void {
@@ -30,3 +31,8 @@ it('can get provides', function (): void {
     expect(new ExceptionNotifyServiceProvider(app()))
         ->provides()->toBeArray();
 })->group(__DIR__, __FILE__);
+
+it('implement DeferrableProvider', function (): void {
+    expect(new ExceptionNotifyServiceProvider(app()))
+        ->toBeInstanceOf(DeferrableProvider::class);
+})->group(__DIR__, __FILE__)->todo('Remove the todo when the ExceptionNotifyServiceProvider implements DeferrableProvider');

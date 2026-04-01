@@ -102,7 +102,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         tap($app, static function (): void {
             Channel::flush();
-            File::delete(glob(storage_path('logs/*.log')));
+            // File::delete(glob(storage_path('logs/*.log')));
             Mail::fake();
             // Queue::fake();
         });
@@ -114,6 +114,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $repository->set('database.default', 'sqlite');
             $repository->set('database.connections.sqlite.database', ':memory:');
 
+            $repository->set('logging.default', 'daily');
             $repository->set('mail.default', 'log');
         });
 

@@ -32,7 +32,6 @@ return (new Configuration)
             'nesbot/carbon',
             'psr/http-message',
             'symfony/console',
-            'symfony/error-handler',
             'symfony/var-dumper',
         ],
         [ErrorType::SHADOW_DEPENDENCY]
