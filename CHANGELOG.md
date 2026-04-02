@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.1"></a>
+## [7.0.1] - 2026-04-02
+### 💅 Code Refactorings
+- **ExceptionNotifyServiceProvider:** Implement DeferrableProvider interface ([d40d41b](https://github.com/guanguans/laravel-exception-notify/commit/d40d41b))
+
+
 <a name="7.0.0"></a>
 ## [7.0.0] - 2026-04-01
 ### ✨ Features
@@ -1390,7 +1396,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.1...HEAD
+[7.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.3.0...7.0.0
 [6.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...6.2.1
