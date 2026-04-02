@@ -27,7 +27,7 @@ class ExceptionTraceCollector extends AbstractExceptionCollector
         return str($this->exception->getTraceAsString())
             ->explode(\PHP_EOL)
             ->reject(fn (string $trace): bool => Str::contains($trace, $this->except))
-            ->map(static fn (string $trace): string => Str::remove($trace, base_path().\DIRECTORY_SEPARATOR))
+            ->map(static fn (string $trace): string => Str::remove(base_path().\DIRECTORY_SEPARATOR, $trace))
             ->unique(static fn (string $trace, int $index): string => Str::chopStart($trace, "#$index "))
             ->all();
     }

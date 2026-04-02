@@ -34,6 +34,7 @@ use Guanguans\LaravelExceptionNotify\Collectors\RequestFileCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestHeaderCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestPostCollector;
 use Guanguans\LaravelExceptionNotify\Collectors\RequestQueryCollector;
+use Guanguans\LaravelExceptionNotify\ExceptionNotifyServiceProvider;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
 use Guanguans\LaravelExceptionNotify\Pipes\AddKeywordChorePipe;
 use Guanguans\LaravelExceptionNotify\Pipes\LimitLengthPipe;
@@ -119,6 +120,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         });
 
         tap($app->make(Repository::class), static function (Repository $repository): void {
+            resolve(collect((new ExceptionNotifyServiceProvider(app()))->provides())->random());
             $repository->set('exception-notify.job.connection', 'sync');
             $repository->set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
             $repository->set('exception-notify.collectors', [

@@ -33,6 +33,5 @@ it('can get provides', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('implement DeferrableProvider', function (): void {
-    expect(new ExceptionNotifyServiceProvider(app()))
-        ->toBeInstanceOf(DeferrableProvider::class);
-})->group(__DIR__, __FILE__)->todo('Remove the todo when the ExceptionNotifyServiceProvider implements DeferrableProvider');
+    expect(new ExceptionNotifyServiceProvider(app()))->toBeInstanceOf(DeferrableProvider::class);
+})->group(__DIR__, __FILE__);
