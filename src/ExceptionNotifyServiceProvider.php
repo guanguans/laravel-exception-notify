@@ -22,7 +22,7 @@ use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
-class ExceptionNotifyServiceProvider extends ServiceProvider implements DeferrableProvider
+class ExceptionNotifyServiceProvider extends ServiceProvider /* implements DeferrableProvider */
 {
     /**
      * @api
