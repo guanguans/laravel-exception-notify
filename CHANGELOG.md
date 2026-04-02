@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.0"></a>
+## [7.0.0] - 2026-04-01
+### ✨ Features
+- **ci:** Update PHP version requirement to 8.2 ([23bbd55](https://github.com/guanguans/laravel-exception-notify/commit/23bbd55))
+
+### 💅 Code Refactorings
+- Remove unused FlattenException in AbstractExceptionCollector ([bdb6cc6](https://github.com/guanguans/laravel-exception-notify/commit/bdb6cc6))
+- apply phpstan ([4c08607](https://github.com/guanguans/laravel-exception-notify/commit/4c08607))
+- apply rector ([223fcab](https://github.com/guanguans/laravel-exception-notify/commit/223fcab))
+- **collectors:** Replace replaceFirst with chopStart for path manipulation ([3f5719b](https://github.com/guanguans/laravel-exception-notify/commit/3f5719b))
+
+### 🤖 Continuous Integrations
+- **config:** Update github config files ([0db3e32](https://github.com/guanguans/laravel-exception-notify/commit/0db3e32))
+- **config:** Update config files ([1c43e71](https://github.com/guanguans/laravel-exception-notify/commit/1c43e71))
+
+
 <a name="6.3.0"></a>
 ## [6.3.0] - 2026-03-30
 ### 📦 Builds
@@ -1374,7 +1390,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/6.3.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.0...HEAD
+[7.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.3.0...7.0.0
 [6.3.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/guanguans/laravel-exception-notify/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.1.0...6.2.0
