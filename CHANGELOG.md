@@ -8,6 +8,41 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.3"></a>
+## [7.0.3] - 2026-09-24
+### 📦 Builds
+- **deps:** bump github/codeql-action from 4.37.3 to 4.37.4 ([810938a](https://github.com/guanguans/laravel-exception-notify/commit/810938a))
+- **deps:** bump github/codeql-action from 4.37.7 to 4.37.8 ([a883a0a](https://github.com/guanguans/laravel-exception-notify/commit/a883a0a))
+- **deps:** Update package versions in composer.json ([f294a11](https://github.com/guanguans/laravel-exception-notify/commit/f294a11))
+- **deps:** bump github/codeql-action from 4.37.8 to 4.37.9 ([c2f9aae](https://github.com/guanguans/laravel-exception-notify/commit/c2f9aae))
+- **deps:** bump github/codeql-action from 4 to 4.37.3 ([e6123f9](https://github.com/guanguans/laravel-exception-notify/commit/e6123f9))
+- **deps:** bump github/codeql-action from 4.37.6 to 4.37.7 ([8a6f8bb](https://github.com/guanguans/laravel-exception-notify/commit/8a6f8bb))
+- **deps:** bump github/codeql-action from 4.37.4 to 4.37.6 ([cdea637](https://github.com/guanguans/laravel-exception-notify/commit/cdea637))
+- **deps:** bump actions/setup-node from 6 to 7 ([05e5169](https://github.com/guanguans/laravel-exception-notify/commit/05e5169))
+- **deps:** bump github/codeql-action from 4.37.9 to 4.38.0 ([d780973](https://github.com/guanguans/laravel-exception-notify/commit/d780973))
+- **deps:** bump github/codeql-action from 4.38.0 to 4.38.1 ([b69a3bc](https://github.com/guanguans/laravel-exception-notify/commit/b69a3bc))
+- **deps:** bump actions/stale from 10 to 11 ([37858a2](https://github.com/guanguans/laravel-exception-notify/commit/37858a2))
+- **deps:** bump actions/cache from 5 to 6 ([69b719c](https://github.com/guanguans/laravel-exception-notify/commit/69b719c))
+- **deps:** bump actions/checkout from 6 to 7 ([7d2887d](https://github.com/guanguans/laravel-exception-notify/commit/7d2887d))
+- **deps:** bump codecov/codecov-action from 6 to 7 ([fe33bb2](https://github.com/guanguans/laravel-exception-notify/commit/fe33bb2))
+- **deps:** bump dependabot/fetch-metadata from 2 to 3 ([000d17c](https://github.com/guanguans/laravel-exception-notify/commit/000d17c))
+- **deps-dev:** update rector/jack requirement || ^1.0 ([caca27a](https://github.com/guanguans/laravel-exception-notify/commit/caca27a))
+- **deps-dev:** update shipmonk/dead-code-detector requirement || ^1.0 ([df535d1](https://github.com/guanguans/laravel-exception-notify/commit/df535d1))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([bc2149f](https://github.com/guanguans/laravel-exception-notify/commit/bc2149f))
+
+### Pull Requests
+- Merge pull request [#108](https://github.com/guanguans/laravel-exception-notify/issues/108) from guanguans/dependabot/github_actions/github/codeql-action-4.38.1
+- Merge pull request [#107](https://github.com/guanguans/laravel-exception-notify/issues/107) from guanguans/dependabot/github_actions/github/codeql-action-4.38.0
+- Merge pull request [#106](https://github.com/guanguans/laravel-exception-notify/issues/106) from guanguans/dependabot/github_actions/github/codeql-action-4.37.9
+- Merge pull request [#105](https://github.com/guanguans/laravel-exception-notify/issues/105) from guanguans/dependabot/github_actions/github/codeql-action-4.37.8
+- Merge pull request [#104](https://github.com/guanguans/laravel-exception-notify/issues/104) from guanguans/dependabot/github_actions/github/codeql-action-4.37.7
+- Merge pull request [#103](https://github.com/guanguans/laravel-exception-notify/issues/103) from guanguans/dependabot/github_actions/github/codeql-action-4.37.6
+- Merge pull request [#101](https://github.com/guanguans/laravel-exception-notify/issues/101) from guanguans/dependabot/github_actions/github/codeql-action-4.37.4
+- Merge pull request [#100](https://github.com/guanguans/laravel-exception-notify/issues/100) from guanguans/dependabot/github_actions/github/codeql-action-4.37.3
+
+
 <a name="7.0.2"></a>
 ## [7.0.2] - 2026-04-02
 ### 💅 Code Refactorings
@@ -1402,7 +1437,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.2...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.3...HEAD
+[7.0.3]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.0...7.0.1
 [7.0.0]: https://github.com/guanguans/laravel-exception-notify/compare/6.3.0...7.0.0
