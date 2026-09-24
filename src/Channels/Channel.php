@@ -32,9 +32,7 @@ class Channel implements ChannelContract
     /** @var list<callable> */
     private static array $skipCallbacks = [];
 
-    public function __construct(
-        private readonly ChannelContract $channelContract
-    ) {}
+    public function __construct(private readonly ChannelContract $channelContract) {}
 
     /**
      * @api

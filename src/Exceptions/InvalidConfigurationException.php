@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Exceptions;
 
-use Illuminate\Validation\Validator;
+use Illuminate\Contracts\Validation\Validator;
 
 class InvalidConfigurationException extends InvalidArgumentException
 {

@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpUnusedAliasInspection */
-
 declare(strict_types=1);
 
 /**
@@ -36,6 +35,5 @@ Route::group([
     'as' => 'api.',
     'namespace' => '\Workbench\App\Http\Controllers\Api',
     'prefix' => 'api',
-    'middleware' => [
-    ],
+    'middleware' => [],
 ], static function (Router $router): void {});
