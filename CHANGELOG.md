@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.4"></a>
+## [7.0.4] - 2026-10-11
+### 💅 Code Refactorings
+- **rector:** Remove unused Rector rules from configuration ([1caf355](https://github.com/guanguans/laravel-exception-notify/commit/1caf355))
+
+### 📦 Builds
+- **deps-dev:** Update development dependencies in composer.json ([1571325](https://github.com/guanguans/laravel-exception-notify/commit/1571325))
+- **deps-dev:** update rector/jack requirement ([84de034](https://github.com/guanguans/laravel-exception-notify/commit/84de034))
+
+
 <a name="7.0.3"></a>
 ## [7.0.3] - 2026-09-24
 ### 📦 Builds
@@ -1437,7 +1447,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.3...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.4...HEAD
+[7.0.4]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.3...7.0.4
 [7.0.3]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.1...7.0.2
 [7.0.1]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.0...7.0.1
