@@ -16,11 +16,16 @@ declare(strict_types=1);
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\LaravelExceptionNotify\Template;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
-use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
+use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
+use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
+use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchOfResponseRector;
+use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
+use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector;
 use Guanguans\RectorRules\Set\SetList;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
+use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
@@ -35,6 +40,7 @@ use RectorLaravel\Rector\Class_\DescriptionPropertyToDescriptionAttributeRector;
 use RectorLaravel\Rector\Class_\FillablePropertyToFillableAttributeRector;
 use RectorLaravel\Rector\Class_\HiddenPropertyToHiddenAttributeRector;
 use RectorLaravel\Rector\Class_\SignaturePropertyToSignatureAttributeRector;
+use RectorLaravel\Rector\Class_\WithoutTimestampsPropertyToWithoutTimestampsAttributeRector;
 use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
 use RectorLaravel\Rector\FuncCall\TypeHintTappableCallRector;
@@ -47,25 +53,22 @@ use RectorPest\Set\PestSetList;
 error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
 
 return RectorConfig::configure()
-    ->withPaths([
-        __DIR__.'/config/',
-        __DIR__.'/src/',
-        __DIR__.'/tests/',
-        __DIR__.'/workbench/',
-        ...Utils::defaultRootFiles(),
-    ])
-    ->withRootFiles()
-    ->withSkip(['*/Fixtures/*', __DIR__.'/src/Support/Utils.php', __DIR__.'/tests.php'])
+    ->withPaths([...Utils::defaultRootDirectories(), ...Utils::defaultRootFiles()])
+    ->withSkip(['*/Fixtures/*', __DIR__.'/src/Support/Utils.php'])
     ->withSkip([
+        AddSensitiveParameterAttributeRector::class,
+
         LogicalToBooleanRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
         PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
     ])
     ->withSkip([
         DescriptionPropertyToDescriptionAttributeRector::class,
+        SignaturePropertyToSignatureAttributeRector::class,
         FillablePropertyToFillableAttributeRector::class,
         HiddenPropertyToHiddenAttributeRector::class,
-        SignaturePropertyToSignatureAttributeRector::class,
+        WithoutTimestampsPropertyToWithoutTimestampsAttributeRector::class,
 
         ArrayToArrGetRector::class,
         DispatchToHelperFunctionsRector::class,
@@ -80,19 +83,34 @@ return RectorConfig::configure()
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/tests/Pest.php',
         ],
+        ScalarValueToConstFetchOfResponseRector::class => [
+            __DIR__.'/config/exception-notify.php',
+            __DIR__.'/workbench/config/database.php',
+            __DIR__.'/workbench/routes/console.php',
+        ],
+        ScalarValueToConstFetchRector::class => [
+            __DIR__.'/workbench/config/database.php',
+        ],
         SortAssociativeArrayByKeyRector::class => [
+            /** @see vendor/rector/rector/src/PostRector/Rector/ */
             __DIR__.'/config/',
             __DIR__.'/src/',
             __DIR__.'/tests/',
             __DIR__.'/workbench/',
         ],
-        StringToClassConstantRector::class => [
+        SortListItemOfSameScalarTypeRector::class => [
+            __DIR__.'/config/exception-notify.php',
+            __FILE__,
+        ],
+        StringToClassConstantOfRequestOptionsRector::class => [
+            __DIR__.'/composer-bump',
             __DIR__.'/config/exception-notify.php',
             __DIR__.'/src/Commands/TestCommand.php',
-            __DIR__.'/src/Template.php',
-            __DIR__.'/tests/',
+            __DIR__.'/tests/TestCase.php',
             __DIR__.'/workbench/config/database.php',
-            __DIR__.'/composer-bump',
+        ],
+        StringToClassConstantRector::class => [
+            __DIR__.'/src/Template.php',
         ],
         TypeHintTappableCallRector::class => [
             __DIR__.'/src/Commands/Concerns/Configurable.php',
@@ -128,10 +146,10 @@ return RectorConfig::configure()
         phpunitMockToStub: true,
     )
     ->withSets([
-        SetList::ALL,
         LaravelLevelSetList::UP_TO_LARAVEL_110,
         PestLevelSetList::UP_TO_PEST_30,
         PestSetList::PEST_CODE_QUALITY,
+        SetList::ALL,
     ])
     ->withRules([])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
@@ -146,20 +164,17 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['afterEach', 'beforeEach', 'MIT', 'PDO'])
-    ->withConfiguredRule(
-        RenameFunctionRector::class,
-        collect(['env_explode', 'make', 'rescue'])
-            ->mapWithKeys(static fn (string $func): array => [$func => "Guanguans\\LaravelExceptionNotify\\Support\\$func"])
-            ->all()
-    )
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT', 'PDO', 'afterEach', 'beforeEach'])
+    ->withConfiguredRule(RenameFunctionRector::class, array_reduce(
+        ['env_explode', 'make', 'rescue'],
+        static fn (array $carry, string $func): array => $carry + [$func => "Guanguans\\LaravelExceptionNotify\\Support\\$func"],
+        []
+    ))
     ->withConfiguredRule(StringToClassConstantRector::class, array_map(
-        static fn (string $string, string $constant): StringToClassConstant => new StringToClassConstant(
-            $string,
-            Template::class,
-            $constant
-        ),
-        $constants = (new ReflectionClass(Template::class))->getConstants(),
+        static fn (
+            string $value,
+            string $name
+        ): StringToClassConstant => new StringToClassConstant($value, Template::class, $name),
+        $constants = (new ReflectionClass(Template::class))->getConstants(ReflectionClassConstant::IS_PUBLIC),
         array_keys($constants),
     ));

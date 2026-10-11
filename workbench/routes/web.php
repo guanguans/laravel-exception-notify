@@ -43,14 +43,14 @@ Route::any(
     'auto-report-exception',
     static function (Repository $repository): void {
         $repository->set('exception-notify.channels.stack.channels', [
-            'dump',
-            'log',
-            'mail',
             'bark',
             'chanify',
             'dingTalk',
             'discord',
+            'dump',
             'lark',
+            'log',
+            'mail',
             'ntfy',
             'pushDeer',
             'slack',

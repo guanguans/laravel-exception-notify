@@ -27,9 +27,9 @@ return ECSConfig::configure()
             __DIR__.'/src/Channels/AbstractChannel.php',
         ],
         StaticLambdaFixer::class => [
-            __DIR__.'/workbench/app/Providers/WorkbenchServiceProvider.php',
             __DIR__.'/tests/*Test.php',
             __DIR__.'/tests/Pest.php',
+            __DIR__.'/workbench/app/Providers/WorkbenchServiceProvider.php',
         ],
     ])
     ->withSets([SetList::GUANGUANS])

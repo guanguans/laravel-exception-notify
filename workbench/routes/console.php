@@ -40,7 +40,7 @@ Artisan::command('optimize:image {--dry-run : Only list found images}', function
         Finder::create()
             ->in(getcwd())
             ->exclude(['.build/', 'Fixtures/', 'vendor-bin/', 'vendor/'])
-            ->name(['/\.jpg$/', '/\.jpeg$/', '/\.png$/', '/\.gif$/', '/\.webp$/', '/\.svg$/', '/\.avif$/'])
+            ->name(['/\.avif$/', '/\.gif$/', '/\.jpeg$/', '/\.jpg$/', '/\.png$/', '/\.svg$/', '/\.webp$/'])
             ->size('> 0')
             ->ignoreDotFiles(false)
             ->ignoreUnreadableDirs(false)

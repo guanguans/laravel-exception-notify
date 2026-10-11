@@ -22,7 +22,7 @@ class RequestPostCollector extends AbstractCollector
      */
     public function __construct(
         private readonly Request $request,
-        private readonly array $masks = ['password', '*password', 'password*', '*password*'],
+        private readonly array $masks = ['*password', '*password*', 'password', 'password*'],
     ) {}
 
     public function collect(): array
