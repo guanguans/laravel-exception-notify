@@ -209,13 +209,13 @@ parameters:
         - identifier: shipmonk.publicPropertyNotReadonly
         - identifier: shipmonk.stringInterpolationWithNull
         - identifier: shipmonk.variableTypeOverwritten
-        - identifier: symplify.commandHasAsCommandAttribute
+#        - identifier: symplify.commandHasAsCommandAttribute
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.explicitTraitSuffixName
         - identifier: symplify.forbiddenExtendOfNonAbstractClass
         - identifier: symplify.forbiddenFuncCall
 #        - identifier: symplify.forbiddenNode
-        - identifier: symplify.forbiddenStaticClassConstFetch
+#        - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: symplify.forbiddenTrait
         - identifier: symplify.noDynamicName
         - identifier: symplify.requiredInterfaceContractNamespace

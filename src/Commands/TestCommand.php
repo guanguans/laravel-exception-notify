@@ -22,6 +22,7 @@ use Guanguans\Notify\Foundation\Response;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -73,6 +74,13 @@ class TestCommand extends Command
 
             return self::INVALID;
         }
+
+        /**
+         * Because the previous call to ExceptionNotifyManager::shouldReport() will hit the limit of
+         * the maximum number of attempts, it is necessary to manually increase the maximum number of
+         * attempts here, otherwise in extreme cases, it may not be possible to test due to the inability to send.
+         */
+        Config::set($key = 'exception-notify.rate_limiter.max_attempts', Config::integer($key) + 1);
 
         try {
             throw $runtimeException;
