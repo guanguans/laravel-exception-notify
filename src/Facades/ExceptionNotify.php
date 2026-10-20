@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static string getDefaultDriver()
  * @method static \Guanguans\LaravelExceptionNotify\Channels\Channel channel(string|null $channel = null)
+ * @method static \Guanguans\LaravelExceptionNotify\Contracts\ChannelContract originalDriver(string|null $driver = null)
  * @method static void report(\Throwable $throwable)
  * @method static mixed reportContent(string $content)
  * @method static mixed driver(string|null $driver = null)

@@ -42,6 +42,30 @@ class ExceptionNotifyManager extends Manager implements ChannelContract
         return $this->driver($channel);
     }
 
+    /**
+     * Get a original driver instance.
+     *
+     * @see parent::driver()
+     *
+     * @api
+     */
+    public function originalDriver(?string $driver = null): ChannelContract
+    {
+        $driver = $driver ?: $this->getDefaultDriver();
+
+        if (empty($driver)) {
+            throw new InvalidArgumentException(\sprintf(
+                'Unable to resolve empty driver for [%s].',
+                static::class
+            ));
+        }
+
+        // If the given driver has not been created before, we will create the instances
+        // here and cache it so we can return it next time very quickly. If there is
+        // already a driver created by this name, we'll just return that instance.
+        return $this->drivers[$driver] ??= $this->createOriginalDriver($driver);
+    }
+
     public function report(\Throwable $throwable): void
     {
         $this->driver()->report($throwable);
