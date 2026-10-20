@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.7"></a>
+## [7.0.7] - 2026-10-20
+### ✨ Features
+- **ExceptionNotifyManager:** Add originalDriver method for driver retrieval ([28b5b0b](https://github.com/guanguans/laravel-exception-notify/commit/28b5b0b))
+
+
 <a name="7.0.6"></a>
 ## [7.0.6] - 2026-10-20
 ### 🐞 Bug Fixes
@@ -1459,7 +1465,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.6...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.7...HEAD
+[7.0.7]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.6...7.0.7
 [7.0.6]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.5...7.0.6
 [7.0.5]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.4...7.0.5
 [7.0.4]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.3...7.0.4
