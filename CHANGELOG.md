@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.0.5"></a>
+## [7.0.5] - 2026-10-20
+### 🐞 Bug Fixes
+- **TestCommand:** Increase max attempts for exception notifications ([be6524e](https://github.com/guanguans/laravel-exception-notify/commit/be6524e))
+
+
 <a name="7.0.4"></a>
 ## [7.0.4] - 2026-10-11
 ### 💅 Code Refactorings
@@ -1447,7 +1453,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.4...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.5...HEAD
+[7.0.5]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.4...7.0.5
 [7.0.4]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.3...7.0.4
 [7.0.3]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.1...7.0.2
