@@ -15,6 +15,12 @@ env:
   # DB_DATABASE: ":memory:"
   # SOAR_ENABLED: (true)
   # SOAR_SUDO_PASSWORD: "password"
+  # LOG_STACK: 'daily'
+  # EXCEPTION_NOTIFY_RATE_LIMITER_CACHE_STORE: 'array'
+  # EXCEPTION_NOTIFY_RATE_LIMITER_MAX_ATTEMPTS: 3
+  # EXCEPTION_NOTIFY_JOB_CONNECTION: 'sync'
+  # EXCEPTION_NOTIFY_STACK_CHANNELS: 'log,ntfy'
+  # EXCEPTION_NOTIFY_NTFY_TOPIC: 'swiss-knife-exception-notify'
 
 migrations:
   - workbench/database/migrations/
