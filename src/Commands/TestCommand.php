@@ -59,6 +59,8 @@ class TestCommand extends Command
             return self::INVALID;
         }
 
+        // Increase the maximum number of attempts to ensure that the test can be executed.
+        Config::set('exception-notify.rate_limiter.max_attempts', \PHP_INT_MAX);
         $runtimeException = new RuntimeException('This is a test.');
 
         if (!$exceptionNotifyManager->shouldReport($runtimeException)) {
@@ -74,13 +76,6 @@ class TestCommand extends Command
 
             return self::INVALID;
         }
-
-        /**
-         * Because the previous call to ExceptionNotifyManager::shouldReport() will hit the limit of
-         * the maximum number of attempts, it is necessary to manually increase the maximum number of
-         * attempts here, otherwise in extreme cases, it may not be possible to test due to the inability to send.
-         */
-        Config::set($key = 'exception-notify.rate_limiter.max_attempts', Config::integer($key) + 1);
 
         try {
             throw $runtimeException;
