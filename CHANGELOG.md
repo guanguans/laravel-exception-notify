@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.1.0"></a>
+## [7.1.0] - 2026-10-22
+### ✨ Features
+- **ContextSubscriber:** Add context subscriber for command and route events ([d4e8924](https://github.com/guanguans/laravel-exception-notify/commit/d4e8924))
+
+### 💅 Code Refactorings
+- **config:** default exception notify job connection to sync ([fcfa5e8](https://github.com/guanguans/laravel-exception-notify/commit/fcfa5e8))
+
+
 <a name="7.0.7"></a>
 ## [7.0.7] - 2026-10-20
 ### ✨ Features
@@ -1465,7 +1474,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.7...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.0...HEAD
+[7.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.7...7.1.0
 [7.0.7]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.6...7.0.7
 [7.0.6]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.5...7.0.6
 [7.0.5]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.4...7.0.5
