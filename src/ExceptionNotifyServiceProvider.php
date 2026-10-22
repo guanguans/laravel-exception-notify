@@ -16,10 +16,12 @@ namespace Guanguans\LaravelExceptionNotify;
 use Composer\InstalledVersions;
 use Guanguans\LaravelExceptionNotify\Commands\TestCommand;
 use Guanguans\LaravelExceptionNotify\Facades\ExceptionNotify;
+use Guanguans\LaravelExceptionNotify\Listeners\ContextSubscriber;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Console\AboutCommand;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class ExceptionNotifyServiceProvider extends ServiceProvider /* implements DeferrableProvider */
@@ -44,6 +46,7 @@ class ExceptionNotifyServiceProvider extends ServiceProvider /* implements Defer
     {
         $this->setupConfig();
         $this->registerReportUsing();
+        Event::subscribe(ContextSubscriber::class);
     }
 
     /**
