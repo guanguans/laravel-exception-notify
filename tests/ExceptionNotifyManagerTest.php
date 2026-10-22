@@ -42,8 +42,13 @@ it('can report content', function (): void {
         ->toBeArray();
 })->group(__DIR__, __FILE__);
 
-it('will throw `InvalidArgumentException`', function (): void {
+it('will throw `InvalidArgumentException` when driver is not found', function (): void {
     resolve(ExceptionNotifyManager::class)->driver('foo');
+})->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
+
+it('will throw `InvalidArgumentException` when original driver is empty', function (): void {
+    config(['exception-notify.default' => '']);
+    resolve(ExceptionNotifyManager::class)->originalDriver();
 })->group(__DIR__, __FILE__)->throws(InvalidArgumentException::class);
 
 it('can create custom driver', function (): void {

@@ -50,7 +50,7 @@ return [
      */
     'job' => [
         'class' => ReportExceptionJob::class,
-        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION'),
+        'connection' => env('EXCEPTION_NOTIFY_JOB_CONNECTION', 'sync'),
         'queue' => env('EXCEPTION_NOTIFY_JOB_QUEUE'),
     ],
 

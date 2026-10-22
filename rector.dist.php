@@ -20,7 +20,6 @@ use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
-use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchOfResponseRector;
 use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
 use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector;
 use Guanguans\RectorRules\Set\SetList;
@@ -83,11 +82,6 @@ return RectorConfig::configure()
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/tests/Pest.php',
         ],
-        ScalarValueToConstFetchOfResponseRector::class => [
-            __DIR__.'/config/exception-notify.php',
-            __DIR__.'/workbench/config/database.php',
-            __DIR__.'/workbench/routes/console.php',
-        ],
         ScalarValueToConstFetchRector::class => [
             __DIR__.'/workbench/config/database.php',
         ],
@@ -103,11 +97,7 @@ return RectorConfig::configure()
             __FILE__,
         ],
         StringToClassConstantOfRequestOptionsRector::class => [
-            __DIR__.'/composer-bump',
             __DIR__.'/config/exception-notify.php',
-            __DIR__.'/src/Commands/TestCommand.php',
-            __DIR__.'/tests/TestCase.php',
-            __DIR__.'/workbench/config/database.php',
         ],
         StringToClassConstantRector::class => [
             __DIR__.'/src/Template.php',

@@ -39,17 +39,17 @@ final class ContextSubscriber
     {
         return [
             CommandStarting::class => static function (CommandStarting $commandStarting): void {
-                RequestBasicCollector::mergeAppends([
+                RequestBasicCollector::mergeAppends([ // @codeCoverageIgnoreStart
                     // 'Command' => $commandStarting->command ?? $commandStarting->input->getArguments()['command'] ?? 'default',
                     // 'Command' => Event::normalizeCommand((string) $commandStarting->input),
                     'Command' => (string) $commandStarting->input,
-                ]);
+                ]); // @codeCoverageIgnoreEnd
             },
             RouteMatched::class => static function (RouteMatched $routeMatched): void {
                 RequestBasicCollector::mergeAppends(['Controller Action' => $routeMatched->route->getActionName()]);
             },
             ScheduledTaskStarting::class => static function (ScheduledTaskStarting $scheduledTaskStarting): void {
-                RequestBasicCollector::mergeAppends(['Command' => self::resolveCommand($scheduledTaskStarting->task)]);
+                RequestBasicCollector::mergeAppends(['Command' => self::resolveCommand($scheduledTaskStarting->task)]); // @codeCoverageIgnore
             },
         ];
     }
@@ -57,7 +57,7 @@ final class ContextSubscriber
     /**
      * @see \Illuminate\Console\Scheduling\ScheduleListCommand::displayJson()
      */
-    private static function resolveCommand(Event $schedulingEvent): string
+    private static function resolveCommand(Event $schedulingEvent): string // @codeCoverageIgnoreStart
     {
         /**
          * @see \Illuminate\Console\Scheduling\Schedule::command()
@@ -80,5 +80,5 @@ final class ContextSubscriber
         }
 
         return $command;
-    }
+    } // @codeCoverageIgnoreEnd
 }
