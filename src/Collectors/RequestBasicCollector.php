@@ -22,9 +22,39 @@ class RequestBasicCollector extends AbstractCollector
     /** @var array<string, mixed> */
     private static array $appends = [];
 
-    public function __construct(private readonly Request $request) {}
+    public function __construct(private readonly Request $request)
+    {
+        // /**
+        //  * ```php
+        //  * private array $appends = [];
+        //  * ```.
+        //  */
+        // app()->instance(self::class, $this);
+    }
+
+    // public static function setAppend(string $key, mixed $value): void
+    // {
+    //     self::$appends[$key] = $value;
+    // }
+    //
+    // /**
+    //  * @see \Illuminate\Database\Eloquent\Concerns\HasAttributes::setAppends()
+    //  *
+    //  * @param array<string, mixed> $appends
+    //  */
+    // public static function setAppends(array $appends): void
+    // {
+    //     self::$appends = $appends;
+    // }
+    //
+    // public static function mergeAppend(string $key, mixed $value): void
+    // {
+    //     self::$appends[$key] = $value;
+    // }
 
     /**
+     * @see \Illuminate\Database\Eloquent\Concerns\HasAttributes::mergeAppends()
+     *
      * @param array<string, mixed> $appends
      */
     public static function mergeAppends(array $appends): void

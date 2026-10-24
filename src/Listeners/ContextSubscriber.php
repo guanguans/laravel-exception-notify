@@ -73,12 +73,12 @@ final class ContextSubscriber
          */
         $command = Event::normalizeCommand($schedulingEvent->getSummaryForDisplay());
 
-        if ($schedulingEvent instanceof CallbackEvent && \in_array($command, ['Callback', 'Closure'], true)) {
-            return 'Closure at: '.(fn () => $this->getClosureLocation($schedulingEvent))->call(
-                tap(resolve(ScheduleListCommand::class))->setLaravel(app())
-            );
+        if (!$schedulingEvent instanceof CallbackEvent || !\in_array($command, ['Callback', 'Closure'], true)) {
+            return $command;
         }
 
-        return $command;
+        return 'Closure at: '.(fn () => $this->getClosureLocation($schedulingEvent))->call(
+            tap(resolve(ScheduleListCommand::class))->setLaravel(app())
+        );
     } // @codeCoverageIgnoreEnd
 }

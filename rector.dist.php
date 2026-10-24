@@ -44,6 +44,7 @@ use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
 use RectorLaravel\Rector\FuncCall\HelperFuncCallToFacadeClassRector;
 use RectorLaravel\Rector\FuncCall\TypeHintTappableCallRector;
 use RectorLaravel\Rector\If_\ThrowIfRector;
+use RectorLaravel\Rector\MethodCall\ValidationRuleArrayStringValueToArrayRector;
 use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelLevelSetList;
 use RectorPest\Set\PestLevelSetList;
@@ -63,6 +64,7 @@ return RectorConfig::configure()
         SplitDoubleAssignRector::class,
     ])
     ->withSkip([
+        /** @see SortListItemOfSameScalarTypeRector */
         DescriptionPropertyToDescriptionAttributeRector::class,
         SignaturePropertyToSignatureAttributeRector::class,
         FillablePropertyToFillableAttributeRector::class,
@@ -74,6 +76,7 @@ return RectorConfig::configure()
         EmptyToBlankAndFilledFuncRector::class,
         HelperFuncCallToFacadeClassRector::class,
         ThrowIfRector::class,
+        ValidationRuleArrayStringValueToArrayRector::class,
     ])
     ->withSkip([
         RenameClassConstFetchRector::class => [
@@ -94,7 +97,6 @@ return RectorConfig::configure()
         ],
         SortListItemOfSameScalarTypeRector::class => [
             __DIR__.'/config/exception-notify.php',
-            __FILE__,
         ],
         StringToClassConstantOfRequestOptionsRector::class => [
             __DIR__.'/config/exception-notify.php',
@@ -151,6 +153,7 @@ return RectorConfig::configure()
             'PhpUndefinedClassInspection',
             'PhpUnhandledExceptionInspection',
             'PhpVoidFunctionResultUsedInspection',
+            // 'SqlResolve',
             'StaticClosureCanBeUsedInspection',
         ],
     ])

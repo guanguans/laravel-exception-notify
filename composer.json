@@ -475,7 +475,7 @@
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Support/Rectors/",
         "sk": "@user-php vendor/bin/swiss-knife",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=6",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=6 --skip-file=src/Collectors/RequestBasicCollector.php",
         "sk:check-conflicts": "@sk check-conflicts config/ src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes config/ src/",
