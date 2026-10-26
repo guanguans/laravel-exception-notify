@@ -35,6 +35,7 @@ class ApplicationCollector extends AbstractCollector
             'Name' => config('app.name'),
             'Version' => $this->container->version(),
             'PHP Version' => \PHP_VERSION,
+            'Php Interface' => \PHP_SAPI,
             'Environment' => $this->container->environment(),
             'In Console' => $this->container->runningInConsole(),
             'Debug Mode' => $this->container->hasDebugModeEnabled(),
