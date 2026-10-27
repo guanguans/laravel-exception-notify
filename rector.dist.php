@@ -21,7 +21,7 @@ use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRect
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
 use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
-use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector;
+use Guanguans\RectorRules\Rector\String_\StringToClassConstantRector;
 use Guanguans\RectorRules\Set\SetList;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
@@ -31,7 +31,6 @@ use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\Renaming\Rector\ClassConstFetch\RenameClassConstFetchRector;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
-use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 use RectorLaravel\Rector\ArrayDimFetch\ArrayToArrGetRector;
@@ -82,9 +81,9 @@ return RectorConfig::configure()
         RenameClassConstFetchRector::class => [
             __DIR__.'/workbench/config/database.php',
         ],
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/tests/Pest.php',
-        ],
+        // RenameParamToMatchTypeRector::class => [
+        //     __DIR__.'/tests/Pest.php',
+        // ],
         ScalarValueToConstFetchRector::class => [
             __DIR__.'/workbench/config/database.php',
         ],
@@ -96,9 +95,6 @@ return RectorConfig::configure()
             __DIR__.'/workbench/',
         ],
         SortListItemOfSameScalarTypeRector::class => [
-            __DIR__.'/config/exception-notify.php',
-        ],
-        StringToClassConstantOfRequestOptionsRector::class => [
             __DIR__.'/config/exception-notify.php',
         ],
         StringToClassConstantRector::class => [

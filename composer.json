@@ -103,7 +103,7 @@
         "guanguans/monorepo-builder-worker": "^3.4",
         "guanguans/php-cs-fixer-custom-fixers": "dev-main",
         "guanguans/phpstan-rules": "^1.1",
-        "guanguans/rector-rules": "^1.9",
+        "guanguans/rector-rules": "^1.10",
         "jbelien/phpstan-sarif-formatter": "^1.2",
         "larastan/larastan": "^3.13",
         "laravel/facade-documenter": "dev-main",
