@@ -8,6 +8,18 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.1.1"></a>
+## [7.1.1] - 2026-10-27
+### ✨ Features
+- **collectors:** Enhance application and request data collection ([8f3ed85](https://github.com/guanguans/laravel-exception-notify/commit/8f3ed85))
+
+### 💅 Code Refactorings
+- **ContextSubscriber:** Simplify command normalization logic ([141c252](https://github.com/guanguans/laravel-exception-notify/commit/141c252))
+
+### 📦 Builds
+- **dependencies:** Update rector-rules to version 1.10 ([f6f1d05](https://github.com/guanguans/laravel-exception-notify/commit/f6f1d05))
+
+
 <a name="7.1.0"></a>
 ## [7.1.0] - 2026-10-22
 ### ✨ Features
@@ -1474,7 +1486,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.1...HEAD
+[7.1.1]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.0...7.1.1
 [7.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.7...7.1.0
 [7.0.7]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.6...7.0.7
 [7.0.6]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.5...7.0.6
