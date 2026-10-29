@@ -49,7 +49,10 @@ final class ContextSubscriber
                 RequestBasicCollector::mergeAppends(['Controller Action' => $routeMatched->route->getActionName()]);
             },
             ScheduledTaskStarting::class => static function (ScheduledTaskStarting $scheduledTaskStarting): void {
-                RequestBasicCollector::mergeAppends(['Command' => self::resolveCommand($scheduledTaskStarting->task)]); // @codeCoverageIgnore
+                RequestBasicCollector::mergeAppends([ // @codeCoverageIgnoreStart
+                    'Command' => self::resolveCommand($scheduledTaskStarting->task),
+                    'In Schedule' => true,
+                ]); // @codeCoverageIgnoreEnd
             },
         ];
     }
