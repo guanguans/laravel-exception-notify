@@ -25,6 +25,8 @@ use Guanguans\LaravelExceptionNotify\Mail\ReportExceptionMail;
 use Illuminate\Support\Facades\Mail;
 
 it('can report', function (): void {
+    Mail::fake();
+
     expect(resolve(ExceptionNotifyManager::class)->driver('mail'))
         ->report(new RuntimeException('testing'))
         ->toBeNull();
