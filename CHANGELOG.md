@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="7.1.2"></a>
+## [7.1.2] - 2026-11-10
+### 💅 Code Refactorings
+- **collectors:** Rename ContextSubscriber to CollectionSubscriber ([75b4277](https://github.com/guanguans/laravel-exception-notify/commit/75b4277))
+- **collectors:** Simplify request data collection logic ([0ad3b89](https://github.com/guanguans/laravel-exception-notify/commit/0ad3b89))
+
+
 <a name="7.1.1"></a>
 ## [7.1.1] - 2026-10-27
 ### ✨ Features
@@ -1486,7 +1493,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/laravel-exception-notify/issues/1) from guanguans/imgbot
 
 
-[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.1...HEAD
+[Unreleased]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.2...HEAD
+[7.1.2]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.1...7.1.2
 [7.1.1]: https://github.com/guanguans/laravel-exception-notify/compare/7.1.0...7.1.1
 [7.1.0]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.7...7.1.0
 [7.0.7]: https://github.com/guanguans/laravel-exception-notify/compare/7.0.6...7.0.7
