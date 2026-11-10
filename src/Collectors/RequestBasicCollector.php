@@ -13,54 +13,17 @@ declare(strict_types=1);
 
 namespace Guanguans\LaravelExceptionNotify\Collectors;
 
+use Guanguans\LaravelExceptionNotify\Listeners\CollectionSubscriber;
 use Guanguans\LaravelExceptionNotify\Support\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Number;
 
 class RequestBasicCollector extends AbstractCollector
 {
-    /** @var array<string, mixed> */
-    private static array $appends = [];
-
-    public function __construct(private readonly Request $request)
-    {
-        // /**
-        //  * ```php
-        //  * private array $appends = [];
-        //  * ```.
-        //  */
-        // app()->instance(self::class, $this);
-    }
-
-    // public static function setAppend(string $key, mixed $value): void
-    // {
-    //     self::$appends[$key] = $value;
-    // }
-    //
-    // /**
-    //  * @see \Illuminate\Database\Eloquent\Concerns\HasAttributes::setAppends()
-    //  *
-    //  * @param array<string, mixed> $appends
-    //  */
-    // public static function setAppends(array $appends): void
-    // {
-    //     self::$appends = $appends;
-    // }
-    //
-    // public static function mergeAppend(string $key, mixed $value): void
-    // {
-    //     self::$appends[$key] = $value;
-    // }
-
-    /**
-     * @see \Illuminate\Database\Eloquent\Concerns\HasAttributes::mergeAppends()
-     *
-     * @param array<string, mixed> $appends
-     */
-    public static function mergeAppends(array $appends): void
-    {
-        self::$appends = array_merge(self::$appends, $appends);
-    }
+    public function __construct(
+        private readonly Request $request,
+        private readonly CollectionSubscriber $collectionSubscriber
+    ) {}
 
     /**
      * @throws \Exception
@@ -71,14 +34,16 @@ class RequestBasicCollector extends AbstractCollector
     {
         return array_merge(
             app()->runningInConsole()
-                ? ['Command' => null, 'In Schedule' => false]
+                ? [
+                    CollectionSubscriber::COMMAND => $this->collectionSubscriber->getCommandCollection(),
+                    CollectionSubscriber::IN_SCHEDULE => $this->collectionSubscriber->getInScheduleCollection(),
+                ]
                 : [
-                    'URL' => $this->request->url(),
+                    'Url' => $this->request->url(),
                     'IP' => $this->request->ip(),
                     'Method' => $this->request->method(),
-                    'Controller Action' => $this->request->route()?->getActionName(),
+                    CollectionSubscriber::CONTROLLER_ACTION => $this->collectionSubscriber->getControllerActionCollection(),
                 ],
-            self::$appends,
             [
                 'Memory' => Number::fileSize(memory_get_peak_usage(true)),
                 'Duration' => blank(
