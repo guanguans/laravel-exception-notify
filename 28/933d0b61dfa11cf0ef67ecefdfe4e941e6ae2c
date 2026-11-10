@@ -1,0 +1,29 @@
+src/Listeners/CollectionSubscriber.php
+  s_40ec9423c89304::t_fe99376f7e508c 29
+  h_f374ed0b3ee0f5 31,35-39
+  s_40ec9423c89304::t_b3d00b05d06b26 33
+  h_f374ed0b3ee0f5 27,30,32,34
+src/ExceptionNotifyServiceProvider.php
+  h_f374ed0b3ee0f5 19,49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "28933d0b61dfa11cf0ef67ecefdfe4e941e6ae2c",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_40ec9423c89304": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794270904225",
+        "model": "unknown"
+      },
+      "human_author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
